@@ -5,17 +5,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.hanjum.board.dao.BoardDAO;
-import com.hanjum.board.dao.ProjectDAO;
+import com.hanjum.board.dao.EnterDAO;
 import com.hanjum.board.vo.BoardBean;
-import com.hanjum.board.vo.ProjectBean;
+import com.hanjum.board.vo.EnterBean;
 import com.hanjum.db.JdbcUtil;
 
-public class ProjectProService {
+public class EnterProService {
 	private BoardDAO boardDAO;
-	private ProjectDAO projectDAO;
+	private EnterDAO enterDAO;
 	private Connection con;
-	public ProjectProService() {
-		projectDAO = ProjectDAO.getInstance(); // 1단계
+	public EnterProService() {
+		enterDAO = EnterDAO.getInstance(); // 1단계
 		boardDAO = BoardDAO.getInstance();
 		con = JdbcUtil.getConnection(); // 2단계
 		// 다수의 메서드를 활용하기 위해 1단계, 2단계를 생성자로 호출
@@ -24,24 +24,24 @@ public class ProjectProService {
 	
 	// GET ======================================================================================
 	
-	public ProjectBean getProject(int board_id) { // 프로젝트 조회 서비스
-		System.out.println("ProjectProService - getProject()");
+	public EnterBean getEnter(int board_id) { // 채용공고 조회 서비스
+		System.out.println("EnterProService - getEnter()");
 		boardDAO.setConnection(con);
 		BoardBean boardBean = boardDAO.getBoardInfo(board_id);
 		
-		projectDAO.setConnection(con);
+		enterDAO.setConnection(con);
 		
-		return projectDAO.getProjectInfo(boardBean); // ProjectBean
+		return enterDAO.getEnterInfo(boardBean); // EnterBean
 		
 	}
 	
 	// INSERT ===================================================================================
 	
-	public boolean writeProject(ProjectBean projectBean) { // 프로젝트 작성 서비스
-		System.out.println("ProjectProService - writeProject()");
+	public boolean writeEnter(EnterBean enterBean) { // 채용공고 작성 서비스
+		System.out.println("EnterProService - writeEnter()");
 		boolean isSuccess = false;
-		projectDAO.setConnection(con);
-		int count = projectDAO.insertProject(projectBean);
+		enterDAO.setConnection(con);
+		int count = enterDAO.insertEnter(enterBean);
 		if(count > 0) {
 			JdbcUtil.commit(con);
 			isSuccess = true;
@@ -54,11 +54,11 @@ public class ProjectProService {
 	
 	// UPDATE ===================================================================================
 	
-	public boolean modifyProject(ProjectBean projectBean) { // 프로젝트 수정 서비스
-		System.out.println("ProjectProService - modifyProject()");
+	public boolean modifyEnter(EnterBean enterBean) { // 채용공고 수정 서비스
+		System.out.println("EnterProService - modifyEnter()");
 		boolean isSuccess = false;
-		projectDAO.setConnection(con);
-		int count = projectDAO.updateProject(projectBean);
+		enterDAO.setConnection(con);
+		int count = enterDAO.updateEnter(enterBean);
 		if(count > 0) {
 			JdbcUtil.commit(con);
 			isSuccess = true;
@@ -71,11 +71,11 @@ public class ProjectProService {
 	
 	// DELETE ===================================================================================
 	
-	public boolean dropProject(int board_id) { // 프로젝트 삭제 서비스
-		System.out.println("ProjectProService - dropProject()");
+	public boolean dropEnter(int board_id) { // 채용공고 삭제 서비스
+		System.out.println("EnterProService - dropEnter()");
 		boolean isSuccess = false;
-		projectDAO.setConnection(con);
-		int count = projectDAO.deleteProject(board_id);
+		enterDAO.setConnection(con);
+		int count = enterDAO.deleteEnter(board_id);
 		if(count > 0) {
 			JdbcUtil.commit(con);
 			isSuccess = true;
@@ -88,14 +88,14 @@ public class ProjectProService {
 	
 	// LIST ===================================================================================
 
-	public ArrayList<ProjectBean> listProject(int startRow){ // 프로젝트 리스트 서비스
-		System.out.println("ProjectProService - listProject()");
-		return projectDAO.listProject(startRow);
+	public ArrayList<EnterBean> listEnter(int startRow){ // 채용공고 리스트 서비스
+		System.out.println("EnterProService - listEnter()");
+		return enterDAO.listEnter(startRow);
 	}
 	
-	public ArrayList<ProjectBean> listSeatchProject(int startRow, HashMap<Integer, ArrayList<Object>> seatch){ // 프로젝트 검색 서비스
-		System.out.println("ProjectProService - listProject()");
-		return projectDAO.listSeatchProject(startRow, seatch);
+	public ArrayList<EnterBean> listSeatchEnter(int startRow, HashMap<Integer, ArrayList<Object>> seatch){ // 채용공고 검색 서비스
+		System.out.println("EnterProService - listEnter()");
+		return enterDAO.listSeatchEnter(startRow, seatch);
 	}
 	
 }

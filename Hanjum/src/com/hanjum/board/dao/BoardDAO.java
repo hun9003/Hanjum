@@ -26,7 +26,7 @@ public class BoardDAO {
 	}
 	// GET ======================================================================================
 	
-	public int getBoardLastId() { // board테이블의 마지막 id 값
+	public int getBoardLastId() { // board 게시물 마지막 id 값
 		System.out.println("BoardDAO - getBoardLastId()");
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -47,7 +47,7 @@ public class BoardDAO {
 		return board_id;
 	}
 	
-	public BoardBean getBoardInfo(int board_id) { // board 테이블 정보 조회
+	public BoardBean getBoardInfo(int board_id) { // board 게시물 정보 조회
 		System.out.println("BoardDAO - getBoardInfo()");
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -87,7 +87,7 @@ public class BoardDAO {
 	
 	// INSERT ===================================================================================
 	
-	public int insertBoard(BoardBean boardBean) { // board 테이블 작성
+	public int insertBoard(BoardBean boardBean) { // board 게시물 작성
 		System.out.println("BoardDAO - insertBoard()");
 		int insertCount = 0;
 		
@@ -96,11 +96,11 @@ public class BoardDAO {
 	
 	// UPDATE ===================================================================================
 	
-	public void updateBoardReadcount(int board_id) { // board 조회수 증가
+	public void updateBoardReadcount(int board_id) { // board 게시물 조회수 증가
 		System.out.println("BoardDAO - updateBoardReadcount()");
 	}
 	
-	public int updateBoard(BoardBean boardBean) { // board 테이블 수정
+	public int updateBoard(BoardBean boardBean) { // board 게시물 수정
 		System.out.println("BoardDAO - updateBoard()");
 		int updateCount = 0;
 		
@@ -108,7 +108,7 @@ public class BoardDAO {
 	}
 	// DELETE ===================================================================================
 	
-	public int deleteBoard(int board_id) {
+	public int deleteBoard(int board_id) { // board 게시물 삭제
 		System.out.println("BoardDAO - deleteBoard()");
 		int deleteBoard = 0;
 		

@@ -7,9 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.hanjum.action.Action;
-import com.hanjum.board.service.ProjectWriteProService;
+import com.hanjum.board.service.ProjectProService;
 import com.hanjum.board.vo.ProjectBean;
 import com.hanjum.vo.ActionForward;
+import com.hanjum.vo.Constant;
 
 public class ProjectWriteProAction implements Action{
 
@@ -37,16 +38,13 @@ public class ProjectWriteProAction implements Action{
 		projectBean.setBoard_creator_cre_max_price(0);
 		projectBean.setBoard_creator_status(0);
 		
-		ProjectWriteProService projectWriteProService = new ProjectWriteProService();
-		boolean isWriteSuccess = projectWriteProService.registProject(projectBean);
+		ProjectProService projectWriteProService = new ProjectProService();
+		boolean isSuccess = projectWriteProService.writeProject(projectBean);
 		
-		if(!isWriteSuccess) {
+		if(!isSuccess) {
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();
-			out.println("<script>");
-			out.println("alert('작성에 실패했습니다. 계속 실패 시 관리자에게 문의해주십시오.')"); 
-			out.println("history.back()"); 
-			out.println("</script>");
+			out.println(Constant.arrMsg);
 		} else {
 			forward = new ActionForward();
 			forward.setPath("ProjectList.bo");
