@@ -8,7 +8,7 @@ public class Constant {
 	public static final int ADMIN_USER_PAGE_SIZE = 20; // 회원관리페이지에 회원 리스트 담을 갯수
 
 	public static final String arrMsg = "<script> "
-			+ "alert('작성에 실패했습니다. 계속 실패 시 관리자에게 문의해주십시오.'); "
+			+ "alert('실패했습니다. 계속 실패 시 관리자에게 문의해주십시오.'); "
 			+ "history.back();"
 			+ "</script>";
 }
