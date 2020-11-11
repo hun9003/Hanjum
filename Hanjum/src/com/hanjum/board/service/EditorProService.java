@@ -5,17 +5,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.hanjum.board.dao.BoardDAO;
-import com.hanjum.board.dao.ProjectDAO;
+import com.hanjum.board.dao.EditorDAO;
 import com.hanjum.board.vo.BoardBean;
-import com.hanjum.board.vo.ProjectBean;
+import com.hanjum.board.vo.EditorBean;
 import com.hanjum.db.JdbcUtil;
 
-public class ProjectProService {
+public class EditorProService {
 	private BoardDAO boardDAO;
-	private ProjectDAO projectDAO;
+	private EditorDAO editorDAO;
 	private Connection con;
-	public ProjectProService() {
-		projectDAO = ProjectDAO.getInstance(); // 1단계
+	public EditorProService() {
+		editorDAO = EditorDAO.getInstance(); // 1단계
 		boardDAO = BoardDAO.getInstance();
 		con = JdbcUtil.getConnection(); // 2단계
 		// 다수의 메서드를 활용하기 위해 1단계, 2단계를 생성자로 호출
@@ -24,24 +24,24 @@ public class ProjectProService {
 	
 	// GET ======================================================================================
 	
-	public ProjectBean getProject(int board_id) { // 프로젝트 조회 서비스
-		System.out.println("ProjectProService - getProject()");
+	public EditorBean getEditor(int board_id) { // 에디터 조회 서비스
+		System.out.println("EditorProService - getEditor()");
 		boardDAO.setConnection(con);
 		BoardBean boardBean = boardDAO.getBoardInfo(board_id);
 		
-		projectDAO.setConnection(con);
+		editorDAO.setConnection(con);
 		
-		return projectDAO.getProjectInfo(boardBean); // ProjectBean
+		return editorDAO.getEditorInfo(boardBean); // EditorBean
 		
 	}
 	
 	// INSERT ===================================================================================
 	
-	public boolean writeProject(ProjectBean projectBean) { // 프로젝트 작성 서비스
-		System.out.println("ProjectProService - writeProject()");
+	public boolean writeEditor(EditorBean editorBean) { // 에디터 작성 서비스
+		System.out.println("EditorProService - writeEditor()");
 		boolean isSuccess = false;
-		projectDAO.setConnection(con);
-		int count = projectDAO.insertProject(projectBean);
+		editorDAO.setConnection(con);
+		int count = editorDAO.insertEditor(editorBean);
 		if(count > 0) {
 			JdbcUtil.commit(con);
 			isSuccess = true;
@@ -54,11 +54,11 @@ public class ProjectProService {
 	
 	// UPDATE ===================================================================================
 	
-	public boolean modifyProject(ProjectBean projectBean) { // 프로젝트 수정 서비스
-		System.out.println("ProjectProService - modifyProject()");
+	public boolean modifyEditor(EditorBean editorBean) { // 에디터 수정 서비스
+		System.out.println("EditorProService - modifyEditor()");
 		boolean isSuccess = false;
-		projectDAO.setConnection(con);
-		int count = projectDAO.updateProject(projectBean);
+		editorDAO.setConnection(con);
+		int count = editorDAO.updateEditor(editorBean);
 		if(count > 0) {
 			JdbcUtil.commit(con);
 			isSuccess = true;
@@ -71,11 +71,11 @@ public class ProjectProService {
 	
 	// DELETE ===================================================================================
 	
-	public boolean dropProject(int board_id) { // 프로젝트 삭제 서비스
-		System.out.println("ProjectProService - dropProject()");
+	public boolean dropEditor(int board_id) { // 에디터 삭제 서비스
+		System.out.println("EditorProService - dropEditor()");
 		boolean isSuccess = false;
-		projectDAO.setConnection(con);
-		int count = projectDAO.deleteProject(board_id);
+		editorDAO.setConnection(con);
+		int count = editorDAO.deleteEditor(board_id);
 		if(count > 0) {
 			JdbcUtil.commit(con);
 			isSuccess = true;
@@ -88,14 +88,14 @@ public class ProjectProService {
 	
 	// LIST ===================================================================================
 
-	public ArrayList<ProjectBean> listProject(int startRow){ // 프로젝트 리스트 서비스
-		System.out.println("ProjectProService - listProject()");
-		return projectDAO.listProject(startRow);
+	public ArrayList<EditorBean> listEditor(int startRow){ // 에디터 리스트 서비스
+		System.out.println("EditorProService - listEditor()");
+		return editorDAO.listEditor(startRow);
 	}
 	
-	public ArrayList<ProjectBean> listSeatchProject(int startRow, HashMap<Integer, ArrayList<Object>> seatch){ // 프로젝트 검색 서비스
-		System.out.println("ProjectProService - listProject()");
-		return projectDAO.listSeatchProject(startRow, seatch);
+	public ArrayList<EditorBean> listSeatchEditor(int startRow, HashMap<Integer, ArrayList<Object>> seatch){ // 에디터 검색 서비스
+		System.out.println("EditorProService - listEditor()");
+		return editorDAO.listSeatchEditor(startRow, seatch);
 	}
 	
 }
