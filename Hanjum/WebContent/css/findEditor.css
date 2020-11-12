@@ -1,0 +1,32 @@
+@charset "UTF-8";
+
+div#main_img { width: 1400px; height: 1300px;
+							 background:url("../img/editor_1.png");background-position:center; 
+							 background-size:1400px ; background-repeat:no-repeat;
+							margin: 0px auto; }				
+
+
+select{width: 300px; padding: .8em .5em; border: 1px solid #999; 
+background: url("../img/arrow.jpg")  no-repeat :95% 50%; border-radius: 3px;
+margin:30px 0px 50px 32px;}
+
+.search_menu{width: 250px; padding: .8em .5em; border: 1px solid #999; 
+ border-radius: 3px; margin:50px 0px 50px 32px;}
+
+input {vertical-align: middle; }
+
+input.img_button {
+        background: url( "../img/button_search.png" ) no-repeat;
+        border: none; width: 32px; height: 32px; cursor: pointer;}
+        
+form {display: inline;}
+
+div.editor_table{width:1200px; height:340px; cursor:pointer; box-shadow: 0px 0px 10px #444; margin:20px auto; 
+							border-radius: 16px; font-weight: bold; background: #fff;}
+div.editor_img{background: url("../img/person.png");}
+							
+div.editor_name {font-size: 20px;}
+							
+
+
+
