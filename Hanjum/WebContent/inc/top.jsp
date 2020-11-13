@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 
 <header>
-<% int login = 1; %>
+<% int login = 0; %>
 <div id="top">
 <jsp:include page="side.jsp"/>
 	<div id="top_title">
@@ -27,7 +27,7 @@
 		<div id="myNav" class="menu_user_content">
 			<ul class="lstyle_n overlay_content no_margin no_padding pullRight">
 			 <li class="bg_red">메뉴</li>
-			 <li><a href="#">My INFO</a></li>
+			 <li><a href="UserUpdateForm.uo">My INFO</a></li>
 			 <li><a href="#">1:1 문의</a></li>
 			 <li><a href="intro#QnA">자주 묻는 질문</a></li>
 			 <li><a href="#">로그아웃</a></li>
@@ -64,8 +64,8 @@
 		%>
 		<div class="top_member_menu">
 		<ul class="menu_col menu_member">
-			<li><a href="#" class="btn_link btn_main font_white">로그인</a></li>
-			<li><a href="#" class="btn_link btn_main font_white">회원가입</a></li>
+			<li><a href="UserLoginForm.uo" class="btn_link btn_main font_white">로그인</a></li>
+			<li><a href="UserInsertMain.uo" class="btn_link btn_main font_white">회원가입</a></li>
 		</ul>
 		</div>
 		<%
