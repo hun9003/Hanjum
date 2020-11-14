@@ -26,8 +26,8 @@ public class ProjectDAO {
 	
 	// GET ======================================================================================
 	
-	public ProjectBean getProjectInfo(BoardBean boardBean) { // 에디터 게시물 조회
-		System.out.println("ProjectDAO - getProjectInfo()");
+	public ProjectBean selectProjectInfo(BoardBean boardBean) { // 에디터 게시물 조회
+		System.out.println("ProjectDAO - selectProjectInfo()");
 		ProjectBean projectBean = null;
 		if(boardBean instanceof ProjectBean) {
 			projectBean = (ProjectBean)boardBean;
@@ -69,8 +69,8 @@ public class ProjectDAO {
 		
 	// LIST =====================================================================================
 		
-	public ArrayList<ProjectBean> listProject(int startRow){ // 에디터 게시글 리스트
-		System.out.println("ProjectDAO - listProject()");
+	public ArrayList<ProjectBean> selectListProject(int startRow){ // 에디터 게시글 리스트
+		System.out.println("ProjectDAO - selectListProject()");
 		int pageSize = Constant.BOARD_PAGE_SIZE;
 		ArrayList<ProjectBean> list = null;
 		
@@ -78,7 +78,8 @@ public class ProjectDAO {
 		return list;
 	}
 	
-	public ArrayList<ProjectBean> listSeatchProject(int startRow, HashMap<Integer, ArrayList<Object>> seatch){ // 에디터 검색
+	public ArrayList<ProjectBean> selectListSearchProject(int startRow, HashMap<Integer, ArrayList<Object>> search){ // 에디터 검색
+		System.out.println("ProjectDAO - selectListSearchProject()");
 		ArrayList<ProjectBean> list = null;
 		
 		return list;

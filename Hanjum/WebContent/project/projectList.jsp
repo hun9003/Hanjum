@@ -15,14 +15,14 @@
 <div id="wrap">
 <jsp:include page="../inc/top.jsp"/>
 <div class = "main_banner">
-	<div id="main_img" class="editor_banner">
+	<div id="main_img" class="project_banner">
 	</div>
 </div>
 <div class="board_option_list">
 	<form action="" method="post">
 	<div class="search_category">
 	<fieldset class="search_field">
-	<legend>원하는 편집자를 검색해보세요.</legend>
+	<legend>원하는 프로젝트를 검색해보세요.</legend>
 		<select name="field" id="field" class="search_option">
 			<option value="">분야</option>
 			<option value="youtube">유튜브</option>
@@ -178,15 +178,11 @@
 	  		<tr><td><div class="detail_text">평균단가<span class="f_right margin_r_10">5만원~10만원</span></div></td></tr>
 	  		</table>
 		
-		
-		
-		
-		
-		
 		</div>
 		
 	</div>
 </div>
+<div id="writeBtn" class="write_btn"></div>
 <div id="boardPage">
 	<div class="light">
 		<div class="wp-pagenavi">

@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.hanjum.action.Action;
+import com.hanjum.board.service.ProjectProService;
 import com.hanjum.vo.ActionForward;
 
 public class ProjectListAction implements Action {
@@ -13,16 +14,15 @@ public class ProjectListAction implements Action {
 		System.out.println("ProjectListAction!");
 		ActionForward forward = null;
 		
-		/*
-		 * 	서비스 호출
-		 */
+		ProjectProService projectProService = new ProjectProService();
+		projectProService.listProject(1);
 		
 		/*
 		 *  서비스 리턴 값 검사 후 포워딩
 		 */
 		
 		forward = new ActionForward();
-		forward.setPath("/project/ProjectList.jsp");
+		forward.setPath("/project/projectList.jsp");
 		forward.setRedirect(false);
 		return forward;
 	}

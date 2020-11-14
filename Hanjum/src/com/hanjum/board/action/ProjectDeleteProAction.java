@@ -29,7 +29,7 @@ public class ProjectDeleteProAction implements Action {
 		} else {
 			forward = new ActionForward();
 			forward.setPath("ProjectList.bo");
-			forward.setRedirect(true);
+			forward.setRedirect(false);
 		}
 		return forward;
 	}

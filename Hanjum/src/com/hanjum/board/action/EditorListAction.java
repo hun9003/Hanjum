@@ -23,7 +23,7 @@ public class EditorListAction implements Action {
 		
 		forward = new ActionForward();
 		forward.setPath("/editor/editorList.jsp");
-		forward.setRedirect(true);
+		forward.setRedirect(false);
 		return forward;
 	}
 	

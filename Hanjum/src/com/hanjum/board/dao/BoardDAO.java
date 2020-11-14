@@ -8,7 +8,7 @@ import com.hanjum.board.vo.BoardBean;
 import com.hanjum.board.vo.EditorBean;
 import com.hanjum.board.vo.EnterBean;
 import com.hanjum.board.vo.ProjectBean;
-import com.hanjum.db.JdbcUtil;
+import static com.hanjum.db.JdbcUtil.*;
 
 public class BoardDAO {
 	private BoardDAO() {}
@@ -31,56 +31,56 @@ public class BoardDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		int board_id = 0;
-//		try {
-//			String sql = "SELECT MAX(board_id) FROM board";
-//			pstmt = con.prepareStatement(sql);
-//			rs = pstmt.executeQuery();
-//			if(rs.next()) {
-//				board_id = rs.getInt(1);
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		} finally {
-//			JdbcUtil.close(pstmt);
-//			JdbcUtil.close(rs);
-//		}
+		try {
+			String sql = "SELECT MAX(board_id) FROM board";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				board_id = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
 		return board_id;
 	}
 	
-	public BoardBean getBoardInfo(int board_id) { // board 게시물 정보 조회
-		System.out.println("BoardDAO - getBoardInfo()");
+	public BoardBean selectBoardInfo(int board_id) { // board 게시물 정보 조회
+		System.out.println("BoardDAO - selectBoardInfo()");
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		BoardBean boardBean = null;
-//		try {
-//			String sql = "SELECT * FROM board WHERE board_id = ?";
-//			pstmt = con.prepareStatement(sql);
-//			pstmt.setInt(1, board_id);
-//			rs = pstmt.executeQuery();
-//			if(rs.next()) {
-//				
-//				switch (rs.getInt("board_type")) {
-//				case 1: boardBean = new ProjectBean();break;
-//				case 2: boardBean = new EditorBean();break;
-//				case 3: boardBean = new EnterBean();break;
-//				default: boardBean = new BoardBean();
-//					break;
-//				}
-//				
-//				boardBean.setBoard_id(board_id);
-//				boardBean.setBoard_subject(rs.getString("board_subject"));
-//				boardBean.setBoard_content(rs.getString("board_content"));
-//				boardBean.setBoard_date(rs.getTimestamp("board_date"));
-//				boardBean.setReadcount(rs.getInt("board_readcount"));
-//				boardBean.setBoard_type(rs.getInt("board_type"));
-//				boardBean.setReport(rs.getInt("board_report"));
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		} finally {
-//			JdbcUtil.close(pstmt);
-//			JdbcUtil.close(rs);
-//		}
+		try {
+			String sql = "SELECT * FROM board WHERE board_id = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, board_id);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				
+				switch (rs.getInt("board_type")) {
+				case 1: boardBean = new ProjectBean();break;
+				case 2: boardBean = new EditorBean();break;
+				case 3: boardBean = new EnterBean();break;
+				default: boardBean = new BoardBean();
+					break;
+				}
+				
+				boardBean.setBoard_id(board_id);
+				boardBean.setBoard_subject(rs.getString("board_subject"));
+				boardBean.setBoard_content(rs.getString("board_content"));
+				boardBean.setBoard_date(rs.getTimestamp("board_date"));
+				boardBean.setReadcount(rs.getInt("board_readcount"));
+				boardBean.setBoard_type(rs.getInt("board_type"));
+				boardBean.setReport(rs.getInt("board_report"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
 		return boardBean;
 	}
 	

@@ -40,15 +40,14 @@ public class ProjectWriteProAction implements Action{
 		
 		ProjectProService projectWriteProService = new ProjectProService();
 		boolean isSuccess = projectWriteProService.writeProject(projectBean);
-		
 		if(!isSuccess) {
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();
 			out.println(Constant.arrMsg);
 		} else {
-			forward = new ActionForward();
-			forward.setPath("ProjectList.bo");
-			forward.setRedirect(true);
+				forward = new ActionForward();
+				forward.setPath("ProjectList.bo");
+				forward.setRedirect(true);
 		}
 		return forward;
 	}

@@ -6,11 +6,11 @@ import javax.servlet.http.HttpServletResponse;
 import com.hanjum.action.Action;
 import com.hanjum.vo.ActionForward;
 
-public class ProjectSeatchListAction implements Action {
+public class EditorSearchListAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		System.out.println("ProjectSeatchListAction!");
+		System.out.println("EditorSearchListAction!");
 		ActionForward forward = null;
 		
 		/*
@@ -22,8 +22,8 @@ public class ProjectSeatchListAction implements Action {
 		 */
 		
 		forward = new ActionForward();
-		forward.setPath("/project/projectList.jsp");
-		forward.setRedirect(true);
+		forward.setPath("/editor/editorList.jsp");
+		forward.setRedirect(false);
 		return forward;
 	}
 	
