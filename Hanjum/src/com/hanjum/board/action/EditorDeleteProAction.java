@@ -29,7 +29,7 @@ public class EditorDeleteProAction implements Action {
 		} else {
 			forward = new ActionForward();
 			forward.setPath("EditorList.bo");
-			forward.setRedirect(true);
+			forward.setRedirect(false);
 		}
 		return forward;
 	}

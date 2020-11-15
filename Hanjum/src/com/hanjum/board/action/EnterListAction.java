@@ -23,7 +23,7 @@ public class EnterListAction implements Action {
 		
 		forward = new ActionForward();
 		forward.setPath("/enter/enterList.jsp");
-		forward.setRedirect(true);
+		forward.setRedirect(false);
 		return forward;
 	}
 	

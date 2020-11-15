@@ -23,7 +23,7 @@ public class EditorWriteProAction implements Action{
 		
 		forward = new ActionForward();
 		forward.setPath("EditorList.bo");
-		forward.setRedirect(true);
+		forward.setRedirect(false);
 		return forward;
 	}
 	

@@ -24,8 +24,8 @@ public class EditorDAO {
 	}
 	// GET ======================================================================================
 	
-	public EditorBean getEditorInfo(BoardBean boardBean) { // 에디터 게시물 조회
-		System.out.println("EditorDAO - getEditorInfo()");
+	public EditorBean selectEditorInfo(BoardBean boardBean) { // 에디터 게시물 조회
+		System.out.println("EditorDAO - selectEditorInfo()");
 		EditorBean editorBean = null;
 		if(boardBean instanceof EditorBean) {
 			editorBean = (EditorBean)boardBean;
@@ -68,8 +68,8 @@ public class EditorDAO {
 		
 	// LIST =====================================================================================
 		
-	public ArrayList<EditorBean> listEditor(int startRow){ // 에디터 게시글 리스트
-		System.out.println("EditorDAO - listEditor()");
+	public ArrayList<EditorBean> selectListEditor(int startRow){ // 에디터 게시글 리스트
+		System.out.println("EditorDAO - selectListEditor()");
 		int pageSize = Constant.BOARD_PAGE_SIZE;
 		ArrayList<EditorBean> list = null;
 		
@@ -77,7 +77,8 @@ public class EditorDAO {
 		return list;
 	}
 	
-	public ArrayList<EditorBean> listSeatchEditor(int startRow, HashMap<Integer, ArrayList<Object>> seatch){ // 에디터 검색
+	public ArrayList<EditorBean> selectListSearchEditor(int startRow, HashMap<Integer, ArrayList<Object>> search){ // 에디터 검색
+		System.out.println("EditorDAO - selectListSearchEditor()");
 		ArrayList<EditorBean> list = null;
 		
 		return list;

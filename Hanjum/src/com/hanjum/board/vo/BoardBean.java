@@ -10,6 +10,7 @@ public class BoardBean {
 	private int readcount;
 	private int report;
 	private int board_type;
+	private String user_id;
 	public int getBoard_id() {
 		return board_id;
 	}
@@ -51,6 +52,12 @@ public class BoardBean {
 	}
 	public void setBoard_type(int board_type) {
 		this.board_type = board_type;
+	}
+	public String getUser_id() {
+		return user_id;
+	}
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
 	}
 	
 }

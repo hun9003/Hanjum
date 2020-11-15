@@ -12,19 +12,19 @@ import javax.servlet.http.HttpServletResponse;
 import com.hanjum.action.Action;
 import com.hanjum.board.action.EditorInfoAction;
 import com.hanjum.board.action.EditorListAction;
-import com.hanjum.board.action.EditorSeatchListAction;
+import com.hanjum.board.action.EditorSearchListAction;
 import com.hanjum.board.action.EditorUpdateProAction;
 import com.hanjum.board.action.EditorWriteProAction;
 import com.hanjum.board.action.EnterDeleteProAction;
 import com.hanjum.board.action.EnterInfoAction;
 import com.hanjum.board.action.EnterListAction;
-import com.hanjum.board.action.EnterSeatchListAction;
+import com.hanjum.board.action.EnterSearchListAction;
 import com.hanjum.board.action.EnterUpdateProAction;
 import com.hanjum.board.action.EnterWriteProAction;
 import com.hanjum.board.action.ProjectDeleteProAction;
 import com.hanjum.board.action.ProjectInfoAction;
 import com.hanjum.board.action.ProjectListAction;
-import com.hanjum.board.action.ProjectSeatchListAction;
+import com.hanjum.board.action.ProjectSearchListAction;
 import com.hanjum.board.action.ProjectUpdateProAction;
 import com.hanjum.board.action.ProjectWriteProAction;
 import com.hanjum.vo.ActionForward;
@@ -80,8 +80,8 @@ public class BoardFrontController extends HttpServlet {
 		} else if(command.equals("/ProjectList.bo")) { // 프로젝트 리스트 액션
 			action = new ProjectListAction();
 			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
-		} else if(command.equals("/ProjectSeatchList.bo")) { // 프로젝트 검색 리스트 액션
-			action = new ProjectSeatchListAction();
+		} else if(command.equals("/ProjectSearchList.bo")) { // 프로젝트 검색 리스트 액션
+			action = new ProjectSearchListAction();
 			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
 		} else if(command.equals("/Enter.bo")) { // 채용공고 조회 액션
 			action = new EnterInfoAction();
@@ -98,8 +98,8 @@ public class BoardFrontController extends HttpServlet {
 		} else if(command.equals("/EnterList.bo")) { // 채용공고 리스트 액션
 			action = new EnterListAction();
 			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
-		} else if(command.equals("/EnterSeatchList.bo")) { // 채용공고 검색 리스트 액션
-			action = new EnterSeatchListAction();
+		} else if(command.equals("/EnterSearchList.bo")) { // 채용공고 검색 리스트 액션
+			action = new EnterSearchListAction();
 			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
 		} else if(command.equals("/Editor.bo")) { // 편집자 조회 액션
 			action = new EditorInfoAction();
@@ -113,8 +113,8 @@ public class BoardFrontController extends HttpServlet {
 		} else if(command.equals("/EditorList.bo")) { // 편집자 리스트 액션
 			action = new EditorListAction();
 			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
-		} else if(command.equals("/EditorSeatchList.bo")) { // 편집자 검색 리스트 액션
-			action = new EditorSeatchListAction();
+		} else if(command.equals("/EditorSearchList.bo")) { // 편집자 검색 리스트 액션
+			action = new EditorSearchListAction();
 			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
 		}  
 		

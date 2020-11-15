@@ -11,4 +11,16 @@ public class Constant {
 			+ "alert('실패했습니다. 계속 실패 시 관리자에게 문의해주십시오.'); "
 			+ "history.back();"
 			+ "</script>";
+	public static final String arrMsgLogin = "<script> "
+			+ "alert('아이디 혹은 비밀번호가 틀립니다.'); "
+			+ "history.back();"
+			+ "</script>";
+	public static final String arrMsgLoad = "<script> "
+			+ "alert('불러오는데 실패했습니다. 계속 실패 시 관리자에게 문의해주십시오.'); "
+			+ "history.back();"
+			+ "</script>";
+	public static final String arrMsgLink = "<script> "
+			+ "alert('잘못된 접근입니다.'); "
+			+ "location.href = 'http://localhost:8080/Hanjum/home';"
+			+ "</script>";
 }

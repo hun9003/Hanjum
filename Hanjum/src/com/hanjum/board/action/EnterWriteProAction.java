@@ -23,7 +23,7 @@ public class EnterWriteProAction implements Action{
 		
 		forward = new ActionForward();
 		forward.setPath("EnterList.bo");
-		forward.setRedirect(true);
+		forward.setRedirect(false);
 		return forward;
 	}
 	

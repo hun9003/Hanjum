@@ -11,9 +11,9 @@
 	<div id="top_menu">
 		<ul class="menu_col menu_main">
 			<li><a href="intro" class="btn_link btn_main font_white">사이트소개</a></li>
-			<li><a href="#" class="btn_link btn_main font_white">프로젝트찾기</a></li>
-			<li><a href="#" class="btn_link btn_main font_white">편집자찾기</a></li>
-			<li><a href="#" class="btn_link btn_main font_white">채용공고</a></li>
+			<li><a href="ProjectList.bo" class="btn_link btn_main font_white">프로젝트찾기</a></li>
+			<li><a href="EditorList.bo" class="btn_link btn_main font_white">편집자찾기</a></li>
+			<li><a href="EnterList.bo" class="btn_link btn_main font_white">채용공고</a></li>
 		</ul>
 	</div>
 	<%
