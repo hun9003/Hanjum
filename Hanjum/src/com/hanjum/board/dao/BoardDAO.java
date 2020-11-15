@@ -3,6 +3,7 @@ package com.hanjum.board.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import com.hanjum.board.vo.BoardBean;
 import com.hanjum.board.vo.EditorBean;
@@ -26,7 +27,7 @@ public class BoardDAO {
 	}
 	// GET ======================================================================================
 	
-	public int getBoardLastId() { // board 게시물 마지막 id 값
+	public int selectBoardLastId() { // board 게시물 마지막 id 값
 		System.out.println("BoardDAO - getBoardLastId()");
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -36,9 +37,10 @@ public class BoardDAO {
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
-				board_id = rs.getInt(1);
+				board_id = rs.getInt(1)+1;
 			}
 		} catch (Exception e) {
+			System.out.println("getBoardLastId() 오류! - " + e.getMessage());
 			e.printStackTrace();
 		} finally {
 			close(pstmt);
@@ -76,6 +78,7 @@ public class BoardDAO {
 				boardBean.setReport(rs.getInt("board_report"));
 			}
 		} catch (Exception e) {
+			System.out.println("selectBoardInfo() 오류! - " + e.getMessage());
 			e.printStackTrace();
 		} finally {
 			close(pstmt);
@@ -84,12 +87,53 @@ public class BoardDAO {
 		return boardBean;
 	}
 	
+	public int selectListCount(int board_type) {
+		System.out.println("BoardDAO - selectListCount()");
+		int listCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			String sql = "SELECT COUNT(board_id) FROM board WHERE board_type = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, board_type);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				listCount = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			System.out.println("selectListCount() 오류! - " + e.getMessage());
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		return listCount;
+	}
 	
 	// INSERT ===================================================================================
 	
 	public int insertBoard(BoardBean boardBean) { // board 게시물 작성
 		System.out.println("BoardDAO - insertBoard()");
 		int insertCount = 0;
+		PreparedStatement pstmt = null;
+		
+		try {
+			String sql = "INSERT INTO board (board_id, board_subject, board_content, board_type, user_id)"
+					+ " VALUES (?,?,?,?,?)";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, boardBean.getBoard_id());
+			pstmt.setString(2, boardBean.getBoard_subject());
+			pstmt.setString(3, boardBean.getBoard_content());
+			pstmt.setInt(4, boardBean.getBoard_type());
+			pstmt.setString(5, "test");
+			insertCount = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("insertBoard() 오류! - " + e.getMessage());
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
 		
 		return insertCount;
 	}

@@ -21,24 +21,24 @@
 <div id="main_menu">
 
 <div class="main_menu_circle">
-<a href="#"><img src="img/creator.svg" class="circle_img"></a>
-<div class="main_menu_text font_bold">크리에이터</div>
+<img src="img/creator.svg" class="circle_img">
+<a href="ProjectList.bo"><div class="main_menu_text font_bold">크리에이터</div></a>
 </div>
 
 <div class="main_menu_circle">
-<a href="#"><img src="img/editor.svg" class="circle_img"></a>
-<div class="main_menu_text font_bold">편집자</div>
+<img src="img/editor.svg" class="circle_img">
+<a href="EditorList.bo"><div class="main_menu_text font_bold">편집자</div></a>
 </div>
 
 <div class="main_menu_circle">
-<a href="#"><img src="img/job.svg" class="circle_img"></a>
-<div class="main_menu_text font_bold">채용공고</div>
+<img src="img/job.svg" class="circle_img">
+<a href="EnterList.bo"><div class="main_menu_text font_bold">채용공고</div></a>
 </div>
 
 </div>
 
 <div id="main_editors">
-<div class="main_title"><h2 class="no_margin h2red"><font class="font_white">HOT</font> Editor<span class="f_right"><a href="#">+더보기</a></span></h2></div>
+<div class="main_title"><h2 class="no_margin h2red"><font class="font_white">HOT</font> Editor<span class="f_right"><a href="EditorList.bo">+더보기</a></span></h2></div>
 	<div class="main_editors_form">
 		<div class="main_editors_table">
 		<div class="pullRight_red">		
@@ -127,7 +127,7 @@
 </div>
 
 <div id="main_project">
-<div class="main_title"><h2 class="no_margin h2green"><font class="font_white">NEW</font> Project<span class="f_right"><a href="#">+더보기</a></span></h2></div>
+<div class="main_title"><h2 class="no_margin h2green"><font class="font_white">NEW</font> Project<span class="f_right"><a href="ProjectList.bo">+더보기</a></span></h2></div>
 <div class="main_project_form">
 	<div class="main_project_table">
 	<div class="pullRight_green">

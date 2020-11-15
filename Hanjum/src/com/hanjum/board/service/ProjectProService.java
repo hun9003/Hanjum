@@ -33,7 +33,7 @@ public class ProjectProService {
 	
 	public boolean writeProject(ProjectBean projectBean) { // 프로젝트 작성 서비스
 		System.out.println("ProjectProService - writeProject()");
-		boolean isSuccess = true;
+		boolean isSuccess = false;
 		int count = projectDAO.insertProject(projectBean);
 		if(count > 0) {
 			commit(con);
@@ -79,13 +79,14 @@ public class ProjectProService {
 	
 	// LIST ===================================================================================
 
-	public ArrayList<ProjectBean> listProject(int startRow){ // 프로젝트 리스트 서비스
+	public ArrayList<ProjectBean> getListProject(int startRow){ // 프로젝트 리스트 서비스
 		System.out.println("ProjectProService - listProject()");
+		ArrayList<ProjectBean> list = projectDAO.selectListProject(startRow);
 		close(con);
-		return projectDAO.selectListProject(startRow);
+		return list;
 	}
 	
-	public ArrayList<ProjectBean> listSearchProject(int startRow, HashMap<Integer, ArrayList<Object>> search){ // 프로젝트 검색 서비스
+	public ArrayList<ProjectBean> getListSearchProject(int startRow, HashMap<Integer, ArrayList<Object>> search){ // 프로젝트 검색 서비스
 		System.out.println("ProjectProService - listProject()");
 		close(con);
 		return projectDAO.selectListSearchProject(startRow, search);

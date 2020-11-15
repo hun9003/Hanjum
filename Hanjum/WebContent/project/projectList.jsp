@@ -1,5 +1,20 @@
+<%@page import="com.hanjum.vo.PageInfo"%>
+<%@page import="com.hanjum.board.vo.ProjectBean"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%
+	ArrayList<ProjectBean> projectList = (ArrayList<ProjectBean>)request.getAttribute("projectList");
+	PageInfo pageInfo = (PageInfo)request.getAttribute("pageInfo");
+	int listCount = pageInfo.getListCount();
+	int nowPage = pageInfo.getPage();
+	int maxPage = pageInfo.getMaxPage();
+	int startPage = pageInfo.getStartPage();
+	int endPage = pageInfo.getEndPage();
+	
+	String pageUrl = "ProjectList.bo";
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -80,126 +95,138 @@
 </div>
 <div class="clear"></div>
 <div class="board_list">
+<%
+if(projectList != null && listCount > 0){
+	String genre = "";
+	String recording = "";
+	String ori_clip = "";
+	String ori_length = "";
+	String edit_length = "";
+	String ori_transfer	= "";
+	String min_price = "";
+	String max_price = "";
+	for(int i=0; i< projectList.size(); i++){
+		ProjectBean project = projectList.get(i);
+		genre = project.getBoard_creator_genre()
+				.replace("1", "유튜브")
+				.replace("2", "홍보")
+				.replace("3", "광고")
+				.replace("4", "뮤직비디오")
+				.replace("5", "드라마")
+				.replace("6", "모션그래픽")
+				.replace("7", "기타");
+		switch(project.getBoard_creator_recording()){
+		case 1: recording = "싱크 작업 필요"; break;
+		case 2: recording = "부분적 필요"; break;
+		case 3: recording = "원본 녹음 사용"; break;
+		}
+		switch(project.getBoard_creator_ori_clip_num()){
+		case 1: ori_clip = "5개 이하"; break;
+		case 2: ori_clip = "5개 ~ 20개"; break;
+		case 3: ori_clip = "20개 ~ 50개"; break;
+		case 4: ori_clip = "50개 이상"; break;
+		}
+		switch(project.getBoard_creator_ori_length()){
+		case 1: ori_length = "10분 이하"; break;
+		case 2: ori_length = "30분 이하"; break;
+		case 3: ori_length = "1시간 이하"; break;
+		case 4: ori_length = "5시간 이하"; break;
+		case 5: ori_length = "5시간 이상"; break;
+		case 6: ori_length = "정확히 알 수 없음"; break;
+		}
+		switch(project.getBoard_creator_edit_length()){
+		case 1: edit_length = "5분 이하"; break;
+		case 2: edit_length = "10분 이하"; break;
+		case 3: edit_length = "30분 이하"; break;
+		case 4: edit_length = "1시간 이하"; break;
+		case 5: edit_length = "1시간 이상"; break;
+		}
+		switch(project.getBoard_creator_ori_transfer()){
+		case 1: ori_transfer = "이메일"; break;
+		case 2: ori_transfer = "웹하드"; break;
+		case 3: ori_transfer = "NAS"; break;
+		case 4: ori_transfer = "SMS"; break;
+		case 5: ori_transfer = "직접 전달"; break;
+		}
+		if((project.getBoard_creator_cre_min_price() / 1000) < 10){
+			min_price = (project.getBoard_creator_cre_min_price() / 1000)+"천원";
+		} else {
+			if(project.getBoard_creator_cre_min_price() % 10000 > 0){
+				min_price = (project.getBoard_creator_cre_min_price() / 10000.0)+"만원";
+			} else {
+				min_price = (project.getBoard_creator_cre_min_price() / 10000)+"만원";	
+			}
+		}
+		if((project.getBoard_creator_cre_max_price() / 1000) < 10){
+			max_price = (project.getBoard_creator_cre_max_price() / 1000)+"천원";
+		} else {
+			if(project.getBoard_creator_cre_max_price() % 10000 > 0){
+			max_price = (project.getBoard_creator_cre_max_price() / 10000.0)+"만원";
+			} else {
+			max_price = (project.getBoard_creator_cre_max_price() / 10000)+"만원";	
+			}
+			
+		}
+		
+		%>
 	<div class="board_table">
 		<div class="profile">
 		<div class="profile_photo"><img alt="profile" src="img/customer-service-2-fill.svg"></div>
-		<div class="profile_name">test1234</div>
+		<div class="profile_name"><%=project.getUser_id() %></div>
 		</div>
 		
 		<div class="content">
-		<div class="content_subject">"최선을 다해 편집하겠습니다."</div>
-		<div class="content_text"><div class="content_text_detail">광고, 유튜브 전문 편집자 입니다 경력 5년차고 원하시는걸 말로 표현만 하시면 바로 만들어드립니다.</div></div>
-		<div class="content_catagory"><div class="content_text_detail">분야 : 유튜브 / 광고</div></div>
+		<div class="content_subject"><%=project.getBoard_subject() %></div>
+		<div class="content_text"><div class="content_text_detail"><%=project.getBoard_content() %></div></div>
+		<div class="content_catagory"><div class="content_text_detail">0명의 지원자가 있습니다.</div></div>
 		</div>
 		
 		<div class="detail">
 		<table class="detail_table">
-	  		<tr><td><div class="detail_text">평균점수
-			<span class="f_right margin_r_10">
-				<span class="starR on">별1</span>
-	 	 		<span class="starR">별2</span>
-	  			<span class="starR">별3</span>
-	  			<span class="starR">별4</span>
-	  			<span class="starR">별5</span>
-	  		</span>
-	  		</div></td></tr>
-	  		<tr><td><div class="detail_text">전문성 <progress value="7" max="10"></progress></div></td></tr>
-	  		<tr><td><div class="detail_text">만족도 <progress value="8" max="10"></progress></div></td></tr>
-	  		<tr><td><div class="detail_text">적극성 <progress value="7" max="10"></progress></div></td></tr>
-	  		<tr><td><div class="detail_text">소통 <progress value="9" max="10"></progress></div></td></tr>
-	  		<tr><td><div class="detail_text">포트폴리오<span class="f_right margin_r_10">0개</span></div></td></tr>
-	  		<tr><td><div class="detail_text">평균단가<span class="f_right margin_r_10">5만원~10만원</span></div></td></tr>
+	  		<tr><td><div class="detail_text">분야<span class="f_right margin_r_10"><%=genre %></span></div></td></tr>
+	  		<tr><td><div class="detail_text">동시녹음유무<span class="f_right margin_r_10"><%=recording %></span></div></td></tr>
+	  		<tr><td><div class="detail_text">편집전 런타임<span class="f_right margin_r_10"><%=ori_length %></span></div></td></tr>
+	  		<tr><td><div class="detail_text">편집후 런타임<span class="f_right margin_r_10"><%=edit_length %></span></div></td></tr>
+	  		<tr><td><div class="detail_text">영상클립<span class="f_right margin_r_10"><%=ori_clip %></span></div></td></tr>
+	  		<tr><td><div class="detail_text">전달방식<span class="f_right margin_r_10"><%=ori_transfer %></span></div></td></tr>
+	  		<tr><td><div class="detail_text">편집단가<span class="f_right margin_r_10"><%=min_price %>~<%=max_price %></span></div></td></tr>
 	  	</table>
 		</div>
-		
 	</div>
-		<div class="board_table">
-		<div class="profile">
-		<div class="profile_photo"><img alt="profile" src="img/customer-service-2-fill.svg"></div>
-		<div class="profile_name">test1234</div>
-		</div>
-		
-		<div class="content">
-		<div class="content_subject">"최선을 다해 편집하겠습니다."</div>
-		<div class="content_text"><div class="content_text_detail">광고, 유튜브 전문 편집자 입니다 경력 5년차고 원하시는걸 말로 표현만 하시면 바로 만들어드립니다.</div></div>
-		<div class="content_catagory"><div class="content_text_detail">분야 : 유튜브 / 광고</div></div>
-		</div>
-		
-		<div class="detail">
-			<table class="detail_table">
-	  		<tr><td><div class="detail_text">평균점수
-			<span class="f_right margin_r_10">
-				<span class="starR on">별1</span>
-	 	 		<span class="starR">별2</span>
-	  			<span class="starR">별3</span>
-	  			<span class="starR">별4</span>
-	  			<span class="starR">별5</span>
-	  		</span>
-	  		</div></td></tr>
-	  		<tr><td><div class="detail_text">전문성 <progress value="7" max="10"></progress></div></td></tr>
-	  		<tr><td><div class="detail_text">만족도 <progress value="8" max="10"></progress></div></td></tr>
-	  		<tr><td><div class="detail_text">적극성 <progress value="7" max="10"></progress></div></td></tr>
-	  		<tr><td><div class="detail_text">소통 <progress value="9" max="10"></progress></div></td></tr>
-	  		<tr><td><div class="detail_text">포트폴리오<span class="f_right margin_r_10">0개</span></div></td></tr>
-	  		<tr><td><div class="detail_text">평균단가<span class="f_right margin_r_10">5만원~10만원</span></div></td></tr>
-	  		</table>
-	  		</div>
-		
-	</div>
-		<div class="board_table">
-		<div class="profile">
-		<div class="profile_photo"><img alt="profile" src="img/customer-service-2-fill.svg"></div>
-		<div class="profile_name">test1234</div>
-		</div>
-		
-		<div class="content">
-		<div class="content_subject">"최선을 다해 편집하겠습니다."</div>
-		<div class="content_text"><div class="content_text_detail">광고, 유튜브 전문 편집자 입니다 경력 5년차고 원하시는걸 말로 표현만 하시면 바로 만들어드립니다.</div></div>
-		<div class="content_catagory"><div class="content_text_detail">분야 : 유튜브 / 광고</div></div>
-		</div>
-		
-		<div class="detail">
-		
-	  		<table class="detail_table">
-	  		<tr><td><div class="detail_text">평균점수
-			<span class="f_right margin_r_10">
-				<span class="starR on">별1</span>
-	 	 		<span class="starR">별2</span>
-	  			<span class="starR">별3</span>
-	  			<span class="starR">별4</span>
-	  			<span class="starR">별5</span>
-	  		</span>
-	  		</div></td></tr>
-	  		<tr><td><div class="detail_text">전문성 <progress value="7" max="10"></progress></div></td></tr>
-	  		<tr><td><div class="detail_text">만족도 <progress value="8" max="10"></progress></div></td></tr>
-	  		<tr><td><div class="detail_text">적극성 <progress value="7" max="10"></progress></div></td></tr>
-	  		<tr><td><div class="detail_text">소통 <progress value="9" max="10"></progress></div></td></tr>
-	  		<tr><td><div class="detail_text">포트폴리오<span class="f_right margin_r_10">0개</span></div></td></tr>
-	  		<tr><td><div class="detail_text">평균단가<span class="f_right margin_r_10">5만원~10만원</span></div></td></tr>
-	  		</table>
-		
-		</div>
-		
-	</div>
+	<%
+		}
+	} else {
+		%>
+		<section id="emptyArea">등록된 프로젝트가 없습니다.</section>
+		<%
+	}
+	%>
 </div>
-<div id="writeBtn" class="write_btn"></div>
+<div id="writeBtn" class="write_btn" onclick="location.href='ProjectWrite.bo'"></div>
 <div id="boardPage">
 	<div class="light">
 		<div class="wp-pagenavi">
-		<a href="#"><span class="first"></span></a>
-		<a href="#"><span class="previouspostslink"></span></a>	
-		<span class="current">1</span>
-		<span><a href="#">2</a></span>
-		<span><a href="#">3</a></span>
-		<span><a href="#">4</a></span>
-		<span><a href="#">5</a></span>
-		<span><a href="#">6</a></span>
-		<span><a href="#">7</a></span>
-		<span><a href="#">8</a></span>
-		<span><a href="#">9</a></span>
-		<span><a href="#">10</a></span>
-		<a href="#"><span class="nextpostslink"></span></a>
-		<a href="#"><span class="last"></span></a>	
+		<%if(nowPage>1){ %>
+		<a href="<%=pageUrl%>?page=1"><span class="first"></span></a>
+		<a href="<%=pageUrl%>?page=<%=nowPage-1%>"><span class="previouspostslink"></span></a>	
+		<% 
+		}
+		for(int i=startPage; i<=endPage; i++){
+			if(i == nowPage){
+				%>
+		<span class="current"><%=i %></span>
+		<% } else { %>
+		<span><a href="<%=pageUrl%>?page=<%=i%>"><%=i %></a></span>
+		<% } %>
+		<%
+			}
+		if(nowPage < maxPage){ 
+		%>
+		<a href="<%=pageUrl%>?page=<%=nowPage+1%>"><span class="nextpostslink"></span></a>
+		<a href="<%=pageUrl%>?page=<%=endPage%>"><span class="last"></span></a>	
+		<%
+		}
+		%>
 		</div>
 	</div>
 </div>
