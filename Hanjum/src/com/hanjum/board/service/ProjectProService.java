@@ -24,9 +24,10 @@ public class ProjectProService {
 	
 	public ProjectBean getProject(BoardBean boardBean) { // 프로젝트 조회 서비스
 		System.out.println("ProjectProService - getProject()");
+		ProjectBean projectBean = projectDAO.selectProjectInfo(boardBean);
 		
-		return projectDAO.selectProjectInfo(boardBean); // ProjectBean
-		
+		close(con);
+		return projectBean; // ProjectBean
 	}
 	
 	// INSERT ===================================================================================
