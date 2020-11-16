@@ -14,6 +14,7 @@
 	int endPage = pageInfo.getEndPage();
 	
 	String pageUrl = "ProjectList.bo";
+	String contentUrl = "Project.bo";
 %>
 <!DOCTYPE html>
 <html>
@@ -88,8 +89,6 @@
 정렬 : <select name="order_type">
 <option value="1">최신순</option>
 <option value="2">오래된순</option>
-<option value="3">별점 높은순</option>
-<option value="4">별점 낮은순</option>
 </select>
 </span>
 </div>
@@ -105,7 +104,7 @@ if(projectList != null && listCount > 0){
 	String ori_transfer	= "";
 	String min_price = "";
 	String max_price = "";
-	for(int i=0; i< projectList.size(); i++){
+	for(int i=0; i < projectList.size(); i++){
 		ProjectBean project = projectList.get(i);
 		genre = project.getBoard_creator_genre()
 				.replace("1", "유튜브")
@@ -169,7 +168,7 @@ if(projectList != null && listCount > 0){
 		}
 		
 		%>
-	<div class="board_table">
+	<div class="board_table" onclick="location.href = '<%=contentUrl%>?board_id=<%=project.getBoard_id()%>'">
 		<div class="profile">
 		<div class="profile_photo"><img alt="profile" src="img/customer-service-2-fill.svg"></div>
 		<div class="profile_name"><%=project.getUser_id() %></div>

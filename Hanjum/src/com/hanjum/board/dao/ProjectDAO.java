@@ -35,6 +35,33 @@ public class ProjectDAO {
 		if(boardBean instanceof ProjectBean) {
 			projectBean = (ProjectBean)boardBean;
 		}
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			String sql = "SELECT * from board_creator WHERE board_id = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, projectBean.getBoard_id());
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				projectBean.setBoard_creator_cam_num(rs.getInt("board_creator_cam_num"));
+				projectBean.setBoard_creator_content_detail(rs.getString("board_creator_content_detail"));
+				projectBean.setBoard_creator_cre_max_price(rs.getInt("board_creator_cre_max_price"));
+				projectBean.setBoard_creator_cre_min_price(rs.getInt("board_creator_cre_min_price"));
+				projectBean.setBoard_creator_cre_ref(rs.getString("board_creator_cre_ref"));
+				projectBean.setBoard_creator_edit_length(rs.getInt("board_creator_edit_length"));
+				projectBean.setBoard_creator_genre(rs.getString("board_creator_genre"));
+				projectBean.setBoard_creator_ori_clip_num(rs.getInt("board_creator_ori_clip_num"));
+				projectBean.setBoard_creator_ori_length(rs.getInt("board_creator_ori_length"));
+				projectBean.setBoard_creator_ori_transfer(rs.getInt("board_creator_ori_transfer"));
+				projectBean.setBoard_creator_recording(rs.getInt("board_creator_recording"));
+				projectBean.setBoard_creator_status(rs.getInt("board_creator_status"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
 		
 		return projectBean;
 	}

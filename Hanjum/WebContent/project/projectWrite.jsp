@@ -34,7 +34,7 @@
 <tr><td class="td_name"><label for="DetailContent">세부설명</label></td><td class="td_content">
 <textarea id="DetailContent" name="board_creator_content_detail"></textarea>
 </td></tr>
-<tr><td class="td_name">동시 녹음 유부</td><td class="td_content">
+<tr><td class="td_name">동시 녹음 유무</td><td class="td_content">
 <div class="check_list"><input type="radio" id="Recording1" name="board_creator_recording" value="1"><label for="Recording1"></label><span class="checkbox">싱크 작업 필요</span></div>
 <div class="check_list"><input type="radio" id="Recording2"  name="board_creator_recording" value="2"><label for="Recording2"></label><span class="checkbox">부분적 필요</span></div>
 <div class="check_list"><input type="radio" id="Recording3"  name="board_creator_recording" value="3"><label for="Recording3"></label><span class="checkbox">원본 녹음 사용</span></div>
@@ -65,6 +65,7 @@
 <div class="check_list"><input type="radio" id="EditLength3" name="board_creator_edit_length" value="3"><label for="EditLength3"></label><span class="checkbox">30분 이하</span></div>
 <div class="check_list"><input type="radio" id="EditLength4" name="board_creator_edit_length" value="4"><label for="EditLength4"></label><span class="checkbox">1시간 이하</span></div>
 <div class="check_list"><input type="radio" id="EditLength5" name="board_creator_edit_length" value="5"><label for="EditLength5"></label><span class="checkbox">1시간 이상</span></div>
+</td></tr>
 <tr><td class="td_name"><label for="OriTransfer1">파일의 전달방식</label></td><td class="td_content">
 <div class="check_list"><input type="radio" id="OriTransfer1" name="board_creator_ori_transfer" value="1"><label for="OriTransfer1"></label><span class="checkbox">이메일</span></div>
 <div class="check_list"><input type="radio" id="OriTransfer2" name="board_creator_ori_transfer" value="2"><label for="OriTransfer2"></label><span class="checkbox">웹하드</span></div>
@@ -76,9 +77,10 @@
 <div class="input_price"><input type="number" id="MinPrice" step="1000" min="1000" name="board_creator_cre_min_price" value="0"> 원 ~ <input type="number" id="MaxPrice" step="1000" min="1000" name="board_creator_cre_max_price" value="5000"> 원</div>
 </td></tr>
 <tr><td class="td_name"><label for="Ref1">레퍼런스 링크</label></td><td class="td_content">
-<div class="input_link"><input type="url" name="board_creator_cre_ref[]" id="Ref1" placeholder="링크를 업로드 하세요."></div>
-<div class="input_link"><input type="url" name="board_creator_cre_ref[]" id="Ref2" placeholder="링크를 업로드 하세요."></div>
-<div class="input_link"><input type="url" name="board_creator_cre_ref[]" id="Ref3" placeholder="링크를 업로드 하세요."></div>
+<div class="link_alert"><img src="img/linkAlert.png"> 표시된 곳만 작성해주세요</div>
+<div class="input_link"><input type="text" name="board_creator_cre_ref[]" id="Ref1" placeholder="링크를 업로드 하세요."></div>
+<div class="input_link"><input type="text" name="board_creator_cre_ref[]" id="Ref2" placeholder="링크를 업로드 하세요."></div>
+<div class="input_link"><input type="text" name="board_creator_cre_ref[]" id="Ref3" placeholder="링크를 업로드 하세요."></div>
 </td></tr>
 </table>
 <div class="write_form_submit"><input type="submit" id="WriteSubmit" value="등록하기"></div>

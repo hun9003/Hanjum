@@ -21,6 +21,7 @@
 		%>
 		<div class="top_member_menu">
 		<ul class="menu_col menu_member">
+			<li><div id="setting" class="menu_setting"><img src="img/settings-5-fill.png" alt="세팅"></div>
 			<li><div id="noticeBtn" class="menu_notice"><img src="img/notice.png" alt="알림" style="width:40px;"></div></li>
 			<li><div id="menuBtn" class="menu_user"><img src="img/menu_white.png" alt="메뉴"></div></li>
 		</ul>

@@ -16,7 +16,7 @@
 <jsp:include page="../inc/top.jsp"/>
 <main>
 <div class="intro_main"></div>
-<div class="intro_content">
+<div class="intro_content" id="introNav">
 <h1>한줌에디터의 빠르고 편리한 프로세스를 경험해보세요.</h1>
 <div class="intro_nav">
 <div id="intro_nav_1" class="intro_nav_f active"><span>1. 프로젝트 등록</span></div>

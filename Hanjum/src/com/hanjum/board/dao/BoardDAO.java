@@ -76,6 +76,7 @@ public class BoardDAO {
 				boardBean.setReadcount(rs.getInt("board_readcount"));
 				boardBean.setBoard_type(rs.getInt("board_type"));
 				boardBean.setReport(rs.getInt("board_report"));
+				boardBean.setUser_id(rs.getString("user_id"));
 			}
 		} catch (Exception e) {
 			System.out.println("selectBoardInfo() 오류! - " + e.getMessage());
@@ -147,7 +148,23 @@ public class BoardDAO {
 	public int updateBoard(BoardBean boardBean) { // board 게시물 수정
 		System.out.println("BoardDAO - updateBoard()");
 		int updateCount = 0;
+		PreparedStatement pstmt = null;
 		
+		try {
+			String sql = "UPDATE board SET board_subject = ?, board_content = ?, ";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, boardBean.getBoard_id());
+			pstmt.setString(2, boardBean.getBoard_subject());
+			pstmt.setString(3, boardBean.getBoard_content());
+			pstmt.setInt(4, boardBean.getBoard_type());
+			pstmt.setString(5, "test");
+			updateCount = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("updateBoard() 오류! - " + e.getMessage());
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
 		return updateCount;
 	}
 	// DELETE ===================================================================================

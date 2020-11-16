@@ -62,6 +62,8 @@ div.notice_title span {font-size: 20px; color:#fff; padding-left: 10px;}
 div.notice_content {margin-left: 20px;}
 div.notice_content ul li{padding:20px 0 30px 0;}
 
+div.menu_setting {position: absolute; top: 5px; left: -5px; z-index:320;}
+
 @media (max-width : 1800px) {
 .ad1,.ad2 {display: none;}
 }
