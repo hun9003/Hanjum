@@ -56,23 +56,23 @@
 		</select>
 		<select name="region" id="region" class="search_option">
 			<option value="">거주지</option>
-			<option value="seoul">서울</option>
-			<option value="gyeonggi">경기</option>
-			<option value="incheon">인천</option>
-			<option value="busan">부산</option>
-			<option value="deagu">대구</option>
-			<option value="gwangju">광주</option>
-			<option value="deajeon">대전</option>
-			<option value="ulsan">울산</option>
-			<option value="sejong">세종</option>
-			<option value="gangwon">강원</option>
-			<option value="gyeongnam">경남</option>
-			<option value="gyeongbuk">경북</option>
-			<option value="jeonnam">전남</option>
-			<option value="jeonbuk">전북</option>
-			<option value="chungnam">충남</option>
-			<option value="chungbuk">충북</option>
-			<option value="jeju">제주</option>
+			<option value="02">서울 </option>
+            <option value="031">경기 </option>
+            <option value="032">인천</option>
+            <option value="033">강원 </option>
+            <option value="041">충남 </option>
+            <option value="042">대전 </option>
+            <option value="043">충북 </option>
+            <option value="051">부산 </option>
+            <option value="052">울산 </option>
+            <option value="053">대구 </option>
+            <option value="054">경북 </option>
+            <option value="054">경북 </option>
+            <option value="055">경남 </option>
+            <option value="061">전남 </option>
+            <option value="062">광주 </option>
+            <option value="063">전북 </option>
+            <option value="064">제주 </option>
 		</select>
 		<select class="search_type" name="searchType" id="SearchType">
 			<option value="subject">제목</option>
@@ -104,7 +104,7 @@ if(projectList != null && listCount > 0){
 	String ori_transfer	= "";
 	String min_price = "";
 	String max_price = "";
-	for(int i=0; i < projectList.size(); i++){
+	for(int i= 0; i < projectList.size(); i++){
 		ProjectBean project = projectList.get(i);
 		genre = project.getBoard_creator_genre()
 				.replace("1", "유튜브")
@@ -229,6 +229,8 @@ if(projectList != null && listCount > 0){
 		</div>
 	</div>
 </div>
+
+
 <div style="height: 100px;"></div>
 
 <jsp:include page="../inc/bottom.jsp"/>

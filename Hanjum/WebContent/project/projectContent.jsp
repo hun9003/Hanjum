@@ -126,11 +126,17 @@ for(int i = 0; i < ref.length; i++){
 %>
 </td></tr>
 </table>
+<div class="write_form_submit">
+<input type="button" id="UpdateBtn" value="수정하기" onclick="location.href = 'ProjectUpdate.bo?board_id=<%=project.getBoard_id()%>'">
+<input type="button" id="DeleteBtn" value="삭제하기" onclick="location.href = 'ProjectDeletePro.bo?board_id=<%=project.getBoard_id()%>'">
+<input type="button" id="ListBtn" value="목록으로" onclick="location.href = 'ProjectList.bo'">
+</div>
 </div>
 <%
 }
 %>
 <jsp:include page="../inc/bottom.jsp"/>
 </div>
+
 </body>
 </html>

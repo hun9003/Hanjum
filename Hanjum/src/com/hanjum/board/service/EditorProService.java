@@ -79,14 +79,14 @@ public class EditorProService {
 	
 	// LIST ===================================================================================
 
-	public ArrayList<EditorBean> listEditor(int startRow){ // 에디터 리스트 서비스
-		System.out.println("EditorProService - listEditor()");
+	public ArrayList<EditorBean> getListEditor(int startRow){ // 에디터 리스트 서비스
+		System.out.println("EditorProService - getListEditor()");
 		close(con);
 		return editorDAO.selectListEditor(startRow);
 	}
 	
-	public ArrayList<EditorBean> listSearchEditor(int startRow, HashMap<Integer, ArrayList<Object>> search){ // 에디터 검색 서비스
-		System.out.println("EditorProService - listEditor()");
+	public ArrayList<EditorBean> getListSearchEditor(int startRow, HashMap<Integer, ArrayList<Object>> search){ // 에디터 검색 서비스
+		System.out.println("EditorProService - getListSearchEditor()");
 		close(con);
 		return editorDAO.selectListSearchEditor(startRow, search);
 	}

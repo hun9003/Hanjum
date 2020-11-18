@@ -6,10 +6,13 @@
 <meta charset="UTF-8">
 <link href="css/default.css" rel="stylesheet">
 <link href="css/board.css" rel="stylesheet">
+<link href="css/util.css" rel="stylesheet">
 <script type="text/javascript" src="js/jquery-3.5.1.js"></script>
 <script type="text/javascript" src="js/topMenu.js"></script>
 <script type="text/javascript" src="plugin/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript" src="js/smartediter.js"></script>
+<script type="text/javascript" src="js/refLink.js"></script>
+
 <title>한줌에디터</title>
 </head>
 <body>
@@ -23,13 +26,13 @@
 <tr><td class="td_name"><label for="Subject">프로젝트 제목</label></td><td class="td_content"><div class="input_subject"><input id="Subject" type="text" name="board_subject" required="required"></div></td></tr>
 <tr><td class="td_name"><label for="Content">프로젝트 소개</label></td><td class="td_content"><textarea id="Content" name="board_content" cols="100" rows="5" ></textarea></td></tr>
 <tr><td class="td_name">장르</td><td class="td_content">
-<div class="check_list"><input type="checkbox" id="genre1" name="board_creator_genre[]" value="1"><label for="genre1"></label><span class="checkbox">유튜브</span></div>
-<div class="check_list"><input type="checkbox" id="genre2" name="board_creator_genre[]" value="2"><label for="genre2"></label><span class="checkbox">홍보</span></div>
-<div class="check_list"><input type="checkbox" id="genre3" name="board_creator_genre[]" value="3"><label for="genre3"></label><span class="checkbox">광고</span></div>
-<div class="check_list"><input type="checkbox" id="genre4" name="board_creator_genre[]" value="4"><label for="genre4"></label><span class="checkbox">뮤직비디오</span></div>
-<div class="check_list"><input type="checkbox" id="genre5" name="board_creator_genre[]" value="5"><label for="genre5"></label><span class="checkbox">드라마</span></div>
-<div class="check_list"><input type="checkbox" id="genre6" name="board_creator_genre[]" value="6"><label for="genre6"></label><span class="checkbox">모션그래픽</span></div>
-<div class="check_list"><input type="checkbox" id="genre7" name="board_creator_genre[]" value="7"><label for="genre7"></label><span class="checkbox">기타</span></div>
+<div class="check_list"><input type="checkbox" id="genre1" name="board_creator_genre" value="1"><label for="genre1"></label><span class="checkbox">유튜브</span></div>
+<div class="check_list"><input type="checkbox" id="genre2" name="board_creator_genre" value="2"><label for="genre2"></label><span class="checkbox">홍보</span></div>
+<div class="check_list"><input type="checkbox" id="genre3" name="board_creator_genre" value="3"><label for="genre3"></label><span class="checkbox">광고</span></div>
+<div class="check_list"><input type="checkbox" id="genre4" name="board_creator_genre" value="4"><label for="genre4"></label><span class="checkbox">뮤직비디오</span></div>
+<div class="check_list"><input type="checkbox" id="genre5" name="board_creator_genre" value="5"><label for="genre5"></label><span class="checkbox">드라마</span></div>
+<div class="check_list"><input type="checkbox" id="genre6" name="board_creator_genre" value="6"><label for="genre6"></label><span class="checkbox">모션그래픽</span></div>
+<div class="check_list"><input type="checkbox" id="genre7" name="board_creator_genre" value="7"><label for="genre7"></label><span class="checkbox">기타</span></div>
 </td></tr>
 <tr><td class="td_name"><label for="DetailContent">세부설명</label></td><td class="td_content">
 <textarea id="DetailContent" name="board_creator_content_detail"></textarea>
@@ -74,18 +77,20 @@
 <div class="check_list"><input type="radio" id="OriTransfer5" name="board_creator_ori_transfer" value="5"><label for="OriTransfer5"></label><span class="checkbox">직접전달</span></div>
 </td></tr>
 <tr><td class="td_name"><label for="MinPrice">예상 단가</label></td><td class="td_content">
-<div class="input_price"><input type="number" id="MinPrice" step="1000" min="1000" name="board_creator_cre_min_price" value="0"> 원 ~ <input type="number" id="MaxPrice" step="1000" min="1000" name="board_creator_cre_max_price" value="5000"> 원</div>
+<div class="input_price"><input type="number" id="MinPrice" step="1000" min="0" name="board_creator_cre_min_price" value="0"> 원 ~ <input type="number" id="MaxPrice" step="1000" min="1000" name="board_creator_cre_max_price" value="5000"> 원</div>
 </td></tr>
-<tr><td class="td_name"><label for="Ref1">레퍼런스 링크</label></td><td class="td_content">
-<div class="link_alert"><img src="img/linkAlert.png"> 표시된 곳만 작성해주세요</div>
-<div class="input_link"><input type="text" name="board_creator_cre_ref[]" id="Ref1" placeholder="링크를 업로드 하세요."></div>
-<div class="input_link"><input type="text" name="board_creator_cre_ref[]" id="Ref2" placeholder="링크를 업로드 하세요."></div>
-<div class="input_link"><input type="text" name="board_creator_cre_ref[]" id="Ref3" placeholder="링크를 업로드 하세요."></div>
+<tr><td class="td_name"><label for="Ref1">레퍼런스 링크</label></td>
+<td id="td_ref" class="td_content">
+<div class="link_alert"><img src="img/linkAlert.png"> 표시된 곳만 작성해주세요 <button type="button" id="ref_insert" class="defaultBtn m-l-30">추가</button><button type="button" id="ref_delete" class="defaultBtn m-l-30">삭제</button></div>
+<div id="divRef1" class="input_link m-tb-15"><input type="text" name="board_creator_cre_ref" id="Ref1" placeholder="링크를 업로드 하세요."></div>
 </td></tr>
 </table>
 <div class="write_form_submit"><input type="submit" id="WriteSubmit" value="등록하기"></div>
 </form>
 </div>
+
+
+
 
 <jsp:include page="../inc/bottom.jsp"/>
 </div>

@@ -4,6 +4,7 @@ public class EnterBean extends BoardBean{
 	private int board_id;
 	private String board_enter_company;
 	private String board_enter_location;
+	private String board_enter_content_detail;
 	private String board_enter_program;
 	private int board_enter_hiring;
 	private int board_enter_salary;
@@ -70,6 +71,12 @@ public class EnterBean extends BoardBean{
 	}
 	public void setBoard_enter_ent_ref(String board_enter_ent_ref) {
 		this.board_enter_ent_ref = board_enter_ent_ref;
+	}
+	public String getBoard_enter_content_detail() {
+		return board_enter_content_detail;
+	}
+	public void setBoard_enter_content_detail(String board_enter_content_detail) {
+		this.board_enter_content_detail = board_enter_content_detail;
 	}
 	
 }

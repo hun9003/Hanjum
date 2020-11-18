@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.hanjum.board.dao.BoardDAO;
 import com.hanjum.board.dao.ProjectDAO;
 import com.hanjum.board.vo.BoardBean;
 import com.hanjum.board.vo.ProjectBean;
@@ -13,8 +14,8 @@ public class ProjectProService {
 	private ProjectDAO projectDAO;
 	private Connection con;
 	public ProjectProService() {
-		projectDAO = ProjectDAO.getInstance(); // 1단계
-		con = getConnection(); // 2단계
+		con = getConnection(); // 1단계
+		projectDAO = ProjectDAO.getInstance(); // 2단계
 		projectDAO.setConnection(con); // 3단계
 		// 다수의 메서드를 활용하기 위해 1단계, 2단계를 생성자로 호출
 		// 3단계는 각자의 메서드에서 호출 ( 여러 DAO를 활용해야해서 여기서 하기 애매한거같음)
@@ -34,11 +35,20 @@ public class ProjectProService {
 	
 	public boolean writeProject(ProjectBean projectBean) { // 프로젝트 작성 서비스
 		System.out.println("ProjectProService - writeProject()");
+		BoardBean boardBean = projectBean;
+		BoardDAO boardDAO = BoardDAO.getInstance(); // 2단계
+		boardDAO.setConnection(con); // 3단계
+		
 		boolean isSuccess = false;
-		int count = projectDAO.insertProject(projectBean);
+		int count = boardDAO.insertBoard(boardBean);
 		if(count > 0) {
-			commit(con);
-			isSuccess = true;
+			count = projectDAO.insertProject(projectBean);
+			if(count > 0) {
+				commit(con);
+				isSuccess = true;
+			} else {
+				rollback(con);
+			}
 		} else {
 			rollback(con);
 		}
@@ -53,8 +63,16 @@ public class ProjectProService {
 		boolean isSuccess = false;
 		int count = projectDAO.updateProject(projectBean);
 		if(count > 0) {
-			commit(con);
-			isSuccess = true;
+			BoardBean boardBean = projectBean;
+			BoardDAO boardDAO = BoardDAO.getInstance(); // 2단계
+			boardDAO.setConnection(con); // 3단계
+			count = boardDAO.updateBoard(boardBean);
+			if(count > 0) {
+				commit(con);
+				isSuccess = true;
+			} else {
+				rollback(con);
+			}
 		} else {
 			rollback(con);
 		}
@@ -69,8 +87,15 @@ public class ProjectProService {
 		boolean isSuccess = false;
 		int count = projectDAO.deleteProject(board_id);
 		if(count > 0) {
-			commit(con);
-			isSuccess = true;
+			BoardDAO boardDAO = BoardDAO.getInstance(); // 2단계
+			boardDAO.setConnection(con); // 3단계
+			count = boardDAO.deleteBoard(board_id);
+			if(count > 0) {
+				commit(con);
+				isSuccess = true;
+			} else {
+				rollback(con);
+			}
 		} else {
 			rollback(con);
 		}

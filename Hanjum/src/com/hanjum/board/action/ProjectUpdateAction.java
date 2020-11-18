@@ -5,20 +5,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.hanjum.action.Action;
 import com.hanjum.board.service.BoardProService;
-import com.hanjum.board.service.EnterProService;
 import com.hanjum.board.service.ProjectProService;
 import com.hanjum.board.vo.BoardBean;
-import com.hanjum.board.vo.EnterBean;
 import com.hanjum.board.vo.ProjectBean;
 import com.hanjum.vo.ActionForward;
 
-public class EnterInfoAction implements Action {
+public class ProjectUpdateAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		System.out.println("EnterInfoAction!");
+		System.out.println("ProjectUpdateAction!");
 		ActionForward forward = null;
-		
 		int board_id = 0;
 		if(request.getParameter("board_id") != null) {
 			board_id = Integer.parseInt(request.getParameter("board_id"));
@@ -27,13 +24,13 @@ public class EnterInfoAction implements Action {
 		BoardProService boardProService = new BoardProService();
 		BoardBean boardBean = boardProService.getBoard(board_id);
 		
-		EnterProService enterProService = new EnterProService();
-		EnterBean enter = enterProService.getEnter(boardBean);
+		ProjectProService projectProService = new ProjectProService();
+		ProjectBean project = projectProService.getProject(boardBean);
 		
-		request.setAttribute("enter", enter);
+		request.setAttribute("project", project);
 		
 		forward = new ActionForward();
-		forward.setPath("/enter/enterContent.jsp");
+		forward.setPath("/project/projectUpdate.jsp");
 		forward.setRedirect(false);
 		return forward;
 	}
