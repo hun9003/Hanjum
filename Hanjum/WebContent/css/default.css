@@ -11,7 +11,7 @@
     font-family: NanumGothicBold_0;
     src: url('./font/NanumGothicBold_0.ttf');
     }
-html,body {margin: 0; padding:0; min-height: 1600px;	font-family: "NanumGothic_0", sans-serif;
+html,body {margin: 0; padding:0; min-height: 500px; min-width: 500px;	font-family: "NanumGothic_0", sans-serif;
 /*  	background-image: url("../img/back6.png"); background-position: 300px 0px; */
  	
  	}
@@ -40,6 +40,8 @@ ul.menu_member li { padding: 0 10px;}
 .font_bold { font-weight: bold; }
 .fx_header {width:1400px; position: fixed; top: 0; margin: 0 auto; background-color:rgb(230,0,0, 0.65); color: #000; z-index:302;}
 .f_right {float:right;}
+.f_left {float:left;}
+.margin_r_10 {margin-right: 10px;}
 .bg_red {background-color: #c60000;}
 a.btn_link { text-decoration: none;}
 a.btn_link:hover { text-decoration: underline; }
@@ -59,6 +61,8 @@ div.notice_title {height: 30px; border-bottom: 2px solid #c60000; background-col
 div.notice_title span {font-size: 20px; color:#fff; padding-left: 10px;}
 div.notice_content {margin-left: 20px;}
 div.notice_content ul li{padding:20px 0 30px 0;}
+
+div.menu_setting {position: absolute; top: 5px; left: -5px; z-index:320;}
 
 @media (max-width : 1800px) {
 .ad1,.ad2 {display: none;}

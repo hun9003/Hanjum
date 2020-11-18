@@ -4,6 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link href="css/default.css" rel="stylesheet">
+<script src="js/jquery-3.5.1.js"></script>
+<script src="js/topMenu.js"></script>
 <title>로그인</title>
 <style type="text/css">
 #registFrm {
@@ -36,17 +39,19 @@ table {
 </style>
 </head>
 <body>
+<div id="wrap">
+<jsp:include page="../inc/top.jsp"/>
 	<section id = "loginForm">
 		<h2>로그인</h2>
-		<form action="UserLoginPro.uo" method="post" enctype="multipart/form-data" name="Userform">
+		<form action="UserLoginPro.uo" method="post" name="Userform">
 			<table>
 				<tr>
-					<td class="td_left"><label for="User_id">아이디</label></td>
-					<td class="td_right"><input type="text" name="User_id" id="User_id" required="required"/></td>
+					<td class="td_left"><label for="user_id">아이디</label></td>
+					<td class="td_right"><input type="text" name="user_id" id="user_id" required="required"/></td>
 				</tr>
 				<tr>
-					<td class="td_left"><label for="User_pass">비밀번호</label></td>
-					<td class="td_right"><input name="User_pass" type="password" id="User_pass" required="required"/></td>
+					<td class="td_left"><label for="user_pass">비밀번호</label></td>
+					<td class="td_right"><input name="user_pass" type="password" id="user_pass" required="required"/></td>
 				</tr>
 			</table>
 			<section id="commandCell">
@@ -55,5 +60,7 @@ table {
 			</section>
 		</form>
 	</section>
+	<jsp:include page="../inc/bottom.jsp"/>
+</div>
 </body>
 </html>

@@ -4,6 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link href="css/default.css" rel="stylesheet">
+<script src="js/jquery-3.5.1.js"></script>
+<script src="js/topMenu.js"></script>
 <title>회원가입</title>
 <style type="text/css">
 #registFrm {
@@ -36,9 +39,11 @@ table {
 </style>
 </head>
 <body>
+<div id="wrap">
+<jsp:include page="../inc/top.jsp"/>
 	<section id = "writeForm">
 		<h2>회원가입</h2>
-		<form action="UserInsertPro.uo" method="post" enctype="multipart/form-data" name="Userform">
+		<form action="UserInsertPro.uo" method="post" name="Userform">
 			<table>
 				<tr>
 					<td class="td_left"><label for="user_id">아이디</label></td>
@@ -68,5 +73,7 @@ table {
 			</section>
 		</form>
 	</section>
+	<jsp:include page="../inc/bottom.jsp"/>
+</div>
 </body>
 </html>

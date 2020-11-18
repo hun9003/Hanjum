@@ -2,7 +2,13 @@
     pageEncoding="UTF-8"%>
 
 <header>
-<% int login = 0; %>
+<% String id = (String)session.getAttribute("user_id");
+int login = 0;
+
+if(id!=null){
+login=1;	
+}
+%>
 <div id="top">
 <jsp:include page="side.jsp"/>
 	<div id="top_title">
@@ -27,10 +33,10 @@
 		<div id="myNav" class="menu_user_content">
 			<ul class="lstyle_n overlay_content no_margin no_padding pullRight">
 			 <li class="bg_red">메뉴</li>
-			 <li><a href="UserUpdateForm.uo">My INFO</a></li>
+			 <li><a href="UserUpdateForm.uo?user_id=<%=id%>">My INFO</a></li>
 			 <li><a href="#">1:1 문의</a></li>
 			 <li><a href="intro#QnA">자주 묻는 질문</a></li>
-			 <li><a href="#">로그아웃</a></li>
+			 <li><a href="user/userLogout.jsp">로그아웃</a></li>
 			</ul>
   		</div>
   		<div id="myNotice" class="menu_user_notice">
