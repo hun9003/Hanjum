@@ -10,6 +10,32 @@
 <script src="js/jquery-3.5.1.js"></script>
 <script src="js/rollingJob.js"></script>
 <script src="js/topMenu.js"></script>
+<script type="text/javascript">
+
+	$(document).ready(function () {
+		$('#myNotice').click(function () {
+			$.getJSON('getNewNotice.nt', function (rdata) {
+				$.each(rdata, function (index, item) {
+					$('ul#notice_new_msg').append('<li style="padding:7px;"><a href="'+item.notice_url+'">'+item.notice_content+'</a></li>');
+				});	 // each	+
+			}); //getJSON
+		}); //click - 새알람S
+	}); //ready	
+	
+// 	$(document).ready(function(){
+// 		$('#myNotice').click(function () {
+	
+// 		$.ajax('notifications.nt',{
+// 			success : function(rdata){
+// 				$(rdata).each(function(){
+// 					$('ul#notice_new_msg').append(rdata);
+// 				});
+// 			}
+// 		});
+		
+
+	
+</script>
 </head>
 <body>
 <div id="wrap">

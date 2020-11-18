@@ -9,8 +9,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.hanjum.notice.action.Action;
-import com.hanjum.notice.vo.ActionForward;
+import com.hanjum.action.Action;
+import com.hanjum.notice.action.NoticeListAction;
+import com.hanjum.notice.action.NoticeNewAlarmAction;
+import com.hanjum.notice.action.NoticeOldAction;
+import com.hanjum.notice.action.NoticeSetAction;
+import com.hanjum.notice.action.NoticeUpdateStatusAction;
+import com.hanjum.vo.ActionForward;
+
 
 
 @WebServlet("*.nt")
@@ -21,29 +27,71 @@ public class NoticeFrontController extends HttpServlet {
 		
 		request.setCharacterEncoding("utf-8"); // POST 방식 요청
 		
-		String command = request.getServletPath(); // 서블릿 주소 가져옴
-		System.out.println("command 서블릿 주소 : " + command);
+		// 서블릿 주소 가져옴
+		String command = request.getServletPath();
+		System.out.println("Servlet Path : " + command);		
 		
 		Action action = null;
 		ActionForward forward = null;
 		
-		
-		// 서블릿 주소 판별
-		// - FRONT : view 페이지로 바로 포워딩 view 페이지를 ActionForward객체의 setPath()로 지정해서 이동
-		if(command.equals("/newAlarm.nt")) { 
-			forward = new ActionForward();
-			forward.setPath("**********.jsp");		
-		}else if(command.equals("/*****.nt")) {
-			forward = new ActionForward();
-			forward.setPath("***********.jsp");
+		if(command.equals("/getNewNotice.nt")) { 
+			// 새로운 알람 불러오기
+			System.out.println("getNewNotice.nt");
+			
+			action = new NoticeNewAlarmAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if(command.equals("/getNoticeList.nt")) {
+			// 알람 전체
+			System.out.println("getNoticeList.nt");
+			
+			action = new NoticeListAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if(command.equals("/getOldNotice.nt")) {
+			// 확인된 알람
+			System.out.println("getOldNotice.nt");
+			
+			action = new NoticeOldAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if(command.equals("/setNotice.nt")) {
+			// 알람 값들 입력
+			System.out.println("setNotice.nt");
+			
+			action = new NoticeSetAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if(command.equals("/updateStatus.nt")) {
+			// 안읽은알람 -> 읽은알람상태로 바꿔줌
+			System.out.println("updateStatus.nt");
+			
+			action = new NoticeUpdateStatusAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		
-			
-		// - BACK : DB작업 - action의 execute(request, response)를 호출해서 작업해줌
-		if(command.equals("/clickABell.nt")) { // notification 버튼 클릭했을 때
-			
-			
-		}
+		
 		
 		
 		// forward 존재여부판별해서 : dispatcher or redirect
