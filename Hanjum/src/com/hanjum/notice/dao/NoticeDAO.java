@@ -3,15 +3,13 @@ package com.hanjum.notice.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
-
-import com.hanjum.notice.db.jdbcUtil;
 import com.hanjum.notice.vo.NoticeBean;
+import static com.hanjum.db.JdbcUtil.*;
 
 public class NoticeDAO {
 
-	// Singleton Pattern
+	// **Singleton Pattern
 	
 	// 외부에서 인스턴트 생성 불가능 하도록 private
 	private NoticeDAO() {};
@@ -35,30 +33,26 @@ public class NoticeDAO {
 		this.con = con;
 	}
 	
-	// ******GET******
-	// 클릭한 크리에이터에게 알람이 가는 메서드
-	public int getNotice(String user_id, String notice_from_id) {
-		int alert = 0; // 
-		
-		
-		
-		
-		
-		return alert;
-	}
+//---------------------------------------------------------------------------
+
 	
-	public ArrayList<NoticeBean> getNoticeList(NoticeBean noticeBean) {
-		ArrayList<NoticeBean> nb = null;
+	// ---------------GET---------------
+	// 사용자에 해당하는 모든 알람 리스트 다 가져옴
+	public ArrayList<NoticeBean> getNoticeList(String user_id) {
+		System.out.println("DAO - getNoticeList()");
+
+		ArrayList<NoticeBean> list = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = null;
 		
 		try {
-			jdbcUtil.getConnection();
+			getConnection();
 			
-			sql = "select * from notice order by notice_date";
+			sql = "select * from notice where user_id=? order by notice_id desc";
 			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, user_id);
 			rs= pstmt.executeQuery();
 		
 			while(rs.next()) {
@@ -70,35 +64,186 @@ public class NoticeDAO {
 				notice.setNotice_id(rs.getInt("notice_id"));
 				notice.setNotice_read(rs.getInt("notice_read"));
 				notice.setNotice_url(rs.getString("notice_url"));
-				notice.setUser_id(rs.getString("user_id"));
+				notice.setUser_id(user_id);
 				
-				nb.add(notice);
+				list.add(notice);
 				
+			}
+		} catch (Exception e) {			
+			e.printStackTrace();
+		} finally {
+			close(con);
+			close(pstmt);
+			close(rs);
+		}
+		return list;
+	}
+
+	
+	
+	// 사용자에 해당하는 새로운 알람 5개 까지만 가져옴
+	public ArrayList<NoticeBean> getNewNotice(String user_id) {
+		System.out.println("DAO - getNewNotice()");
+
+		ArrayList<NoticeBean> list = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		
+		try {
+			
+			sql = "select * from notice where user_id=? and notice_read=0 order by notice_id desc limit 5"; 
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, user_id);
+			rs= pstmt.executeQuery();
+		
+			while(rs.next()) {
+				list = new ArrayList<NoticeBean>();
+				NoticeBean notice = new NoticeBean();
+				notice.setBoard_id(rs.getInt("board_id"));
+				notice.setNotice_content(rs.getString("notice_content"));
+				notice.setNotice_date(rs.getTimestamp("notice_date"));
+				notice.setNotice_from_id(rs.getString("notice_from_id"));
+				notice.setNotice_id(rs.getInt("notice_id"));
+				notice.setNotice_read(rs.getInt("notice_read"));
+				notice.setNotice_url(rs.getString("notice_url"));
+				notice.setUser_id(user_id);
+				
+				list.add(notice);
 			}
 			
 		} catch (Exception e) {			
 			e.printStackTrace();
 		} finally {
-			jdbcUtil.close(con);
-			jdbcUtil.close(pstmt);
-			jdbcUtil.close(rs);
+			close(pstmt);
+			close(rs);
+		}
+		return list;
+	}
+	
+	
+	
+	// 사용자에 해당하는 오래된 알람 5개만 출력
+		public ArrayList<NoticeBean> getOldNotice(String user_id) {
+			System.out.println("DAO - getOldNotice()");
+
+			ArrayList<NoticeBean> list = null; 
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			
+			try  {
+				String sql = "select * from notice where user_id=? and notice_read=1 order by notice_id desc limit 5";
+				pstmt = con.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) {
+					list =  new ArrayList<NoticeBean>();
+					NoticeBean notice = new NoticeBean();
+					notice.setBoard_id(rs.getInt("board_id"));
+					notice.setNotice_content(rs.getString("notice_content"));
+					notice.setNotice_date(rs.getTimestamp("notice_date"));
+					notice.setNotice_from_id(rs.getString("notice_from_id"));
+					notice.setNotice_id(rs.getInt("notice_id"));
+					notice.setNotice_read(rs.getInt("notice_read"));
+					notice.setNotice_url(rs.getString("notice_url"));
+					notice.setUser_id(rs.getString("user_id"));
+					
+					list.add(notice);
+					
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+				close(rs);
+			}
+			return list;
+		}
+	
+		
+		
+	// ---------------INSERT---------------
+	// insertNotice 알람정보들 저장 - commit, rollback -> service에서 ! (성공하면 알람 보내기 !)
+		public int insertNotice(NoticeBean noticeBean) {
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			String sql = null;
+			int notice_id = 0;
+			int noticeSuccess = 0;
+			
+			try {
+				// notice_id 번호 부여
+				sql = "select max(notice_id) from notice";
+				pstmt = con.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) {
+					notice_id = rs.getInt("max(notice_id") + 1; 
+				}
+				
+				// 알람정보들 입력
+				sql = "insert into notice(notice_date, notice_id, notice_content, notice_url, notice_read, board_id, user_id, notice_from_id) values(now(), ?, ?, ?, ?, ?, ?, ?)";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, notice_id);
+				pstmt.setString(2, noticeBean.getNotice_content());
+				pstmt.setString(3, noticeBean.getNotice_url());
+				pstmt.setInt(4, noticeBean.getNotice_read());
+				pstmt.setInt(5, noticeBean.getBoard_id());
+				pstmt.setString(6, noticeBean.getUser_id());
+				pstmt.setString(7, noticeBean.getNotice_from_id());
+				
+				noticeSuccess = pstmt.executeUpdate();
+				
+			}catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+				close(rs);
+			}
+			return noticeSuccess;
 		}
 		
-		return nb;
-	}
-
-	
-	// ******UPDATE******
-	public void updateStatus(int alert) {
-		// 수락 : 상태가 진행 중으로 변하고 채팅창열림
-		// 거절 : notice_from_id 에게 거절당했다고 알람보냄
-		// 수락/거절 둘 다 안 할 경우 : 알람 계속 떠있??????
 		
 		
-	}
+	// ---------------UPDATE---------------
+	// user가 클릭한 알람 notice_read = 1로 바꿔줌 (바꿔졌으면 1 - commit 하기, 아니면 0 - rollback 하기)
+		public int updateStatus(int notice_id) {
+			System.out.println("DAO - updateStatus()");
+	
+			PreparedStatement pstmt = null;
+			int noticeRead = 0;
+			
+			try {
+				String sql = "update notice set notice_read=notice_read+1 where notice_id=?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1,  notice_id);
+				noticeRead = pstmt.executeUpdate();
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+			}
+			return noticeRead;
+		}
+	
 	
 	
 
+	// ---------------SEND---------------
+	// 클릭한 크리에이터에게 알람이 가는 메서드
+	// (notice_from_id 가 클릭시 발생)
+		public int sendNotification(String user_id, String notice_from_id) {
+			int alert = 0; // 
+			
+			return alert;
+		}
+		
+	// 매칭되지않은 나머지 유저들에게 보내는 알람
+		
+		
+		
 }
 
 
