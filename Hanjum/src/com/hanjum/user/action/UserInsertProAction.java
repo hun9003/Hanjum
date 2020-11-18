@@ -24,7 +24,8 @@ public class UserInsertProAction implements Action {
 		userBean.setUser_name(request.getParameter("user_name"));
 		userBean.setUser_email(request.getParameter("user_email"));
 		userBean.setUser_phone(request.getParameter("user_phone"));
-		
+		userBean.setUser_type(1);
+		System.out.println(userBean.getUser_id());
 		UserProService userInsertProServic = new UserProService();
 		boolean isSuccess = userInsertProServic.insertUser(userBean);
 		System.out.println("서비스 성공!");

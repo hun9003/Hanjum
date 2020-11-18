@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.hanjum.action.Action;
 import com.hanjum.user.svc.UserProService;
@@ -38,6 +39,9 @@ public class UserLoginProAction implements Action {
 			forward.setPath("Home.uo");
 			// 3. 포워딩 방식(Redirect 방식) 지정
 			forward.setRedirect(true);
+			
+			HttpSession session = request.getSession();
+			session.setAttribute("user_id", user_id);
 		}
 		return forward;
 	}

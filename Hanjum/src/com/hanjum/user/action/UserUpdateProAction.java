@@ -24,9 +24,8 @@ public class UserUpdateProAction implements Action {
 		userBean.setUser_name(request.getParameter("user_name"));
 		userBean.setUser_email(request.getParameter("user_email"));
 		userBean.setUser_phone(request.getParameter("user_phone"));
-		
-		UserProService userUpdateProServic = new UserProService();
-		boolean isWriteSuccess = userUpdateProServic.updateUser(userBean);
+		UserProService userUpdateProService = new UserProService();
+		boolean isWriteSuccess = userUpdateProService.updateUser(userBean);
 		System.out.println("UserUpdateServic 성공!");
 		if(!isWriteSuccess) {
 			response.setContentType("text/html; charset=UTF-8");

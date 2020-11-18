@@ -4,7 +4,7 @@ public class EditorBean extends UserBean {
 	private String editor_photo;
 	private String editor_des;
 	private String editor_profile;
-	private String editor_programe;
+	private String editor_program;
 	private String editor_solution;
 	private String editor_inventory;
 	private int editor_upload;
@@ -35,11 +35,11 @@ public class EditorBean extends UserBean {
 	public void setEditor_profile(String editor_profile) {
 		this.editor_profile = editor_profile;
 	}
-	public String getEditor_programe() {
-		return editor_programe;
+	public String getEditor_program() {
+		return editor_program;
 	}
-	public void setEditor_programe(String editor_programe) {
-		this.editor_programe = editor_programe;
+	public void setEditor_program(String editor_program) {
+		this.editor_program = editor_program;
 	}
 	public String getEditor_solution() {
 		return editor_solution;

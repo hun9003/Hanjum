@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.hanjum.action.Action;
 import com.hanjum.user.action.UserLoginProAction;
+import com.hanjum.user.action.UserUpdateEditorProAction;
+import com.hanjum.user.action.UserUpdateFormAction;
 import com.hanjum.user.action.UserUpdateProAction;
 import com.hanjum.user.action.UserDeleteProAction;
 import com.hanjum.user.action.UserInsertEditorProAction;
@@ -89,10 +91,12 @@ public class UserFrontController extends HttpServlet {
 			forward.setRedirect(true);
 			
 		} else if (command.equals("/UserUpdateForm.uo")) {
-			
-			forward = new ActionForward();
-			forward.setPath("/user/userUpdateForm.jsp");
-			
+			action = new UserUpdateFormAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else if (command.equals("/UserUpdatePro.uo")) {
 			
 			action = new UserUpdateProAction();
@@ -102,7 +106,17 @@ public class UserFrontController extends HttpServlet {
 				e.printStackTrace();
 			}
 			
-		} else if (command.equals("/UserDeletePro.uo")) {
+		} else if (command.equals("/UserUpdateEditorPro.uo")) {
+			
+			action = new UserUpdateEditorProAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
+		else if (command.equals("/UserDeletePro.uo")) {
 			
 			action = new UserDeleteProAction();
 			try {
