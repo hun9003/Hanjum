@@ -2,7 +2,6 @@ package com.hanjum.notice.service;
 
 import java.sql.Connection;
 import java.util.ArrayList;
-import com.hanjum.board.dao.BoardDAO;
 import com.hanjum.notice.dao.NoticeDAO;
 import com.hanjum.notice.vo.NoticeBean;
 import static com.hanjum.db.JdbcUtil.*;
@@ -15,29 +14,30 @@ public class NoticeProService {
 	private NoticeDAO noticeDAO;
 	private Connection con;
 	public NoticeProService() {
-		BoardDAO.getInstance();
+		noticeDAO = NoticeDAO.getInstance();
 		con = getConnection();
 		noticeDAO.setConnection(con);
 	}
 	
 	
 //	----------------DAO호출-------------------
- 
+	
+	
+	// 새로운 알람 5개 가져오기
+		public ArrayList<NoticeBean> getNewNotice(String user_id) {
+			System.out.println("svc - getNewNotice()");
+			ArrayList<NoticeBean> list = noticeDAO.getNewNotice(user_id);
+			close(con);
+			return list;
+		}
+	
+	
 	// 모든 알람 리스트 가져오기
 	public ArrayList<NoticeBean> getNoticeList(String user_id){
 		System.out.println("svc - getNoticeList()");
 		ArrayList<NoticeBean> list = noticeDAO.getNoticeList(user_id);
 		close(con);
 		return list;		
-	}
-	
-	
-	// 새로운 알람 5개 가져오기
-	public ArrayList<NoticeBean> getNewNotice(String user_id) {
-		System.out.println("svc - getNewNotice()");
-		ArrayList<NoticeBean> list = noticeDAO.getNewNotice(user_id);
-		close(con);
-		return list;
 	}
 	
 	
@@ -81,7 +81,7 @@ public class NoticeProService {
 	}
 	
 	
-	// 
+	// 알람보내기
 	public int sendNotification(String user_id, String notice_from_id) {
 		int alert = 0;
 		

@@ -19,17 +19,19 @@ DBCP(DataBase Connection Pool) 설정
   maxActive="최대 동시 대여 가능한 커넥션 갯수"
   maxIdle="최대 보유 가능한 유휴 커넥션 갯수"
   
+  
+  
 -->
 	<Resource
 		name="jdbc/MySQL"
 		auth="Container"
 		type="javax.sql.DataSource"
-		username="root"
-		password="rateyes9003"
-		driverClassName="com.mysql.jdbc.Driver"
+		username="group3"
+		password="1234"
+		DriverClassName="com.mysql.jdbc.Driver"
 		factory="org.apache.tomcat.dbcp.dbcp2.BasicDataSourceFactory"
-		url="jdbc:mysql://localhost:3306/group3"
-		maxActive="500"
-		maxidle="20"/>
-		
+		url="jdbc:mysql://192.168.1.24:3306/group3?useSSL=false"
+		MaxActive="500"
+		maxIdle="20"/>
+
 </Context>

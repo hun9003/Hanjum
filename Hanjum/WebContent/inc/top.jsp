@@ -40,7 +40,7 @@
 		  		<div id="new_notice">
 			  		<div class="notice_title"><span>새 알림</span></div>
 			  		<div class="notice_content">
-			  		<ul class="no_margin lstyle_n">
+			  		<ul id="notice_new_msg" class="no_margin lstyle_n">
 			  		<li><a href="#">2개의 새로운 리뷰가 도착했습니다.</a></li>
 			  		</ul>
 			  		</div>
@@ -50,7 +50,7 @@
 		  		<div id="old_notice">
 		  		<div class="notice_title"><span>지난 알림</span></div>
 		  		<div class="notice_content">
-		  			<ul class="no_margin lstyle_n">
+		  			<ul id="notice_old_msg" class="no_margin lstyle_n">
 			  		<li><a href="#">등록한 프로젝트의 지원자가 있습니다.</a></li>
 			  		</ul>
 		  		</div>

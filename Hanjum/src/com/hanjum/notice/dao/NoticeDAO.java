@@ -48,7 +48,6 @@ public class NoticeDAO {
 		String sql = null;
 		
 		try {
-			getConnection();
 			
 			sql = "select * from notice where user_id=? order by notice_id desc";
 			pstmt = con.prepareStatement(sql);
@@ -92,9 +91,11 @@ public class NoticeDAO {
 		
 		try {
 			
-			sql = "select * from notice where user_id=? and notice_read=0 order by notice_id desc limit 5"; 
+//			sql = "select * from notice where user_id=? and notice_read=0 order by notice_id desc limit 5"; 
+			sql = "select * from notice order by notice_id desc limit 5"; 
+
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, user_id);
+//			pstmt.setString(1, user_id);
 			rs= pstmt.executeQuery();
 		
 			while(rs.next()) {
@@ -107,7 +108,7 @@ public class NoticeDAO {
 				notice.setNotice_id(rs.getInt("notice_id"));
 				notice.setNotice_read(rs.getInt("notice_read"));
 				notice.setNotice_url(rs.getString("notice_url"));
-				notice.setUser_id(user_id);
+//				notice.setUser_id(user_id);
 				
 				list.add(notice);
 			}
@@ -130,10 +131,15 @@ public class NoticeDAO {
 			ArrayList<NoticeBean> list = null; 
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
+			String sql = null;
 			
 			try  {
-				String sql = "select * from notice where user_id=? and notice_read=1 order by notice_id desc limit 5";
+				
+//				sql = "select * from notice where user_id=? and notice_read=1 order by notice_id desc limit 5";
+				sql = "select * from notice order by notice_id desc limit 5"; 
+
 				pstmt = con.prepareStatement(sql);
+//				pstmt.setString(1, user_id);
 				rs = pstmt.executeQuery();
 				
 				if(rs.next()) {
@@ -173,6 +179,7 @@ public class NoticeDAO {
 			int noticeSuccess = 0;
 			
 			try {
+				
 				// notice_id 번호 부여
 				sql = "select max(notice_id) from notice";
 				pstmt = con.prepareStatement(sql);
@@ -183,12 +190,12 @@ public class NoticeDAO {
 				}
 				
 				// 알람정보들 입력
-				sql = "insert into notice(notice_date, notice_id, notice_content, notice_url, notice_read, board_id, user_id, notice_from_id) values(now(), ?, ?, ?, ?, ?, ?, ?)";
+				sql = "insert into notice(notice_date, notice_id, notice_content, notice_url, notice_read, board_id, user_id, notice_from_id) values(now(), ?, ?, ?, 0, ?, ?, ?)";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, notice_id);
 				pstmt.setString(2, noticeBean.getNotice_content());
 				pstmt.setString(3, noticeBean.getNotice_url());
-				pstmt.setInt(4, noticeBean.getNotice_read());
+//				pstmt.setInt(4, noticeBean.getNotice_read()); // 처음에 notice_read는 무조건 0 
 				pstmt.setInt(5, noticeBean.getBoard_id());
 				pstmt.setString(6, noticeBean.getUser_id());
 				pstmt.setString(7, noticeBean.getNotice_from_id());
@@ -213,9 +220,11 @@ public class NoticeDAO {
 	
 			PreparedStatement pstmt = null;
 			int noticeRead = 0;
+			String sql = null;
 			
 			try {
-				String sql = "update notice set notice_read=notice_read+1 where notice_id=?";
+				
+				sql = "update notice set notice_read=notice_read+1 where notice_id=?";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1,  notice_id);
 				noticeRead = pstmt.executeUpdate();

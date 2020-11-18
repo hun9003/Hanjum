@@ -13,27 +13,24 @@
 <script type="text/javascript">
 
 	$(document).ready(function () {
-		$('#myNotice').click(function () {
+		$('#new_notice').click(function () {
 			$.getJSON('getNewNotice.nt', function (rdata) {
 				$.each(rdata, function (index, item) {
-					$('ul#notice_new_msg').append('<li style="padding:7px;"><a href="'+item.notice_url+'">'+item.notice_content+'</a></li>');
-				});	 // each	+
+					$('ul#notice_new_msg').html('<li style="padding:15px;"><a href="'+item.notice_url+'">'+item.notice_content+'</a></li>');
+				}); // each
 			}); //getJSON
-		}); //click - 새알람S
+		}); //click - 새알람
+		
+		$('#old_notice').click(function () {
+			$.getJSON('getOldNotice.nt', function (rdata) {
+				$.each(rdata, function (index, item) {
+					$('ul#notice_old_msg').html('<li style="padding:15px;"><a href="'+item.notice_url+'">'+item.notice_content+'</a></li>');
+				}); // each
+			}); //getJSON
+		}); //click - 확인한 알람
+		
 	}); //ready	
 	
-// 	$(document).ready(function(){
-// 		$('#myNotice').click(function () {
-	
-// 		$.ajax('notifications.nt',{
-// 			success : function(rdata){
-// 				$(rdata).each(function(){
-// 					$('ul#notice_new_msg').append(rdata);
-// 				});
-// 			}
-// 		});
-		
-
 	
 </script>
 </head>
