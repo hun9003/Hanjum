@@ -57,6 +57,7 @@ public class ProjectDAO {
 				projectBean.setBoard_creator_status(rs.getInt("board_creator_status"));
 			}
 		} catch (Exception e) {
+			System.out.println("selectProjectInfo() 오류! - " + e.getMessage());
 			e.printStackTrace();
 		} finally {
 			close(pstmt);
@@ -100,6 +101,8 @@ public class ProjectDAO {
 			insertCount = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.out.println("insertProject() 오류! - " + e.getMessage());
+
 		} finally {
 			close(pstmt);
 		}
@@ -108,10 +111,37 @@ public class ProjectDAO {
 		
 	// UPDATE ===================================================================================
 		
-	public int updateProject(ProjectBean ProjectBean) { // 에디터 게시물 수정
+	public int updateProject(ProjectBean projectBean) { // 에디터 게시물 수정
 		System.out.println("ProjectDAO - updateProject()");
 		int updateCount = 0;
+		PreparedStatement pstmt = null;
 		
+		try {
+			String sql = "UPDATE board_creator SET board_creator_content_detail = ?, board_creator_genre = ?, board_creator_recording = ?, "
+					+ "board_creator_cam_num = ?,board_creator_ori_clip_num = ?, board_creator_ori_length = ?, board_creator_edit_length = ?, "
+					+ "board_creator_ori_transfer = ?, board_creator_cre_ref = ?, board_creator_cre_min_price = ?, board_creator_cre_max_price = ?, board_creator_status = ? "
+					+ "WHERE board_id = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, projectBean.getBoard_creator_content_detail());
+			pstmt.setString(2, projectBean.getBoard_creator_genre());
+			pstmt.setInt(3, projectBean.getBoard_creator_recording());
+			pstmt.setInt(4, projectBean.getBoard_creator_cam_num());
+			pstmt.setInt(5, projectBean.getBoard_creator_ori_clip_num());
+			pstmt.setInt(6, projectBean.getBoard_creator_ori_length());
+			pstmt.setInt(7, projectBean.getBoard_creator_edit_length());
+			pstmt.setInt(8, projectBean.getBoard_creator_ori_transfer());
+			pstmt.setString(9, projectBean.getBoard_creator_cre_ref());
+			pstmt.setInt(10, projectBean.getBoard_creator_cre_min_price());
+			pstmt.setInt(11, projectBean.getBoard_creator_cre_max_price());
+			pstmt.setInt(12, projectBean.getBoard_creator_status());
+			pstmt.setInt(13, projectBean.getBoard_id());
+			updateCount = pstmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("updateProject() 오류! - " + e.getMessage());
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
 		return updateCount;
 	}
 		
@@ -120,7 +150,19 @@ public class ProjectDAO {
 	public int deleteProject(int board_id) { // 에디터 게시글 삭제
 		System.out.println("ProjectDAO - deleteProject()");
 		int deleteProject = 0;
+		PreparedStatement pstmt = null;
 		
+		try {
+			String sql = "DELETE FROM board_creator WHERE board_id = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, board_id);
+			deleteProject = pstmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("deleteProject() 오류! - " + e.getMessage());
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
 		return deleteProject;
 	}
 		

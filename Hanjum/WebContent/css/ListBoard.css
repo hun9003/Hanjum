@@ -9,7 +9,10 @@ div#main_img.project_banner {
 							 background:url("../img/5.png");background-position:center; 
 							 background-size:1400px ; background-repeat:no-repeat;
 							margin: 0px auto; }
-
+div#main_img.enter_banner { width: 1400px; height: 1300px;
+							 background:url("../img/4.png");background-position:center; 
+							 background-size:1400px ; background-repeat:no-repeat;
+							margin: 0px auto; }	
 select.search_option {width: 200px; padding: .8em .5em; border: 1px solid #999; font-weight: bold;
 background-color:#fff; border-radius: 3px;
 margin:20px 15px 20px 15px;}
@@ -42,6 +45,7 @@ div.profile_photo {height: 231px;}
 div.profile_photo img{width: 200px; max-height: 180px; margin:25px;}	
 div.profile_name {height: 69px; border-top: 1px solid #dbdbdb; font-size: 20px; vertical-align: middle; line-height: 69px; color: #64b1ff; text-align: center;}	
 div.content {float:left; width: 750px; height: 300px; border-right: 1px solid #dbdbdb;}
+div.content_enter {float:left; width: 1000px; height: 300px; border-right: 1px solid #dbdbdb;}
 div.content_subject {height: 70px; font-size:24px; margin-left:20px; vertical-align: middle; line-height: 70px;}
 div.content_text {height: 160px; border-bottom: 1px solid #dbdbdb;border-top: 1px solid #dbdbdb;}
 div.content_text_detail {padding : 20px;}
@@ -63,6 +67,8 @@ div.detail progress{float: right; margin-right: 10px;}
 .starR.on{background-position:0 0;}			
 .write_btn {position: fixed; z-index: 451; bottom:50px; right:50px; width: 100px; height: 100px; border-radius: 50%; padding: 20px; background : #fe9770 url("../img/file-edit-line.png") no-repeat; background-position: 17px 25px;  opacity: 0.65; transition: box-shadow 0.5s, transform 0.5s; }
 .write_btn:hover {opacity: 1; box-shadow: 0px 0px 10px #444; cursor: pointer;}		
+
+table.search_table { width:1000px; margin: 0 auto;}
 
 /* 페이징css */
 div#boardPage { margin-top : 50px; margin-bottom: 30px; }

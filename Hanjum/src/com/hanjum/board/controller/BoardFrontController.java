@@ -19,11 +19,13 @@ import com.hanjum.board.action.EnterDeleteProAction;
 import com.hanjum.board.action.EnterInfoAction;
 import com.hanjum.board.action.EnterListAction;
 import com.hanjum.board.action.EnterSearchListAction;
+import com.hanjum.board.action.EnterUpdateAction;
 import com.hanjum.board.action.EnterUpdateProAction;
 import com.hanjum.board.action.EnterWriteProAction;
 import com.hanjum.board.action.ProjectDeleteProAction;
 import com.hanjum.board.action.ProjectInfoAction;
 import com.hanjum.board.action.ProjectListAction;
+import com.hanjum.board.action.ProjectUpdateAction;
 import com.hanjum.board.action.ProjectSearchListAction;
 import com.hanjum.board.action.ProjectUpdateProAction;
 import com.hanjum.board.action.ProjectWriteProAction;
@@ -48,16 +50,10 @@ public class BoardFrontController extends HttpServlet {
 		 if(command.equals("/ProjectWrite.bo")) { // 프로젝트 글쓰기
 			forward = new ActionForward();
 			forward.setPath("/project/projectWrite.jsp");
-		} else if(command.equals("/ProjectUpdate.bo")) { // 프로젝트 수정
-			forward = new ActionForward();
-			forward.setPath("/project/projectUpdate.jsp");
-		}  else if(command.equals("/EnterWrite.bo")) { // 채용 글쓰기
+		}   else if(command.equals("/EnterWrite.bo")) { // 채용 글쓰기
 			forward = new ActionForward();
 			forward.setPath("/enter/enterWrite.jsp");
-		} else if(command.equals("/EnterUpdate.bo")) { // 채용 수정
-			forward = new ActionForward();
-			forward.setPath("/enter/enterUpdate.jsp");
-		} else if(command.equals("/EditorWrite.bo")) { //편집자 글쓰기
+		}  else if(command.equals("/EditorWrite.bo")) { //편집자 글쓰기
 			forward = new ActionForward();
 			forward.setPath("/editor/editorWriteForm.jsp");
 		}  else if(command.equals("/EditorUpdate.bo")) { //편집자 수정
@@ -70,6 +66,9 @@ public class BoardFrontController extends HttpServlet {
 			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
 		} else if(command.equals("/ProjectWritePro.bo")) { // 프로젝트 작성 액션
 			action = new ProjectWriteProAction();
+			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
+		} else if(command.equals("/ProjectUpdate.bo")) { // 프로젝트 수정
+			action = new ProjectUpdateAction();
 			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
 		} else if(command.equals("/ProjectUpdatePro.bo")) { // 프로젝트 수정 액션
 			action = new ProjectUpdateProAction();
@@ -88,6 +87,9 @@ public class BoardFrontController extends HttpServlet {
 			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
 		} else if(command.equals("/EnterWritePro.bo")) { // 채용공고 작성 액션
 			action = new EnterWriteProAction();
+			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
+		} else if(command.equals("/EnterUpdate.bo")) { // 채용 수정
+			action = new EnterUpdateAction();
 			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
 		} else if(command.equals("/EnterUpdatePro.bo")) { // 채용공고 수정 액션
 			action = new EnterUpdateProAction();
@@ -116,7 +118,7 @@ public class BoardFrontController extends HttpServlet {
 		} else if(command.equals("/EditorSearchList.bo")) { // 편집자 검색 리스트 액션
 			action = new EditorSearchListAction();
 			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
-		}  
+		}
 		
 		if(forward != null) {
 			if(forward.isRedirect()) {

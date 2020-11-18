@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.hanjum.action.Action;
+import com.hanjum.board.service.BoardProService;
 import com.hanjum.board.service.ProjectProService;
 import com.hanjum.vo.ActionForward;
 import com.hanjum.vo.Constant;
@@ -20,16 +21,18 @@ public class ProjectDeleteProAction implements Action {
 		int board_id = Integer.parseInt(request.getParameter("board_id"));
 		
 		ProjectProService projectProService = new ProjectProService();
+		
 		boolean isSuccess = projectProService.dropProject(board_id);
 		
 		if(!isSuccess) {
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();
 			out.println(Constant.arrMsg);
+			
 		} else {
 			forward = new ActionForward();
 			forward.setPath("ProjectList.bo");
-			forward.setRedirect(false);
+			forward.setRedirect(true);
 		}
 		return forward;
 	}

@@ -2,6 +2,7 @@ package com.hanjum.board.action;
 
 import java.io.PrintWriter;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,53 +25,58 @@ public class ProjectWriteProAction implements Action{
 		ActionForward forward = null;
 		boolean isSuccess = false;
 		
-		BoardBean boardBean = new ProjectBean();
-		boardBean.setBoard_subject(request.getParameter("board_subject"));
-		boardBean.setBoard_content(request.getParameter("board_content"));
-		boardBean.setBoard_date(new Timestamp(System.currentTimeMillis()));
-		boardBean.setBoard_type(1);
-		BoardProService boardProService = new BoardProService();
+		ProjectBean projectBean = new ProjectBean();
+		projectBean.setBoard_subject(request.getParameter("board_subject"));
+		projectBean.setBoard_content(request.getParameter("board_content"));
+		projectBean.setBoard_date(new Timestamp(System.currentTimeMillis()));
+		projectBean.setBoard_type(1);
 		
-		boardBean.setBoard_id(boardProService.getBoardLastId());
-		isSuccess = boardProService.writeBoard(boardBean);
-		if(isSuccess) {
-			if(boardBean instanceof ProjectBean) {
-				String[] genreArr = request.getParameterValues("board_creator_genre[]");
-				String genre = Arrays.toString(genreArr).replaceAll("[\\[\\] ]", "");
-				
-				String[] refArr = request.getParameterValues("board_creator_cre_ref[]");
-				String ref = Arrays.toString(refArr).replaceAll("[\\[\\] ]", "");
-				
-				ProjectBean projectBean = (ProjectBean)boardBean;
-				projectBean.setBoard_creator_content_detail(request.getParameter("board_creator_content_detail"));
-				projectBean.setBoard_creator_genre(genre);
-				projectBean.setBoard_creator_recording(Integer.parseInt(request.getParameter("board_creator_recording")));
-				projectBean.setBoard_creator_cam_num(Integer.parseInt(request.getParameter("board_creator_cam_num")));
-				projectBean.setBoard_creator_ori_clip_num(Integer.parseInt(request.getParameter("board_creator_ori_clip_num")));
-				projectBean.setBoard_creator_ori_length(Integer.parseInt(request.getParameter("board_creator_ori_length")));
-				projectBean.setBoard_creator_edit_length(Integer.parseInt(request.getParameter("board_creator_edit_length")));
-				projectBean.setBoard_creator_ori_transfer(Integer.parseInt(request.getParameter("board_creator_ori_transfer")));
-				projectBean.setBoard_creator_cre_ref(ref);
-				projectBean.setBoard_creator_cre_min_price(Integer.parseInt(request.getParameter("board_creator_cre_min_price")));
-				projectBean.setBoard_creator_cre_max_price(Integer.parseInt(request.getParameter("board_creator_cre_max_price")));
-				projectBean.setBoard_creator_status(1);
-				
-				ProjectProService projectWriteProService = new ProjectProService();
-				isSuccess = projectWriteProService.writeProject(projectBean);
-				if(!isSuccess) {
-					response.setContentType("text/html; charset=UTF-8");
-					PrintWriter out = response.getWriter();
-					out.println(Constant.arrMsg);
-				} else {
-						forward = new ActionForward();
-						forward.setPath("ProjectList.bo");
-						forward.setRedirect(true);
-				}
-				
-			} else {
-				System.out.println("형변환 실패!");
+		BoardProService boardProService = new BoardProService();
+		projectBean.setBoard_id(boardProService.getBoardLastId());
+		
+		String[] genreOriArr = request.getParameterValues("board_creator_genre");
+		ArrayList<String> genreArr = new ArrayList<String>();
+		for(String genreStr : genreOriArr) {
+			if(!genreStr.equals("")) {
+				genreArr.add(genreStr);
 			}
 		}
+		String genre = genreArr.toString().replaceAll("[\\[\\] ]", "");
+		
+		String[] refOriArr = request.getParameterValues("board_creator_cre_ref");
+		ArrayList<String> refArr = new ArrayList<String>();
+		for(String refStr : refOriArr) {
+			if(!refStr.equals("")) {
+				refArr.add(refStr);
+			}
+		}
+		String ref = refArr.toString().replaceAll("[\\[\\] ]", "");
+
+		projectBean.setBoard_creator_content_detail(request.getParameter("board_creator_content_detail"));
+		projectBean.setBoard_creator_genre(genre);
+		projectBean.setBoard_creator_recording(Integer.parseInt(request.getParameter("board_creator_recording")));
+		projectBean.setBoard_creator_cam_num(Integer.parseInt(request.getParameter("board_creator_cam_num")));
+		projectBean.setBoard_creator_ori_clip_num(Integer.parseInt(request.getParameter("board_creator_ori_clip_num")));
+		projectBean.setBoard_creator_ori_length(Integer.parseInt(request.getParameter("board_creator_ori_length")));
+		projectBean.setBoard_creator_edit_length(Integer.parseInt(request.getParameter("board_creator_edit_length")));
+		projectBean.setBoard_creator_ori_transfer(Integer.parseInt(request.getParameter("board_creator_ori_transfer")));
+		projectBean.setBoard_creator_cre_ref(ref);
+		projectBean.setBoard_creator_cre_min_price(Integer.parseInt(request.getParameter("board_creator_cre_min_price")));
+		projectBean.setBoard_creator_cre_max_price(Integer.parseInt(request.getParameter("board_creator_cre_max_price")));
+		projectBean.setBoard_creator_status(1);
+		
+		ProjectProService projectWriteProService = new ProjectProService();
+		isSuccess = projectWriteProService.writeProject(projectBean);
+		if(!isSuccess) {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println(Constant.arrMsg);
+		} else {
+			forward = new ActionForward();
+			forward.setPath("ProjectList.bo");
+			forward.setRedirect(true);
+		}
+		
 		return forward;
 	}
 }

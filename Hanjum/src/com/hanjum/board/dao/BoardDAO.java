@@ -143,6 +143,7 @@ public class BoardDAO {
 	
 	public void updateBoardReadcount(int board_id) { // board 게시물 조회수 증가
 		System.out.println("BoardDAO - updateBoardReadcount()");
+	
 	}
 	
 	public int updateBoard(BoardBean boardBean) { // board 게시물 수정
@@ -151,13 +152,11 @@ public class BoardDAO {
 		PreparedStatement pstmt = null;
 		
 		try {
-			String sql = "UPDATE board SET board_subject = ?, board_content = ?, ";
+			String sql = "UPDATE board SET board_subject = ?, board_content = ? WHERE board_id = ?";
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, boardBean.getBoard_id());
-			pstmt.setString(2, boardBean.getBoard_subject());
-			pstmt.setString(3, boardBean.getBoard_content());
-			pstmt.setInt(4, boardBean.getBoard_type());
-			pstmt.setString(5, "test");
+			pstmt.setString(1, boardBean.getBoard_subject());
+			pstmt.setString(2, boardBean.getBoard_content());
+			pstmt.setInt(3, boardBean.getBoard_id());
 			updateCount = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("updateBoard() 오류! - " + e.getMessage());
@@ -172,7 +171,18 @@ public class BoardDAO {
 	public int deleteBoard(int board_id) { // board 게시물 삭제
 		System.out.println("BoardDAO - deleteBoard()");
 		int deleteBoard = 0;
-		
+		PreparedStatement pstmt = null;
+		try {
+			String sql = "DELETE FROM board WHERE board_id = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, board_id);
+			deleteBoard = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("deleteBoard() 오류! - " + e.getMessage());
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
 		return deleteBoard;
 	}
 	
