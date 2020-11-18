@@ -29,6 +29,9 @@
 			}); //getJSON
 		}); //click - 확인한 알람
 		
+		
+
+		
 	}); //ready	
 	
 	
