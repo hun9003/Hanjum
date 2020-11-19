@@ -31,7 +31,7 @@ public class NoticeProService {
 			return list;
 		}
 	
-	
+	 
 	// 모든 알람 리스트 가져오기
 	public ArrayList<NoticeBean> getNoticeList(String user_id){
 		System.out.println("svc - getNoticeList()");

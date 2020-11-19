@@ -30,7 +30,31 @@
 		}); //click - 확인한 알람
 		
 		
-
+// 		// 신청할때 배열로 저장해서 데이터 넘기기
+// 		$('버튼').click(function () {
+// 			// 배열 변수 선언 - 프로퍼티 어쩌구 +  editor and creator한테도
+// 			var apply = {
+// 					 "notice_id" : $('아이디나클래스').val(),
+// 					 "notice_content" : $('아이디나클래스').val(),
+// 					 "notice_url" : $('아이디나클래스').val(),
+// 					 "board_id" : $('아이디나클래스').val(),
+// 					 "user_id" : $('아이디나클래스').val(),
+// 					 "notice_from_id" : $('아이디나클래스').val()
+// 			}; // 배열에 저장
+			
+// 			// ajax 호출
+// 			$.ajax({
+// 				url : "setNotice.nt",
+// 				dataType : "json",
+// 				contentType : "application/json; charset=UTF-8",
+// 				data : apply,
+// 				success : function(rdata){
+// 					if(boolean으로 리턴값받아서?)
+// 						alert('성공적으로 신청되었습니다')
+// 				}
+// 			});
+						
+// 		}); //click
 		
 	}); //ready	
 	
