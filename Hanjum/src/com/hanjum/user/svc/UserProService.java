@@ -1,11 +1,14 @@
 package com.hanjum.user.svc;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 
 import static com.hanjum.db.JdbcUtil.*;
+
 import com.hanjum.user.dao.UserDAO;
 import com.hanjum.user.vo.EditorBean;
 import com.hanjum.user.vo.UserBean;
+
 
 public class UserProService {
 	public boolean insertUser(UserBean userBean) {
@@ -47,22 +50,21 @@ public class UserProService {
 	}
 	
 	
-	public boolean loginUser(String user_id, String user_pass) {
-		boolean isSuccess = false;
+	public UserBean loginUser(String user_id, String user_pass) {
 		
 		Connection con = getConnection();
 		UserDAO userDAO = UserDAO.getInstance();
 		userDAO.setConnection(con);
-		int insertCount = userDAO.loginUser(user_id, user_pass);
-		if(insertCount > 0) {
+		UserBean userBean = userDAO.loginUser(user_id, user_pass);
+		System.out.println("디에이오 지나서 서비스" + userBean);
+		if(userBean != null) {
 			commit(con);
-			isSuccess = true;
 		} else {
 			rollback(con);
 		}
 		close(con);
 		
-		return isSuccess;
+		return userBean;
 	}
 	
 	public boolean updateUser(UserBean userBean) {
@@ -152,5 +154,75 @@ public class UserProService {
 		return editorBean;
 		
 		
+	}
+
+	public int getListCount() {
+		System.out.println("getListCount - user");
+		int listCount = 0;
+		
+		// 1(공통). Connection 객체 가져오기
+		Connection con = getConnection();
+		
+		// 2(공통). BoardDAO 객체 가져오기
+		UserDAO userDAO = UserDAO.getInstance();
+		
+		// 3(공통). BoardDAO 객체에 Connection 객체 전달
+		userDAO.setConnection(con);
+		
+		// 4. BoardDAO 객체의 selectListCount() 메서드 호출하여 
+		//    전체 게시물 수 가져오기
+		listCount = userDAO.getListCount();
+		
+		// 5(공통). Connection 객체 반환하기
+		close(con);
+		
+		return listCount;
+	}
+	public int getListCount(String search, String searchType) {
+		System.out.println("getListCount - user");
+		int listCount = 0;
+		
+		// 1(공통). Connection 객체 가져오기
+		Connection con = getConnection();
+		
+		// 2(공통). BoardDAO 객체 가져오기
+		UserDAO userDAO = UserDAO.getInstance();
+		
+		// 3(공통). BoardDAO 객체에 Connection 객체 전달
+		userDAO.setConnection(con);
+		
+		// 4. BoardDAO 객체의 selectListCount() 메서드 호출하여 
+		//    전체 게시물 수 가져오기
+		listCount = userDAO.getListCount(search,searchType);
+		
+		// 5(공통). Connection 객체 반환하기
+		close(con);
+		
+		return listCount;
+	}
+
+	public ArrayList<UserBean> getUserList(int page, int limit) {
+		ArrayList<UserBean> userList = null;
+		Connection con = getConnection();
+		UserDAO userDAO = UserDAO.getInstance();
+		userDAO.setConnection(con);
+		
+		userList = userDAO.getUserList(page,limit);
+		close(con);
+		
+		return userList;
+	}
+
+
+	public ArrayList<UserBean> getUserList(int page, int limit, String search, String searchType) {
+		ArrayList<UserBean> userList = null;
+		Connection con = getConnection();
+		UserDAO userDAO = UserDAO.getInstance();
+		userDAO.setConnection(con);
+		
+		userList = userDAO.getUserList(page,limit,search,searchType);
+		close(con);
+		
+		return userList;
 	}
 }

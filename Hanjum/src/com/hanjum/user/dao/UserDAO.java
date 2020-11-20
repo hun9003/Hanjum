@@ -6,8 +6,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import static com.hanjum.db.JdbcUtil.*;
+
 import com.hanjum.user.vo.EditorBean;
 import com.hanjum.user.vo.UserBean;
 
@@ -104,28 +106,34 @@ public class UserDAO {
 	}
 	
 	// login
-	public int loginUser(String user_id, String user_pass) {
+	public UserBean loginUser(String user_id, String user_pass) {
 		System.out.println("UserDAO - loginUser()");
 		int insertCount = 0;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+		
+		UserBean userBean = null;
+		
 		try {
 			String sql = "select * from user where user_id=?";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setString(1, user_id);
 			System.out.println(user_id);
+			System.out.println(user_pass);
 			rs=pstmt.executeQuery();
 			if(rs.next()) {
 				if(user_pass.equals(rs.getString("user_pass"))) {
+					userBean = new UserBean();
 					String sql2 = "update user set user_login_count=user_login_count+1 where user_id=?";
 					pstmt=con.prepareStatement(sql2);
 					pstmt.setString(1, user_id);
 					insertCount=pstmt.executeUpdate();
-				}else {
-					insertCount=0;
+					if(insertCount>0) {
+						userBean.setUser_type(Integer.parseInt(rs.getString("user_type")));
+						userBean.setUser_id(rs.getString("user_id"));
+						userExp(user_id, 10);
+					}
 				}
-			}else {
-				insertCount=-1;
 			}
 			System.out.println(insertCount);
 			
@@ -136,8 +144,42 @@ public class UserDAO {
 			close(rs);
 			close(pstmt);
 		}
-		return insertCount;
+		System.out.println(userBean + "DAO안");
+		return userBean;
 	}
+	public void userExp(String user_id, int exp) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select * from user where user_id=?";
+		try {
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, user_id);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				int level = rs.getInt("user_level");
+				int lv_exp = rs.getInt("user_lv_exp")+exp;
+				int levelupExp = level * 20;
+				if(lv_exp >=  levelupExp) {
+					level ++;
+					lv_exp -= levelupExp;
+					levelupExp = level * 20;
+				}
+				System.out.println(level);
+				String sql2 = "update user set user_level=?,user_lv_exp=? where user_id=?";
+				pstmt=con.prepareStatement(sql2);
+				pstmt.setInt(1, level);
+				pstmt.setInt(2, lv_exp);
+				pstmt.setString(3, user_id);
+				pstmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+	}
+	
 	public int updateUser(UserBean userBean) {
 		System.out.println("UserDAO - updateUser()");
 		int insertCount = 0;
@@ -242,7 +284,7 @@ public class UserDAO {
 
 	public EditorBean getEditorBean(String user_id) {
 		System.out.println("selectUserInfo - dao");
-		EditorBean editorBean = new EditorBean();
+		EditorBean editorBean = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = "select * from editor where user_id=?";
@@ -251,6 +293,7 @@ public class UserDAO {
 			pstmt.setString(1, user_id);
 			rs=pstmt.executeQuery();
 			if(rs.next()) {
+				editorBean = new EditorBean();
 				editorBean.setUser_id(user_id);
 				editorBean.setEditor_photo(rs.getString("editor_photo"));
 				editorBean.setEditor_des(rs.getString("editor_des"));
@@ -277,5 +320,163 @@ public class UserDAO {
 		
 		return editorBean;
 	}
+
+	public int getListCount() {
+	int listCount = 0;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			// SELECT 구문을 사용하여 전체 게시물 수 조회
+			// => count()함수 사용, 조회 대상 컬럼 1개 지정하거나 * 사용
+			String sql = "select Count(user_id) from user";
+			pstmt = con.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			
+			// 조회 결과가 있을 경우 (= 게시물이 하나라도 존재하는 경우)
+			// => 게시물 수를 listCount에 저장
+			if(rs.next()) {
+				listCount = rs.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("getListCount() 오류! - " + e.getMessage());
+			e.printStackTrace();
+		} finally {
+			// 자원 반환
+			// 주의! DAO 클래스 내에서 Connection 객체 반환 금지!
+			close(rs);
+			close(pstmt);
+		}
+		
+		
+		
+		return listCount;
+	}
+	public int getListCount(String search, String searchType) {
+		int listCount = 0;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			// SELECT 구문을 사용하여 전체 게시물 수 조회
+			// => count()함수 사용, 조회 대상 컬럼 1개 지정하거나 * 사용
+			String sql = "select Count(user_id) from user where "+searchType + " like ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, "%"+search+"%");
+			rs=pstmt.executeQuery();
+			
+			// 조회 결과가 있을 경우 (= 게시물이 하나라도 존재하는 경우)
+			// => 게시물 수를 listCount에 저장
+			if(rs.next()) {
+				listCount = rs.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("getListCount() 오류! - " + e.getMessage());
+			e.printStackTrace();
+		} finally {
+			// 자원 반환
+			// 주의! DAO 클래스 내에서 Connection 객체 반환 금지!
+			close(rs);
+			close(pstmt);
+		}
+		
+		
+		
+		return listCount;
+	}
+
+	public ArrayList<UserBean> getUserList(int page, int limit) {
+		ArrayList<UserBean> userList = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		int startRow = (page-1) * limit;
+		
+		try {
+			String sql = "select * from user limit ?,?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, limit);
+			rs=pstmt.executeQuery();
+			
+			userList = new ArrayList<UserBean>();
+			while(rs.next()) {
+				UserBean userBean = new UserBean();
+				userBean.setUser_id(rs.getString("user_id"));
+				userBean.setUser_pass(rs.getString("user_pass"));
+				userBean.setUser_name(rs.getString("user_name"));
+				userBean.setUser_email(rs.getString("user_email"));
+				userBean.setUser_phone(rs.getString("user_phone"));
+				userBean.setUser_level(Integer.parseInt(rs.getString("user_level")));
+				userBean.setUser_lv_exp(Integer.parseInt(rs.getString("user_lv_exp")));
+				userBean.setUser_score(Integer.parseInt(rs.getString("user_score")));
+				userBean.setUser_project_count(Integer.parseInt(rs.getString("user_project_count")));
+				userBean.setUser_type(Integer.parseInt(rs.getString("user_type")));
+				userBean.setUser_login_count(Integer.parseInt(rs.getString("user_login_count")));
+				
+				userList.add(userBean);
+				
+			}
+		
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return userList;
+	}
+
+	public ArrayList<UserBean> getUserList(int page, int limit, String search, String searchType) {
+		ArrayList<UserBean> userList = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		System.out.println("getUserList_검색");
+		int startRow = (page-1) * limit;
+		
+		try {
+			String sql = "select * from user where " +searchType + " like ? limit ?,?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, "%"+search+"%");
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, limit);
+			rs=pstmt.executeQuery();
+			
+			userList = new ArrayList<UserBean>();
+			while(rs.next()) {
+				UserBean userBean = new UserBean();
+				userBean.setUser_id(rs.getString("user_id"));
+				userBean.setUser_pass(rs.getString("user_pass"));
+				userBean.setUser_name(rs.getString("user_name"));
+				userBean.setUser_email(rs.getString("user_email"));
+				userBean.setUser_phone(rs.getString("user_phone"));
+				userBean.setUser_level(Integer.parseInt(rs.getString("user_level")));
+				userBean.setUser_lv_exp(Integer.parseInt(rs.getString("user_lv_exp")));
+				userBean.setUser_score(Integer.parseInt(rs.getString("user_score")));
+				userBean.setUser_project_count(Integer.parseInt(rs.getString("user_project_count")));
+				userBean.setUser_type(Integer.parseInt(rs.getString("user_type")));
+				userBean.setUser_login_count(Integer.parseInt(rs.getString("user_login_count")));
+				
+				userList.add(userBean);
+				
+			}
+		
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return userList;
+	}
+	
 	
 }

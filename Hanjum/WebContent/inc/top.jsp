@@ -1,11 +1,26 @@
+<%@page import="com.hanjum.user.vo.UserBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
 <header>
-<% String id = (String)session.getAttribute("user_id");
+<% 
+
+UserBean userBean = new UserBean();
+userBean = (UserBean)session.getAttribute("userBean");
+String id = null;
+int type = 0;
 int login = 0;
 
-if(id!=null){
+if(session.getAttribute("userBean") != null){
+	id = userBean.getUser_id();
+	type = userBean.getUser_type();
+} else {
+	id = null;
+	type = 0;
+	login = 0;
+}
+
+if(id!= null){
 login=1;	
 }
 %>
@@ -27,6 +42,8 @@ login=1;
 		%>
 		<div class="top_member_menu">
 		<ul class="menu_col menu_member">
+		<%if (type==0){%>
+			<li><div id="setting" class="menu_setting"><a href="UserManage.uo"><img src="img/settings-5-fill.png" alt="세팅"></a></div><%}%>
 			<li><div id="noticeBtn" class="menu_notice"><img src="img/notice.png" alt="알림" style="width:40px;"></div></li>
 			<li><div id="menuBtn" class="menu_user"><img src="img/menu_white.png" alt="메뉴"></div></li>
 		</ul>

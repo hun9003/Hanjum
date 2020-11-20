@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import com.hanjum.action.Action;
 import com.hanjum.user.svc.UserProService;
+import com.hanjum.user.vo.UserBean;
 import com.hanjum.vo.ActionForward;
 
 public class UserLoginProAction implements Action {
@@ -22,10 +23,10 @@ public class UserLoginProAction implements Action {
 		String user_pass = request.getParameter("user_pass");
 		
 		UserProService userLoginProService = new UserProService();
-		boolean isWriteSuccess = userLoginProService.loginUser(user_id, user_pass);
-		System.out.println("서비스 성공!");
+		UserBean userBean = userLoginProService.loginUser(user_id, user_pass);
+		System.out.println("서비스 성공!" + userBean);
 		
-		if(!isWriteSuccess) {
+		if(userBean == null) {
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter(); 
 			out.println("<script>"); // 자바스크립트 시작 태그
@@ -41,7 +42,9 @@ public class UserLoginProAction implements Action {
 			forward.setRedirect(true);
 			
 			HttpSession session = request.getSession();
-			session.setAttribute("user_id", user_id);
+			session.setAttribute("userBean", userBean);
+			System.out.println(userBean.getUser_type());
+			System.out.println(userBean.getUser_id());
 		}
 		return forward;
 	}

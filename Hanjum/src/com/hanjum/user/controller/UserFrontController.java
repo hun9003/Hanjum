@@ -11,10 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.hanjum.action.Action;
 import com.hanjum.user.action.UserLoginProAction;
+import com.hanjum.user.action.UserManageAction;
+import com.hanjum.user.action.UserSearchManageAction;
 import com.hanjum.user.action.UserUpdateEditorProAction;
 import com.hanjum.user.action.UserUpdateFormAction;
 import com.hanjum.user.action.UserUpdateProAction;
 import com.hanjum.user.action.UserDeleteProAction;
+import com.hanjum.user.action.UserInfoAction;
 import com.hanjum.user.action.UserInsertEditorProAction;
 import com.hanjum.user.action.UserInsertProAction;
 import com.hanjum.vo.ActionForward;
@@ -125,8 +128,28 @@ public class UserFrontController extends HttpServlet {
 				e.printStackTrace();
 			}
 			
+		} else if (command.equals("/UserManage.uo")) {
+			action = new UserManageAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/UserInfo.uo")) {
+			action = new UserInfoAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/UserSearchManage.uo")) {
+			action = new UserSearchManageAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
-
 		// -------------------------------------------------------------------------------------------------------------------
 		// 기본 작업 후 공통 작업 수행
 		if (forward != null) { // 포워드가 값이 있다 = 포워드 객체가 생성 되었다 -> 실행
