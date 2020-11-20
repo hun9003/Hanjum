@@ -21,9 +21,14 @@ public class NoticeNewAlarmAction implements Action {
 		ActionForward forward = new ActionForward();
 		
 		
+<<<<<<< HEAD
 		// ajax  배열로 받아와서 user_id 가져오니ㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣ
 		String user_id = "test";
 				//request.getParameter("user_id");
+=======
+		// ajax  배열로 받아와서 user_id 
+		String user_id = request.getParameter("user_id");
+>>>>>>> refs/remotes/origin/pjs
 		
 		// NoticeBean 객체 전달
 		NoticeProService service =  new NoticeProService();

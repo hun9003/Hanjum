@@ -1,7 +1,13 @@
 package com.hanjum.notice.service;
 
+import java.io.IOException;
+import java.net.URI;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Set;
+
+
+
 import com.hanjum.notice.dao.NoticeDAO;
 import com.hanjum.notice.vo.NoticeBean;
 import static com.hanjum.db.JdbcUtil.*;
@@ -87,8 +93,7 @@ public class NoticeProService {
 		
 		return alert;
 	}
-	
-	
+
 	
 	
 	

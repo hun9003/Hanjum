@@ -244,7 +244,22 @@ public class NoticeDAO {
 	// 클릭한 크리에이터에게 알람이 가는 메서드
 	// (notice_from_id 가 클릭시 발생)
 		public int sendNotification(String user_id, String notice_from_id) {
+			System.out.println("DAO - sendNotification()");
 			int alert = 0; // 
+			String sql = null;
+			PreparedStatement pstmt = null;
+			
+			try {
+				sql = "";
+				pstmt = con.prepareStatement(sql);
+				
+			
+				
+			}catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				
+			}
 			
 			return alert;
 		}
