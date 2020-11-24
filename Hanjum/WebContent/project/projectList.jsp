@@ -23,8 +23,10 @@
 <link href="css/default.css" rel="stylesheet">
 <link href="css/front.css" rel="stylesheet">
 <link href="css/ListBoard.css" rel="stylesheet">
+<link href="css/util.css" rel="stylesheet">
 <script src="js/jquery-3.5.1.js"></script>
 <script src="js/topMenu.js"></script>
+<script src="js/board_search.js"></script>
 <title>한줌에디터</title>
 </head>
 <body>
@@ -35,51 +37,104 @@
 	</div>
 </div>
 <div class="board_option_list">
-	<form action="" method="post">
+	<form action="ProjectSearchList.bo" method="post">
 	<div class="search_category">
 	<fieldset class="search_field">
 	<legend>원하는 프로젝트를 검색해보세요.</legend>
-		<select name="field" id="field" class="search_option">
-			<option value="">분야</option>
-			<option value="youtube">유튜브</option>
-			<option value="ad">광고</option>
-			<option value="promotion">홍보영상</option>
-			<option value="motion">모션그래픽</option>
+	<div class="search_form">
+		<table class="search_table">
+		<tr>
+		<th class="td_s">분야</th><th class="td_m">단가</th><th class="td_l">검색</th>
+		</tr>
+		<tr>
+		<td>
+		<select class="search_option" name="board_creator_genre">
+		<option value="">분야를 선택하세요</option>
+		<option value="1">유튜브</option>
+		<option value="2">홍보</option>
+		<option value="3">광고</option>
+		<option value="4">뮤직비디오</option>
+		<option value="5">드라마</option>
+		<option value="6">모션그래픽</option>
+		<option value="7">기타</option>
 		</select>
-		<select name="price" id=price class="search_option">
-			<option value="">단가</option>
-			<option value="5">0~5만원</option>
-			<option value="10">5~10만원</option>
-			<option value="15">10~15만원</option>
-			<option value="20">15~20만원</option>
-			<option value="over">그 이상</option>
+		</td>
+		<td>
+		<div class="input_price"><input class="defaultTextInput" type="number" id="MinPrice" step="1000" min="0" name="board_creator_cre_min_price" placeholder="최소단가를 입력하세요"> 원 ~ <input class="defaultTextInput" type="number" id="MaxPrice" step="1000" min="1000" name="board_creator_cre_max_price" placeholder="최대단가를 입력하세요."> 원</div>
+		</td>
+		<td class="td_search">
+		<select class="search_type" name="search_type">
+		<option value="1">제목+소개</option>
+		<option value="2">제목</option>
+		<option value="3">소개</option>
+		<option value="4">세부설명</option>
+		<option value="5">닉네임</option>
 		</select>
-		<select name="region" id="region" class="search_option">
-			<option value="">거주지</option>
-			<option value="02">서울 </option>
-            <option value="031">경기 </option>
-            <option value="032">인천</option>
-            <option value="033">강원 </option>
-            <option value="041">충남 </option>
-            <option value="042">대전 </option>
-            <option value="043">충북 </option>
-            <option value="051">부산 </option>
-            <option value="052">울산 </option>
-            <option value="053">대구 </option>
-            <option value="054">경북 </option>
-            <option value="054">경북 </option>
-            <option value="055">경남 </option>
-            <option value="061">전남 </option>
-            <option value="062">광주 </option>
-            <option value="063">전북 </option>
-            <option value="064">제주 </option>
-		</select>
-		<select class="search_type" name="searchType" id="SearchType">
-			<option value="subject">제목</option>
-			<option value="user_name">닉네임</option>
-		</select>
-		<input type="text"  class="search_menu" placeholder="상세조건검색">
-		<input type="submit" class="img_button" value="">
+		<input class="smallTextInput" type="text" name="keyword">
+		<button class="defaultBtn searchBtn m-l-10">검색</button>
+		</td>		
+		</tr>
+		<tr>
+		<th colspan="3" id="search_detail">상세내용 찾기<input class='searchReset m-r-10 defaultBtn' type='reset' value='초기화'></th>
+		</tr>
+		</table>
+		<div class="search_detail_form">
+			<table class="search_detail_table">
+			<tr>
+			<th>동시 녹음 유무</th><td colspan="3">
+			<div class="check_list"><input type="radio" id="Recording1" name="board_creator_recording" value="1"><label for="Recording1"></label><span class="checkbox">싱크 작업 필요</span></div>
+			<div class="check_list"><input type="radio" id="Recording2"  name="board_creator_recording" value="2"><label for="Recording2"></label><span class="checkbox">부분적 필요</span></div>
+			<div class="check_list"><input type="radio" id="Recording3"  name="board_creator_recording" value="3"><label for="Recording3"></label><span class="checkbox">원본 녹음 사용</span></div>
+			</td>
+			</tr>
+			<tr>
+			<th>녹화에 이용된 캠</th><td colspan="3">
+			<div class="check_list"><input type="radio" id="CamNum1" name="board_creator_cam_num" value="1"><label for="CamNum1"></label><span class="checkbox">1캠</span></div>
+			<div class="check_list"><input type="radio" id="CamNum2" name="board_creator_cam_num" value="2"><label for="CamNum2"></label><span class="checkbox">2캠</span></div>
+			<div class="check_list"><input type="radio" id="CamNum3" name="board_creator_cam_num" value="3"><label for="CamNum3"></label><span class="checkbox">3캠</span></div>
+			<div class="check_list"><input type="radio" id="CamNum4" name="board_creator_cam_num" value="4"><label for="CamNum4"></label><span class="checkbox">4캠 이상</span></div>
+			</td>
+			</tr>
+			<tr>
+			<th>원본 클립</th><td colspan="3">
+			<div class="check_list"><input type="radio" id="OriClipNum1" name="board_creator_ori_clip_num" value="1"><label for="OriClipNum1"></label><span class="checkbox">5개 이하</span></div>
+			<div class="check_list"><input type="radio" id="OriClipNum2" name="board_creator_ori_clip_num" value="2"><label for="OriClipNum2"></label><span class="checkbox">5개 ~ 20개</span></div>
+			<div class="check_list"><input type="radio" id="OriClipNum3" name="board_creator_ori_clip_num" value="3"><label for="OriClipNum3"></label><span class="checkbox">20 ~ 50개</span></div>
+			<div class="check_list"><input type="radio" id="OriClipNum4" name="board_creator_ori_clip_num" value="4"><label for="OriClipNum4"></label><span class="checkbox">50개 이상</span></div>
+			</td>
+			</tr>
+			<tr>
+			<th>편집 전 런타임</th><td colspan="3">
+			<div class="check_list"><input type="radio" id="OriLength1" name="board_creator_ori_length" value="1"><label for="OriLength1"></label><span class="checkbox">10분 이하</span></div>
+			<div class="check_list"><input type="radio" id="OriLength2" name="board_creator_ori_length" value="2"><label for="OriLength2"></label><span class="checkbox">30분 이하</span></div>
+			<div class="check_list"><input type="radio" id="OriLength3" name="board_creator_ori_length" value="3"><label for="OriLength3"></label><span class="checkbox">1시간 이하</span></div>
+			<div class="check_list"><input type="radio" id="OriLength4" name="board_creator_ori_length" value="4"><label for="OriLength4"></label><span class="checkbox">5시간 이하</span></div>
+			<div class="check_list"><input type="radio" id="OriLength5" name="board_creator_ori_length" value="5"><label for="OriLength5"></label><span class="checkbox">5시간 이상</span></div>
+			<div class="check_list"><input type="radio" id="OriLength6" name="board_creator_ori_length" value="6"><label for="OriLength6"></label><span class="checkbox">정확히 알 수 없음</span></div>
+			</td>
+			</tr>
+			<tr>
+			<th>편집 후 런타임</th><td colspan="3">
+			<div class="check_list"><input type="radio" id="EditLength1" name="board_creator_edit_length" value="1"><label for="EditLength1"></label><span class="checkbox">5분 이하</span></div>
+			<div class="check_list"><input type="radio" id="EditLength2" name="board_creator_edit_length" value="2"><label for="EditLength2"></label><span class="checkbox">10분 이하</span></div>
+			<div class="check_list"><input type="radio" id="EditLength3" name="board_creator_edit_length" value="3"><label for="EditLength3"></label><span class="checkbox">30분 이하</span></div>
+			<div class="check_list"><input type="radio" id="EditLength4" name="board_creator_edit_length" value="4"><label for="EditLength4"></label><span class="checkbox">1시간 이하</span></div>
+			<div class="check_list"><input type="radio" id="EditLength5" name="board_creator_edit_length" value="5"><label for="EditLength5"></label><span class="checkbox">1시간 이상</span></div>
+			</td>
+			</tr>
+			<tr>
+			<th>파일의 전달방식</th><td colspan="3">
+			<div class="check_list"><input type="radio" id="OriTransfer1" name="board_creator_ori_transfer" value="1"><label for="OriTransfer1"></label><span class="checkbox">이메일</span></div>
+			<div class="check_list"><input type="radio" id="OriTransfer2" name="board_creator_ori_transfer" value="2"><label for="OriTransfer2"></label><span class="checkbox">웹하드</span></div>
+			<div class="check_list"><input type="radio" id="OriTransfer3" name="board_creator_ori_transfer" value="3"><label for="OriTransfer3"></label><span class="checkbox">NAS</span></div>
+			<div class="check_list"><input type="radio" id="OriTransfer4" name="board_creator_ori_transfer" value="4"><label for="OriTransfer4"></label><span class="checkbox">SMS</span></div>
+			<div class="check_list"><input type="radio" id="OriTransfer5" name="board_creator_ori_transfer" value="5"><label for="OriTransfer5"></label><span class="checkbox">직접전달</span></div>
+			</td>
+			</tr>
+			</table>
+		</div>
+	</div>
+	
 	</fieldset>
 	</div>
 	</form>

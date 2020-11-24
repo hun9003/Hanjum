@@ -111,7 +111,7 @@ public class EnterProService {
 		return list;
 	}
 	
-	public ArrayList<EnterBean> getListSearchEnter(int startRow, HashMap<Integer, ArrayList<Object>> search){ // 채용공고 검색 서비스
+	public ArrayList<EnterBean> getListSearchEnter(int startRow, HashMap<String, String> search){ // 채용공고 검색 서비스
 		System.out.println("EnterProService - getListSearchEnter()");
 		close(con);
 		return enterDAO.selectListSearchEnter(startRow, search);

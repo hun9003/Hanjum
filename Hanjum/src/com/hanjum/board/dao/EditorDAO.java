@@ -77,7 +77,7 @@ public class EditorDAO {
 		return list;
 	}
 	
-	public ArrayList<EditorBean> selectListSearchEditor(int startRow, HashMap<Integer, ArrayList<Object>> search){ // 에디터 검색
+	public ArrayList<EditorBean> selectListSearchEditor(int startRow, HashMap<String, String> search){ // 에디터 검색
 		System.out.println("EditorDAO - selectListSearchEditor()");
 		ArrayList<EditorBean> list = null;
 		

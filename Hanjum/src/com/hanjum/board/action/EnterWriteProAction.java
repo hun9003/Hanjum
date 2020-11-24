@@ -33,7 +33,6 @@ public class EnterWriteProAction implements Action{
 		BoardProService boardProService = new BoardProService();		
 		enterBean.setBoard_id(boardProService.getBoardLastId());
 		
-		
 		String[] programOriArr = request.getParameterValues("board_enter_program");
 		ArrayList<String> programArr = new ArrayList<String>();
 		for(String programStr : programOriArr) {
