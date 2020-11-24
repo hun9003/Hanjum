@@ -25,6 +25,16 @@
 			<li><div id="noticeBtn" class="menu_notice"><img src="img/notice.png" alt="알림" style="width:40px;"></div></li>
 			<li><div id="menuBtn" class="menu_user"><img src="img/menu_white.png" alt="메뉴"></div></li>
 		</ul>
+		<div id="mySet" class ="menu_manager_content">
+			<ul id="manager_list" class="lstyle_n overlay_content no_margin no_padding pullRight">
+			<li class="bg_red">관리자 페이지</li>
+			 <li><a href="#">회원 관리</a></li>
+			 <li><a href="#">계약 관리</a></li>
+			 <li><a href="#">카테고리 관리</a></li>
+			 <li><a href="#">Help 관리</a></li>
+			</ul>
+			
+		</div>
 		<div id="myNav" class="menu_user_content">
 			<ul class="lstyle_n overlay_content no_margin no_padding pullRight">
 			 <li class="bg_red">메뉴</li>

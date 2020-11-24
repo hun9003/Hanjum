@@ -23,7 +23,7 @@ div#top_title { float: left; margin: 20px 0 0 20px; cursor: pointer; }
 div#top_menu { float: left; margin: 20px 0 20px 50px; }
 div#top_menu li { padding : 0px 40px; }
 div.top_member_menu {position:relative; float: right; margin: 20px 20px 0 0; z-index:301;}
-div.menu_user, div.menu_notice {  position : relative; width : 45px; top:-15px; left:0px; height: 45px; border-radius: 4px; cursor: pointer;}
+div.menu_user, div.menu_notice, div.menu_setting {  position : relative; width : 45px; top:-15px; left:0px; height: 45px; border-radius: 4px; cursor: pointer;}
 div.menu_user img, div.menu_notice img { position : absolute; width : 40px; top:3px; left:3px; z-index:302;}
 ul.menu_col li { float:left; list-style-type: none; padding: 0 20px;}
 ul.main_banner_list {padding: 0; margin: 0; position: absolute; z-index:302;}
@@ -50,13 +50,14 @@ a.btn_banner { text-decoration: none;}
 
 a.btn_main { font-weight: bold; }
 
+div.menu_manager_content {font-weight:bold; color:white; width:400px; height:0%; position: absolute; top:70px; left:-200px; background-color: rgba(255,255,255, 0.9); overflow: hidden; transition:0.5s; border-radius: 8px; z-index:303;}
+div.menu_user_notice {font-weight:bold; color:white; width:400px; height:0%; position: absolute; top:70px; left:-150px; background-color: rgba(255,255,255, 0.9); overflow: hidden; transition:0.5s; border-radius: 8px; z-index:303;}
 div.menu_user_content{width:300px; height:0%; position: absolute; top:73px; left:0; background-color: rgba(255,255,255, 0.9); overflow: hidden; transition:0.5s; border-radius: 8px; z-index:303;}
 .overlay_content {position: relative; top:0; width:100%; text-align: conter; z-index:303;}
 .overlay_content li { color: #fff; font-size: 20px; padding: 8px; font-weight: bold;} 
 .overlay_content li a{ position: relative; padding: 8px; text-decoration: none; font-size: 20px; color: #c60000; display: block; transition: 0.3s; font-weight: bold; z-index: 303px;}
 ul.pullRight li a:before{position: absolute;width: 2px;height: 40px;left: 0px;top: 0px;content: '';background: #c60000;opacity: 0.25;transition: all 0.3s;}
 ul.pullRight li a:hover:before{ width: 100%;}
-div.menu_user_notice {font-weight:bold; color:white; width:400px; height:0%; position: absolute; top:70px; left:-150px; background-color: rgba(255,255,255, 0.9); overflow: hidden; transition:0.5s; border-radius: 8px; z-index:303;}
 div.notice_content ul li a {text-decoration: none; color:#c60000;}
 div.notice_title {height: 30px; border-bottom: 2px solid #c60000; background-color:#c60000; vertical-align: middle; line-height: 30px;}
 div.notice_title span {font-size: 20px; color:#fff; padding-left: 10px;}

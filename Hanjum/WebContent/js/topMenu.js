@@ -24,9 +24,25 @@ $(document).ready(function(){
 			$("#myNotice").css("height",ulHeight);
 		}
 	});
+//	관리자 제어
+	$("#setting").click(function(){
+		var navHeight = $("#mySet").css("height").replace("px","");
+		if(navHeight > 0){
+			$("#mySet").css("height","0px");
+			$("#mySet").css("border","0px solid #c60000");
+		} else {
+			var ulHeight = $("#manager_list").css("height").replace("px","");
+			$("#mySet").css("border","2px solid #c60000");
+			$("#mySet").css("height",ulHeight);
+		}
+	});
+	
+	
+	
 	$('html').click(function(e) {
 		var navHeight = $("#myNav").css("height").replace("px","");
 		var noticeHeight = $("#myNotice").css("height").replace("px","");
+		var settingheight= $("#mySet").css("height").replace("px","");
 		if(navHeight > 0){
 			if(!$(e.target).hasClass("menu_user_content")) {
 					$("#myNav").css("height","0px");
@@ -37,6 +53,12 @@ $(document).ready(function(){
 			if(!$(e.target).hasClass("menu_user_notice")) {
 				$("#myNotice").css("height","0px");
 				$("#myNotice").css("border","0px solid #c60000");
+			} 
+		}
+		if(settingheight > 0){
+			if(!$(e.target).hasClass("menu_manager_content")) {
+				$("#mySet").css("height","0px");
+				$("#mySet").css("border","0px solid #c60000");
 			} 
 		}
 	});
