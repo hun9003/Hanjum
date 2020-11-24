@@ -212,7 +212,7 @@ public class EnterDAO {
 		return list;
 	}
 	
-	public ArrayList<EnterBean> selectListSearchEnter(int startRow, HashMap<Integer, ArrayList<Object>> search){ // 채용공고 검색
+	public ArrayList<EnterBean> selectListSearchEnter(int startRow, HashMap<String, String> search){ // 채용공고 검색
 		System.out.println("EnterDAO - selectListSearchEnter()");
 		ArrayList<EnterBean> list = null;
 		

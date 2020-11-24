@@ -77,7 +77,7 @@ if(enter != null){
 <div class="input_salary">연봉 <input type="number" id="Salary" name="board_enter_salary" min="0" placeholder="ex)2500" value="<%=enter.getBoard_enter_salary()%>"> 만원</div>
 </td></tr>
 <tr><td class="td_name">근무시간</td><td class="td_content">
-<div class="input_workTime"><input type="text" id="StartWork" name="board_enter_start_work" placeholder="출근시간 ex)오전 9시" value="<%=enter.getBoard_enter_start_work()%>">~ <input type="text" id="FinWork" name="board_enter_fin_work" placeholder="퇴근시간 ex)오후 6시" value="<%=enter.getBoard_enter_fin_work()%>"></div>
+<div class="input_workTime"><input type="time" id="StartWork" class="smallTextInput" name="board_enter_start_work" value="<%=enter.getBoard_enter_start_work()%>"> ~ <input type="time" id="FinWork" class="smallTextInput" name="board_enter_fin_work" value="<%=enter.getBoard_enter_fin_work()%>"></div>
 </td></tr> 
 <tr><td class="td_name">근무요일</td><td class="td_content">
 <div class="check_list"><input type="checkbox" id="WorkDays1" name="board_enter_work_days" value="1" <%if(enter.getBoard_enter_work_days().contains("1")){%>checked<%} %>><label for="WorkDays1"></label><span class="checkbox">월요일</span></div>
@@ -93,7 +93,7 @@ if(enter != null){
 <div id="divRef1" class="input_link m-tb-15"><input type="url" name="board_enter_ent_ref" id="Ref1" placeholder="링크를 업로드 하세요." value="<%=enter.getBoard_enter_ent_ref()%>"></div>
 </td></tr>
 </table>
-<div class="write_form_submit"><input type="button" id="WriteSubmit" value="수정하기" onclick="document.fr_write.submit()"></div>
+<div class="write_form_submit"><input type="submit" id="WriteSubmit" value="수정하기"></div>
 </form>
 </div>
 <%

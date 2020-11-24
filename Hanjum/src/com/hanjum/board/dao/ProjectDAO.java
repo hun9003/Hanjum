@@ -67,6 +67,46 @@ public class ProjectDAO {
 		return projectBean;
 	}
 	
+	public int selectProjectSearchCount(HashMap<String, String> search) {
+		int count = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			String sql = "SELECT COUNT(b.board_id) FROM board b JOIN user u ON b.user_id = u.user_id "
+					+ "JOIN board_creator c ON c.board_id = b.board_id WHERE ";
+			switch (search.get("search_type")) {
+			case "1": sql+="CONCAT(b.board_subject,b.board_content) LIKE '%"+search.get("keyword")+"%' "; break;
+			case "2": sql+="b.board_subject LIKE '%"+search.get("keyword")+"%' "; break;
+			case "3": sql+="b.board_content LIKE '%"+search.get("keyword")+"%' ";break;
+			case "4": sql+="c.board_creator_content_detail LIKE '%"+search.get("keyword")+"%' ";break;
+			case "5": sql+="u.user_name LIKE '%"+search.get("keyword")+"%' ";break;
+			default : sql+="CONCAT(b.board_subject,b.board_content) LIKE '%"+search.get("keyword")+"%' ";
+			}
+			if(search.containsKey("genre")) {sql+="AND c.board_creator_genre LIKE '%"+search.get("genre")+"%' ";}
+			if(search.containsKey("price_n")) {sql+="AND c.board_creator_cre_min_price < "+search.get("price_x")+" ";}
+			if(search.containsKey("price_x")) {sql+="AND c.board_creator_cre_max_price > "+search.get("price_n")+" ";}
+			if(search.containsKey("recording")) {sql+="AND c.board_creator_recording LIKE '%"+search.get("recording")+"%' ";}
+			if(search.containsKey("camnum")) {sql+="AND c.board_creator_cam_num LIKE '%"+search.get("camnum")+"%' ";} 
+			if(search.containsKey("clipnum")) {sql+="AND c.board_creator_ori_clip_num LIKE '%"+search.get("clipnum")+"%' ";}
+			if(search.containsKey("oriLength")) {sql+="AND c.board_creator_ori_length LIKE '%"+search.get("oriLength")+"%' ";} 
+			if(search.containsKey("editLength")) {sql+="AND c.board_creator_edit_length LIKE '%"+search.get("editLength")+"%' ";} 
+			if(search.containsKey("transfer")) {sql+="AND c.board_creator_ori_transfer LIKE '%"+search.get("transfer")+"%' ";} 
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+			
+		} catch (Exception e) {
+			System.out.println("selectProjectSearchCount() 오류! - " + e.getMessage());
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		return count;
+	}
+	
 	// CHECK ====================================================================================
 		
 		
@@ -223,12 +263,77 @@ public class ProjectDAO {
 		return list;
 	}
 	
-	public ArrayList<ProjectBean> selectListSearchProject(int startRow, HashMap<Integer, ArrayList<Object>> search){ // 에디터 검색
+	public ArrayList<ProjectBean> selectListSearchProject(int page, HashMap<String, String> search){ // 에디터 검색
 		System.out.println("ProjectDAO - selectListSearchProject()");
 		ArrayList<ProjectBean> list = null;
-		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int limit = Constant.BOARD_PAGE_SIZE;
+		int startRow = (page - 1) * limit;
+		try {
+			String sql = "SELECT b.board_id, b.board_subject, b.board_content, b.board_date, b.board_type, u.user_id, u.user_name, c.board_creator_genre," + 
+					"c.board_creator_recording, c.board_creator_cam_num, c.board_creator_ori_clip_num, c.board_creator_ori_length," + 
+					"c.board_creator_edit_length, c.board_creator_ori_transfer, c.board_creator_cre_min_price, c.board_creator_cre_max_price, c.board_creator_status FROM board b JOIN user u ON b.user_id = u.user_id "
+					+ "JOIN board_creator c ON c.board_id = b.board_id WHERE ";
+			switch (search.get("search_type")) {
+			case "1": sql+="CONCAT(b.board_subject,b.board_content) LIKE '%"+search.get("keyword")+"%' "; break;
+			case "2": sql+="b.board_subject LIKE '%"+search.get("keyword")+"%' "; break;
+			case "3": sql+="b.board_content LIKE '%"+search.get("keyword")+"%' ";break;
+			case "4": sql+="c.board_creator_content_detail LIKE '%"+search.get("keyword")+"%' ";break;
+			case "5": sql+="u.user_name LIKE '%"+search.get("keyword")+"%' ";break;
+			default : sql+="CONCAT(b.board_subject,b.board_content) LIKE '%"+search.get("keyword")+"%' ";
+			}
+			if(search.containsKey("genre")) {sql+="AND c.board_creator_genre LIKE '%"+search.get("genre")+"%' ";}
+			if(search.containsKey("price_n")) {sql+="AND c.board_creator_cre_min_price < "+search.get("price_x")+" ";}
+			if(search.containsKey("price_x")) {sql+="AND c.board_creator_cre_max_price > "+search.get("price_n")+" ";}
+			if(search.containsKey("recording")) {sql+="AND c.board_creator_recording LIKE '%"+search.get("recording")+"%' ";}
+			if(search.containsKey("camnum")) {sql+="AND c.board_creator_cam_num LIKE '%"+search.get("camnum")+"%' ";} 
+			if(search.containsKey("clipnum")) {sql+="AND c.board_creator_ori_clip_num LIKE '%"+search.get("clipnum")+"%' ";}
+			if(search.containsKey("oriLength")) {sql+="AND c.board_creator_ori_length LIKE '%"+search.get("oriLength")+"%' ";} 
+			if(search.containsKey("editLength")) {sql+="AND c.board_creator_edit_length LIKE '%"+search.get("editLength")+"%' ";} 
+			if(search.containsKey("transfer")) {sql+="AND c.board_creator_ori_transfer LIKE '%"+search.get("transfer")+"%' ";} 
+			
+			sql += "ORDER BY b.board_date DESC LIMIT ?,?";
+			System.out.println(sql);
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, limit);
+			rs = pstmt.executeQuery();
+			list = new ArrayList<ProjectBean>();
+			while(rs.next()) {
+				ProjectBean projectBean = new ProjectBean();
+				projectBean.setBoard_id(rs.getInt("board_id"));
+				projectBean.setBoard_subject(rs.getString("board_subject"));
+				projectBean.setBoard_content(rs.getString("board_content"));
+				projectBean.setBoard_date(rs.getTimestamp("board_date"));
+				projectBean.setBoard_type(rs.getInt("board_type"));
+				projectBean.setUser_id(rs.getString("user_id"));
+				projectBean.setBoard_creator_cam_num(rs.getInt("board_creator_cam_num"));
+				projectBean.setBoard_creator_cre_max_price(rs.getInt("board_creator_cre_max_price"));
+				projectBean.setBoard_creator_cre_min_price(rs.getInt("board_creator_cre_min_price"));
+				projectBean.setBoard_creator_edit_length(rs.getInt("board_creator_edit_length"));
+				projectBean.setBoard_creator_genre(rs.getString("board_creator_genre"));
+				projectBean.setBoard_creator_ori_clip_num(rs.getInt("board_creator_ori_clip_num"));
+				projectBean.setBoard_creator_ori_length(rs.getInt("board_creator_ori_length"));
+				projectBean.setBoard_creator_ori_transfer(rs.getInt("board_creator_ori_transfer"));
+				projectBean.setBoard_creator_recording(rs.getInt("board_creator_recording"));
+				projectBean.setBoard_creator_status(rs.getInt("board_creator_status"));
+				
+				list.add(projectBean);
+			}
+			
+		} catch (Exception e) {
+			System.out.println("selectListSearchProject() 오류! - " + e.getMessage());
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
 		return list;
 	}
+
+
+	
 		
 		
 	// OTHER ====================================================================================

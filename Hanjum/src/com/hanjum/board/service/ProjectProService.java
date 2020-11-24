@@ -31,6 +31,11 @@ public class ProjectProService {
 		return projectBean; // ProjectBean
 	}
 	
+	public int getProjectSearchListCount(HashMap<String, String> search) { // 프로젝트 검색 갯수
+		System.out.println("ProjectProService - getListSearchProjectCount()");
+		int count = projectDAO.selectProjectSearchCount(search);
+		return count;
+	}
 	// INSERT ===================================================================================
 	
 	public boolean writeProject(ProjectBean projectBean) { // 프로젝트 작성 서비스
@@ -112,10 +117,13 @@ public class ProjectProService {
 		return list;
 	}
 	
-	public ArrayList<ProjectBean> getListSearchProject(int startRow, HashMap<Integer, ArrayList<Object>> search){ // 프로젝트 검색 서비스
+	public ArrayList<ProjectBean> getListSearchProject(int page, HashMap<String, String> search){ // 프로젝트 검색 서비스
 		System.out.println("ProjectProService - listProject()");
+		ArrayList<ProjectBean> list = projectDAO.selectListSearchProject(page, search);
 		close(con);
-		return projectDAO.selectListSearchProject(startRow, search);
+		return list;
 	}
+
+	
 	
 }

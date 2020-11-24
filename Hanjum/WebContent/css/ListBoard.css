@@ -13,7 +13,7 @@ div#main_img.enter_banner { width: 1400px; height: 1300px;
 							 background:url("../img/4.png");background-position:center; 
 							 background-size:1400px ; background-repeat:no-repeat;
 							margin: 0px auto; }	
-select.search_option {width: 200px; padding: .8em .5em; border: 1px solid #999; font-weight: bold;
+select.search_option {width: 150px; padding: .8em .5em; border: 1px solid #999; font-weight: bold;
 background-color:#fff; border-radius: 3px;
 margin:20px 15px 20px 15px;}
 
@@ -23,17 +23,30 @@ input.search_menu{width: 250px; padding: .8em .5em; border: 1px solid #999;
 select.search_type{width :100px; height: 35px; font-weight: bold;}
 
 div.search_category { width: 1150px; margin: 0 auto; }
+table.search_table,table.search_detail_table { width:1000px; border-spacing: 0; margin:0 auto; overflow: hidden;}
+table.search_table{border-top-left-radius: 8px; border-top-right-radius: 8px }
+table.search_detail_table{border-bottom-left-radius: 8px; border-bottom-right-radius: 8px }
+table.search_table th {background-color: #ff8080; color: #fff; height: 40px;}
+div.search_detail_form {height: 0; overflow: hidden;}
 
+table.search_detail_table th {background-color: #ff8080; color: #fff; height: 40px;}
+table.search_detail_table th { width: 150px; }
+button.searchBtn {display: inline-block; vertical-align: middle;}
+table.search_table td,table.search_table th,table.search_detail_table th
+{ border: 1px solid #ebebeb; text-align: center;}
+table.search_detail_table td { border: 1px solid #ebebeb;}
 input {vertical-align: middle; }
-
+table.search_detail_table {overflow: hidden;}
 input.img_button {
         background: url("../img/button_search.png") no-repeat;
         border: none; width: 32px; height: 32px; cursor: pointer;}
-        
+input.searchReset {position: absolute; top:5px; right: 10px; z-index:201; display: none;}     
 form {display: inline;}
 
 fieldset.search_field { margin: 30px 0; background-color: #fff; font-weight: bold; border-radius: 8px;}
-fieldset.search_field legend { font-size : 20px; color: #c60000;}
+fieldset.search_field legend { font-size : 20px; color: #ff6c6c;}
+
+#search_detail {cursor: pointer; position: relative; z-index: 200;}
 
 div.board_list_type{width: 1300px; margin: 20px auto 10px auto; padding-bottom: 20px; font-weight: bold;}
 

@@ -1,3 +1,5 @@
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.hanjum.board.vo.EnterBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -36,7 +38,12 @@
 		case 2: hiring = "정규직";break;
 		case 3: hiring = "비정규직";break;
 		}
-    
+		SimpleDateFormat formatTime = new SimpleDateFormat("a HH시 mm분");
+		SimpleDateFormat fm = new SimpleDateFormat("HH:mm");
+		Date startWorkTime = fm.parse(enter.getBoard_enter_start_work());
+		Date finWorkTime = fm.parse(enter.getBoard_enter_fin_work());
+		String startWork = formatTime.format(startWorkTime).replace("AM", "오전").replace("PM", "오후");
+		String finWork = formatTime.format(finWorkTime).replace("AM", "오전").replace("PM", "오후");
     %>
 <!DOCTYPE html>
 <html>
@@ -89,7 +96,7 @@
 <tr><td class="td_name">이용 프로그램</td><td class="td_content"><%=program %></td></tr>
 <tr><td class="td_name">고용형태</td><td class="td_content"><%=hiring %></td></tr>
 <tr><td class="td_name"><label for="Salary">연봉</label></td><td class="td_content"><%=enter.getBoard_enter_salary()	%>만원</td></tr>
-<tr><td class="td_name">근무시간</td><td class="td_content"><%=enter.getBoard_enter_start_work() %> ~ <%=enter.getBoard_enter_fin_work() %></td></tr>
+<tr><td class="td_name">근무시간</td><td class="td_content"><%=startWork%> ~ <%=finWork %></td></tr>
 <tr><td class="td_name">근무요일</td><td class="td_content">주 <%=workday %>일 (<%=workday_list %>)</td></tr>
 <tr><td class="td_name"><label for="Ref1">회사 링크</label></td>
 <td id="td_ref" class="td_content"><a href="<%=enter.getBoard_enter_ent_ref()%>" target="_blank"><%=enter.getBoard_enter_ent_ref() %></a></td></tr>

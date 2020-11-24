@@ -85,7 +85,7 @@ public class EditorProService {
 		return editorDAO.selectListEditor(startRow);
 	}
 	
-	public ArrayList<EditorBean> getListSearchEditor(int startRow, HashMap<Integer, ArrayList<Object>> search){ // 에디터 검색 서비스
+	public ArrayList<EditorBean> getListSearchEditor(int startRow, HashMap<String, String> search){ // 에디터 검색 서비스
 		System.out.println("EditorProService - getListSearchEditor()");
 		close(con);
 		return editorDAO.selectListSearchEditor(startRow, search);
