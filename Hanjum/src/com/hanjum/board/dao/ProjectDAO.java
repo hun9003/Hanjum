@@ -318,7 +318,7 @@ public class ProjectDAO {
 				projectBean.setBoard_creator_ori_transfer(rs.getInt("board_creator_ori_transfer"));
 				projectBean.setBoard_creator_recording(rs.getInt("board_creator_recording"));
 				projectBean.setBoard_creator_status(rs.getInt("board_creator_status"));
-				
+				// 검색리스트
 				list.add(projectBean);
 			}
 			
