@@ -23,7 +23,7 @@ div#top_title { float: left; margin: 20px 0 0 20px; cursor: pointer; }
 div#top_menu { float: left; margin: 20px 0 20px 50px; }
 div#top_menu li { padding : 0px 40px; }
 div.top_member_menu {position:relative; float: right; margin: 20px 20px 0 0; z-index:301;}
-div.menu_user, div.menu_notice {  position : relative; width : 45px; top:-15px; left:0px; height: 45px; border-radius: 4px; cursor: pointer;}
+div.menu_user, div.menu_notice, div.menu_setting {  position : relative; width : 45px; top:-15px; left:0px; height: 45px; border-radius: 4px; cursor: pointer;}
 div.menu_user img, div.menu_notice img { position : absolute; width : 40px; top:3px; left:3px; z-index:302;}
 ul.menu_col li { float:left; list-style-type: none; padding: 0 20px;}
 ul.main_banner_list {padding: 0; margin: 0; position: absolute; z-index:302;}
@@ -42,7 +42,10 @@ ul.menu_member li { padding: 0 10px;}
 .f_right {float:right;}
 .f_left {float:left;}
 .margin_r_10 {margin-right: 10px;}
+<<<<<<< HEAD
 .margin_l_10 {margin-left: 10px;}
+=======
+>>>>>>> origin/pje
 .bg_red {background-color: #c60000;}
 
 .td_s {width: 200px}
@@ -56,13 +59,14 @@ a.btn_banner { text-decoration: none;}
 
 a.btn_main { font-weight: bold; }
 
+div.menu_manager_content {font-weight:bold; color:white; width:400px; height:0%; position: absolute; top:70px; left:-200px; background-color: rgba(255,255,255, 0.9); overflow: hidden; transition:0.5s; border-radius: 8px; z-index:303;}
+div.menu_user_notice {font-weight:bold; color:white; width:400px; height:0%; position: absolute; top:70px; left:-150px; background-color: rgba(255,255,255, 0.9); overflow: hidden; transition:0.5s; border-radius: 8px; z-index:303;}
 div.menu_user_content{width:300px; height:0%; position: absolute; top:73px; left:0; background-color: rgba(255,255,255, 0.9); overflow: hidden; transition:0.5s; border-radius: 8px; z-index:303;}
 .overlay_content {position: relative; top:0; width:100%; text-align: conter; z-index:303;}
 .overlay_content li { color: #fff; font-size: 20px; padding: 8px; font-weight: bold;} 
 .overlay_content li a{ position: relative; padding: 8px; text-decoration: none; font-size: 20px; color: #c60000; display: block; transition: 0.3s; font-weight: bold; z-index: 303px;}
 ul.pullRight li a:before{position: absolute;width: 2px;height: 40px;left: 0px;top: 0px;content: '';background: #c60000;opacity: 0.25;transition: all 0.3s;}
 ul.pullRight li a:hover:before{ width: 100%;}
-div.menu_user_notice {font-weight:bold; color:white; width:400px; height:0%; position: absolute; top:70px; left:-150px; background-color: rgba(255,255,255, 0.9); overflow: hidden; transition:0.5s; border-radius: 8px; z-index:303;}
 div.notice_content ul li a {text-decoration: none; color:#c60000;}
 div.notice_title {height: 30px; border-bottom: 2px solid #c60000; background-color:#c60000; vertical-align: middle; line-height: 30px;}
 div.notice_title span {font-size: 20px; color:#fff; padding-left: 10px;}
@@ -71,6 +75,7 @@ div.notice_content ul li{padding:20px 0 30px 0;}
 
 div.menu_setting {position: absolute; top: 5px; left: -5px; z-index:320;}
 
+<<<<<<< HEAD
 div.check_list { display: inline-block; margin: 0px 10px;}
 div.check_list span {margin-left: 10px;}
 div.check_list input[type="checkbox"] {display: none;}
@@ -80,11 +85,18 @@ div.check_list input[type="radio"] {display: none;}
 div.check_list input[type="radio"]+label {display: inline-block; cursor:pointer; width: 20px; height: 20px; background-image: url("../img/checkbox-line.png"); background-size: 20px; border-radius: 4px;vertical-align: middle; line-height: 10px;}
 div.check_list input[type="radio"]:checked+label {background-color: #ff8080;}
 
+<<<<<<< HEAD
+input.defaultTextInput {width:150px; height: 25px;}
+button.defaultBtn {width:80px; height: 30px; border: 0; background-color: #ff8080; color: #fff; font-size:18px; cursor: pointer;}
+=======
+>>>>>>> origin/pje
+=======
 input.defaultTextInput {width:100px; height: 25px;}
 input.largeTextInput {width:400px; height:25px}
 input.middleTextInput {width:300px; height: 25px;}
 input.smallTextInput {width:200px; height: 25px;}
 .defaultBtn {width:80px; height: 30px; border: 2px #fff solid; border-radius: 4px; background-color: #ff8080; color: #fff; font-size:18px; font-weight:bold; cursor: pointer;}
+>>>>>>> origin/pjh
 @media (max-width : 1800px) {
 .ad1,.ad2 {display: none;}
 }
