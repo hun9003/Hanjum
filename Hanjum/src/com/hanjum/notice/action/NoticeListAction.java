@@ -37,6 +37,7 @@ public class NoticeListAction implements Action {
 			jo.put("board_id", notice.getBoard_id());
 			jo.put("user_id", notice.getUser_id());
 			jo.put("notice_from_id", notice.getNotice_from_id());
+			jo.put("notice_type", notice.getNotice_type());
 			
 			noticeJsonList.add(jo);		
 		}

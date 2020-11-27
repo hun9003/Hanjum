@@ -64,6 +64,7 @@ public class NoticeDAO {
 				notice.setNotice_read(rs.getInt("notice_read"));
 				notice.setNotice_url(rs.getString("notice_url"));
 				notice.setUser_id(user_id);
+				notice.setNotice_type(rs.getInt("notice_type"));
 				
 				list.add(notice);
 				
@@ -91,11 +92,11 @@ public class NoticeDAO {
 		
 		try {
 			
-//			sql = "select * from notice where user_id=? and notice_read=0 order by notice_id desc limit 5"; 
-			sql = "select * from notice order by notice_id desc limit 5"; 
+			sql = "select * from notice where user_id=? and notice_read=0 order by notice_id desc limit 5"; 
+//			sql = "select * from notice order by notice_id desc limit 5"; 
 
 			pstmt = con.prepareStatement(sql);
-//			pstmt.setString(1, user_id);
+			pstmt.setString(1, user_id);
 			rs= pstmt.executeQuery();
 		
 			while(rs.next()) {
@@ -109,6 +110,8 @@ public class NoticeDAO {
 				notice.setNotice_read(rs.getInt("notice_read"));
 				notice.setNotice_url(rs.getString("notice_url"));
 //				notice.setUser_id(user_id);
+				notice.setNotice_type(rs.getInt("notice_type"));
+
 				
 				list.add(notice);
 			}
@@ -135,11 +138,11 @@ public class NoticeDAO {
 			
 			try  {
 				
-//				sql = "select * from notice where user_id=? and notice_read=1 order by notice_id desc limit 5";
-				sql = "select * from notice order by notice_id desc limit 5"; 
+				sql = "select * from notice where user_id=? and notice_read=1 order by notice_id desc limit 5";
+//				sql = "select * from notice order by notice_id desc limit 5"; 
 
 				pstmt = con.prepareStatement(sql);
-//				pstmt.setString(1, user_id);
+				pstmt.setString(1, user_id);
 				rs = pstmt.executeQuery();
 				
 				if(rs.next()) {
@@ -153,6 +156,8 @@ public class NoticeDAO {
 					notice.setNotice_read(rs.getInt("notice_read"));
 					notice.setNotice_url(rs.getString("notice_url"));
 					notice.setUser_id(rs.getString("user_id"));
+					notice.setNotice_type(rs.getInt("notice_type"));
+
 					
 					list.add(notice);
 					
@@ -186,19 +191,20 @@ public class NoticeDAO {
 				rs = pstmt.executeQuery();
 				
 				if(rs.next()) {
-					notice_id = rs.getInt("max(notice_id") + 1; 
+					notice_id = rs.getInt("max(notice_id)") + 1; 
 				}
 				
 				// 알람정보들 입력
-				sql = "insert into notice(notice_date, notice_id, notice_content, notice_url, notice_read, board_id, user_id, notice_from_id) values(now(), ?, ?, ?, 0, ?, ?, ?)";
+				sql = "insert into notice(notice_date, notice_id, notice_content, notice_url, notice_read, board_id, user_id, notice_from_id, notice_type) values(now(), ?, ?, ?, 0, ?, ?, ?, ?)";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, notice_id);
 				pstmt.setString(2, noticeBean.getNotice_content());
 				pstmt.setString(3, noticeBean.getNotice_url());
 //				pstmt.setInt(4, noticeBean.getNotice_read()); // 처음에 notice_read는 무조건 0 
-				pstmt.setInt(5, noticeBean.getBoard_id());
-				pstmt.setString(6, noticeBean.getUser_id());
-				pstmt.setString(7, noticeBean.getNotice_from_id());
+				pstmt.setInt(4, noticeBean.getBoard_id());
+				pstmt.setString(5, noticeBean.getUser_id());
+				pstmt.setString(6, noticeBean.getNotice_from_id());
+				pstmt.setInt(7, noticeBean.getNotice_type());
 				
 				noticeSuccess = pstmt.executeUpdate();
 				
@@ -243,56 +249,47 @@ public class NoticeDAO {
 	// ---------------SEND---------------
 	// 클릭한 크리에이터에게 알람이 가는 메서드
 	// (notice_from_id 가 클릭시 발생)
-		public int sendNotification(String user_id, String notice_from_id) {
+	// 어떤 종류의 알람인지 감시하고 메세지 보냄
+	// notice
+		public int sendNotification(NoticeBean noticeBean) {
 			System.out.println("DAO - sendNotification()");
-			int alert = 0; // 
+			int alertType = 0; // 
 			String sql = null;
 			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+//			String notice_type = (String)noticeBean.getNotice_content();
+			// notice_type 을 리턴값으로 int
+			// 
 			
 			try {
-				sql = "";
-				pstmt = con.prepareStatement(sql);
-				
-			
+				// notice_type 뭘로 바꿀건지 
+					sql = "select notice_type from notice where user_id=? order by notice_id desc limit 1";
+					pstmt = con.prepareStatement(sql);
+					pstmt.setInt(1, noticeBean.getNotice_id());
+					rs = pstmt.executeQuery();
+					
+					if(rs.next()) {
+						alertType = rs.getInt("notice_type");
+					}
+					
+					return alertType;
 				
 			}catch (Exception e) {
 				e.printStackTrace();
 			}finally {
-				
+				close(pstmt);
+				close(rs);						
 			}
+			return alertType;
 			
-			return alert;
 		}
 		
 	// 매칭되지않은 나머지 유저들에게 보내는 알람
-		
+	
+	// notice_content 가 notice_type ! 다른거같은데 같나..?
 		
 		
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

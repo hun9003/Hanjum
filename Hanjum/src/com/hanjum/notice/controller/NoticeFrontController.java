@@ -69,7 +69,7 @@ public class NoticeFrontController extends HttpServlet {
 				e.printStackTrace();
 			}
 		}else if(command.equals("/setNotice.nt")) {
-			// 알람 값들 입력
+			// 알람 값들 입력 
 			System.out.println("setNotice.nt");
 			
 			action = new NoticeSetAction();
@@ -90,7 +90,10 @@ public class NoticeFrontController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}
+		} 
+//		else if(command.equals("/")){
+//			
+//		}
 		
 		
 		

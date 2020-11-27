@@ -10,6 +10,27 @@
 <script src="js/jquery-3.5.1.js"></script>
 <script src="js/topMenu.js"></script>
 <script src="js/rollingintro.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function () {
+	$('#new_notice').click(function () {
+		$.getJSON('getNewNotice.nt', function (rdata) {
+			$.each(rdata, function (index, item) {
+				$('ul#notice_new_msg').html('<li style="padding:15px;"><a href="'+item.notice_url+'">'+item.notice_content+'</a></li>');
+			}); // each
+		}); //getJSON
+	}); //click - 새알람
+	
+	$('#old_notice').click(function () {
+		$.getJSON('getOldNotice.nt', function (rdata) {
+			$.each(rdata, function (index, item) {
+				$('ul#notice_old_msg').html('<li style="padding:15px;"><a href="'+item.notice_url+'">'+item.notice_content+'</a></li>');
+			}); // each
+		}); //getJSON
+	}); //click - 확인한 알람
+}); //ready	
+
+</script>
 </head>
 <body>
 <div id="wrap">

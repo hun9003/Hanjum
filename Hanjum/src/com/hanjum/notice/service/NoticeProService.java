@@ -60,13 +60,23 @@ public class NoticeProService {
 	public void insertNotice(NoticeBean noticeBean) {
 		System.out.println("svc - insertNotice()");
 		int noticeSuccess = noticeDAO.insertNotice(noticeBean);
+		String msg = null;
 		
 		if(noticeSuccess > 0) {
 			commit(con);
 			// 여기서 알람보내는 method 호출???****
-//			noticeDAO.sendNotification(user_id, notice_from_id)
+//			noticeDAO.sendNotification(noticeBean.notice_type)
+			
+//			if(notice_type == 1) {
+//				리턴받은 notice_type으로 분류 후 String 형으로 리턴시켜줌 여기서
+//			}
+			
+			
+			
 		}else {
 			rollback(con);
+			// ㄷ
+			// 실패일 경우에 리턴값 따로줘서 등록실패했다고 알려줌
 		}
 		close(con);
 	}
@@ -83,7 +93,6 @@ public class NoticeProService {
 			rollback(con);
 		}
 		close(con);
-		
 	}
 	
 	
@@ -99,17 +108,6 @@ public class NoticeProService {
 	
 	
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 

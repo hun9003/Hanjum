@@ -18,12 +18,10 @@ public class NoticeOldAlarmAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		System.out.println("NoticeOldNotice.java");
+		System.out.println("NoticeOldAlarmAction.java");
 		ActionForward forward = null;
 		
-		// ajax  배열로 db로 꼬우
-		String user_id = "test";
-				//request.getParameter("user_id");
+		String user_id = request.getParameter("user_id");
 		
 		// NoticeBean 객체 전달
 		NoticeProService service = new NoticeProService();
@@ -41,6 +39,8 @@ public class NoticeOldAlarmAction implements Action {
 			jo.put("board_id", notice.getBoard_id()+"");
 			jo.put("user_id", notice.getUser_id());
 			jo.put("notice_from_id", notice.getNotice_from_id());
+			jo.put("notice_type", notice.getNotice_type());
+
 			
 			noticeJsonList.add(jo);		
 		}

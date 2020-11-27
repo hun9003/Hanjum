@@ -19,16 +19,9 @@ public class NoticeNewAlarmAction implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ActionForward forward = new ActionForward();
-		
-		
-<<<<<<< HEAD
-		// ajax  배열로 받아와서 user_id 가져오니ㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣ
-		String user_id = "test";
-				//request.getParameter("user_id");
-=======
-		// ajax  배열로 받아와서 user_id 
+
+		// 새알람 가져옴
 		String user_id = request.getParameter("user_id");
->>>>>>> refs/remotes/origin/pjs
 		
 		// NoticeBean 객체 전달
 		NoticeProService service =  new NoticeProService();
@@ -47,6 +40,8 @@ public class NoticeNewAlarmAction implements Action {
 				jo.put("board_id", notice.getBoard_id());
 				jo.put("user_id", notice.getUser_id());
 				jo.put("notice_from_id", notice.getNotice_from_id());
+				jo.put("notice_type", notice.getNotice_type());
+
 			
 			noticeJsonList.add(jo);		
 		}
