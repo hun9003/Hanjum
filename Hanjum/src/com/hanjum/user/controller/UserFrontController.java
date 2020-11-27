@@ -11,15 +11,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.hanjum.action.Action;
 import com.hanjum.user.action.UserLoginProAction;
+import com.hanjum.user.action.UserLogoutAction;
 import com.hanjum.user.action.UserManageAction;
 import com.hanjum.user.action.UserSearchManageAction;
 import com.hanjum.user.action.UserUpdateEditorProAction;
 import com.hanjum.user.action.UserUpdateFormAction;
 import com.hanjum.user.action.UserUpdateProAction;
+import com.hanjum.user.action.UserCheckIdAction;
 import com.hanjum.user.action.UserDeleteProAction;
 import com.hanjum.user.action.UserInfoAction;
 import com.hanjum.user.action.UserInsertEditorProAction;
 import com.hanjum.user.action.UserInsertProAction;
+import com.hanjum.user.action.UserLikeAction;
 import com.hanjum.vo.ActionForward;
 
 @WebServlet("*.uo")
@@ -144,6 +147,28 @@ public class UserFrontController extends HttpServlet {
 			}
 		} else if (command.equals("/UserSearchManage.uo")) {
 			action = new UserSearchManageAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/UserLike.uo")) {
+			action = new UserLikeAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/UserLogout.uo")) {
+			action = new UserLogoutAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/UserCheck.uo")) {
+			System.out.println("에이젝스로왔따!!");
+			action = new UserCheckIdAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {

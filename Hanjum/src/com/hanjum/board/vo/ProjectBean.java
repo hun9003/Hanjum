@@ -3,7 +3,7 @@ package com.hanjum.board.vo;
 public class ProjectBean extends BoardBean {
 	private int board_id;
 	private String board_creator_content_detail;
-	private int board_creator_genre;
+	private String board_creator_genre;
 	private int board_creator_recording;
 	private int board_creator_cam_num;
 	private int board_creator_ori_clip_num;
@@ -26,10 +26,10 @@ public class ProjectBean extends BoardBean {
 	public void setBoard_creator_content_detail(String board_creator_content_detail) {
 		this.board_creator_content_detail = board_creator_content_detail;
 	}
-	public int getBoard_creator_genre() {
+	public String getBoard_creator_genre() {
 		return board_creator_genre;
 	}
-	public void setBoard_creator_genre(int board_creator_genre) {
+	public void setBoard_creator_genre(String board_creator_genre) {
 		this.board_creator_genre = board_creator_genre;
 	}
 	public int getBoard_creator_recording() {

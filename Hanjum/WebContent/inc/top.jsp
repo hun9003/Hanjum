@@ -14,6 +14,7 @@ int login = 0;
 if(session.getAttribute("userBean") != null){
 	id = userBean.getUser_id();
 	type = userBean.getUser_type();
+	session.setAttribute("user_id", id);
 } else {
 	id = null;
 	type = 0;
@@ -32,9 +33,9 @@ login=1;
 	<div id="top_menu">
 		<ul class="menu_col menu_main">
 			<li><a href="intro" class="btn_link btn_main font_white">사이트소개</a></li>
-			<li><a href="#" class="btn_link btn_main font_white">프로젝트찾기</a></li>
-			<li><a href="#" class="btn_link btn_main font_white">편집자찾기</a></li>
-			<li><a href="#" class="btn_link btn_main font_white">채용공고</a></li>
+			<li><a href="ProjectList.bo" class="btn_link btn_main font_white">프로젝트찾기</a></li>
+			<li><a href="EditorList.bo" class="btn_link btn_main font_white">편집자찾기</a></li>
+			<li><a href="EnterList.bo" class="btn_link btn_main font_white">채용공고</a></li>
 		</ul>
 	</div>
 	<%
@@ -51,9 +52,9 @@ login=1;
 			<ul class="lstyle_n overlay_content no_margin no_padding pullRight">
 			 <li class="bg_red">메뉴</li>
 			 <li><a href="UserUpdateForm.uo?user_id=<%=id%>">My INFO</a></li>
-			 <li><a href="#">1:1 문의</a></li>
-			 <li><a href="intro#QnA">자주 묻는 질문</a></li>
-			 <li><a href="user/userLogout.jsp">로그아웃</a></li>
+			 <li><a href="ProjectList.bo">1:1 문의</a></li>
+			 <li><a href="EditorList.bo">자주 묻는 질문</a></li>
+			 <li><a href="UserLogout.uo">로그아웃</a></li>
 			</ul>
   		</div>
   		<div id="myNotice" class="menu_user_notice">
