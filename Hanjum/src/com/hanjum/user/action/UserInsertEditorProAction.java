@@ -46,7 +46,7 @@ public class UserInsertEditorProAction implements Action {
 		editorBean.setUser_id(multi.getParameter("user_id"));
 		editorBean.setUser_pass(multi.getParameter("user_pass"));
 		editorBean.setUser_name(multi.getParameter("user_name"));
-		editorBean.setUser_email(multi.getParameter("user_email"));
+		editorBean.setUser_email(multi.getParameter("user_email")+"@"+multi.getParameter("user_email2"));
 		editorBean.setUser_phone(multi.getParameter("user_phone"));
 		editorBean.setEditor_photo(multi.getOriginalFileName("editor_photo"));
 		editorBean.setEditor_des(multi.getParameter("editor_des"));

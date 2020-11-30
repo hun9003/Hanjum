@@ -22,7 +22,7 @@ public class UserInsertProAction implements Action {
 		userBean.setUser_id(request.getParameter("user_id"));
 		userBean.setUser_pass(request.getParameter("user_pass"));
 		userBean.setUser_name(request.getParameter("user_name"));
-		userBean.setUser_email(request.getParameter("user_email"));
+		userBean.setUser_email(request.getParameter("user_email")+"@"+request.getParameter("user_email2"));
 		userBean.setUser_phone(request.getParameter("user_phone"));
 		userBean.setUser_type(1);
 		System.out.println(userBean.getUser_id());

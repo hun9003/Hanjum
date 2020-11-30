@@ -11,6 +11,108 @@
 <script type="text/javascript" src="js/topMenu.js"></script>
 <script type="text/javascript" src="plugin/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript" src="js/smartediter.js"></script>
+<script type="text/javascript">
+	var checkIdResult = false, checkPasswdResult = false;
+$(document).ready(function(){
+	$('#user_id').blur(function(){
+		var element = document.getElementById('id_check');
+		var user_id = $('#user_id').val();
+		$.ajax({
+			url : '${pageContext.request.contextPath}/UserCheck.uo?user_id='+ user_id,
+			type : 'get',
+			success : function(data){
+				$("#checkIdResult").html(data);
+				
+				if (data == 1){
+					$("#checkIdResult").html("이미 사용 중인 아이디 입니다.");
+				}else if(user_id == "") {
+					$("#checkIdResult").html("아이디를 입력해 주세요 :)");
+				}else {
+					$("#checkIdResult").html("사용가능");
+				}
+			}			
+		});
+	});
+});
+	
+	
+	
+	
+	function checkId(idForm) { 
+		var id = user_idForm.value; 
+		
+		var element = document.getElementById('checkIdResult');
+		
+		var regex = /^[A-Za-z][A-Za-z0-9]{3,11}$/g;
+		
+		if(regex.exec(id)) { 
+			element.innerHTML = "사용 가능";
+			checkIdResult = true;
+		} else { 
+			element.innerHTML = "사용 불가";
+			checkIdResult = false;
+		}
+		
+	}
+	function checkUserID(id){
+		var id = user_id.value;
+	}
+	
+	function checkPasswd(passwdForm) { 
+		var passwd = passwdForm.value; 
+		var element = document.getElementById('checkPasswdResult');
+		var langthRegex = /^[A-Za-z0-9!@#$%]{4,16}$/;
+		var upperCaseRegex = /[A-Z]/;
+		var lowerCaseRegex = /[a-z]/;
+		var digitRegex = /[0-9]/;
+		var specRegex = /[!@#$%]/;
+		
+		if (langthRegex.exec(passwd)){
+			var count = 0;
+			if (upperCaseRegex.exec(passwd)) {count ++;} 
+			if (lowerCaseRegex.exec(passwd)) {count ++;} 
+			if (digitRegex.exec(passwd)) {count ++;} 
+			if (specRegex.exec(passwd)){count ++;}
+			
+			if (count == 4){
+				element.innerHTML ="사용 가능(안전)";
+				checkPasswdResult = true;
+			} else if(count == 3) {
+				element.innerHTML ="사용 가능(보통)";
+				checkPasswdResult = true;
+			} else if(count == 2) {
+				element.innerHTML ="사용 가능(위험)";
+				checkPasswdResult = true;
+			} else {
+				element.innerHTML ="사용 불가(두 가지 이상 조합)";
+				checkPasswdResult = false;
+			}
+		} else { 
+			element.innerHTML = "사용 불가";
+			checkPasswdResult = false;
+		}
+	}
+	function check() {
+		if(checkIdResult && checkPasswdResult) {
+			return true;
+		} else {
+			alert('아이디 또는 패스워드 규칙 확인 필수!');
+			return false;
+		}
+	}
+	
+	function selEmail(email){
+		if(email != "직접입력"){
+			document.getElementById("user_email2").value = email;
+			document.getElementById("user_email2").readOnly = true;
+		}else{
+			document.getElementById("user_email2").readOnly = false;
+			document.getElementById("user_email2").value = "";
+	                document.getElementById("user_email2").focus();
+		}
+	}
+	
+</script>
 <title>한줌에디터</title>
 </head>
 <body>
@@ -21,10 +123,18 @@
 <div class="write_title"><h1>에디터 회원 가입</h1></div>
 <form action="UserInsertEditorPro.uo" method="post" name="fr_write" id="WriteForm" enctype="multipart/form-data">
 <table class="write_table">
-<tr><td class="td_name"><label for="Subject">아이디</label></td><td class="td_content"><input id="user_id" type="text" name="user_id"></td></tr>
+<tr><td class="td_name"><label for="Subject">아이디</label></td><td class="td_content"><input id="user_id" type="text" name="user_id">
+<div id="checkIdResult"><!-- 자바스크립트에서 메세지 출력 공간 --></div></td></tr>
 <tr><td class="td_name"><label for="Content">비밀번호</label></td><td class="td_content"><input id="user_pass" name="user_pass"/></td></tr>
 <tr><td class="td_name"><label for="Content">이름</label></td><td class="td_content"><input id="user_name" name="user_name"/></td></tr>
-<tr><td class="td_name"><label for="Content">이메일</label></td><td class="td_content"><input id="user_email" name="user_email"/></td></tr>
+<tr><td class="td_name"><label for="Content">이메일</label></td><td class="td_content"><input id="user_email" name="user_email"/>
+ @ <input type="text" name="user_email2" id="user_email2" onfocus="inInput(this)" onblur="outInput(this)"/>
+<select onfocus="inInput(this)" onblur="outInput(this)" onChange="selEmail(this.value)">
+	<option onselect="focus">직접입력</option>
+	<option value="naver.com">naver.com</option>
+	<option value="gmail.com">gmail.com</option>
+	<option value="daum.net">daum.net</option>
+</select></td></tr>
 <tr><td class="td_name"><label for="Content">휴대전화</label></td><td class="td_content"><input id="user_phone" name="user_phone"/></td></tr>
 <tr><td class="td_name"><label for="Content">프로필 사진</label></td><td class="td_content"><input type="file" id="editor_photo" name="editor_photo"/></td></tr>
 <tr><td class="td_name"><label for="Content">한줄 소개</label></td><td class="td_content"><textarea id="editor_des" name="editor_des" cols="100" rows="5" ></textarea></td></tr>
