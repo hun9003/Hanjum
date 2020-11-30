@@ -143,9 +143,9 @@ public class NoticeDAO {
 				pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, user_id);
 				rs = pstmt.executeQuery();
-				
-				if(rs.next()) {
-					list =  new ArrayList<NoticeBean>();
+
+				list =  new ArrayList<NoticeBean>();
+				while(rs.next()) {
 					NoticeBean notice = new NoticeBean();
 					notice.setBoard_id(rs.getInt("board_id"));
 					notice.setNotice_content(rs.getString("notice_content"));
