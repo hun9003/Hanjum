@@ -22,6 +22,7 @@ public class NoticeSetAction implements Action {
 		noticeBean.setNotice_read(Integer.parseInt(request.getParameter("notice_read")));
 		noticeBean.setNotice_url(request.getParameter("notice_url"));
 		noticeBean.setUser_id(request.getParameter("user_id"));
+		noticeBean.setNotice_type(Integer.parseInt(request.getParameter("notice_type")));
 		
 		NoticeProService service = new NoticeProService();
 		// 얘 리턴값? + 어디서 호출당하는지
