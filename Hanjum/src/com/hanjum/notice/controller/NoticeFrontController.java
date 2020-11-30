@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.hanjum.action.Action;
 import com.hanjum.notice.action.NoticeListAction;
 import com.hanjum.notice.action.NoticeNewAlarmAction;
-import com.hanjum.notice.action.NoticeOldAction;
+import com.hanjum.notice.action.NoticeOldAlarmAction;
 import com.hanjum.notice.action.NoticeSetAction;
 import com.hanjum.notice.action.NoticeUpdateStatusAction;
 import com.hanjum.vo.ActionForward;
@@ -54,13 +54,14 @@ public class NoticeFrontController extends HttpServlet {
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {
+				System.out.println(e.getMessage());
 				e.printStackTrace();
 			}
 		}else if(command.equals("/getOldNotice.nt")) {
 			// 확인된 알람
 			System.out.println("getOldNotice.nt");
 			
-			action = new NoticeOldAction();
+			action = new NoticeOldAlarmAction();
 			
 			try {
 				forward = action.execute(request, response);
@@ -68,7 +69,7 @@ public class NoticeFrontController extends HttpServlet {
 				e.printStackTrace();
 			}
 		}else if(command.equals("/setNotice.nt")) {
-			// 알람 값들 입력
+			// 알람 값들 입력 
 			System.out.println("setNotice.nt");
 			
 			action = new NoticeSetAction();
@@ -89,7 +90,10 @@ public class NoticeFrontController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}
+		} 
+//		else if(command.equals("/")){
+//			
+//		}
 		
 		
 		

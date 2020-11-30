@@ -12,9 +12,16 @@ public class NoticeBean {
 	int board_id; // 프로젝트 id
 	String user_id; // 유저(본인) 아이디
 	String notice_from_id; // 알람을 보낸 사람 아이디
+	int notice_type;
 	
 	
 	// Getter / Setter
+	public int getNotice_type() {
+		return notice_type;
+	}
+	public void setNotice_type(int notice_type) {
+		this.notice_type = notice_type;
+	}
 	public int getNotice_id() {
 		return notice_id;
 	}
