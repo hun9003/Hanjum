@@ -2,22 +2,18 @@ package com.hanjum.review.action;
 
 import java.io.PrintWriter;
 
-import java.sql.Timestamp;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.hanjum.action.Action;
-import com.hanjum.review.service.ReviewWriteService;
+import com.hanjum.review.svc.ReviewWriteService;
 import com.hanjum.review.vo.ReviewBean;
 import com.hanjum.vo.ActionForward;
-
-
 
 public class ReviewWriteProAction implements Action {
 
 	@Override
-	public com.hanjum.vo.ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		System.out.println("review pro action");
 		

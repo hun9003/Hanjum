@@ -1,8 +1,6 @@
 package com.hanjum.review.dao;
 
-
-
-
+import static db.JdbcUtil.close;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,11 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.hanjum.review.vo.ReviewBean;
-import com.sun.xml.internal.ws.Closeable;
-
-
-
-
 
 public class ReviewDAO {
 private ReviewDAO() {}
@@ -34,11 +27,20 @@ private ReviewDAO() {}
 	public int insertArticle(ReviewBean reviewBean) {
 		System.out.println("reviewDAO");
 		int insertCount=0;
-		
+		int num = 1;
 		PreparedStatement pstmt = null;
-		
+		ResultSet rs = null;
 		try {
-			String sql = "insert into review(user_id,review_content, review_speciality, review_satisfaction, review_positivity, review_communication, review_form_id, review_date) values(?,?,?,?,?,?,?,now())";
+			
+			String sql = "select MAX(review_id) from review";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				num = rs.getInt(1) +1;
+			}
+			
+			sql = "insert into review(user_id,review_content, review_speciality, review_satisfaction, review_positivity, review_communication, review_form_id, review_date,review_id) values(?,?,?,?,?,?,?,now(),?)";
 			pstmt=con.prepareStatement(sql);
 			
 			pstmt.setString(1, reviewBean.getUser_id());
@@ -49,6 +51,7 @@ private ReviewDAO() {}
 			pstmt.setInt(6, reviewBean.getReview_communication());
 //			pstmt.setTimestamp(7, reviewBean.getReview_date());
 			pstmt.setString(7, reviewBean.getReview_form_id());
+			pstmt.setInt(8, num);
 			
 			insertCount = pstmt.executeUpdate();
 			
@@ -57,8 +60,8 @@ private ReviewDAO() {}
 			System.out.println("insertArticle() 오류! - " + e.getMessage());
 			e.printStackTrace();
 		} finally {
-			
-			
+			close(rs);
+			close(pstmt);
 		}
 		
 		return insertCount;

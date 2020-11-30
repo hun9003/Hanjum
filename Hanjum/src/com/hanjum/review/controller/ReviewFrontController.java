@@ -1,7 +1,6 @@
 package com.hanjum.review.controller;
 
-import java.io.IOException;
-
+import java.io.IOException; 
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,11 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.hanjum.action.Action;
+import com.hanjum.review.action.ReviewListAction;
 import com.hanjum.review.action.ReviewWriteProAction;
 import com.hanjum.vo.ActionForward;
 
-
+import action.Action;
 
 @WebServlet("*.bo") // 서블릿 주소 중 XXX.bo 주소에 대한 요청을 전달받아 처리
 public class ReviewFrontController extends HttpServlet {
@@ -49,9 +48,9 @@ public class ReviewFrontController extends HttpServlet {
 				e.printStackTrace();
 			}
 			
-		}else if(command.equals("/ReviewUpdateForm.bo")) {
-			forward = new ActionForward();
-			forward.setPath("/editor/reviewupdate.jsp");
+		}else if(command.equals("ReviewList.bo")) {
+			action = new ReviewListAction();
+			forward = action.execute(request, response);
 		}
 		
 		

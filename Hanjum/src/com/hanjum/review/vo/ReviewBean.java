@@ -14,6 +14,7 @@ public class ReviewBean {
 	private int review_communication;
 	private Timestamp review_date;
 	private String review_form_id;
+	private int review_id;
 	
 	public String getUser_id() {
 		return user_id;
@@ -65,6 +66,13 @@ public class ReviewBean {
 	public void setReview_form_id(String review_form_id) {
 		this.review_form_id = review_form_id;
 	}
+	public int getReview_id() {
+		return review_id;
+	}
+	public void setReview_id(int review_id) {
+		this.review_id = review_id;
+	}
+	
 	
 	
 	

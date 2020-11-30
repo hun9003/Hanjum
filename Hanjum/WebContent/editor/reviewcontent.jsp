@@ -1,5 +1,9 @@
+<%@page import="com.hanjum.review.vo.ReviewBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%
+    ReviewBean reviewBean = new ReviewBean();
+    %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,8 +13,18 @@
 
 </script>
 </head>
-<body>
-	
+<body>	
+		<form action="RevieListPro.bo" method="post" name="reviewlist"> 
+		
+		아이디(리뷰작성자):<input type="text" <%= reviewBean.getReview_form_id()%>>
+		아이디(리뷰당하는사람):<input type="text" <%=reviewBean.getUser_id() %>>
+		전문성:<%=reviewBean.getReview_speciality() %> <br>
+		만족도:<%=reviewBean.getReview_satisfaction()%> <br>
+		적극성:<%=reviewBean.getReview_positivity() %> <br>
+		소통:<%=reviewBean.getReview_communication() %> <br>
+		코멘트:<%=reviewBean.getReview_content() %>	
+		</form>
+	</section>
 	<section id="writeForm">
 		<h1>리뷰등록</h1>
 		<form action="ReviewWritePro.bo" method="post" name="reviewForm">
@@ -39,6 +53,7 @@
     <div>
     	<textarea name="review_content" id="review_content" rows="10" cols="10"></textarea>
     </div>
+    
     <input type="submit" value="등록">
 </form>
 	</section>
