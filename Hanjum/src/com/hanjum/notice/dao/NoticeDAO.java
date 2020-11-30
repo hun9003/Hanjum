@@ -72,7 +72,6 @@ public class NoticeDAO {
 		} catch (Exception e) {			
 			e.printStackTrace();
 		} finally {
-			close(con);
 			close(pstmt);
 			close(rs);
 		}
