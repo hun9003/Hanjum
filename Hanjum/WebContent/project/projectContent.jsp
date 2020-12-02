@@ -85,38 +85,22 @@
 		}
 			
 	%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<link href="css/default.css" rel="stylesheet">
-<link href="css/board.css" rel="stylesheet">
-<script type="text/javascript" src="js/jquery-3.5.1.js"></script>
-<script type="text/javascript" src="js/topMenu.js"></script>
-<script type="text/javascript" src="plugin/js/service/HuskyEZCreator.js" charset="utf-8"></script>
-<script type="text/javascript" src="js/smartediter.js"></script>
-<title>한줌에디터</title>
-</head>
-<body>
-<div id="wrap">
-<jsp:include page="../inc/top.jsp"/>
-
 <div class="write_form">
 <div class="write_title"><h1>프로젝트</h1></div>
 <table class="write_table">
-<tr><td class="td_name">프로젝트 제목</td><td class="td_content"><div class="board_subject"><%=project.getBoard_subject() %></div></td></tr>
-<tr><td class="td_name">작성자</td><td class="td_content"><div class="board_content"><%=project.getUser_id() %></div></td></tr>
-<tr><td class="td_name">프로젝트 소개</td><td class="td_content"><div class="board_content"><%=project.getBoard_content() %></div></td></tr>
-<tr><td class="td_name">장르</td><td class="td_content"><div class="board_option"><%=genre %></div></td></tr>
-<tr><td class="td_name">세부설명</td><td class="td_content"><div class="board_detail_content"><%=project.getBoard_creator_content_detail()%></div></td></tr>
-<tr><td class="td_name">동시 녹음 유무</td><td class="td_content"><div class="board_option"><%=recording %></div></td></tr>
-<tr><td class="td_name">녹화에 이용된 캠</td><td class="td_content"><div class="board_option"><%=cam_num %></div></td></tr>
-<tr><td class="td_name">원본 클립</td><td class="td_content"><div class="board_option"><%=ori_clip %></div></td></tr>
-<tr><td class="td_name">편집 전 런타임</td><td class="td_content"><div class="board_option"><%=ori_length %></div></td></tr>
-<tr><td class="td_name">편집 후 런타임</td><td class="td_content"><div class="board_option"><%=edit_length %></div></td></tr>
-<tr><td class="td_name">파일의 전달방식</td><td class="td_content"><div class="board_option"><%=ori_transfer %></div></td></tr>
-<tr><td class="td_name">예상 단가</td><td class="td_content"><div class="board_price"><%=min_price %> ~ <%=max_price %></div></td></tr>
-<tr><td class="td_name"><label for="Ref1">레퍼런스 링크</label></td><td class="td_content">
+<tr><th class="td_name">프로젝트 제목</th><td class="td_content"><div class="board_subject"><%=project.getBoard_subject() %></div></td></tr>
+<tr><th class="td_name">작성자</th><td class="td_content"><div class="board_content"><%=project.getUser_id() %></div></td></tr>
+<tr><th class="td_name">프로젝트 소개</th><td class="td_content"><div class="board_content"><%=project.getBoard_content() %></div></td></tr>
+<tr><th class="td_name">장르</th><td class="td_content"><div class="board_option"><%=genre %></div></td></tr>
+<tr><th class="td_name">세부설명</th><td class="td_content"><div class="board_detail_content"><%=project.getBoard_creator_content_detail()%></div></td></tr>
+<tr><th class="td_name">동시 녹음 유무</th><td class="td_content"><div class="board_option"><%=recording %></div></td></tr>
+<tr><th class="td_name">녹화에 이용된 캠</th><td class="td_content"><div class="board_option"><%=cam_num %></div></td></tr>
+<tr><th class="td_name">원본 클립</th><td class="td_content"><div class="board_option"><%=ori_clip %></div></td></tr>
+<tr><th class="td_name">편집 전 런타임</th><td class="td_content"><div class="board_option"><%=ori_length %></div></td></tr>
+<tr><th class="td_name">편집 후 런타임</th><td class="td_content"><div class="board_option"><%=edit_length %></div></td></tr>
+<tr><th class="td_name">파일의 전달방식</th><td class="td_content"><div class="board_option"><%=ori_transfer %></div></td></tr>
+<tr><th class="td_name">예상 단가</th><td class="td_content"><div class="board_price"><%=min_price %> ~ <%=max_price %></div></td></tr>
+<tr><th class="td_name"><label for="Ref1">레퍼런스 링크</label></th><td class="td_content">
 <%
 for(int i = 0; i < ref.length; i++){
 %>
@@ -127,16 +111,10 @@ for(int i = 0; i < ref.length; i++){
 </td></tr>
 </table>
 <div class="write_form_submit">
-<input type="button" id="UpdateBtn" value="수정하기" onclick="location.href = 'ProjectUpdate.bo?board_id=<%=project.getBoard_id()%>'">
+<input type="button" name="update_btn" id="UpdateBtn" value="수정하기" data-href="ProjectUpdate.bo?board_id=<%=project.getBoard_id()%>">
 <input type="button" id="DeleteBtn" value="삭제하기" onclick="location.href = 'ProjectDeletePro.bo?board_id=<%=project.getBoard_id()%>'">
-<input type="button" id="ListBtn" value="목록으로" onclick="location.href = 'ProjectList.bo'">
 </div>
 </div>
 <%
 }
 %>
-<jsp:include page="../inc/bottom.jsp"/>
-</div>
-
-</body>
-</html>

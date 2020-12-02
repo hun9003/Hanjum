@@ -74,23 +74,17 @@ public class ProjectDAO {
 		try {
 			String sql = "SELECT COUNT(b.board_id) FROM board b JOIN user u ON b.user_id = u.user_id "
 					+ "JOIN board_creator c ON c.board_id = b.board_id WHERE ";
-			switch (search.get("search_type")) {
-			case "1": sql+="CONCAT(b.board_subject,b.board_content) LIKE '%"+search.get("keyword")+"%' "; break;
-			case "2": sql+="b.board_subject LIKE '%"+search.get("keyword")+"%' "; break;
-			case "3": sql+="b.board_content LIKE '%"+search.get("keyword")+"%' ";break;
-			case "4": sql+="c.board_creator_content_detail LIKE '%"+search.get("keyword")+"%' ";break;
-			case "5": sql+="u.user_name LIKE '%"+search.get("keyword")+"%' ";break;
-			default : sql+="CONCAT(b.board_subject,b.board_content) LIKE '%"+search.get("keyword")+"%' ";
-			}
-			if(search.containsKey("genre")) {sql+="AND c.board_creator_genre LIKE '%"+search.get("genre")+"%' ";}
-			if(search.containsKey("price_n")) {sql+="AND c.board_creator_cre_min_price < "+search.get("price_x")+" ";}
-			if(search.containsKey("price_x")) {sql+="AND c.board_creator_cre_max_price > "+search.get("price_n")+" ";}
-			if(search.containsKey("recording")) {sql+="AND c.board_creator_recording LIKE '%"+search.get("recording")+"%' ";}
-			if(search.containsKey("camnum")) {sql+="AND c.board_creator_cam_num LIKE '%"+search.get("camnum")+"%' ";} 
-			if(search.containsKey("clipnum")) {sql+="AND c.board_creator_ori_clip_num LIKE '%"+search.get("clipnum")+"%' ";}
-			if(search.containsKey("oriLength")) {sql+="AND c.board_creator_ori_length LIKE '%"+search.get("oriLength")+"%' ";} 
-			if(search.containsKey("editLength")) {sql+="AND c.board_creator_edit_length LIKE '%"+search.get("editLength")+"%' ";} 
-			if(search.containsKey("transfer")) {sql+="AND c.board_creator_ori_transfer LIKE '%"+search.get("transfer")+"%' ";} 
+			if(search.containsKey("keyword")) {sql+="CONCAT(b.board_subject,b.board_content) LIKE '%"+search.get("keyword")+"%' ";}
+			if(search.containsKey("genre")) {sql+="AND c.board_creator_genre IN("+search.get("genre")+") ";}
+			if(search.containsKey("price_x")) {sql+="AND c.board_creator_cre_min_price < "+search.get("price_x")+" ";}
+			if(search.containsKey("price_n")) {sql+="AND c.board_creator_cre_max_price > "+search.get("price_n")+" ";}
+			if(search.containsKey("recording")) {sql+="AND c.board_creator_recording IN("+search.get("recording")+") ";}
+			if(search.containsKey("camnum")) {sql+="AND c.board_creator_cam_num IN("+search.get("camnum")+") ";} 
+			if(search.containsKey("clipnum")) {sql+="AND c.board_creator_ori_clip_num IN("+search.get("clipnum")+") ";}
+			if(search.containsKey("oriLength")) {sql+="AND c.board_creator_ori_length IN("+search.get("oriLength")+") ";} 
+			if(search.containsKey("editLength")) {sql+="AND c.board_creator_edit_length IN("+search.get("editLength")+") ";} 
+			if(search.containsKey("transfer")) {sql+="AND c.board_creator_ori_transfer IN("+search.get("transfer")+") ";} 
+			System.out.println(sql);
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
@@ -275,23 +269,16 @@ public class ProjectDAO {
 					"c.board_creator_recording, c.board_creator_cam_num, c.board_creator_ori_clip_num, c.board_creator_ori_length," + 
 					"c.board_creator_edit_length, c.board_creator_ori_transfer, c.board_creator_cre_min_price, c.board_creator_cre_max_price, c.board_creator_status FROM board b JOIN user u ON b.user_id = u.user_id "
 					+ "JOIN board_creator c ON c.board_id = b.board_id WHERE ";
-			switch (search.get("search_type")) {
-			case "1": sql+="CONCAT(b.board_subject,b.board_content) LIKE '%"+search.get("keyword")+"%' "; break;
-			case "2": sql+="b.board_subject LIKE '%"+search.get("keyword")+"%' "; break;
-			case "3": sql+="b.board_content LIKE '%"+search.get("keyword")+"%' ";break;
-			case "4": sql+="c.board_creator_content_detail LIKE '%"+search.get("keyword")+"%' ";break;
-			case "5": sql+="u.user_name LIKE '%"+search.get("keyword")+"%' ";break;
-			default : sql+="CONCAT(b.board_subject,b.board_content) LIKE '%"+search.get("keyword")+"%' ";
-			}
-			if(search.containsKey("genre")) {sql+="AND c.board_creator_genre LIKE '%"+search.get("genre")+"%' ";}
-			if(search.containsKey("price_n")) {sql+="AND c.board_creator_cre_min_price < "+search.get("price_x")+" ";}
-			if(search.containsKey("price_x")) {sql+="AND c.board_creator_cre_max_price > "+search.get("price_n")+" ";}
-			if(search.containsKey("recording")) {sql+="AND c.board_creator_recording LIKE '%"+search.get("recording")+"%' ";}
-			if(search.containsKey("camnum")) {sql+="AND c.board_creator_cam_num LIKE '%"+search.get("camnum")+"%' ";} 
-			if(search.containsKey("clipnum")) {sql+="AND c.board_creator_ori_clip_num LIKE '%"+search.get("clipnum")+"%' ";}
-			if(search.containsKey("oriLength")) {sql+="AND c.board_creator_ori_length LIKE '%"+search.get("oriLength")+"%' ";} 
-			if(search.containsKey("editLength")) {sql+="AND c.board_creator_edit_length LIKE '%"+search.get("editLength")+"%' ";} 
-			if(search.containsKey("transfer")) {sql+="AND c.board_creator_ori_transfer LIKE '%"+search.get("transfer")+"%' ";} 
+			if(search.containsKey("keyword")) {sql+="CONCAT(b.board_subject,b.board_content) LIKE '%"+search.get("keyword")+"%' ";}
+			if(search.containsKey("genre")) {sql+="AND c.board_creator_genre IN("+search.get("genre")+") ";}
+			if(search.containsKey("price_x")) {sql+="AND c.board_creator_cre_min_price < "+search.get("price_x")+" ";}
+			if(search.containsKey("price_n")) {sql+="AND c.board_creator_cre_max_price > "+search.get("price_n")+" ";}
+			if(search.containsKey("recording")) {sql+="AND c.board_creator_recording IN("+search.get("recording")+") ";}
+			if(search.containsKey("camnum")) {sql+="AND c.board_creator_cam_num IN("+search.get("camnum")+") ";} 
+			if(search.containsKey("clipnum")) {sql+="AND c.board_creator_ori_clip_num IN("+search.get("clipnum")+") ";}
+			if(search.containsKey("oriLength")) {sql+="AND c.board_creator_ori_length IN("+search.get("oriLength")+") ";} 
+			if(search.containsKey("editLength")) {sql+="AND c.board_creator_edit_length IN("+search.get("editLength")+") ";} 
+			if(search.containsKey("transfer")) {sql+="AND c.board_creator_ori_transfer IN("+search.get("transfer")+") ";} 
 			
 			sql += "ORDER BY b.board_date DESC LIMIT ?,?";
 			System.out.println(sql);

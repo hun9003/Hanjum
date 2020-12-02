@@ -7,6 +7,8 @@
 	
 	UserBean userBean = (UserBean)request.getAttribute("userBean");
 	EditorBean editorBean = (EditorBean)request.getAttribute("EditorBean");
+	String email = userBean.getUser_email();
+	String[] cutEmail = email.split("@");
 	String user_type = null;
 	switch (userBean.getUser_type()){
 	case 1:
@@ -52,6 +54,17 @@ $(document).ready(function(){
       $("#photo_p").html(photo);
    })
 })
+
+function selEmail(email){
+	if(email != "직접입력"){
+		document.getElementById("user_email2").value = email;
+		document.getElementById("user_email2").readOnly = true;
+	}else{
+		document.getElementById("user_email2").readOnly = false;
+		document.getElementById("user_email2").value = "";
+                document.getElementById("user_email2").focus();
+	}
+}
 </script>
 <title>한줌에디터</title>
 </head>
@@ -66,7 +79,17 @@ $(document).ready(function(){
 <tr><td class="td_name"><label for="Subject">아이디</label></td><td class="td_content"><input id="user_id" type="text" name="user_id" value="<%=userBean.getUser_id()%>" readonly="readonly"></td></tr>
 <tr><td class="td_name"><label for="Content">비밀번호</label></td><td class="td_content"><input id="user_pass" name="user_pass"/></td></tr>
 <tr><td class="td_name"><label for="Content">이름</label></td><td class="td_content"><input id="user_name" type="text" name="user_name" value="<%=userBean.getUser_name()%>" readonly="readonly"/></td></tr>
-<tr><td class="td_name"><label for="Content">이메일</label></td><td class="td_content"><input id="user_email" type="text" name="user_email" value="<%=userBean.getUser_email()%>"/></td></tr>
+<tr><td class="td_name"><label for="Content">이메일</label></td><td class="td_content"><input id="user_email" type="text" name="user_email" value="<%=cutEmail[0]%>"/>
+ @ <input type="text" name="user_email2" id="user_email2" value="<%=cutEmail[1]%>" onfocus="inInput(this)" onblur="outInput(this)"/>
+<select onfocus="inInput(this)" onblur="outInput(this)" onChange="selEmail(this.value)">
+	<option onselect="focus">직접입력</option>
+	<option value="naver.com" 
+	<%if(cutEmail[1].equals("naver.com")){%> selected ="selected" <%} %>>naver.com</option>
+	<option value="gmail.com"
+	<%if(cutEmail[1].equals("gmail.com")){%> selected ="selected" <%} %>>gmail.com</option>
+	<option value="daum.net"
+	<%if(cutEmail[1].equals("daum.net")){%> selected ="selected" <%} %>>daum.net</option>
+</select></td></tr>
 <tr><td class="td_name"><label for="Content">휴대 전화</label></td><td class="td_content"><input id="user_phone" type="text" name="user_phone" value="<%=userBean.getUser_phone()%>"/></td></tr>
 <tr><td class="td_name"><label for="Content">레벨</label></td><td class="td_content">Lv <%=userBean.getUser_level() %></td></tr>
 <tr><td class="td_name"><label for="Content">경험치</label></td><td class="td_content"><%=userBean.getUser_lv_exp() %> exp</td></tr>

@@ -50,9 +50,6 @@ public class BoardFrontController extends HttpServlet {
 		 if(command.equals("/ProjectWrite.bo")) { // 프로젝트 글쓰기
 			forward = new ActionForward();
 			forward.setPath("/project/projectWrite.jsp");
-		}   else if(command.equals("/EnterWrite.bo")) { // 채용 글쓰기
-			forward = new ActionForward();
-			forward.setPath("/enter/enterWrite.jsp");
 		}  else if(command.equals("/EditorWrite.bo")) { //편집자 글쓰기
 			forward = new ActionForward();
 			forward.setPath("/editor/editorWriteForm.jsp");
@@ -79,7 +76,7 @@ public class BoardFrontController extends HttpServlet {
 		} else if(command.equals("/ProjectList.bo")) { // 프로젝트 리스트 액션
 			action = new ProjectListAction();
 			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
-		} else if(command.equals("/ProjectSearchList.bo")) { // 프로젝트 검색 리스트 액션
+		} else if(command.equals("/ProjectListSearch.bo")) { // 프로젝트 검색 리스트 액션
 			action = new ProjectSearchListAction();
 			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
 		} else if(command.equals("/Enter.bo")) { // 채용공고 조회 액션
@@ -115,7 +112,7 @@ public class BoardFrontController extends HttpServlet {
 		} else if(command.equals("/EditorList.bo")) { // 편집자 리스트 액션
 			action = new EditorListAction();
 			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
-		} else if(command.equals("/EditorSearchList.bo")) { // 편집자 검색 리스트 액션
+		} else if(command.equals("/EditorListSearch.bo")) { // 편집자 검색 리스트 액션
 			action = new EditorSearchListAction();
 			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
 		}

@@ -50,7 +50,9 @@
 <tr><td class="td_name"><label for="Content">회원 타입</label></td><td class="td_content"><%=user_type %></td></tr>
 <tr><td class="td_name"><label for="Content">로그인 횟수</label></td><td class="td_content"><%=userBean.getUser_login_count() %> 회</td></tr>
 </table>
-	<div class="write_form_submit"><input type="button" id="WriteSubmit" value="뒤로가기" onclick='history.back()'></div>
+	<div class="write_form_submit"><input type="button" id="WriteSubmit" value="뒤로가기" onclick='history.back()'>
+	<input type="button" id="WriteSubmit" value="좋아요" onclick="location.href='UserLike.uo?user_id=<%=session.getAttribute("user_id")%>&like_userid=<%=userBean.getUser_id()%>'"></div>
+	
 </form>
 </div>
 

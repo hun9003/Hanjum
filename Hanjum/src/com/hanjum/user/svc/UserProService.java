@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import static com.hanjum.db.JdbcUtil.*;
 
 import com.hanjum.user.dao.UserDAO;
+import com.hanjum.user.exception.LoginException;
 import com.hanjum.user.vo.EditorBean;
 import com.hanjum.user.vo.UserBean;
 
@@ -50,7 +51,7 @@ public class UserProService {
 	}
 	
 	
-	public UserBean loginUser(String user_id, String user_pass) {
+	public UserBean loginUser(String user_id, String user_pass) throws LoginException {
 		
 		Connection con = getConnection();
 		UserDAO userDAO = UserDAO.getInstance();
@@ -224,5 +225,40 @@ public class UserProService {
 		close(con);
 		
 		return userList;
+	}
+
+	public boolean userLike(String user_id, String like_userid) {
+		boolean likeSuccess = false;
+		Connection con = getConnection();
+		UserDAO userDAO = UserDAO.getInstance();
+		userDAO.setConnection(con);
+		
+		int insertCount = userDAO.changeUserLike(user_id,like_userid);
+		
+		if (insertCount > 0) {
+			commit(con);
+			likeSuccess = true;
+		} else {
+			rollback(con);
+		}
+		close(con);
+		return likeSuccess;
+	}
+
+	public int UserCheckId(String user_id) {
+		int data = 0;
+		Connection con = getConnection();
+		UserDAO userDAO = UserDAO.getInstance();
+		userDAO.setConnection(con);
+		
+		data = userDAO.userCheckId(user_id);
+		if (data > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
+		close(con);
+		return data;
+		
 	}
 }

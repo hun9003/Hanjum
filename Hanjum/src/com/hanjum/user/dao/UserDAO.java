@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import static com.hanjum.db.JdbcUtil.*;
 
+import com.hanjum.user.exception.LoginException;
 import com.hanjum.user.vo.EditorBean;
 import com.hanjum.user.vo.UserBean;
 
@@ -106,7 +107,7 @@ public class UserDAO {
 	}
 	
 	// login
-	public UserBean loginUser(String user_id, String user_pass) {
+	public UserBean loginUser(String user_id, String user_pass) throws LoginException {
 		System.out.println("UserDAO - loginUser()");
 		int insertCount = 0;
 		PreparedStatement pstmt = null;
@@ -133,7 +134,11 @@ public class UserDAO {
 						userBean.setUser_id(rs.getString("user_id"));
 						userExp(user_id, 10);
 					}
-				}
+				} else {
+					throw new LoginException("패스워드 틀림!");
+				} 
+			} else {
+				throw new LoginException("아이디 없음!");
 			}
 			System.out.println(insertCount);
 			
@@ -476,6 +481,62 @@ public class UserDAO {
 		}
 		
 		return userList;
+	}
+
+	public int changeUserLike(String user_id, String like_userid) {
+		int insertCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select like_id from user_likeuser where user_id=? and like_userid=?";
+		
+		try {
+			pstmt=con.prepareStatement(sql);
+			
+			pstmt.setString(1, user_id);
+			pstmt.setString(2, like_userid);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				sql = "delete from user_likeuser where like_id=?";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setInt(1, rs.getInt(1));
+				insertCount=pstmt.executeUpdate();
+			} else {
+				sql = "insert into user_likeuser (user_id,like_userid) values(?,?)";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setString(1, user_id);
+				pstmt.setString(2, like_userid);
+				insertCount=pstmt.executeUpdate();
+			}
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return insertCount;
+	}
+
+	public int userCheckId(String user_id) {
+		int data = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			String sql = "select user_id from user where user_id=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, user_id);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				data = 1;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return data;
 	}
 	
 	
