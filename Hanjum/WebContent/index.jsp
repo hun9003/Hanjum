@@ -24,11 +24,14 @@
     
     <link rel="stylesheet" href="css/flaticon.css">
     <link rel="stylesheet" href="css/style.css">
+	<style>
+		.login-wrap { margin-top: -480px;}
+	</style>
+	
 </head>
 <body>
 <jsp:include page="inc/top.jsp"/>
 <!-- END nav -->
-
 <div class="hero-wrap js-fullheight" style="background-image: url('images/bg_1.jpg');">
   <div class="overlay"></div>
   <div class="container">
@@ -37,7 +40,7 @@
         <span class="subheading">Welcome to Hanjum</span>
         <h1 class="mb-4 t-shadow">한줌에디터에서 영상 편집자를 찾아보세요.</h1>
         <p class="caps t-shadow">다양한 프로젝트와 능력있는 편집자들을 찾아 원하는 대로 만들어가세요.</p>
-        <p class="mb-0"><a href="#" class="btn btn-primary">편집자 등록</a> <a href="#" class="btn btn-white">일반 회원등록</a></p>
+        <p class="mb-0"><a class="btn btn-primary" onclick="joinEditor()">편집자 등록</a> <a class="btn btn-white" onclick="join()">일반 회원등록</a></p>
     </div>
 </div>
 </div>
@@ -48,23 +51,7 @@
       <div class="row">
          <div class="col-md-7"></div>
          <div class="col-md-5 order-md-last">
-          <div class="login-wrap p-4 p-md-5" style="margin-top: -550px; ">
-              <h3 class="mb-4">로그인</h3>
-              <form action="LoginPro.uo" class="signup-form" method="post" name="Userform">
-                 <div class="form-group">
-                    <label class="label" for="user_id">아이디</label>
-                    <input type="text" id="user_id" class="form-control" name="user_id" required="required" placeholder="ID"/>
-                </div>
-                <div class="form-group">
-                 <label class="label" for="password">비밀번호</label>
-                 <input id="password-field" type="password" class="form-control" name="user_pass" required="required" placeholder="Password">
-             </div>
-             <div class="form-group d-flex justify-content-end mt-4">
-                 <button type="submit" class="btn btn-primary submit"><span class="fa fa-paper-plane"></span></button>
-             </div>
-         </form>
-         <p class="text-center">오늘 처음 오셨나요? <a href="Join.uo">Sign Up</a></p>
-     </div>
+<!-- 	로그인 창이 위치하는 곳 -->
  </div>
 </div>
 </div>
@@ -188,7 +175,7 @@
             <div class="icon"><span class="flaticon-online"></span></div>
             <div class="text">
              <strong class="number" data-number="400">0</strong>
-             <span>등록된 편집자 수</span>
+             <span>모집중인 프로젝트 수</span>
          </div>
      </div>
  </div>
@@ -197,7 +184,7 @@
         <div class="icon"><span class="flaticon-graduated"></span></div>
         <div class="text">
          <strong class="number" data-number="4500">0</strong>
-         <span>등록된 채용공고 수</span>
+         <span>등록된 편집자 수</span>
      </div>
  </div>
 </div>
@@ -374,6 +361,25 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
 <script src="js/google-map.js"></script>
 <script src="js/main.js"></script>
-
+<script src="js/layer.js"></script>
+<%
+		if(session.getAttribute("userBean")!=null){
+			%>
+			<script type="text/javascript">
+				$(document).ready(function(){
+					$(".order-md-last").load("UserInfo.uo");
+				});
+			</script>
+			<%
+		} else {
+			%>
+			<script type="text/javascript">
+				$(document).ready(function(){
+					$(".order-md-last").load("Login.uo");
+				});
+			</script>
+			<%
+		}
+	%>
 </body>
 </html>

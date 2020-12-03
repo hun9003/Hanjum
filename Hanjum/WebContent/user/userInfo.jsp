@@ -1,9 +1,7 @@
-  
 <%@page import="com.hanjum.user.vo.UserBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    
-<%
+	pageEncoding="UTF-8"%>
+	<%
 	UserBean userBean = (UserBean)request.getAttribute("userBean");
 	String user_type = null;
 	switch (userBean.getUser_type()){
@@ -23,40 +21,63 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link href="css/default.css" rel="stylesheet">
-<link href="css/board.css" rel="stylesheet">
-<script type="text/javascript" src="js/jquery-3.5.1.js"></script>
-<script type="text/javascript" src="js/topMenu.js"></script>
-<script type="text/javascript" src="plugin/js/service/HuskyEZCreator.js" charset="utf-8"></script>
-<script type="text/javascript" src="js/smartediter.js"></script>
-<title>한줌에디터</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/util.css">
+    <script src="js/jquery.min.js"></script>
+<title>My</title>
+<style>
+.user_name {
+	color: #007bff;
+	font-weight: bold;
+}
+.form-group-content progress{
+	height: 20px;
+	padding: 15px 0px;
+}
+</style>
 </head>
 <body>
-<div id="wrap">
-<jsp:include page="../inc/top.jsp"/>
-
-<div class="write_form">
-<div class="write_title"><h1>내 정보</h1></div>
-<form action="UserUpdatePro.uo" method="post" name="fr_write" id="WriteForm" >
-<table class="write_table">
-<tr><td class="td_name"><label for="Subject">아이디</label></td><td class="td_content"><%=userBean.getUser_id()%></td></tr>
-<tr><td class="td_name"><label for="Content">이름</label></td><td class="td_content"><%=userBean.getUser_name()%></td></tr>
-<tr><td class="td_name"><label for="Content">이메일</label></td><td class="td_content"><%=userBean.getUser_email()%></td></tr>
-<tr><td class="td_name"><label for="Content">휴대 전화</label></td><td class="td_content"><%=userBean.getUser_phone()%></td></tr>
-<tr><td class="td_name"><label for="Content">레벨</label></td><td class="td_content">Lv <%=userBean.getUser_level() %></td></tr>
-<tr><td class="td_name"><label for="Content">경험치</label></td><td class="td_content"><%=userBean.getUser_lv_exp() %> exp</td></tr>
-<tr><td class="td_name"><label for="Content">총 거래 건수</label></td><td class="td_content"><%=userBean.getUser_project_count() %> 건</td></tr>
-<tr><td class="td_name"><label for="Content">내 평점</label></td><td class="td_content"><%=userBean.getUser_score() %> 점</td></tr>
-<tr><td class="td_name"><label for="Content">회원 타입</label></td><td class="td_content"><%=user_type %></td></tr>
-<tr><td class="td_name"><label for="Content">로그인 횟수</label></td><td class="td_content"><%=userBean.getUser_login_count() %> 회</td></tr>
-</table>
-	<div class="write_form_submit"><input type="button" id="WriteSubmit" value="뒤로가기" onclick='history.back()'>
-	<input type="button" id="WriteSubmit" value="좋아요" onclick="location.href='UserLike.uo?user_id=<%=session.getAttribute("user_id")%>&like_userid=<%=userBean.getUser_id()%>'"></div>
-	
-</form>
-</div>
-
-<jsp:include page="../inc/bottom.jsp"/>
-</div>
+	<div class="login-wrap p-4 p-md-5">
+              <h3 class="mb-4">My <span class="float-r m-r-10"><%=user_type %><span></span></span></h3>
+             <div class="form-group">
+             <span class="user_lv">Lv <%=userBean.getUser_level() %></span>
+             <span class="user_name m-l-10"><%=userBean.getUser_name()%></span>
+             <span class="float-r m-r-10">
+             	<button class="btn btn-white">채팅</button>
+             	<button class="btn btn-primary">알림</button>
+             </span>
+             </div> 
+             <div class="form-group">
+			 <span class="form-group-content">
+			 	진행중인 프로젝트 <span class="float-r m-r-10"><a data-href="#">0</a>건</span>
+			 </span>             
+             </div>
+             <div class="form-group">
+			 <span class="form-group-content">
+			 	포인트 <span class="float-r m-r-10"><a data-href="#">0</a>p</span>
+			 </span>             
+             </div>
+             <div class="form-group">
+			 <span class="form-group-content">
+			 	Exp <span class="float-r m-r-10"><progress value="<%=userBean.getUser_lv_exp() %>" max="100"></progress></span>
+			 </span>             
+             </div>
+             
+             <div class="form-group">
+			 <span class="form-group-content">
+			 	<span class="float-r m-r-10">
+			 	<a data-href="#">회원정보수정</a>
+			 	<%
+             		if(userBean.getUser_type() == 0){
+            	 %>
+			 	<a href="#" class="m-l-10">관리</a>
+	             <%
+	             	}
+	             %>
+			 	</span>
+			 </span>             
+             </div>
+     </div>
 </body>
 </html>
+

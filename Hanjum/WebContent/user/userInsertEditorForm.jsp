@@ -42,6 +42,18 @@
 				}
 			});
 		});
+	
+		$("#editor_photo_btn").click(function(){
+			$("#editor_photo").val("");
+			$("#editor_photo").click();
+		});
+		
+		$("#editor_photo").change(function(){
+			var photoIndex = $("#editor_photo").val().lastIndexOf('\\')
+			var photo = $("#editor_photo").val().substring(Number(photoIndex)+Number(1));
+			$("#photo_content").val(photo);
+		})
+	
 		function check_true(label, box) {
 			$(label).css("color","#00e673");
 			$(box).css("border-color","#00e673");
@@ -123,10 +135,12 @@
 </script>
 <style>
 	#editor_photo { display:none; }
+	.check_list { display: inline-block; padding:10px;}
+	.check_list span { margin-left: 10px;}
 </style>
 <div class="login-wrap p-4 p-md-5" style="margin-top:0px;">
               <h3 class="mb-4">편집자 가입</h3>
-              <form action="JoinEditorPro.uo" method="post" name="Userform" onsubmit="return check()">
+              <form action="JoinEditorPro.uo" method="post" name="fr_write" id="WriteForm" enctype="multipart/form-data" onsubmit="return check()">
                  <div class="form-group">
                     <label id="id_label" class="label" for="user_id">아이디</label>
                     <input type="text" id="user_id" class="form-control" name="user_id" required="required" placeholder="ID"/>
@@ -159,81 +173,81 @@
                 </div>
                 <div class="form-group">
                 <label class="label" for="editor_photo_btn">프로필 사진</label>
-                <input class="form-control" type="text" readonly="readonly" style="min-width:100px; width:40%; display: inline-block;" > 
+                <input class="form-control" id="photo_content" type="text" readonly="readonly" style="min-width:100px; width:40%; display: inline-block;" > 
                 <input type="button" class="btn btn-primary" id="editor_photo_btn" value="프로필 업로드"> 
                 <input type="file" id="editor_photo" name="editor_photo"/>
                 </div>
                 <div class="form-group">
                 <label class="label" for="editor_des">한줄 소개</label>
-                <textarea id="editor_des" name="editor_des" cols="100" rows="5" ></textarea>
+                <textarea id="editor_des" name="editor_des" cols="50" rows="3" ></textarea>
                 </div>
                 <div class="form-group">
-                <label class="label" for="DetailContent">본인 소개</label>
-                <div class="form-group-content">
-                <textarea id="DetailContent" name="editor_profile"></textarea>
+                <label  class="label" for="DetailContent">본인 소개</label>
+                <div class="form-control" style="height: auto;">
+                	<textarea id="DetailContent" name="editor_profile" style="padding: 20px; width: 100%;"></textarea>
                 </div>
                 </div>
                 <div class="form-group">
                 <label class="label">이용 프로그램</label>
-	                <div class="check_list"><input type="checkbox" id="program1" name="editor_program" value="1"><label for="program1"></label><span class="checkbox">프리미어</span></div>
-					<div class="check_list"><input type="checkbox" id="program2" name="editor_program" value="2"><label for="program2"></label><span class="checkbox">파이널컷</span></div>
-					<div class="check_list"><input type="checkbox" id="program3" name="editor_program" value="3"><label for="program3"></label><span class="checkbox">베가스</span></div>
-					<div class="check_list"><input type="checkbox" id="program4" name="editor_program" value="4"><label for="program4"></label><span class="checkbox">애프터 이펙트</span></div>
-					<div class="check_list"><input type="checkbox" id="program5" name="editor_program" value="5"><label for="program5"></label><span class="checkbox">기타</span></div>
+	                <div class="check_list"><input type="checkbox" id="program1" name="editor_program" value="1"><span class="checkbox">프리미어</span></div>
+					<div class="check_list"><input type="checkbox" id="program2" name="editor_program" value="2"><span class="checkbox">파이널컷</span></div>
+					<div class="check_list"><input type="checkbox" id="program3" name="editor_program" value="3"><span class="checkbox">베가스</span></div>
+					<div class="check_list"><input type="checkbox" id="program4" name="editor_program" value="4"><span class="checkbox">애프터 이펙트</span></div>
+					<div class="check_list"><input type="checkbox" id="program5" name="editor_program" value="5"><span class="checkbox">기타</span></div>
                 </div>
                 <div class="form-group">
                 <label class="label">최종 납품 해상도</label>
-	                <div class="check_list"><input type="checkbox" id="solution1" name="editor_solution" value="1"><label for="solution1"></label><span class="checkbox">HD</span></div>
-					<div class="check_list"><input type="checkbox" id="solution2" name="editor_solution" value="2"><label for="solution2"></label><span class="checkbox">FHD</span></div>
-					<div class="check_list"><input type="checkbox" id="solution3" name="editor_solution" value="3"><label for="solution3"></label><span class="checkbox">UHD</span></div>
-					<div class="check_list"><input type="checkbox" id="solution4" name="editor_solution" value="4"><label for="solution4"></label><span class="checkbox">맞춤 가능</span></div>
+	                <div class="check_list"><input type="checkbox" id="solution1" name="editor_solution" value="1"><span class="checkbox">HD</span></div>
+					<div class="check_list"><input type="checkbox" id="solution2" name="editor_solution" value="2"><span class="checkbox">FHD</span></div>
+					<div class="check_list"><input type="checkbox" id="solution3" name="editor_solution" value="3"><span class="checkbox">UHD</span></div>
+					<div class="check_list"><input type="checkbox" id="solution4" name="editor_solution" value="4"><span class="checkbox">맞춤 가능</span></div>
                 </div>
                 <div class="form-group">
                 <label class="label">작업 가능 항목</label>
-	                <div class="check_list"><input type="checkbox" id="inventory1" name="editor_inventory" value="1"><label for="inventory1"></label><span class="checkbox">컷 편집</span></div>
-					<div class="check_list"><input type="checkbox" id="inventory2" name="editor_inventory" value="2"><label for="inventory2"></label><span class="checkbox">오디오 싱크</span></div>
-					<div class="check_list"><input type="checkbox" id="inventory3" name="editor_inventory" value="3"><label for="inventory3"></label><span class="checkbox">BGM 삽입</span></div>
-					<div class="check_list"><input type="checkbox" id="inventory4" name="editor_inventory" value="4"><label for="inventory4"></label><span class="checkbox">효과음 삽입</span></div>
-					<div class="check_list"><input type="checkbox" id="inventory5" name="editor_inventory" value="5"><label for="inventory5"></label><span class="checkbox">모션 그래픽</span></div>
-					<div class="check_list"><input type="checkbox" id="inventory5" name="editor_inventory" value="5"><label for="inventory5"></label><span class="checkbox">템플릿 작업</span></div>
+	                <div class="check_list"><input type="checkbox" id="inventory1" name="editor_inventory" value="1"><span class="checkbox">컷 편집</span></div>
+					<div class="check_list"><input type="checkbox" id="inventory2" name="editor_inventory" value="2"><span class="checkbox">오디오 싱크</span></div>
+					<div class="check_list"><input type="checkbox" id="inventory3" name="editor_inventory" value="3"><span class="checkbox">BGM 삽입</span></div>
+					<div class="check_list"><input type="checkbox" id="inventory4" name="editor_inventory" value="4"><span class="checkbox">효과음 삽입</span></div>
+					<div class="check_list"><input type="checkbox" id="inventory5" name="editor_inventory" value="5"><span class="checkbox">모션 그래픽</span></div>
+					<div class="check_list"><input type="checkbox" id="inventory6" name="editor_inventory" value="6"><span class="checkbox">템플릿 작업</span></div>
                 </div>
                 <div class="form-group">
                 <label class="label">납품 파일 공유 방식</label>
-	                <div class="check_list"><input type="radio" id="upload1" name="editor_upload" value="1"><label for="upload1"></label><span class="checkbox">이메일</span></div>
-					<div class="check_list"><input type="radio" id="upload2" name="editor_upload" value="2"><label for="upload2"></label><span class="checkbox">NAS</span></div>
-					<div class="check_list"><input type="radio" id="upload3" name="editor_upload" value="3"><label for="upload3"></label><span class="checkbox">웹하드</span></div>
-					<div class="check_list"><input type="radio" id="upload4" name="editor_upload" value="4"><label for="upload4"></label><span class="checkbox">모두 가능</span></div>
+	                <div class="check_list"><input type="radio" id="upload1" name="editor_upload" value="1"><span class="checkbox">이메일</span></div>
+					<div class="check_list"><input type="radio" id="upload2" name="editor_upload" value="2"><span class="checkbox">NAS</span></div>
+					<div class="check_list"><input type="radio" id="upload3" name="editor_upload" value="3"><span class="checkbox">웹하드</span></div>
+					<div class="check_list"><input type="radio" id="upload4" name="editor_upload" value="4"><span class="checkbox">모두 가능</span></div>
                 </div>
                 <div class="form-group">
                 <label class="label">녹화에 이용된 캠</label>
-                	<div class="check_list"><input type="radio" id="work1" name="editor_work" value="1"><label for="work1"></label><span class="checkbox">1캠</span></div>
-					<div class="check_list"><input type="radio" id="work2" name="editor_work" value="2"><label for="work2"></label><span class="checkbox">2캠</span></div>
-					<div class="check_list"><input type="radio" id="work3" name="editor_work" value="3"><label for="work3"></label><span class="checkbox">3캠</span></div>
-					<div class="check_list"><input type="radio" id="work4" name="editor_work" value="4"><label for="work4"></label><span class="checkbox">4캠 이상</span></div>
+                	<div class="check_list"><input type="radio" id="work1" name="editor_work" value="1"><span class="checkbox">1캠</span></div>
+					<div class="check_list"><input type="radio" id="work2" name="editor_work" value="2"><span class="checkbox">2캠</span></div>
+					<div class="check_list"><input type="radio" id="work3" name="editor_work" value="3"><span class="checkbox">3캠</span></div>
+					<div class="check_list"><input type="radio" id="work4" name="editor_work" value="4"><span class="checkbox">4캠 이상</span></div>
                 </div>
                 <div class="form-group">
                 <label class="label">실물 미팅</label>
-	                <div class="check_list"><input type="radio" id="meeting1" name="editor_meeting" value="1"><label for="meeting1"></label><span class="checkbox">쌉가능</span></div>
-					<div class="check_list"><input type="radio" id="meeting2" name="editor_meeting" value="2"><label for="meeting2"></label><span class="checkbox">불가능</span></div>
+	                <div class="check_list"><input type="radio" id="meeting1" name="editor_meeting" value="1"><span class="checkbox">쌉가능</span></div>
+					<div class="check_list"><input type="radio" id="meeting2" name="editor_meeting" value="2"><span class="checkbox">불가능</span></div>
                 </div>
                 <div class="form-group">
                 <label class="label">선호 작업 유형</label>
-	                <div class="check_list"><input type="radio" id="fort1" name="editor_fort" value="1"><label for="fort1"></label><span class="checkbox">건당 계약</span></div>
-					<div class="check_list"><input type="radio" id="fort2" name="editor_fort" value="2"><label for="fort2"></label><span class="checkbox">단기 계약</span></div>
-					<div class="check_list"><input type="radio" id="fort3" name="editor_fort" value="3"><label for="fort3"></label><span class="checkbox">장기 계약</span></div>
+	                <div class="check_list"><input type="radio" id="fort1" name="editor_fort" value="1"><span class="checkbox">건당 계약</span></div>
+					<div class="check_list"><input type="radio" id="fort2" name="editor_fort" value="2"><span class="checkbox">단기 계약</span></div>
+					<div class="check_list"><input type="radio" id="fort3" name="editor_fort" value="3"><span class="checkbox">장기 계약</span></div>
                 </div>
                 <div class="form-group">
                 <label class="label">샘플 작업 가능 유무</label>
-	                <div class="check_list"><input type="radio" id="sample1" name="editor_sample" value="1"><label for="sample1"></label><span class="checkbox">가능</span></div>
-					<div class="check_list"><input type="radio" id="sample2" name="editor_sample" value="2"><label for="sample2"></label><span class="checkbox">불가능</span></div>
+	                <div class="check_list"><input type="radio" id="sample1" name="editor_sample" value="1"><span class="checkbox">가능</span></div>
+					<div class="check_list"><input type="radio" id="sample2" name="editor_sample" value="2"><span class="checkbox">불가능</span></div>
                 </div>
                 <div class="form-group">
                 <label class="label" for="Content">예상 단가</label>
-              	  <div class="input_price"><input type="number" id="MinPrice" step="1000" min="1000" name="editor_ed_min_price" value="0"> 원 ~ <input type="number" id="MaxPrice" step="1000" min="1000" name="editor_ed_max_price" value="5000"> 원</div>
+              	  <div class="input_price"><input class="form-control" style="width:30%; display: inline-block;" type="number" id="MinPrice" step="1000" min="1000" name="editor_ed_min_price" value="0"> 원 ~ <input class="form-control" style="width:30%; display: inline-block;" type="number" id="MaxPrice" step="1000" min="1000" name="editor_ed_max_price" value="5000"> 원</div>
                 </div>
                 <div class="form-group">
                 <label class="label">거주지</label>
-	                <select name="editor_address">
+	                <select class="form-control"  name="editor_address">
 	                <option>서울</option>
 	                <option>부산</option>
 	                <option>대구</option>

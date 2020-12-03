@@ -10,13 +10,13 @@
 <script type="text/javascript">
 	var checkIdResult = false, checkPasswdResult = false;
 	$(document).ready(function() {
-		$('#user_id').blur(function() {
+		$(document).on("blur","#user_id",function() {
 			var element = document.getElementById('id_check');
 			var user_id = $('#user_id').val();
 			var msg = $("#checkIdResult");
 			var regex = /^[A-Za-z][A-Za-z0-9]{3,11}$/g;
 			$.ajax({
-				url : '${pageContext.request.contextPath}/UserCheck.uo?user_id='+ user_id,
+				url : 'UserCheck.uo?user_id='+ user_id,
 				type : 'get',
 				success : function(data) {
 					$("#checkIdResult").html(data);

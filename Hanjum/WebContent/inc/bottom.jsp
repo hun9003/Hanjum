@@ -1,5 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
+<link rel="stylesheet" href="css/layer.css">
+<div class="layerForm" id="write-layer">
+			<div class="layer-content" id="write-layer-content">
+			<span class="close" id="close-write">&times;</span>
+			<div class="layer-container">
+<!-- 			페이지가 들어갈 공간 -->
+			</div>
+			</div>
+</div>
+    
 <footer class="ftco-footer ftco-no-pt">
   <div class="container">
     <div class="row mb-5">
