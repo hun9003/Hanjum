@@ -1,6 +1,7 @@
 package com.hanjum.user.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,6 +18,7 @@ import com.hanjum.user.action.UserSearchManageAction;
 import com.hanjum.user.action.UserUpdateEditorProAction;
 import com.hanjum.user.action.UserUpdateFormAction;
 import com.hanjum.user.action.UserUpdateProAction;
+import com.hanjum.user.svc.UserProService;
 import com.hanjum.user.action.UserCheckIdAction;
 import com.hanjum.user.action.UserDeleteProAction;
 import com.hanjum.user.action.UserInfoAction;
@@ -166,13 +168,36 @@ public class UserFrontController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if (command.equals("/UserCheck.uo")) {
+		} 
+		
+		
+		
+		else if (command.equals("/UserCheck.uo")) {
 			System.out.println("에이젝스로왔따!!");
 			action = new UserCheckIdAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {
 				e.printStackTrace();
+			}
+		} 
+		
+		
+		else if (command.equals("/CodeCheck.uo")) {   // 메일발송한거 코드체크
+			String email = request.getParameter("email");
+			String code = request.getParameter("code");
+			UserProService codeCheckService = new UserProService();
+			boolean success = codeCheckService.codeCheck(email,code);
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			if(success) {
+				System.out.println(1);
+				out.println("1");
+				out.close();
+			}else {
+				System.out.println(0);
+				out.println("0");
+				out.close();
 			}
 		}
 		// -------------------------------------------------------------------------------------------------------------------

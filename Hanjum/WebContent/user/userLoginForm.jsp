@@ -37,13 +37,20 @@ table {
 	text-align: center;
 }
 </style>
+<script>
+function searchPass(){
+	document.getElementById("userform").style.display = "none";
+	document.getElementById("formTop").html ="비밀번호 찾기";
+	document.getElementById("searchform").style.display = "block";
+}
+</script>
 </head>
 <body>
 <div id="wrap">
 <jsp:include page="../inc/top.jsp"/>
 	<section id = "loginForm">
-		<h2>로그인</h2>
-		<form action="UserLoginPro.uo" method="post" name="Userform">
+		<h2 id="formTop">로그인</h2>
+		<form action="UserLoginPro.uo" method="post" name="Userform" style="display: block;" id ="userform">
 			<table>
 				<tr>
 					<td class="td_left"><label for="user_id">아이디</label></td>
@@ -51,12 +58,27 @@ table {
 				</tr>
 				<tr>
 					<td class="td_left"><label for="user_pass">비밀번호</label></td>
-					<td class="td_right"><input name="user_pass" type="password" id="user_pass" required="required"/></td>
+					<td class="td_right"><input name="user_pass" type="password" id="user_pass" required="required"/><a onclick="searchPass()">비밀번호 찾기</a></td>
 				</tr>
 			</table>
 			<section id="commandCell">
 				<input type="submit" value="로그인">&nbsp;&nbsp;
 				<input type="reset" value="취소"/>
+			</section>
+		</form>
+		<form action="UserSearchPassPro.uo" method="post" name="Userform" style="display: none;" id ="searchform">
+			<table>
+				<tr>
+					<td class="td_left"><label for="user_id">아이디</label></td>
+					<td class="td_right"><input type="text" name="user_id" id="user_id" required="required"/></td>
+				</tr>
+				<tr>
+					<td class="td_left"><label for="user_email">이메일</label></td>
+					<td class="td_right"><input name="user_email" type="text" id="user_email" required="required"/><a onclick="searchPass()">비밀번호 찾기</a></td>
+				</tr>
+			</table>
+			<section id="commandCell">
+				<input type="submit" value="인증코드 전송">&nbsp;&nbsp;
 			</section>
 		</form>
 	</section>

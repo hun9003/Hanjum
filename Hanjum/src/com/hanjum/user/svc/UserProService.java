@@ -261,4 +261,38 @@ public class UserProService {
 		return data;
 		
 	}
+
+	public boolean userEmailCheckCode(String email, String checkCode) {
+		boolean insertCheck = false;
+		Connection con = getConnection();
+		UserDAO userDAO = UserDAO.getInstance();
+		userDAO.setConnection(con);
+		insertCheck = userDAO.userEmailCheckCode(email,checkCode);
+		if(insertCheck) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
+		close(con);
+		return insertCheck;
+		
+		
+	}
+
+	public boolean codeCheck(String email, String code) {
+		boolean success = false;
+		
+		Connection con = getConnection();
+		UserDAO userDAO = UserDAO.getInstance();
+		userDAO.setConnection(con);
+		success = userDAO.emailCodeCheck(email,code);
+		if(success) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
+		close(con);
+		
+		return success;
+	}
 }

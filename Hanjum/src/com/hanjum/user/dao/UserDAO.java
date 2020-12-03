@@ -538,6 +538,67 @@ public class UserDAO {
 		
 		return data;
 	}
+
+	public boolean userEmailCheckCode(String email, String checkCode) {
+		boolean insertCheck = false;
+		int insertCount = 0;
+		PreparedStatement pstmt = null;
+		try {
+			String sql = "delete from email_code where email=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, email);
+			pstmt.executeUpdate();
+			
+			String sql2 = "insert into email_code(email,email_code_content) value(?,?)";
+			pstmt=con.prepareStatement(sql2);
+			pstmt.setString(1, email);
+			pstmt.setString(2, checkCode);
+			
+			insertCount = pstmt.executeUpdate();
+			
+			if(insertCount > 0) {
+				insertCheck = true;
+			} 
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return insertCheck;
+	}
+
+	public boolean emailCodeCheck(String email, String code) {
+		boolean success = false;
+		int deleteCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			String sql = "select * from email_code where email=? and email_code_content=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, email);
+			pstmt.setNString(2, code);
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				String sql2 = "delete from email_code where email=?";
+				pstmt=con.prepareStatement(sql2);
+				pstmt.setString(1, email);
+				deleteCount = pstmt.executeUpdate();
+			}
+			
+			
+			if(deleteCount > 0) {
+				success = true;
+			} 
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return success;
+	}
 	
 	
 }

@@ -50,10 +50,14 @@ $(document).ready(function(){
       $("#editor_photo").click();
    })
    $("#editor_photo").change(function(){
-      var photo = $("#editor_photo").val();
+	   var photoIndex = $("#editor_photo").val().lastIndexOf('\\')
+		var photo = $("#editor_photo").val().substring(Number(photoIndex)+Number(1));
       $("#photo_p").html(photo);
    })
-})
+
+}) // 제이쿼리종료
+
+
 
 function selEmail(email){
 	if(email != "직접입력"){

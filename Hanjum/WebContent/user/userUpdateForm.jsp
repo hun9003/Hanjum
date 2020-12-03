@@ -36,6 +36,12 @@ function selEmail(email){
                 document.getElementById("user_email2").focus();
 	}
 }
+
+function changPass(){
+	document.getElementById("changPass").style.display = "none";
+	document.getElementById("passSet").style.display = "block";
+}
+
 </script>
 <meta charset="UTF-8">
 <link href="css/default.css" rel="stylesheet">
@@ -55,7 +61,16 @@ function selEmail(email){
 <form action="UserUpdatePro.uo" method="post" name="fr_write" id="WriteForm" >
 <table class="write_table">
 <tr><td class="td_name"><label for="Subject">아이디</label></td><td class="td_content"><input id="user_id" type="text" name="user_id" value="<%=userBean.getUser_id()%>" readonly="readonly"></td></tr>
-<tr><td class="td_name"><label for="Content">비밀번호</label></td><td class="td_content"><input id="user_pass" name="user_pass"/></td></tr>
+<tr><td class="td_name"><label for="Content">비밀번호</label></td>
+<td class="td_content">
+<a onclick="changPass()" id ="changPass">변경</a>
+<div id="passSet" style="display: none;">
+현재 비밀번호 : <input id="user_pass" name="user_pass" type="password"/><br><br>
+변경 비밀번호 : <input id="user_updatePass" name="user_updatePass" type="password"/><br>
+비밀번호 확인 : <input id="user_updatePass2" name="user_updatePass2" type="password"/> <a onclick="changPass()" id ="changPass">변경</a>
+</div>
+</td>
+</tr>
 <tr><td class="td_name"><label for="Content">이름</label></td><td class="td_content"><input id="user_name" type="text" name="user_name" value="<%=userBean.getUser_name()%>" readonly="readonly"/></td></tr>
 <tr><td class="td_name"><label for="Content">이메일</label></td><td class="td_content"><input id="user_email" type="text" name="user_email" value="<%=cutEmail[0]%>"/>
  @ <input type="text" name="user_email2" id="user_email2" value="<%=cutEmail[1]%>" onfocus="inInput(this)" onblur="outInput(this)"/>
