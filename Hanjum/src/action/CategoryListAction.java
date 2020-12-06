@@ -29,7 +29,7 @@ public class CategoryListAction implements Action {
 		
 		
 		forward = new ActionForward();
-		forward.setPath("/board/category_list.jsp");
+		forward.setPath("/board/admin_category.jsp");
 		System.out.println("리다이렉트 : " + forward.isRedirect());
 		return forward;
 	}

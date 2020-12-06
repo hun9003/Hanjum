@@ -104,4 +104,48 @@ public class CategoryDAO {
 		
 		return categoryList;
 	}
+
+	public int deleteCategory(CategoryBean cb) {
+		int deleteCount = 0;
+		PreparedStatement pstmt=null;
+		try {
+			String sql="delete from category where category_id=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1,cb.getCategory_id());
+			deleteCount = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		
+		
+		return deleteCount;
+	}
+
+	public int updateCategory(CategoryBean cb) {
+		int updateCount = 0;
+		PreparedStatement pstmt=null;
+		try {
+			String sql="update category set category_content=? where category_id=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, cb.getCategory_content());
+			pstmt.setInt(2,cb.getCategory_id());
+			updateCount = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		
+		
+		return updateCount;
+	}
+
 }

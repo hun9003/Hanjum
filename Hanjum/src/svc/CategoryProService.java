@@ -54,5 +54,41 @@ public class CategoryProService {
 		
 		return categoryList;
 	}
+
+	public boolean deleteCategory(CategoryBean cb) {
+		System.out.println("CategoryWriteProService");
+		boolean isDeleteSuccess = false;
+		
+		int deleteCount = categoryDAO.deleteCategory(cb);
+		System.out.println(deleteCount);
+		if(deleteCount >0) {
+				commit(con);
+				isDeleteSuccess=true;
+		}else {
+				rollback(con);
+		}
+		
+		close(con);
+		
+		return isDeleteSuccess;
+	}
+
+	public boolean updateCategory(CategoryBean cb) {
+		boolean isUpdateSuccess = false;
+		System.out.println("CategoryWriteProService");
+		
+		int updateCount = categoryDAO.updateCategory(cb);
+		System.out.println(updateCount);
+		if(updateCount >0) {
+				commit(con);
+				isUpdateSuccess=true;
+		}else {
+				rollback(con);
+		}
+		
+		close(con);
+		return isUpdateSuccess;
+	}
+	
 	
 }

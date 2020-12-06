@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import action.Action;
+import action.CategoryDeleteAction;
 import action.CategoryListAction;
+import action.CategoryUpdateAction;
 import action.CategoryWriteProAction;
 import vo.ActionForward;
 
@@ -26,9 +28,9 @@ public class CategoryFrontController extends HttpServlet {
 		String command=request.getServletPath();
 		System.out.println("요청 서블릿 주소 : " + command);
 		
-		if(command.equals("/CategoryWriteForm.cg")) {
+		if(command.equals("/CategoryForm.cg")) {
 			forward= new ActionForward();
-			forward.setPath("/board/category_write_form.jsp");
+			forward.setPath("/board/admin_category.jsp");
 		}else if(command.equals("/CategoryWritePro.cg")) {
 			action = new CategoryWriteProAction();
 			try {
@@ -43,8 +45,23 @@ public class CategoryFrontController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}	
-		
+		}else if(command.equals("/CategoryDelete.cg")) {
+			action = new CategoryDeleteAction();
+			try {
+				forward=action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}	
+			
+		}else if(command.equals("/CategoryUpdate.cg")) {
+			action = new CategoryUpdateAction();
+			try {
+				forward=action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}	
+		}
+
 		if(forward!=null) {
 			if(forward.isRedirect()) {
 				response.sendRedirect(forward.getPath());

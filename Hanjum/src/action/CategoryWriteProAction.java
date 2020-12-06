@@ -34,7 +34,6 @@ public class CategoryWriteProAction implements Action {
 			forward = new ActionForward();
 			forward.setPath("CategoryList.cg");
 			forward.setRedirect(true);
-			System.out.println("리다이렉트 : " + forward.isRedirect());
 		}
 		
 		
