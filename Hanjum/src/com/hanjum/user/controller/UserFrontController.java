@@ -200,6 +200,26 @@ public class UserFrontController extends HttpServlet {
 				out.close();
 			}
 		}
+		
+		else if (command.equals("/changePass.uo")) { // 비밀번호 변경
+			System.out.println("에이젝스로왔따!!");
+			String user_id = request.getParameter("user_id");
+			String user_pass = request.getParameter("user_pass");
+			String user_changePass = request.getParameter("user_changePass");
+			UserProService userChangePass = new UserProService();
+			boolean success = userChangePass.changePass(user_id,user_pass,user_changePass);
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			if(success) {
+				System.out.println(1);
+				out.println("1");
+				out.close();
+			}else {
+				System.out.println(0);
+				out.println("0");
+				out.close();
+			}
+		}
 		// -------------------------------------------------------------------------------------------------------------------
 		// 기본 작업 후 공통 작업 수행
 		if (forward != null) { // 포워드가 값이 있다 = 포워드 객체가 생성 되었다 -> 실행

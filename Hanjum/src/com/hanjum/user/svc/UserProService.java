@@ -295,4 +295,20 @@ public class UserProService {
 		
 		return success;
 	}
+
+	public boolean changePass(String user_id, String user_pass, String user_changPass) {
+		boolean success = false;
+		Connection con = getConnection();
+		UserDAO userDAO = UserDAO.getInstance();
+		userDAO.setConnection(con);
+		success = userDAO.changePass(user_id,user_pass,user_changPass);
+		if(success) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
+		close(con);
+		
+		return success;
+	}
 }

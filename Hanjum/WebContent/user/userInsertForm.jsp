@@ -102,7 +102,9 @@ table {
 			}); // ajax종료
 		}); // click 종료
 	});
-
+	
+	
+	// 비밀번호 유효성 검사
 	function checkPasswd(passwdForm) {
 		var passwd = passwdForm.value;
 		var element = document.getElementById('checkPasswdResult');
@@ -129,19 +131,24 @@ table {
 
 			if (count == 4) {
 				element.innerHTML = "사용 가능(안전)";
+				element.style.color = "blue";
 				checkPasswdResult = true;
 			} else if (count == 3) {
 				element.innerHTML = "사용 가능(보통)";
+				element.style.color = "green";
 				checkPasswdResult = true;
 			} else if (count == 2) {
 				element.innerHTML = "사용 가능(위험)";
+				element.style.color = "orange";
 				checkPasswdResult = true;
 			} else {
 				element.innerHTML = "사용 불가(두 가지 이상 조합)";
+				element.style.color = "red";
 				checkPasswdResult = false;
 			}
 		} else {
 			element.innerHTML = "사용 불가";
+			element.style.color = "red";
 			checkPasswdResult = false;
 		}
 	}

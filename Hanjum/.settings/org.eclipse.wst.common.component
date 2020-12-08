@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="Hanjum">
+    <wb-module deploy-name="Hanjum1">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <property name="context-root" value="Hanjum"/>
-        <property name="java-output-path" value="/Hanjum/build/classes"/>
+        <property name="java-output-path" value="/Hanjum1/build/classes"/>
+        <property name="context-root" value="Hanjum1"/>
     </wb-module>
 </project-modules>

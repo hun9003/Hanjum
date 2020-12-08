@@ -190,12 +190,10 @@ public class UserDAO {
 		int insertCount = 0;
 		PreparedStatement pstmt = null;
 		try {
-			String sql = "update user set user_pass=?,user_email=?,user_phone=? where user_id=?";
+			String sql = "update user set user_phone=? where user_id=?";
 			pstmt=con.prepareStatement(sql);
-			pstmt.setString(1, userBean.getUser_pass());
-			pstmt.setString(2, userBean.getUser_email());
-			pstmt.setString(3, userBean.getUser_phone());
-			pstmt.setString(4, userBean.getUser_id());
+			pstmt.setString(1, userBean.getUser_phone());
+			pstmt.setString(2, userBean.getUser_id());
 			insertCount=pstmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("updateUser() 오류! - user" + e.getMessage());
@@ -592,6 +590,30 @@ public class UserDAO {
 				success = true;
 			} 
 			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return success;
+	}
+
+	public boolean changePass(String user_id, String user_pass, String user_changePass) {
+		boolean success = false;
+		int updateCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			String sql = "update user set user_pass=? where user_id=? and user_pass =?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, user_changePass);
+			pstmt.setString(2, user_id);
+			pstmt.setString(3, user_pass);
+			updateCount = pstmt.executeUpdate();
+			
+			if(updateCount > 0 ) {
+				success = true;
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
