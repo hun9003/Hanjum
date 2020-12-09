@@ -1,6 +1,7 @@
 package com.hanjum.user.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,6 +18,7 @@ import com.hanjum.user.action.UserSearchManageAction;
 import com.hanjum.user.action.UserUpdateEditorProAction;
 import com.hanjum.user.action.UserUpdateFormAction;
 import com.hanjum.user.action.UserUpdateProAction;
+import com.hanjum.user.svc.UserProService;
 import com.hanjum.user.action.UserCheckIdAction;
 import com.hanjum.user.action.UserDeleteProAction;
 import com.hanjum.user.action.UserInfoAction;
@@ -38,55 +40,188 @@ public class UserFrontController extends HttpServlet {
 		Action action = null;
 		ActionForward forward = null; // 요청에 필요한 변수 선언
 		
-		if (command.equals("/Join.uo")) { // 회원가입 =========================================================
-			forward = new ActionForward();
-			forward.setPath("/user/userInsertForm.jsp");
-		} else if (command.equals("/JoinEditor.uo")) { // 편집자 회원가입 =======================================
-			forward = new ActionForward();
-			forward.setPath("/user/userInsertEditorForm.jsp");
-		} else if (command.equals("/JoinPro.uo")) { // 회원가입 액션 ============================================
+		if (command.equals("/Join.uo")) { // command 주소 검사
+			// 바로 View로 포워딩 실행
+			forward = new ActionForward(); // 포워드 객체 생성
+			forward.setPath("/user/userInsertForm.jsp"); // 포워드경로 지정 , 디스패쳐 방식으로 해야되니 redirect값은 안줌
+			
+		} else if (command.equals("/JoinEditor.uo")) {
+			
+			forward = new ActionForward(); // 포워드 객체 생성
+			forward.setPath("/user/userInsertEditorForm.jsp"); // 포워드경로 지정 , 디스패쳐 방식으로 해야되니 redirect값은 안줌
+			
+			
+		} else if (command.equals("/JoinPro.uo")) {
+			
 			action = new UserInsertProAction();
-			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
-		} else if (command.equals("/JoinEditorPro.uo")) { // 편집자 회원가입 액션 =================================
+			try {
+				forward = action.execute(request, response);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		} else if (command.equals("/JoinEditorPro.uo")) {
+			
 			action = new UserInsertEditorProAction();
-			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
-		} else if (command.equals("/Login.uo")) { // 로그인 ===================================================
-			forward = new ActionForward();
-			forward.setPath("/user/userLoginForm.jsp");
-		} else if (command.equals("/LoginPro.uo")) { // 로그인 액션 =============================================
+			try {
+				forward = action.execute(request, response);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		}
+		
+		else if (command.equals("/Login.uo")) {
+
+			forward = new ActionForward(); // 포워드 객체 생성
+			forward.setPath("/user/userLoginForm.jsp"); // 포워드경로 지정 , 디스패쳐 방식으로 해야되니 redirect값은 안줌
+			
+		} else if (command.equals("/LoginPro.uo")) {
+			
 			action = new UserLoginProAction();
-			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
-		} else if (command.equals("/UserUpdateForm.uo")) { // 회원 & 편집자 정보 수정 ==============================
+			try {
+				forward = action.execute(request, response);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		} else if (command.equals("/Home.uo")) {
+			forward = new ActionForward(); // 포워드 객체 생성
+			forward.setPath("home"); // 포워드경로 지정 , 디스패쳐 방식으로 해야되니 redirect값은 안줌
+			forward.setRedirect(true);
+			
+		} else if (command.equals("/UserUpdateForm.uo")) {
 			action = new UserUpdateFormAction();
-			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
-		} else if (command.equals("/UserUpdatePro.uo")) { // 회원 정보 수정 액션 ===================================
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/UserUpdatePro.uo")) {
+			
 			action = new UserUpdateProAction();
-			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
-		} else if (command.equals("/UserUpdateEditorPro.uo")) { // 편집자 정보 수정 액션 ===========================
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		} else if (command.equals("/UserUpdateEditorPro.uo")) {
+			
 			action = new UserUpdateEditorProAction();
-			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
-		} else if (command.equals("/UserDeletePro.uo")) {
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
+		else if (command.equals("/UserDeletePro.uo")) {
+			
 			action = new UserDeleteProAction();
-			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
 		} else if (command.equals("/UserManage.uo")) {
 			action = new UserManageAction();
-			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else if (command.equals("/UserInfo.uo")) {
 			action = new UserInfoAction();
-			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else if (command.equals("/UserSearchManage.uo")) {
 			action = new UserSearchManageAction();
-			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else if (command.equals("/UserLike.uo")) {
 			action = new UserLikeAction();
-			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
-		} else if (command.equals("/UserLogout.uo")) {
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/Logout.uo")) {
 			action = new UserLogoutAction();
-			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
-		} else if (command.equals("/UserCheck.uo")) {
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} 
+		
+		
+		
+		else if (command.equals("/UserCheck.uo")) {
 			System.out.println("에이젝스로왔따!!");
 			action = new UserCheckIdAction();
-			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}  else if (command.equals("/My.uo")) {
+			forward = new ActionForward();
+			forward.setPath("/user/userMain.jsp");
+		} 
+		
+		else if (command.equals("/CodeCheck.uo")) {   // 메일발송한거 코드체크
+			String email = request.getParameter("email");
+			String code = request.getParameter("code");
+			UserProService codeCheckService = new UserProService();
+			boolean success = codeCheckService.codeCheck(email,code);
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			if(success) {
+				System.out.println(1);
+				out.println("1");
+				out.close();
+			}else {
+				System.out.println(0);
+				out.println("0");
+				out.close();
+			}
+		} else if (command.equals("/changePass.uo")) { // 비밀번호 변경
+			System.out.println("에이젝스로왔따!!");
+			String user_id = request.getParameter("user_id");
+			String user_pass = request.getParameter("user_pass");
+			String user_changePass = request.getParameter("user_changePass");
+			UserProService userChangePass = new UserProService();
+			boolean success = false;
+			System.out.println(user_pass);
+			System.out.println("id : " +user_id);
+			System.out.println("바꿀비번 : " +user_changePass);
+			if(user_pass == null) { // 유저 패스가 없으면 비밀번호 찾기로 온거
+				success = userChangePass.changePass(user_id, user_changePass);
+			} else { // 유저 패스가 있으면 정상 비밀번호 변경
+				success = userChangePass.changePass(user_id,user_pass,user_changePass);
+			}
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			if(success) {
+				System.out.println(1);
+				out.println("1");
+				out.close();
+			}else {
+				System.out.println(0);
+				out.println("0");
+				out.close();
+			}
 		}
 		// -------------------------------------------------------------------------------------------------------------------
 		// 기본 작업 후 공통 작업 수행

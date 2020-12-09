@@ -1,3 +1,8 @@
+<%@page import="com.hanjum.board.vo.EditorBean"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="com.hanjum.board.vo.ProjectBean"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.HashMap"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -40,7 +45,13 @@
         <span class="subheading">Welcome to Hanjum</span>
         <h1 class="mb-4 t-shadow">한줌에디터에서 영상 편집자를 찾아보세요.</h1>
         <p class="caps t-shadow">다양한 프로젝트와 능력있는 편집자들을 찾아 원하는 대로 만들어가세요.</p>
-        <p class="mb-0"><a class="btn btn-primary" onclick="joinEditor()">편집자 등록</a> <a class="btn btn-white" onclick="join()">일반 회원등록</a></p>
+        <%
+        	if(session.getAttribute("userBean") == null){
+        %>
+        <p class="mb-0"><a class="btn btn-primary" href="My.uo?fr=joinEditor">편집자 등록</a> <a class="btn btn-white" href="My.uo?fr=join">일반 회원등록</a></p>
+    	<%
+        	}
+    	%>
     </div>
 </div>
 </div>
@@ -66,54 +77,30 @@
         </div>
     </div>
     <div class="row justify-content-center">
-     <div class="col-md-3 col-lg-2">
-        <a href="#" class="course-category img d-flex align-items-center justify-content-center" style="background-image: url(images/work-1.jpg);">
-           <div class="text w-100 text-center font-weight-bold">
-              <h3>유튜브</h3>
-              <span>56 개의 프로젝트</span>
-          </div>
-      </a>
-  </div>
-  <div class="col-md-3 col-lg-2">
-    <a href="#" class="course-category img d-flex align-items-center justify-content-center" style="background-image: url(images/work-9.jpg);">
-       <div class="text w-100 text-center font-weight-bold">
-          <h3>광고</h3>
-          <span>24 개의 프로젝트</span>
-      </div>
-  </a>
-</div>
-<div class="col-md-3 col-lg-2">
-    <a href="#" class="course-category img d-flex align-items-center justify-content-center" style="background-image: url(images/work-3.jpg);">
-       <div class="text w-100 text-center font-weight-bold">
-          <h3>다큐멘터리</h3>
-          <span>10 개의 프로젝트</span>
-      </div>
-  </a>
-</div>
-<div class="col-md-3 col-lg-2">
-    <a href="#" class="course-category img d-flex align-items-center justify-content-center" style="background-image: url(images/work-5.jpg);">
-       <div class="text w-100 text-center font-weight-bold">
-          <h3>드라마</h3>
-          <span>8 개의 프로젝트</span>
-      </div>
-  </a>
-</div>
-<div class="col-md-3 col-lg-2">
-    <a href="#" class="course-category img d-flex align-items-center justify-content-center" style="background-image: url(images/work-8.jpg);">
-       <div class="text w-100 text-center font-weight-bold">
-          <h3>뮤직비디오</h3>
-          <span>5 개의 프로젝트</span>
-      </div>
-  </a>
-</div>
-<div class="col-md-3 col-lg-2">
-    <a href="#" class="course-category img d-flex align-items-center justify-content-center" style="background-image: url(images/work-6.jpg);">
-       <span class="text w-100 text-center font-weight-bold">
-          <h3>홍보</h3>
-          <span>2개의 프로젝트</span>
-      </span>
-  </a>
-</div>
+    <%
+    HashMap<String, Integer> genreCount = null;
+    if(request.getAttribute("projectGenreCount") != null){
+    	
+    	genreCount = (HashMap<String, Integer>)request.getAttribute("projectGenreCount");
+   
+	    for(int i = 0; i < genreCount.size(); i++){
+	    %>
+	     <div class="col-md-3 col-lg-2">
+	        <a href="#" class="course-category img d-flex align-items-center justify-content-center" style="background-image: url(images/work-1.jpg);">
+	           <div class="text w-100 text-center font-weight-bold">
+	              <h3><%=genreCount.keySet().toArray()[i] %></h3>
+	              <span><%=genreCount.values().toArray()[i] %> 개의 프로젝트</span>
+	          </div>
+	      </a>
+	  </div>
+	  <%
+	    }
+    } else {
+    	if(request.getServletPath().contains("index")){
+        	response.sendRedirect("home");
+        }
+    }
+  %>
 <div class="col-md-12 text-center mt-5">
     <a href="#" class="btn btn-secondary">모두보기</a>
 </div>
@@ -131,27 +118,109 @@
     </div>
     <div class="row">
     <%
-    	for(int i = 0; i < 6; i++){
-    %>
-       <div class="col-md-4 ftco-animate">
-          <div class="project-wrap">
-          	<div class="project-profile">
-          	<span class="status">모집중</span>
-             <a href="#" class="img" style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); background-image: url(images/work-1.jpg); border-radius: 50%; width:150px; height:150px;margin:0 auto;">
-            </a>
-          	</div>
-            <div class="text p-4">
-                <h3><a href="#">다큐멘터리를 제작할 편집자를 찾고 있습니다</a></h3>
-                <p class="advisor">다큐TV <span>다큐멘터리, 유튜브</span></p>
-                <ul class="d-flex justify-content-between">
-                   <li><span class="flaticon-shower"></span>2020-11-15</li>
-                   <li class="price">10만원 ~ 15만원</li>
-               </ul>
-           </div>
-       </div>
-   </div>
-<%
-    	}
+    	if(request.getAttribute("projectList") != null){
+    		ArrayList<ProjectBean> projectList = (ArrayList<ProjectBean>)request.getAttribute("projectList");
+			
+			String contentUrl = "Project.bo";
+			
+		if(projectList != null){
+			String genre = "";
+			String recording = "";
+			String ori_clip = "";
+			String ori_length = "";
+			String edit_length = "";
+			String ori_transfer	= "";
+			String min_price = "";
+			String max_price = "";
+			for(int i= 0; i < projectList.size(); i++){
+				if(i > 5){
+					break;
+				}
+				ProjectBean project = projectList.get(i);
+				SimpleDateFormat datef = new SimpleDateFormat("yyyy년 MM월 dd일");
+				String board_date = datef.format(projectList.get(i).getBoard_date());
+				genre = project.getBoard_creator_genre()
+						.replace("1", "유튜브")
+						.replace("2", "홍보")
+						.replace("3", "광고")
+						.replace("4", "뮤직비디오")
+						.replace("5", "드라마")
+						.replace("6", "모션그래픽")
+						.replace("7", "기타");
+				switch(project.getBoard_creator_recording()){
+				case 1: recording = "싱크 작업 필요"; break;
+				case 2: recording = "부분적 필요"; break;
+				case 3: recording = "원본 녹음 사용"; break;
+				}
+				switch(project.getBoard_creator_ori_clip_num()){
+				case 1: ori_clip = "5개 이하"; break;
+				case 2: ori_clip = "5개 ~ 20개"; break;
+				case 3: ori_clip = "20개 ~ 50개"; break;
+				case 4: ori_clip = "50개 이상"; break;
+				}
+				switch(project.getBoard_creator_ori_length()){
+				case 1: ori_length = "10분 이하"; break;
+				case 2: ori_length = "30분 이하"; break;
+				case 3: ori_length = "1시간 이하"; break;
+				case 4: ori_length = "5시간 이하"; break;
+				case 5: ori_length = "5시간 이상"; break;
+				case 6: ori_length = "정확히 알 수 없음"; break;
+				}
+				switch(project.getBoard_creator_edit_length()){
+				case 1: edit_length = "5분 이하"; break;
+				case 2: edit_length = "10분 이하"; break;
+				case 3: edit_length = "30분 이하"; break;
+				case 4: edit_length = "1시간 이하"; break;
+				case 5: edit_length = "1시간 이상"; break;
+				}
+				switch(project.getBoard_creator_ori_transfer()){
+				case 1: ori_transfer = "이메일"; break;
+				case 2: ori_transfer = "웹하드"; break;
+				case 3: ori_transfer = "NAS"; break;
+				case 4: ori_transfer = "SMS"; break;
+				case 5: ori_transfer = "직접 전달"; break;
+				}
+				if((project.getBoard_creator_cre_min_price() / 1000) < 10){
+					min_price = (project.getBoard_creator_cre_min_price() / 1000)+"천원";
+				} else {
+					if(project.getBoard_creator_cre_min_price() % 10000 > 0){
+						min_price = (project.getBoard_creator_cre_min_price() / 10000.0)+"만원";
+					} else {
+						min_price = (project.getBoard_creator_cre_min_price() / 10000)+"만원";	
+					}
+				}
+				if((project.getBoard_creator_cre_max_price() / 1000) < 10){
+					max_price = (project.getBoard_creator_cre_max_price() / 1000)+"천원";
+				} else {
+					if(project.getBoard_creator_cre_max_price() % 10000 > 0){
+					max_price = (project.getBoard_creator_cre_max_price() / 10000.0)+"만원";
+					} else {
+					max_price = (project.getBoard_creator_cre_max_price() / 10000)+"만원";	
+					}
+					
+				}
+	    %>
+	       <div class="col-md-4 ftco-animate">
+	          <div class="project-wrap">
+	          	<div class="project-profile">
+	          	<span class="status">모집중</span>
+	             <a id="item-img<%=i %>" data-href="<%=contentUrl%>?board_id=<%=project.getBoard_id()%>" class="img item-link" style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); background-image: url(images/work-1.jpg); border-radius: 50%; width:150px; height:150px;margin:0 auto;">
+	            </a>
+	          	</div>
+	            <div class="text p-4">
+	                <h3><a href="#">다큐멘터리를 제작할 편집자를 찾고 있습니다</a></h3>
+	                <p class="advisor">다큐TV <span>다큐멘터리, 유튜브</span></p>
+	                <ul class="d-flex justify-content-between">
+	                   <li><span class="flaticon-shower"></span>2020-11-15</li>
+	                   <li class="price">10만원 ~ 15만원</li>
+	               </ul>
+	           </div>
+	       </div>
+	   </div>
+	<%
+	    	}
+	    }
+    }
 %>
 </div>
 </div>
@@ -160,44 +229,34 @@
 <section class="ftco-section ftco-counter img" id="section-counter" style="background-image: url(images/bg_4.jpg);">
  <div class="overlay"></div>
  <div class="container">
-   <div class="row">
+  <div class="row">
+    <%
+   	if(request.getAttribute("projectStatusCount") != null){
+   		HashMap<Integer, Integer> statusCount = (HashMap<Integer,Integer>)request.getAttribute("projectStatusCount");
+   		for(int i = 0; i < statusCount.size(); i++){
+   			String siteInfoContent = "";
+   			String siteInfoIcon = "";
+   			switch(i){
+   			case 0: siteInfoContent = "등록된 프로젝트 수"; siteInfoIcon = "flaticon-instructor"; break;
+   			case 1: siteInfoContent = "모집중인 프로젝트 수"; siteInfoIcon = "flaticon-online"; break;
+   			case 2: siteInfoContent = "등록된 편집자 수"; siteInfoIcon = "flaticon-graduated"; break;
+   			case 3: siteInfoContent = "진행중인 프로젝트 수"; siteInfoIcon = "flaticon-tools"; break;
+   			}
+   		
+   %>
     <div class="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
  			<div class="block-18 d-flex align-items-center">
-	   			 <div class="icon"><span class="flaticon-instructor"></span></div>
+	   			 <div class="icon"><span class="<%=siteInfoIcon%>"></span></div>
 	   			 <div class="text">
-	    		 <strong class="number" data-number="1200">0</strong>
-	    		 <span>등록된 프로젝트 수</span>
+	    		 <strong class="number" data-number="<%=statusCount.get(i+1)%>">0</strong>
+	    		 <span><%=siteInfoContent %></span>
 	 		</div>
 		</div>
  	</div>
-       <div class="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
-         <div class="block-18 d-flex align-items-center">
-            <div class="icon"><span class="flaticon-online"></span></div>
-            <div class="text">
-             <strong class="number" data-number="400">0</strong>
-             <span>모집중인 프로젝트 수</span>
-         </div>
-     </div>
- </div>
- <div class="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
-     <div class="block-18 d-flex align-items-center">
-        <div class="icon"><span class="flaticon-graduated"></span></div>
-        <div class="text">
-         <strong class="number" data-number="4500">0</strong>
-         <span>등록된 편집자 수</span>
-     </div>
- </div>
-</div>
-
-<div class="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
- <div class="block-18 d-flex align-items-center">
-    <div class="icon"><span class="flaticon-tools"></span></div>
-    <div class="text">
-     <strong class="number" data-number="300">0</strong>
-     <span>진행중인 프로젝트 수</span>
- </div>
-</div>
-</div>
+ 	<%
+   		}
+   	}
+ 	%>
 </div>
 </div>
 </section>
@@ -206,7 +265,7 @@
    <div class="container">
       <div class="row d-flex">
          <div class="col-md-12 about-intro ftco-animate">
-            
+            <img src="images/main_intro.png">
  </div>
 </div>
 </div>
@@ -229,32 +288,35 @@
         <div class="carousel-testimony owl-carousel">
  
         <%
-        for(int i = 0; i < 10; i++){
+        if(request.getAttribute("editorList") != null){
+        	ArrayList<EditorBean> editorList = (ArrayList<EditorBean>)request.getAttribute("editorList");
+	        for(int i = 0; i < editorList.size(); i++){
+	        %>
+	          <div class="item">
+	            <div class="testimony-wrap py-4">
+	              <div class="text">
+	                 <p class="star">
+	                    <span class="fa fa-star"></span>
+	                    <span class="fa fa-star"></span>
+	                    <span class="fa fa-star"></span>
+	                    <span class="fa fa-star"></span>
+	                    <span class="fa fa-star"></span>
+	                </p>
+	                <p class="mb-4" style="height: 144px;">최선을 다해 편집하겠습니다</p>
+	                <div class="d-flex align-items-center">
+	                   <div class="user-img" style="background-image: url(images/person_1.jpg)"></div>
+	                   <div class="pl-3">
+	                      <p class="name">username<%=i+1 %></p>
+	                      <span class="position">편집자</span>
+	                  </div>
+	              </div>
+	          </div>
+	      </div>
+	  </div>
+	<%
+	        }
+       }
         %>
-          <div class="item">
-            <div class="testimony-wrap py-4">
-              <div class="text">
-                 <p class="star">
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                </p>
-                <p class="mb-4" style="height: 144px;">최선을 다해 편집하겠습니다</p>
-                <div class="d-flex align-items-center">
-                   <div class="user-img" style="background-image: url(images/person_1.jpg)"></div>
-                   <div class="pl-3">
-                      <p class="name">username</p>
-                      <span class="position">편집자</span>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
-<%
-        }
-%>
 
 </div>
 </div>
@@ -281,59 +343,56 @@
   <div class="container">
     <div class="row d-flex">
       <div class="col-md-6 heading-section pr-md-5 ftco-animate d-flex align-items-center">
-         <div class="w-100 mb-4 mb-md-0">
-            <span class="subheading">Welcome to StudyLab</span>
-            <h2 class="mb-4">We Are StudyLab An Online Learning Center</h2>
-            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-            <div class="d-flex video-image align-items-center mt-md-4">
-              <a href="#" class="video img d-flex align-items-center justify-content-center" style="background-image: url(images/about.jpg);">
-                 <span class="fa fa-play-circle"></span>
-             </a>
-             <h4 class="ml-4">Learn anything from StudyLab, Watch video</h4>
-         </div>
+       <div class="w-100 mb-4 mb-md-0">
+        <span class="subheading">Welcome to Hanjum</span>
+        <h2 class="mb-4">한줌에디터의 프로세스를 경험해보세요.</h2>
+        <p>크리에이터님의 영상을 제작해 주실 편집자분들을 찾기 위해 프로젝트를 등록해보세요. 구체적인 분야와 설명을 작성할수록 좋은 영상을 만들 수 있습니다.</p>
+        <p>마음에 드는 믿을만한 편집자를 만나보세요. 유사 프로젝트를 진행한 경험이 있는 편집자에게 프로젝트 분석 및 제안을 받아볼 수 있습니다.</p>
+     	<p>금전거래를 하시기 망설여지시나요? 한줌 에디터의 거래시스템을 통해 안전한 공정거래가 이루어지니 안심하세요.</p>
+     	<p>실물미팅을 하시기 주저되시나요? 한줌 에디터의 1:1 채팅기능을 통해 원하시는 프로젝트의 방향을 토의해보세요.</p>
+     	<p>프로젝트 진행이 끝나면 크리에이터님은 결과물을 받고 지급승인을 눌러 대금지급을 완료합니다.</p>
      </div>
- </div>
- <div class="col-md-6">
+   </div>
+   <div class="col-md-6">
      <div class="row">
-        <div class="col-md-12 col-lg-6 d-flex align-self-stretch ftco-animate">
-          <div class="services">
-            <div class="icon d-flex align-items-center justify-content-center"><span class="flaticon-tools"></span></div>
-            <div class="media-body">
-              <h3 class="heading mb-3">Top Quality Content</h3>
-              <p>A small river named Duden flows by their place and supplies</p>
+      <div class="col-md-12 col-lg-6 d-flex align-self-stretch ftco-animate">
+        <div class="services">
+          <div class="icon d-flex align-items-center justify-content-center"><span class="flaticon-tools"></span></div>
+          <div class="media-body">
+            <h3 class="heading mb-3">프로젝트 등록</h3>
+            <p>프로젝트를 진행할 때 크리에이터님들이 원하는 구체적인 방향과 적절한 단가를 작성해주세요.</p>
           </div>
-      </div>      
-  </div>
-  <div class="col-md-12 col-lg-6 d-flex align-self-stretch ftco-animate">
-      <div class="services">
-        <div class="icon icon-2 d-flex align-items-center justify-content-center"><span class="flaticon-instructor"></span></div>
-        <div class="media-body">
-          <h3 class="heading mb-3">Highly Skilled Instructor</h3>
-          <p>A small river named Duden flows by their place and supplies</p>
+        </div>      
       </div>
-  </div>    
-</div>
-<div class="col-md-12 col-lg-6 d-flex align-self-stretch ftco-animate">
-  <div class="services">
-    <div class="icon icon-3 d-flex align-items-center justify-content-center"><span class="flaticon-quiz"></span></div>
-    <div class="media-body">
-      <h3 class="heading mb-3">World Class &amp; Quiz</h3>
-      <p>A small river named Duden flows by their place and supplies</p>
+      <div class="col-md-12 col-lg-6 d-flex align-self-stretch ftco-animate">
+        <div class="services">
+          <div class="icon icon-2 d-flex align-items-center justify-content-center"><span class="flaticon-instructor"></span></div>
+          <div class="media-body">
+            <h3 class="heading mb-3">편집자 모집</h3>
+            <p>지원자들의 포트폴리오와 평가를 한눈에 볼 수 있습니다. 마음에 드는 편집자를 선택하셔서 프로젝트를 진행하세요.</p>
+          </div>
+        </div>    
+      </div>
+      <div class="col-md-12 col-lg-6 d-flex align-self-stretch ftco-animate">
+        <div class="services">
+          <div class="icon icon-3 d-flex align-items-center justify-content-center"><span class="flaticon-quiz"></span></div>
+          <div class="media-body">
+            <h3 class="heading mb-3">프로젝트 미팅</h3>
+            <p>프로젝트 진행중에 1:1 채팅을 통해 프로젝트의 진행방향을 토의 하실 수 있습니다.</p>
+          </div>
+        </div>      
+      </div>
+      <div class="col-md-12 col-lg-6 d-flex align-self-stretch ftco-animate">
+        <div class="services">
+          <div class="icon icon-4 d-flex align-items-center justify-content-center"><span class="flaticon-browser"></span></div>
+          <div class="media-body">
+            <h3 class="heading mb-3">프로젝트 완료</h3>
+            <p>마음에 드는 결과물을 받으셨다면 해당 편집자님을 관심등록 하여 다음에도 프로젝트를 함께 진행해보세요!</p>
+          </div>
+        </div>      
+      </div>
+    </div>
   </div>
-</div>      
-</div>
-<div class="col-md-12 col-lg-6 d-flex align-self-stretch ftco-animate">
-  <div class="services">
-    <div class="icon icon-4 d-flex align-items-center justify-content-center"><span class="flaticon-browser"></span></div>
-    <div class="media-body">
-      <h3 class="heading mb-3">Get Certified</h3>
-      <p>A small river named Duden flows by their place and supplies</p>
-  </div>
-</div>      
-</div>
-</div>
-</div>
 </div>
 </div>
 </section>

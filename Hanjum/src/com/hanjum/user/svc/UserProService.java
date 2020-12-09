@@ -261,4 +261,89 @@ public class UserProService {
 		return data;
 		
 	}
+
+	public boolean userEmailCheckCode(String email, String checkCode) {
+		boolean insertCheck = false;
+		Connection con = getConnection();
+		UserDAO userDAO = UserDAO.getInstance();
+		userDAO.setConnection(con);
+		insertCheck = userDAO.userEmailCheckCode(email,checkCode);
+		if(insertCheck) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
+		close(con);
+		return insertCheck;
+		
+		
+	}
+
+	public boolean codeCheck(String email, String code) {
+		boolean success = false;
+		
+		Connection con = getConnection();
+		UserDAO userDAO = UserDAO.getInstance();
+		userDAO.setConnection(con);
+		success = userDAO.emailCodeCheck(email,code);
+		if(success) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
+		close(con);
+		
+		return success;
+	}
+		// 내정보 - 비밀번호 변경할때 실행하는 메서드
+	public boolean changePass(String user_id, String user_pass, String user_changePass) {
+		boolean success = false;
+		Connection con = getConnection();
+		UserDAO userDAO = UserDAO.getInstance();
+		userDAO.setConnection(con);
+		success = userDAO.changePass(user_id,user_pass,user_changePass);
+		if(success) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
+		close(con);
+		
+		return success;
+	}
+	
+		// 비밀번호찾기 - 비밀번호 변경할때 실행하는 메서드
+	public boolean changePass(String user_id, String user_changePass) {
+		boolean success = false;
+		Connection con = getConnection();
+		UserDAO userDAO = UserDAO.getInstance();
+		userDAO.setConnection(con);
+		success = userDAO.changePass(user_id, user_changePass);
+		if(success) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
+		close(con);
+		
+		return success;
+	}
+
+	public int checkEmail(String user_id, String email) {
+		int selectCount = 0;
+		Connection con = getConnection();
+		UserDAO userDAO = UserDAO.getInstance();
+		userDAO.setConnection(con);
+		selectCount = userDAO.checkUserEmail(user_id,email);
+		if(selectCount>0) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
+		close(con);
+		
+		return selectCount;
+		
+	}
+
 }

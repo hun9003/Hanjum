@@ -19,7 +19,7 @@
          transform: translate(-50%, -50%); 
          padding: 1rem 1.5rem; 
          border-radius: 0.5rem; 
-         width : 500px;
+         width : 90%;
          max-height : 80%;
      } 
      .layer-join-content { 
@@ -29,11 +29,13 @@
          transform: translate(-50%, -50%); 
          padding: 1rem 1.5rem; 
          border-radius: 0.5rem; 
-         min-width : 600px;
          width : 60%;
          max-height : 80%;
          overflow: scroll;
      } 
+      @media (max-width: 768px) {
+	    .layer-join-content {
+	    		width: 90%; } }
      .layer-join-content::-webkit-scrollbar {
      	display: none;
      }
@@ -72,6 +74,21 @@
 	 div.check_list input[type="radio"]+label {display: inline-block; cursor:pointer; width: 20px; height: 20px; vertical-align: middle; line-height: 10px;}
 	
 	 div.write_form { min-width:800px; width:95%; margin: 20px auto 50px auto; background-color: #fff; border-radius: 16px; overflow: hidden;}
+	  @media (min-width: 425px) {
+	    .write_form {
+      			max-width: 380px; } }
+	  @media (min-width: 576px) {
+	    .write_form {
+      			max-width: 540px; } }
+	  @media (min-width: 768px) {
+	    .write_form {
+	    		max-width: 720px; } }
+	  @media (min-width: 992px) {
+	    .write_form {
+	      		max-width: 960px; } }
+	  @media (min-width: 1200px) {
+	    .write_form {
+	      		max-width: 1140px; } }
 	 div.write_title h1 { margin:0; padding: 20px; 
 	 					  font-weight: 700; 
 	 					  background: #4986fc;

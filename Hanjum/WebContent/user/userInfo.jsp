@@ -9,7 +9,7 @@
 		user_type = "일반 회원";
 		break;
 	case 2:
-		user_type = "편집자 회원";
+		user_type = "편집자";
 		break;
 	default:
 		user_type = "관리자";
@@ -74,6 +74,7 @@
 	             <%
 	             	}
 	             %>
+	             <a href="UserLogout.uo" class="m-l-10">로그아웃</a>
 			 	</span>
 			 </span>             
              </div>

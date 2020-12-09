@@ -190,12 +190,10 @@ public class UserDAO {
 		int insertCount = 0;
 		PreparedStatement pstmt = null;
 		try {
-			String sql = "update user set user_pass=?,user_email=?,user_phone=? where user_id=?";
+			String sql = "update user set user_phone=? where user_id=?";
 			pstmt=con.prepareStatement(sql);
-			pstmt.setString(1, userBean.getUser_pass());
-			pstmt.setString(2, userBean.getUser_email());
-			pstmt.setString(3, userBean.getUser_phone());
-			pstmt.setString(4, userBean.getUser_id());
+			pstmt.setString(1, userBean.getUser_phone());
+			pstmt.setString(2, userBean.getUser_id());
 			insertCount=pstmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("updateUser() 오류! - user" + e.getMessage());
@@ -515,7 +513,8 @@ public class UserDAO {
 		}
 		return insertCount;
 	}
-
+	
+	
 	public int userCheckId(String user_id) {
 		int data = 0;
 		PreparedStatement pstmt = null;
@@ -538,6 +537,141 @@ public class UserDAO {
 		
 		return data;
 	}
+	
+	// 이메일 코드 생성하는건데 이미 해당 이메일에 대해 코드가 있으면 제거하고 다시 보냄(재전송 시)
+	public boolean userEmailCheckCode(String email, String checkCode) {
+		boolean insertCheck = false;
+		int insertCount = 0;
+		PreparedStatement pstmt = null;
+		try {
+			String sql = "delete from email_code where email=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, email);
+			pstmt.executeUpdate();
+			
+			String sql2 = "insert into email_code(email,email_code_content) value(?,?)";
+			pstmt=con.prepareStatement(sql2);
+			pstmt.setString(1, email);
+			pstmt.setString(2, checkCode);
+			
+			insertCount = pstmt.executeUpdate();
+			
+			if(insertCount > 0) {
+				insertCheck = true;
+			} 
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return insertCheck;
+	}
+	
+	// 이메일 코드 체크 성공하면 디비에서 제거함
+	public boolean emailCodeCheck(String email, String code) {
+		boolean success = false;
+		int deleteCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			String sql = "select * from email_code where email=? and email_code_content=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, email);
+			pstmt.setNString(2, code);
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				String sql2 = "delete from email_code where email=?";
+				pstmt=con.prepareStatement(sql2);
+				pstmt.setString(1, email);
+				deleteCount = pstmt.executeUpdate();
+			}
+			
+			
+			if(deleteCount > 0) {
+				success = true;
+			} 
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return success;
+	}
+	// 내정보 - 비밀번호 변경
+	public boolean changePass(String user_id, String user_pass, String user_changePass) {
+		boolean success = false;
+		int updateCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			String sql = "update user set user_pass=? where user_id=? and user_pass =?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, user_changePass);
+			pstmt.setString(2, user_id);
+			pstmt.setString(3, user_pass);
+			updateCount = pstmt.executeUpdate();
+			
+			if(updateCount > 0 ) {
+				success = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return success;
+	}
+	// 비밀번호 찾기 - 비밀번호 변경
+	public boolean changePass(String user_id, String user_changePass) {
+		boolean success = false;
+		int updateCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try { // Email은 이미 메일을 전송할때 제어하여서 확인을 했기 때문에 굳이 파라미터 값을 받지않았습니다.String 파라미터 3개는 내정보에서 이미사용함ㅠ
+			String sql = "update user set user_pass=? where user_id=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, user_changePass);
+			pstmt.setString(2, user_id);
+			updateCount = pstmt.executeUpdate();
+			
+			if(updateCount > 0 ) {
+				success = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return success;
+	}
+	
+	
+	// 비밀번호찾기 user_id + user_email 매칭
+	public int checkUserEmail(String user_id, String email) {
+		int selectCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			String sql = "select * from user where user_id=? and user_email=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, user_id);
+			pstmt.setString(2, email);
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				selectCount ++;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return selectCount;
+	}
+
 	
 	
 }

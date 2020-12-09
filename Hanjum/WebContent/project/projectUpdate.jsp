@@ -6,6 +6,8 @@ ProjectBean project = (ProjectBean)request.getAttribute("project");
 if(project != null){
 	String[] ref = project.getBoard_creator_cre_ref().split(",");
 %>
+<script type="text/javascript" src="js/smartediter.js"></script>
+<script type="text/javascript" src="plugin/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 
 <div class="write_form">
 <div class="write_title"><h1>프로젝트 수정</h1></div>

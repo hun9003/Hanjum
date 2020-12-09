@@ -15,13 +15,6 @@ import com.hanjum.board.action.EditorListAction;
 import com.hanjum.board.action.EditorSearchListAction;
 import com.hanjum.board.action.EditorUpdateProAction;
 import com.hanjum.board.action.EditorWriteProAction;
-import com.hanjum.board.action.EnterDeleteProAction;
-import com.hanjum.board.action.EnterInfoAction;
-import com.hanjum.board.action.EnterListAction;
-import com.hanjum.board.action.EnterSearchListAction;
-import com.hanjum.board.action.EnterUpdateAction;
-import com.hanjum.board.action.EnterUpdateProAction;
-import com.hanjum.board.action.EnterWriteProAction;
 import com.hanjum.board.action.ProjectDeleteProAction;
 import com.hanjum.board.action.ProjectInfoAction;
 import com.hanjum.board.action.ProjectListAction;
@@ -78,27 +71,6 @@ public class BoardFrontController extends HttpServlet {
 			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
 		} else if(command.equals("/ProjectListSearch.bo")) { // 프로젝트 검색 리스트 액션
 			action = new ProjectSearchListAction();
-			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
-		} else if(command.equals("/Enter.bo")) { // 채용공고 조회 액션
-			action = new EnterInfoAction();
-			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
-		} else if(command.equals("/EnterWritePro.bo")) { // 채용공고 작성 액션
-			action = new EnterWriteProAction();
-			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
-		} else if(command.equals("/EnterUpdate.bo")) { // 채용 수정
-			action = new EnterUpdateAction();
-			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
-		} else if(command.equals("/EnterUpdatePro.bo")) { // 채용공고 수정 액션
-			action = new EnterUpdateProAction();
-			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
-		} else if(command.equals("/EnterDeletePro.bo")) { // 채용공고 삭제 액션
-			action = new EnterDeleteProAction();
-			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
-		} else if(command.equals("/EnterList.bo")) { // 채용공고 리스트 액션
-			action = new EnterListAction();
-			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
-		} else if(command.equals("/EnterSearchList.bo")) { // 채용공고 검색 리스트 액션
-			action = new EnterSearchListAction();
 			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
 		} else if(command.equals("/Editor.bo")) { // 편집자 조회 액션
 			action = new EditorInfoAction();

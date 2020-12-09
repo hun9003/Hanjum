@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Vector;
 
 import com.hanjum.board.vo.BoardBean;
 import com.hanjum.board.vo.ProjectBean;
@@ -101,8 +102,66 @@ public class ProjectDAO {
 		return count;
 	}
 	
-	// CHECK ====================================================================================
+	public HashMap<String, Integer> selectGenreCount() { // 분야별 프로젝트 갯수
+		System.out.println("ProjectDAO - selectGenreCount()");
+		HashMap<String, Integer> countList = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			String sql = "SELECT category.category_id, category.category_content, " + 
+					"IFNULL((SELECT COUNT(board_id) FROM board_creator " + 
+					"WHERE board_creator_genre LIKE CONCAT('%',category.category_id,'%')),0) AS Count " + 
+					"FROM category " + 
+					"ORDER BY IFNULL((SELECT COUNT(board_id) FROM board_creator " + 
+					"WHERE board_creator_genre LIKE CONCAT('%',category.category_id,'%')),0) DESC " + 
+					"LIMIT 6;";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			countList = new HashMap<String, Integer>();
+			while(rs.next()) {
+				countList.put(rs.getString("category_content"), rs.getInt("Count"));
+			}
+		} catch (Exception e) {
+			System.out.println("selectGenreCount 오류");
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		} 
 		
+		return countList;
+	}
+	
+		public HashMap<Integer,Integer> selectStatusCount(){
+			System.out.println("ProjectDAO - selectStatusCount()");
+			HashMap<Integer, Integer> countList = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			try {
+				String sql = "SELECT (SELECT COUNT(board_id) FROM board_creator) AS 'a' , "+ 
+						"(SELECT COUNT(board_id) FROM board_creator WHERE board_creator_status = 0)  AS 'b'," + 
+						"(SELECT COUNT(user_id) FROM editor)  AS 'c', " + 
+						"(SELECT COUNT(board_id) FROM board_creator WHERE board_creator_status = 1)  AS 'd';";
+				pstmt = con.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					countList = new HashMap<Integer, Integer>();
+					countList.put(1, rs.getInt(1));
+					countList.put(2, rs.getInt(2));
+					countList.put(3, rs.getInt(3));
+					countList.put(4, rs.getInt(4));
+				}
+			} catch (Exception e) {
+				System.out.println("selectGenreCount 오류");
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+				close(rs);
+			}
+			
+			return countList;
+		}
+	// CHECK ====================================================================================
 		
 		
 	// INSERT ===================================================================================

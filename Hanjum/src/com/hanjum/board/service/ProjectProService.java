@@ -36,6 +36,22 @@ public class ProjectProService {
 		int count = projectDAO.selectProjectSearchCount(search);
 		return count;
 	}
+	
+	public HashMap<String, Integer> getProjectGenreCount() { // 프로젝트 분야별 갯수
+		System.out.println("ProjectProService - getListSearchProjectCount()");
+		HashMap<String, Integer> countList = projectDAO.selectGenreCount();
+		
+		close(con);
+		return countList;
+	}
+	
+	public HashMap<Integer, Integer> getStatusCount(){
+		System.out.println("ProjectProService - getStatusCount()");
+		HashMap<Integer, Integer> statusCount = projectDAO.selectStatusCount();
+		
+		close(con);
+		return statusCount;
+	}
 	// INSERT ===================================================================================
 	
 	public boolean writeProject(ProjectBean projectBean) { // 프로젝트 작성 서비스

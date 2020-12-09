@@ -1,10 +1,15 @@
   
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
 <link href="css/style.css" rel="stylesheet">
 <script type="text/javascript" src="js/jquery-3.5.1.js"></script>
 <script type="text/javascript" src="plugin/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript" src="js/smartediter.js"></script>
+
 <script type="text/javascript">
 	var checkIdResult = false, checkPasswdResult = false;
 	$(document).ready(function() {
@@ -133,11 +138,14 @@
 		}
 	}
 </script>
+<title>회원가입</title>
 <style>
 	#editor_photo { display:none; }
 	.check_list { display: inline-block; padding:10px;}
 	.check_list span { margin-left: 10px;}
 </style>
+</head>
+<body>
 <div class="login-wrap p-4 p-md-5" style="margin-top:0px;">
               <h3 class="mb-4">편집자 가입</h3>
               <form action="JoinEditorPro.uo" method="post" name="fr_write" id="WriteForm" enctype="multipart/form-data" onsubmit="return check()">
@@ -157,7 +165,7 @@
                 </div>
                 <div class="form-group">
                     <label class="label" for="user_email">이메일</label>
-                    <input type="text" id="user_email" style="min-width:100px; width:40%; display: inline-block;" class="form-control" name="user_email" required="required" placeholder="Email"/> @ 
+                    <input type="text" id="user_email" style="min-width:100px; width:30%; display: inline-block;" class="form-control" name="user_email" required="required" placeholder="Email"/> @ 
                     <input type="text" class="form-control" style="width:30%; display: inline-block;" name="user_email2" id="user_email2" onfocus="inInput(this)"
 							onblur="outInput(this)" /> 
 							<select  class="form-control" style="width:25%; display: inline-block;" onfocus="inInput(this)" onblur="outInput(this)" onChange="selEmail(this.value)">
@@ -184,7 +192,8 @@
                 <div class="form-group">
                 <label  class="label" for="DetailContent">본인 소개</label>
                 <div class="form-control" style="height: auto;">
-                	<textarea id="DetailContent" name="editor_profile" style="padding: 20px; width: 100%;"></textarea>
+                	<div style="padding-top:10px;"></div>
+                	<textarea id="DetailContent" name="editor_profile" style="padding: 20px; width:100%; min-width:260px; "></textarea>
                 </div>
                 </div>
                 <div class="form-group">
@@ -268,7 +277,9 @@
 					</select>
                 </div>
              <div class="form-group d-flex justify-content-end mt-4">
-                 <button type="submit" class="btn btn-primary submit"><span class="fa fa-paper-plane"></span></button>
+                 <button type="submit"  id="WriteSubmit" class="btn btn-primary submit"><span class="fa fa-paper-plane"></span></button>
              </div>
          </form>
      </div>
+     </body>
+     </html>

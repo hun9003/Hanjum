@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+<title>한줌에디터</title>
+<link rel="stylesheet" href="css/style.css">
+	</head>
+	<body>
 	<div class="login-wrap p-4 p-md-5">
               <h3 class="mb-4">로그인</h3>
               <form action="LoginPro.uo" class="signup-form" method="post" name="Userform">
@@ -15,5 +23,7 @@
                  <button type="submit" class="btn btn-primary submit"><span class="fa fa-paper-plane"></span></button>
              </div>
          </form>
-         <p class="text-center">오늘 처음 오셨나요? <a id="join_btn" data-href="Join.uo">Sign Up</a></p>
+         <p class="text-center">오늘 처음 오셨나요? <a id="join_btn" href="My.uo?fr=join">Sign Up</a></p>
      </div>
+     </body>
+     </html>
