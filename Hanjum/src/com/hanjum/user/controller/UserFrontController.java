@@ -207,7 +207,15 @@ public class UserFrontController extends HttpServlet {
 			String user_pass = request.getParameter("user_pass");
 			String user_changePass = request.getParameter("user_changePass");
 			UserProService userChangePass = new UserProService();
-			boolean success = userChangePass.changePass(user_id,user_pass,user_changePass);
+			boolean success = false;
+			System.out.println(user_pass);
+			System.out.println("id : " +user_id);
+			System.out.println("바꿀비번 : " +user_changePass);
+			if(user_pass == null) { // 유저 패스가 없으면 비밀번호 찾기로 온거
+				success = userChangePass.changePass(user_id, user_changePass);
+			} else { // 유저 패스가 있으면 정상 비밀번호 변경
+				success = userChangePass.changePass(user_id,user_pass,user_changePass);
+			}
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();
 			if(success) {

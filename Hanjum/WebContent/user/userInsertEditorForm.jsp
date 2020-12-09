@@ -43,9 +43,11 @@
 	
 		   
 		// 이메일 인증번호 전송
+		
 		$('#mail_check').click(function() {
 		var email = $('#user_email').val() + "@" + $('#user_email2').val();
-		$.ajax({
+		alert('입력하신 이메일로 인증코드가 전송됩니다.');
+		$.ajax({ // 회원가입 폼에서는 email만 가지고갑니다. 회원가입 페이지에서 제어를 하기때문(id값이 필요없음)
 			url : '${pageContext.request.contextPath}/mailSend?receiver='+ email,
 			type : 'get',
 			success : function(data) {
@@ -58,12 +60,10 @@
 	// 이메일 인증번호 재전송
 		$('#mail_check2').click(function() {
 		var email = $('#user_email').val() + "@" + $('#user_email2').val();
+			alert("인증번호를 " + email + "로 재발송합니다.");
 		$.ajax({
 			url : '${pageContext.request.contextPath}/mailSend?receiver='+ email,
-			type : 'get',
-			success : function(data) {
-				alert("인증번호가 " + email + "로 재 전송 되었습니다.");
-			}// 석세스 종료
+			type : 'get'
 		}); // ajax종료
 	}); // click 종료
 	

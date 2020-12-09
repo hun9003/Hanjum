@@ -513,7 +513,8 @@ public class UserDAO {
 		}
 		return insertCount;
 	}
-
+	
+	
 	public int userCheckId(String user_id) {
 		int data = 0;
 		PreparedStatement pstmt = null;
@@ -536,7 +537,8 @@ public class UserDAO {
 		
 		return data;
 	}
-
+	
+	// 이메일 코드 생성하는건데 이미 해당 이메일에 대해 코드가 있으면 제거하고 다시 보냄(재전송 시)
 	public boolean userEmailCheckCode(String email, String checkCode) {
 		boolean insertCheck = false;
 		int insertCount = 0;
@@ -565,7 +567,8 @@ public class UserDAO {
 		}
 		return insertCheck;
 	}
-
+	
+	// 이메일 코드 체크 성공하면 디비에서 제거함
 	public boolean emailCodeCheck(String email, String code) {
 		boolean success = false;
 		int deleteCount = 0;
@@ -597,7 +600,7 @@ public class UserDAO {
 		}
 		return success;
 	}
-
+	// 내정보 - 비밀번호 변경
 	public boolean changePass(String user_id, String user_pass, String user_changePass) {
 		boolean success = false;
 		int updateCount = 0;
@@ -621,6 +624,54 @@ public class UserDAO {
 		}
 		return success;
 	}
+	// 비밀번호 찾기 - 비밀번호 변경
+	public boolean changePass(String user_id, String user_changePass) {
+		boolean success = false;
+		int updateCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try { // Email은 이미 메일을 전송할때 제어하여서 확인을 했기 때문에 굳이 파라미터 값을 받지않았습니다.String 파라미터 3개는 내정보에서 이미사용함ㅠ
+			String sql = "update user set user_pass=? where user_id=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, user_changePass);
+			pstmt.setString(2, user_id);
+			updateCount = pstmt.executeUpdate();
+			
+			if(updateCount > 0 ) {
+				success = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return success;
+	}
+	
+	
+	// 비밀번호찾기 user_id + user_email 매칭
+	public int checkUserEmail(String user_id, String email) {
+		int selectCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			String sql = "select * from user where user_id=? and user_email=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, user_id);
+			pstmt.setString(2, email);
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				selectCount ++;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return selectCount;
+	}
+
 	
 	
 }

@@ -72,17 +72,29 @@ table {
 			// 이메일 인증번호 전송
 			$('#mail_check').click(function() {
 			var email = $('#user_email').val() + "@" + $('#user_email2').val();
-			$.ajax({
-				url : '${pageContext.request.contextPath}/mailSend?receiver='+ email,
+			alert('입력하신 이메일로 인증코드가 전송됩니다.');
+			$.ajax({ // 회원가입 폼에서는 email만 가지고갑니다. 회원가입 페이지에서 제어를 하기때문(id값이 필요없음)
+				url : '${pageContext.request.contextPath}/mailSend?receiver='+ email, 
 				type : 'get',
 				success : function(data) {
 					$('#mailSet').hide();
 					$('#codeCheck').show();
-				}// 석세스 종료
+				}// success 종료
 			}); // ajax종료
 		}); // click 종료
 	
-			// 이메일 인증번호 전송
+		// 이메일 인증번호 재전송
+		$('#mail_check2').click(function() {
+		var email = $('#user_email').val() + "@" + $('#user_email2').val();
+		alert("인증번호를 " + email + "로 재발송합니다.");
+		$.ajax({
+			url : '${pageContext.request.contextPath}/mailSend?receiver='+ email,
+			type : 'get'
+		}); // ajax종료
+	}); // click 종료
+		
+		
+			// 이메일 인증번호 체크
 			$('#email_code').keyup(function() {
 			var email = $('#user_email').val() + "@" + $('#user_email2').val();
 			var code = $('#email_code').val();
