@@ -12,7 +12,7 @@
 <script type="text/javascript" src="plugin/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript" src="js/smartediter.js"></script>
 <script type="text/javascript">
-	var checkIdResult = false, checkPasswdResult = false;
+	var checkIdResult = false, checkPasswdResult = false, checkEmailResult = false;
 	
 	// 아이디 검사 ajax
 	$(document).ready(function() {
@@ -80,6 +80,7 @@
 				$('#codeCheck').hide();
 				$('#user_email3').val(email);
 				$('#mailSet2').show();
+				checkEmailResult = true;
 				} else if(data == 0) {
 				$('#codeMessage').html("아쉽게도 코드번호 그거 아니에요.. <br>");
 				}
@@ -139,10 +140,13 @@ function checkPasswd(passwdForm) {
 	}
 }
 	function check() {
-		if(checkIdResult && checkPasswdResult) {
+		if(checkIdResult && checkPasswdResult && checkEmailResult) {
 			return true;
+		} else if(checkIdResult && checkPasswdResult) {
+			alert('이메일 인증을 해주세요.');
+			return false;
 		} else {
-			alert('아이디 또는 패스워드 규칙 확인 필수!');
+			alert('아이디 또는 패스워드 규칙을 확인해주세요.');
 			return false;
 		}
 	}
@@ -167,7 +171,7 @@ function checkPasswd(passwdForm) {
 
 <div class="write_form">
 <div class="write_title"><h1>에디터 회원 가입</h1></div>
-<form action="UserInsertEditorPro.uo" method="post" name="fr_write" id="WriteForm" enctype="multipart/form-data">
+<form action="UserInsertEditorPro.uo" method="post" name="fr_write" id="WriteForm" enctype="multipart/form-data" onsubmit="return check()">
 <table class="write_table">
 <tr><td class="td_name"><label for="Subject">아이디</label></td><td class="td_content">
 <input id="user_id" type="text" name="user_id" placeholder="4-12자리 영문,숫자 조합">

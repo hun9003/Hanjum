@@ -41,7 +41,7 @@ table {
 </style>
 <script src="../js/jquery-3.5.1.js"></script>
 <script type="text/javascript">
-	var checkIdResult = false, checkPasswdResult = false;
+	var checkIdResult = false, checkPasswdResult = false, checkEmailResult = false; 
 	$(document).ready(function() {
 				$('#user_id').blur(function() {
 				var element = document.getElementById('id_check');
@@ -107,6 +107,7 @@ table {
 					$('#codeCheck').hide();
 					$('#user_email3').val(email);
 					$('#mailSet2').show();
+					checkEmailResult = true;
 					} else if(data == 0) {
 					$('#codeMessage').html("아쉽게도 코드번호 그거 아니에요.. <br>");
 					}
@@ -165,10 +166,13 @@ table {
 		}
 	}
 	function check() {
-		if (checkIdResult && checkPasswdResult) {
+		if(checkIdResult && checkPasswdResult && checkEmailResult) {
 			return true;
+		} else if(checkIdResult && checkPasswdResult) {
+			alert('이메일 인증을 해주세요.');
+			return false;
 		} else {
-			alert('아이디 또는 패스워드 규칙 확인 필수!');
+			alert('아이디 또는 패스워드 규칙을 확인해주세요.');
 			return false;
 		}
 	}
