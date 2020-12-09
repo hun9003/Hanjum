@@ -672,6 +672,31 @@ public class UserDAO {
 		return selectCount;
 	}
 
+	public int userReport(String user_id, String report_userid, int report_type, String report_content) {
+		System.out.println("UserDAO - insertUser() - user");
+		int insertCount = 0;
+		PreparedStatement pstmt = null;
+//		ResultSet rs = null;
+		
+		
+		try {
+			String sql = "insert into user_report(user_id,report_userid,report_type,report_content) values(?,?,?,?)";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, user_id);
+			pstmt.setString(2, report_userid);
+			pstmt.setInt(3, report_type);
+			pstmt.setString(4, report_content);
+			insertCount=pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("insertUser() 오류! - " + e.getMessage());
+			e.printStackTrace();
+		} finally {
+//			close(rs);
+			close(pstmt);
+		}
+		return insertCount;
+	}
+
 	
 	
 }

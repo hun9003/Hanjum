@@ -238,7 +238,7 @@ table {
 						</div>
 						<div id="codeCheck" style="display: none;">
 						<input type="text" name="email_code" id="email_code">
-						<input type="button" value="인증 번호 확인" name="code_check" id="code_check">
+						<input type="button" value="인증 번호 재전송" name="code_check" id="code_check">
 						</div>
 						<div id="mailSet2" style="display: none;">
 						<input type="text" name="user_email3" id="user_email3" readonly="readonly">

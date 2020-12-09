@@ -346,4 +346,22 @@ public class UserProService {
 		
 	}
 
+	public boolean userReport(String user_id, String report_userid, int report_type, String report_content) {
+		boolean reportSuccess = false;
+		Connection con = getConnection();
+		UserDAO userDAO = UserDAO.getInstance();
+		userDAO.setConnection(con);
+		
+		int insertCount = userDAO.userReport(user_id,report_userid,report_type,report_content);
+		
+		if (insertCount > 0) {
+			commit(con);
+			reportSuccess = true;
+		} else {
+			rollback(con);
+		}
+		close(con);
+		return reportSuccess;
+	}
+
 }

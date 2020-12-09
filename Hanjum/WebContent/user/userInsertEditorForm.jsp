@@ -262,12 +262,12 @@ function checkPasswd(passwdForm) {
 <option>울산</option><option>세종</option><option>경기</option><option>강원</option><option>충북</option><option>충남</option>
 <option>경북</option><option>경남</option><option>전북</option><option>전남</option><option>제주</option></select>
 </td></tr>
-<!-- <tr><td class="td_name"><label for="Ref1">레퍼런스 링크</label></td><td class="td_content"> -->
-<!-- <div class="link_alert"><img src="img/linkAlert.png"> 표시된 곳만 작성해주세요</div> -->
-<!-- <div class="input_link"><input type="text" name="board_creator_cre_ref[]" id="Ref1" placeholder="링크를 업로드 하세요."></div> -->
-<!-- <div class="input_link"><input type="text" name="board_creator_cre_ref[]" id="Ref2" placeholder="링크를 업로드 하세요."></div> -->
-<!-- <div class="input_link"><input type="text" name="board_creator_cre_ref[]" id="Ref3" placeholder="링크를 업로드 하세요."></div> -->
-<!-- </td></tr> -->
+<tr><td class="td_name"><label for="Ref1">레퍼런스 링크</label></td><td class="td_content">
+<div class="link_alert"><img src="img/linkAlert.png"> 표시된 곳만 작성해주세요</div>
+<div class="input_link"><input type="text" name="board_creator_cre_ref[]" id="Ref1" placeholder="링크를 업로드 하세요."></div>
+<div class="input_link"><input type="text" name="board_creator_cre_ref[]" id="Ref2" placeholder="링크를 업로드 하세요."></div>
+<div class="input_link"><input type="text" name="board_creator_cre_ref[]" id="Ref3" placeholder="링크를 업로드 하세요."></div>
+</td></tr>
 </table>
 <div class="write_form_submit"><input type="submit" id="WriteSubmit" value="회원가입"></div>
 </form>
