@@ -8,6 +8,7 @@ import static com.hanjum.db.JdbcUtil.*;
 import com.hanjum.user.dao.UserDAO;
 import com.hanjum.user.exception.LoginException;
 import com.hanjum.user.vo.EditorBean;
+import com.hanjum.user.vo.ReportBean;
 import com.hanjum.user.vo.UserBean;
 
 
@@ -346,13 +347,13 @@ public class UserProService {
 		
 	}
 
-	public boolean userReport(String user_id, String report_userid, int report_type, String report_content) {
+	public boolean userReport(ReportBean reportBean) {
 		boolean reportSuccess = false;
 		Connection con = getConnection();
 		UserDAO userDAO = UserDAO.getInstance();
 		userDAO.setConnection(con);
 		
-		int insertCount = userDAO.userReport(user_id,report_userid,report_type,report_content);
+		int insertCount = userDAO.userReport(reportBean);
 		
 		if (insertCount > 0) {
 			commit(con);
@@ -362,6 +363,92 @@ public class UserProService {
 		}
 		close(con);
 		return reportSuccess;
+	}
+
+	public boolean changeStatus(String user_id, int editor_status) {
+		boolean success = false;
+		Connection con = getConnection();
+		UserDAO userDAO = UserDAO.getInstance();
+		userDAO.setConnection(con);
+		
+		int insertCount = userDAO.changeStatus(user_id,editor_status);
+		
+		if (insertCount > 0) {
+			commit(con);
+			success = true;
+		} else {
+			rollback(con);
+		}
+		close(con);
+		return success;
+	}
+
+	public int getReportListCount() {
+		int listCount = 0;
+		
+		// 1(공통). Connection 객체 가져오기
+		Connection con = getConnection();
+		
+		// 2(공통). BoardDAO 객체 가져오기
+		UserDAO userDAO = UserDAO.getInstance();
+		
+		// 3(공통). BoardDAO 객체에 Connection 객체 전달
+		userDAO.setConnection(con);
+		
+		// 4. BoardDAO 객체의 selectListCount() 메서드 호출하여 
+		//    전체 게시물 수 가져오기
+		listCount = userDAO.getReportListCount();
+		
+		// 5(공통). Connection 객체 반환하기
+		close(con);
+		
+		return listCount;
+	}
+	public int getReportListCount(String search, String searchType) {
+		int listCount = 0;
+		
+		// 1(공통). Connection 객체 가져오기
+		Connection con = getConnection();
+		
+		// 2(공통). BoardDAO 객체 가져오기
+		UserDAO userDAO = UserDAO.getInstance();
+		
+		// 3(공통). BoardDAO 객체에 Connection 객체 전달
+		userDAO.setConnection(con);
+		
+		// 4. BoardDAO 객체의 selectListCount() 메서드 호출하여 
+		//    전체 게시물 수 가져오기
+		listCount = userDAO.getReportListCount(search,searchType);
+		
+		// 5(공통). Connection 객체 반환하기
+		close(con);
+		
+		return listCount;
+	}
+
+	public ArrayList<ReportBean> getReportList(int page, int limit) {
+		ArrayList<ReportBean> reportList = null;
+		Connection con = getConnection();
+		UserDAO userDAO = UserDAO.getInstance();
+		userDAO.setConnection(con);
+		
+		reportList = userDAO.getReportList(page,limit);
+		close(con);
+		
+		return reportList;
+	}
+
+
+	public ArrayList<ReportBean> getReportList(int page, int limit, String search, String searchType) {
+		ArrayList<ReportBean> reportList = null;
+		Connection con = getConnection();
+		UserDAO userDAO = UserDAO.getInstance();
+		userDAO.setConnection(con);
+		
+		reportList = userDAO.getReportList(page,limit,search,searchType);
+		close(con);
+		
+		return reportList;
 	}
 
 }

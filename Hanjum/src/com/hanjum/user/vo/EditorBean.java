@@ -16,7 +16,14 @@ public class EditorBean extends UserBean {
 	private int editor_ed_max_price;
 	private String editor_address;
 	private int editor_like;
+	private int editor_status;
 	
+	public int getEditor_status() {
+		return editor_status;
+	}
+	public void setEditor_status(int editor_status) {
+		this.editor_status = editor_status;
+	}
 	public String getEditor_photo() {
 		return editor_photo;
 	}

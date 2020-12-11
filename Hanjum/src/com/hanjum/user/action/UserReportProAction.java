@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.hanjum.action.Action;
 import com.hanjum.user.svc.UserProService;
+import com.hanjum.user.vo.ReportBean;
 import com.hanjum.vo.ActionForward;
 
 public class UserReportProAction implements Action {
@@ -15,10 +16,15 @@ public class UserReportProAction implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ActionForward forward = null;
 		String user_id = request.getParameter("user_id");
-		String report_userid = request.getParameter("report_userid");
+		String report_userId = request.getParameter("report_userid");
 		int report_type = Integer.parseInt(request.getParameter("report_type"));
 		String report_content = request.getParameter("report_content");
-		if(user_id.equals(report_userid)) {
+		ReportBean reportBean = new ReportBean();
+		reportBean.setReport_content(report_content);
+		reportBean.setReport_type(report_type);
+		reportBean.setReport_userId(report_userId);
+		reportBean.setUser_id(user_id);
+		if(user_id.equals(report_userId)) {
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter(); 
 			out.println("<script>"); // 자바스크립트 시작 태그
@@ -27,7 +33,7 @@ public class UserReportProAction implements Action {
 			out.println("</script>"); // 자바스크립트 끝 태그
 		} else {
 			UserProService userReportService = new UserProService();
-			boolean reportSuccess = userReportService.userReport(user_id,report_userid,report_type,report_content);
+			boolean reportSuccess = userReportService.userReport(reportBean);
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter(); 
 			if(!reportSuccess) {

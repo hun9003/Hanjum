@@ -31,7 +31,7 @@
 <div class="check_list"><input type="radio" id="type4" name="report_type" value="4" ><label for="type4"></label><span class="checkbox">기타</span></div>
 </td></tr>
 <tr><td class="td_name"><label for="Content">내용</label></td><td class="td_content">
-<textarea id="DetailContent" name="report_content" ></textarea>
+<textarea cols="120" rows="30" name="report_content" ></textarea>
 </td></tr>
 </table>
 	<div class="write_form_submit"><input type="submit" id="WriteSubmit" value="신고 하기"></div>

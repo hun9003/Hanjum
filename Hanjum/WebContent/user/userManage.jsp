@@ -32,7 +32,7 @@
 <jsp:include page="../inc/top.jsp"/>
 
 <div class="write_form">
-<div class="write_title"><h1>유저 목록</h1></div>
+<div class="write_title"><h1><span onclick="location.href='UserManage.uo'">유저 관리</span> / <span onclick="location.href='UserReportManage.uo'">신고 관리</span></h1></div>
 <form action="UserSearchManage.uo" method="post" name="fr_write" id="WriteForm" >
 <table class="write_table">
 <%

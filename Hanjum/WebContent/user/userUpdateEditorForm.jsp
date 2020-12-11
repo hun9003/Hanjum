@@ -134,7 +134,7 @@ $(document).ready(function(){
 		var user_pass = $('#user_pass').val();
 		var user_changePass = $('#user_updatePass').val();
 		$.ajax({
-			url : '${pageContext.request.contextPath}/changePass.uo?user_id='+ user_id + '&user_pass=' + user_pass + '&user_changePass=' + user_changePass,
+			url : 'changePass.uo?user_id='+ user_id + '&user_pass=' + user_pass + '&user_changePass=' + user_changePass,
 			type : "get",
 			success : function(data){
 				if(data == 1) {
@@ -157,6 +157,29 @@ $(document).ready(function(){
 			}
 		}) // ajax종료
 	}) // 비밀번호변경종료
+	
+	// 에디터 상태 변경 - 우선은 a태그에 걸어두긴했는데 나중에 바꾸면될듯..
+	$("#changeStatus").click(function(){
+		var user_id = $('#user_id').val();
+		var status = $("#changeStatus").attr("data-value");
+		$.ajax({
+			url : 'ChangeStatus.uo?editor_status=' + status + '&user_id=' + user_id,
+			type : "get",
+			success : function(data){
+					$("#changeStatus").attr("data-value",data);
+				if(data == 1) {
+					$("#state").html("구인 중(ON상태)");
+					$("#changeStatus").html("퇴근하기");
+				} else {
+					$("#state").html("노는 중(OFF상태)");
+					$("#changeStatus").html("출근하기");
+				}
+			}
+		}) // ajax 종료
+	})// 상태변경 종료
+	
+	
+	
 }) // 제이쿼리종료
 
 
@@ -171,6 +194,7 @@ function selEmail(email){
                 document.getElementById("user_email2").focus();
 	}
 }
+
 
 </script>
 <title>한줌에디터</title>
@@ -218,6 +242,10 @@ function selEmail(email){
 <tr><td class="td_name"><label for="Content">내 평점</label></td><td class="td_content"><%=userBean.getUser_score() %> 점</td></tr>
 <tr><td class="td_name"><label for="Content">회원 타입</label></td><td class="td_content"><%=user_type %></td></tr>
 <tr><td class="td_name"><label for="Content">로그인 횟수</label></td><td class="td_content"><%=userBean.getUser_login_count() %> 회</td></tr>
+
+<tr><td class="td_name"><label for="Content">현재 구인상태</label></td><td class="td_content">
+<div id="state"><%if(editorBean.getEditor_status()==1){%>구인 중(ON상태)<%}else {%>노는 중(OFF상태)<%}%></div><br>
+<span id ="changeStatus" style="color: red;" data-value="<%=editorBean.getEditor_status()%>"><%if(editorBean.getEditor_status()==1){%>퇴근하기<%}else {%>출근하기<%}%>  </span></td></tr>
 <tr><td class="td_name"><label for="Content">프로필 사진</label></td><td class="td_content">
 <input type="file" id="editor_photo" name="editor_photo" style="display: none;"/>
 <input type="button" id="photo_sel" value="파일선택"><p id="photo_p"><%=editorBean.getEditor_photo() %></p></td></tr>
