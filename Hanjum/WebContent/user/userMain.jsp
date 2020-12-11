@@ -17,12 +17,12 @@
     	fr = request.getParameter("fr");
     	switch(fr){
     	case "login": frUrl="Login.uo"; pageSubject="로그인"; break;
-    	case "join": frUrl="Join.uo"; pageSubject="회원둥록"; break;
+    	case "join": frUrl="Join.uo"; pageSubject="회원등록"; break;
     	case "joinEditor": frUrl="JoinEditor.uo"; pageSubject="편집자등록"; break;
     	
     	case "notice": frUrl="getNewNotice.nt"; pageSubject="내 알림"; break;
     	case "chat": frUrl="ChatListPro.ch"; pageSubject="채팅"; break;
-    	case "info": frUrl="UserInfo.uo"; pageSubject="내 정보"; break;
+    	case "info": frUrl="UserMyInfo.uo"; pageSubject="내 정보"; break;
     	case "constract": frUrl="UserConstract.uo"; pageSubject="계약 관리"; break;
     	}
     }
@@ -63,7 +63,7 @@
 		<div class="container">
 			<div class="row no-gutters slider-text align-items-end justify-content-center">
 				<div class="col-md-9 ftco-animate pb-5 text-center">
-					<p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i class="fa fa-chevron-right"></i></a></span> <span>My <i class="fa fa-chevron-right"></i></span></p>
+					<p class="breadcrumbs"><span class="mr-2"><a href="home">Home <i class="fa fa-chevron-right"></i></a></span> <span>My <i class="fa fa-chevron-right"></i></span></p>
 					<h1 class="mb-0 bread"><%=pageSubject %></h1>
 				</div>
 			</div>

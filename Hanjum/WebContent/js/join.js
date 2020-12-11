@@ -129,12 +129,14 @@
 		// 이메일 인증번호 전송
 			$(document).on('click','#mail_check',function() {
 			var email = $('#user_email').val() + "@" + $('#user_email2').val();
+			$("#checkEmailResult").html("이메일로 코드를 발송중입니다.");
 			alert('입력하신 이메일로 인증코드가 전송됩니다.');
 			$.ajax({ // 회원가입 폼에서는 email만 가지고갑니다. 회원가입 페이지에서 제어를 하기때문(id값이 필요없음)
 				url : 'mailSend?receiver='+ email, 
 				type : 'get',
 				success : function(data) {
 					$('#mailSet').hide();
+					$("#checkEmailResult").hide();
 					$('#codeCheck').show();
 				}// success 종료
 			}); // ajax종료
@@ -160,16 +162,21 @@
 				type : 'get',
 				success : function(data) {
 					if(data == 1) {
-					$('#codeMessage').html("메일 인증 완료! <br>");
+					$('#codeMessage').css("color","#00e673");	
+					$('#codeMessage').html("메일 인증을 성공적으로 마쳤습니다. <br>");
 					$('#codeCheck').hide();
-					$('#user_email3').val(email);
+					$('#user_email3').hide();
 					$('#mailSet2').show();
+					checkEmailResult = true;
 					} else if(data == 0) {
-					$('#codeMessage').html("아쉽게도 코드번호 그거 아니에요.. <br>");
+					$('#codeMessage').css("color","#ff471a");
+					$('#codeMessage').html("코드가 올바르지 않습니다. <br>");
 					}
 				}// 석세스 종료
 			}); // ajax종료
 		}); // click 종료
+		
+		
 	});
 	function mailBtn(){
 		var msg = $("#checkEmailResult");
@@ -194,11 +201,20 @@
 			$(box).css("box-shadow","");
 		}
 	function check() {
-		if (checkIdResult && checkPasswdResult) {
-			return true;
-		} else {
-			alert('아이디나 비밀번호가 올바르지 않습니다.');
+		if(!checkIdResult){
+			alert('아이디가 올바르지 않습니다.');
+			$('#user_id').focus();
 			return false;
+		} else if(!checkPasswdResult){
+			alert('비밀번호가 올바르지 않습니다.');
+			$('#password').focus();
+			return false;
+		} else if(!checkEmailResult){
+			alert('이메일을 인증까지 완료해 주시기 바랍니다.');
+			$('#user_email').focus();
+			return false;
+		} else {
+			return true;
 		}
 	}
 	function selEmail(email) {

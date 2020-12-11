@@ -8747,15 +8747,22 @@ h1, h2, h3, h4, h5,
     margin-bottom: 30px; }
     .login-wrap .form-group label {
       position: absolute;
-      top: -12px;
-      left: 0;
+      top: 13px;
+      left: -10px;
       font-weight: 500;
-      font-size: 14px;
-      color: rgba(0, 0, 0, 0.3);
+      font-size: 16px;
+      color: rgba(0, 0, 0, 0.7);
       margin-bottom: 0;
       background: #fff;
       margin-left: 30px;
-      padding: 0 4px; }
+      padding: 0 4px;
+      transition: all 0.5s ease-in-out; }
+      .login-wrap .form-group label.has-focus {
+      	top: -12px;
+      	left: 0;
+      	font-size: 14px;
+      	color: rgba(0, 0, 0, 0.3);
+      }
   .login-wrap .form-control {
     height: 52px;
     background: #fff;

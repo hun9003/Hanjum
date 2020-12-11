@@ -14,6 +14,11 @@ import com.hanjum.action.Action;
 import com.hanjum.user.action.UserLoginProAction;
 import com.hanjum.user.action.UserLogoutAction;
 import com.hanjum.user.action.UserManageAction;
+import com.hanjum.user.action.UserPortfolioDeleteAction;
+import com.hanjum.user.action.UserPortfolioInfoAction;
+import com.hanjum.user.action.UserPortfolioInsertAction;
+import com.hanjum.user.action.UserPortfolioListAction;
+import com.hanjum.user.action.UserPortfolioUpdateAction;
 import com.hanjum.user.action.UserSearchManageAction;
 import com.hanjum.user.action.UserUpdateEditorProAction;
 import com.hanjum.user.action.UserUpdateFormAction;
@@ -22,6 +27,7 @@ import com.hanjum.user.svc.UserProService;
 import com.hanjum.user.action.UserCheckIdAction;
 import com.hanjum.user.action.UserDeleteProAction;
 import com.hanjum.user.action.UserInfoAction;
+import com.hanjum.user.action.UserInfoMyAction;
 import com.hanjum.user.action.UserInsertEditorProAction;
 import com.hanjum.user.action.UserInsertProAction;
 import com.hanjum.user.action.UserLikeAction;
@@ -142,6 +148,13 @@ public class UserFrontController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		} else if (command.equals("/UserMyInfo.uo")) {
+			action = new UserInfoMyAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else if (command.equals("/UserSearchManage.uo")) {
 			action = new UserSearchManageAction();
 			try {
@@ -222,7 +235,47 @@ public class UserFrontController extends HttpServlet {
 				out.println("0");
 				out.close();
 			}
-		}
+		} else if (command.equals("/PfWrite.uo")) {
+			
+			forward = new ActionForward(); // 포워드 객체 생성
+			forward.setPath("/user/userPortfolio.jsp"); // 포워드경로 지정 , 디스패쳐 방식으로 해야되니 redirect값은 안줌
+		
+		} else if (command.equals("/UserPortfolioInsert.uo")) {
+			action = new UserPortfolioInsertAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/UserPortfolioList.uo")) {
+			action = new UserPortfolioListAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/UserPortfolioUpdate.uo")) {
+			action = new UserPortfolioUpdateAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/UserPortfolioDelete.uo")) {
+			action = new UserPortfolioDeleteAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/UserPortfolioInfo.uo")) {
+			action = new UserPortfolioInfoAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} 
 		// -------------------------------------------------------------------------------------------------------------------
 		// 기본 작업 후 공통 작업 수행
 		if (forward != null) { // 포워드가 값이 있다 = 포워드 객체가 생성 되었다 -> 실행

@@ -7,7 +7,6 @@ import java.sql.SQLException;
 
 import com.hanjum.board.vo.BoardBean;
 import com.hanjum.board.vo.EditorBean;
-import com.hanjum.board.vo.EnterBean;
 import com.hanjum.board.vo.ProjectBean;
 import static com.hanjum.db.JdbcUtil.*;
 
@@ -64,7 +63,6 @@ public class BoardDAO {
 				switch (rs.getInt("board_type")) {
 				case 1: boardBean = new ProjectBean();break;
 				case 2: boardBean = new EditorBean();break;
-				case 3: boardBean = new EnterBean();break;
 				default: boardBean = new BoardBean();
 					break;
 				}

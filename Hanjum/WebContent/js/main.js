@@ -10,6 +10,7 @@
     hideDistantElements: false,
     scrollProperty: 'scroll'
   });
+	
 
 
 	var fullHeight = function() {
@@ -155,7 +156,6 @@
 				$('.number').each(function(){
 					var $this = $(this),
 						num = $this.data('number');
-						console.log(num);
 					$this.animateNumber(
 					  {
 					    number: num,
@@ -251,3 +251,6 @@
 
 })(jQuery);
 
+$(function(){
+	$(document).tooltip();
+});

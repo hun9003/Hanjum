@@ -8,6 +8,7 @@ import static com.hanjum.db.JdbcUtil.*;
 import com.hanjum.user.dao.UserDAO;
 import com.hanjum.user.exception.LoginException;
 import com.hanjum.user.vo.EditorBean;
+import com.hanjum.user.vo.PortfolioBean;
 import com.hanjum.user.vo.UserBean;
 
 
@@ -346,4 +347,95 @@ public class UserProService {
 		
 	}
 
+	public boolean insertPortfolio(PortfolioBean portfolioBean) {
+		System.out.println("insertPortfolio");
+		boolean isInsertSuccess = false;
+		
+		Connection con = getConnection();
+		UserDAO userDAO = UserDAO.getInstance();
+		userDAO.setConnection(con);
+		int insertCount = userDAO.insertPortfolio(portfolioBean);
+		if(insertCount > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
+		close(con);
+		return isInsertSuccess;
+	}
+	
+	public ArrayList<PortfolioBean> getPortfolioList(String user_id) {
+		System.out.println("portfilioList");
+		Connection con = getConnection();
+		UserDAO userDAO = UserDAO.getInstance();
+		userDAO.setConnection(con);
+		
+		ArrayList<PortfolioBean> list = userDAO.getPortfolioList(user_id);
+		close(con);
+		return list;
+	}
+
+	public boolean updatePortfolio(PortfolioBean portfolioBean) {
+		System.out.println("updatePortfolio");
+		boolean isUpdateSuccess = false;
+		Connection con = getConnection();
+		UserDAO userDAO = UserDAO.getInstance();
+		userDAO.setConnection(con);
+		
+		int updateCount = userDAO.updatePortfolio(portfolioBean);
+		
+		if(updateCount > 0) {
+			commit(con);
+			isUpdateSuccess = true;
+		} else {
+			rollback(con);
+		}
+		close(con);
+		return isUpdateSuccess;
+	}
+	
+	public boolean deletePortfolio(int editor_pf_id) {
+		System.out.println("deletePortfolio");
+		boolean isDeleteSuccess = false;
+		Connection con = getConnection();
+		UserDAO userDAO = UserDAO.getInstance();
+		userDAO.setConnection(con);
+		
+		int deleteCount = userDAO.deletePortfolio(editor_pf_id);
+		
+		if(deleteCount > 0) {
+			commit(con);
+			isDeleteSuccess = true;
+		} else {
+			rollback(con);
+		}
+		close(con);
+		
+		return isDeleteSuccess;
+	}
+	
+	public int getCountPortfolio(String user_id) {
+		System.out.println("getCountPortfolio");
+		int count = 0;
+		Connection con = getConnection();
+		UserDAO userDAO = UserDAO.getInstance();
+		userDAO.setConnection(con);
+		
+		count = userDAO.getCountPortfolio(user_id);
+		close(con);
+		
+		return count;
+	}
+	
+	public PortfolioBean getPortfolioInfo(int editor_pf_id) {
+		System.out.println("getPortfolioInfo");
+		Connection con = getConnection();
+		UserDAO userDAO = UserDAO.getInstance();
+		userDAO.setConnection(con);
+		
+		PortfolioBean portfolioBean = userDAO.getPortfolioInfo(editor_pf_id);
+		
+		close(con);
+		return portfolioBean;
+	}
 }

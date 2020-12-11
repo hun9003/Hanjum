@@ -12,6 +12,7 @@ import static com.hanjum.db.JdbcUtil.*;
 
 import com.hanjum.user.exception.LoginException;
 import com.hanjum.user.vo.EditorBean;
+import com.hanjum.user.vo.PortfolioBean;
 import com.hanjum.user.vo.UserBean;
 
 public class UserDAO {
@@ -672,6 +673,149 @@ public class UserDAO {
 		return selectCount;
 	}
 
+	public int insertPortfolio(PortfolioBean portfolioBean) { // 포트폴리오 삽입
+		System.out.println("userDAO - insertPortfolio()");
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int insertCount = 0;
+		int pfId = 1;
+		try {
+			String sql = "SELECT MAX(editor_pf_id) FROM editor_portfolio";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				pfId = rs.getInt(1)+1;
+			}
+			
+			sql = "INSERT INTO editor_portfolio VALUES (?,?,?,?,?)";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, portfolioBean.getUser_id());
+			pstmt.setInt(2, pfId);
+			pstmt.setString(3, portfolioBean.getEditor_pf_category());
+			pstmt.setString(4, portfolioBean.getEditor_pf_subject());
+			pstmt.setString(5, portfolioBean.getEditor_pf_link());
+			insertCount = pstmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("insertPortfolio 오류 : "+e.getMessage());
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		
+		return insertCount;
+	}
+
+	public ArrayList<PortfolioBean> getPortfolioList(String user_id){ // 포트폴리오 리스트
+		System.out.println("UserDAO - portfolioList()");
+		ArrayList<PortfolioBean> list = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			String sql = "SELECT * FROM editor_portfolio WHERE user_id = ? ORDER BY editor_pf_id DESC";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, user_id);
+			rs = pstmt.executeQuery();
+			list = new ArrayList<PortfolioBean>();
+			while (rs.next()) {
+				PortfolioBean portfolioBean = new PortfolioBean();
+				portfolioBean.setUser_id(rs.getString("user_id"));
+				portfolioBean.setEditor_pf_category(rs.getString("editor_pf_category"));
+				portfolioBean.setEditor_pf_id(rs.getInt("editor_pf_id"));
+				portfolioBean.setEditor_pf_link(rs.getString("editor_pf_link"));
+				portfolioBean.setEditor_pf_subject(rs.getString("editor_pf_subject"));
+				list.add(portfolioBean);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		return list;
+	}
 	
+	public int updatePortfolio(PortfolioBean portfolioBean) { // 포트폴리오 수정
+		int updateCount = 0;
+		PreparedStatement pstmt = null;
+		try {
+			String sql = "UPDATE editor_portfolio SET editor_pf_category = ?, editor_pf_subject = ?, editor_pf_link = ? WHERE editor_pf_id = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, portfolioBean.getEditor_pf_category());
+			pstmt.setString(2, portfolioBean.getEditor_pf_subject());
+			pstmt.setString(3, portfolioBean.getEditor_pf_link());
+			pstmt.setInt(4, portfolioBean.getEditor_pf_id());
+			updateCount = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return updateCount;
+	}
+	
+	public int deletePortfolio(int editor_pf_id) { // 포트폴리오 삭제
+		int deleteCount = 0;
+		PreparedStatement pstmt = null;
+		try {
+			String sql = "DELETE FROM editor_portfolio WHERE editor_pf_id = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, editor_pf_id);
+			deleteCount = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return deleteCount;
+	}
+	
+	public int getCountPortfolio(String user_id) { // 포트폴리오 갯수
+		int count = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			String sql = "SELECT COUNT(editor_pf_id) FROM editor_portfolio WHERE user_id = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, user_id);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		return count;
+	}
+	
+	public PortfolioBean getPortfolioInfo(int editor_pf_id) {
+		PortfolioBean portfolioBean = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			String sql = "SELECT * FROM editor_portfolio WHERE editor_pf_id = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, editor_pf_id);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				portfolioBean = new PortfolioBean();
+				portfolioBean.setEditor_pf_id(editor_pf_id);
+				portfolioBean.setEditor_pf_category(rs.getString("editor_pf_category"));
+				portfolioBean.setEditor_pf_link(rs.getString("editor_pf_link"));
+				portfolioBean.setEditor_pf_subject(rs.getString("editor_pf_subject"));
+				portfolioBean.setUser_id(rs.getString("user_id"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		return portfolioBean;
+	}
 	
 }

@@ -45,8 +45,8 @@ public class UserInsertProAction implements Action {
 //			forward.setRedirect(true);
 			
 			out.println("<script>"); // 자바스크립트 시작 태그
-			out.println("alert('회원 가입 성공!!')"); // 다이얼로그 메세지 출력
-			out.println("location.href='UserLoginForm.uo'");
+			out.println("alert('회원 등록에 성공했습니다.')"); // 다이얼로그 메세지 출력
+			out.println("location.href='home'");
 			out.println("</script>"); // 자바스크립트 끝 태그
 			
 			
