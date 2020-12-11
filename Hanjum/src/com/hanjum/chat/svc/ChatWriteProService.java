@@ -10,7 +10,8 @@ import static com.hanjum.db.JdbcUtil.*;
 public class ChatWriteProService {
 		
 	public boolean registChat(ChatBean chatBean) {
-     System.out.println("ChatWriteProService - registChat()");
+     
+		System.out.println("ChatWriteProService - registChat()");
 		
 		boolean isWriteSuccess = false;
 		

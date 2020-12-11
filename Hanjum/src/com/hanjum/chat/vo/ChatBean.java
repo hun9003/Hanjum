@@ -11,7 +11,6 @@ public class ChatBean {
 	private Timestamp chat_date;
 	private int board_id;
 	
-	
 	public ChatBean() {}
 	
 	public ChatBean(int chat_id, String chat_editor_id, String chat_creator_id, String chat_content,

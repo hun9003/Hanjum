@@ -9,6 +9,7 @@ import com.hanjum.chat.dao.ChatDAO;
 public class ChatDeleteProService {
 
 	public static boolean isArticleWriter(String chat_editor_id, String chat_creator_id) {
+		
 		System.out.println("ChatDeleteProService");
 		boolean isArticleWriter = false;
 		

@@ -23,7 +23,7 @@ public class ChatListAction implements Action {
 		ChetListService chatListService = new ChetListService();
 		
 		ArrayList<ChatBean> list = new ArrayList<ChatBean>();
-		list = chatListService.getListCount(2);
+		list = chatListService.getListCount(2);  
 		request.setAttribute("list", list);
 		
 		

@@ -17,6 +17,7 @@ public class ChatWriteProAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
 		System.out.println("ChatWriteProAction!");
 		
 		System.out.println(request.getParameter("Chat_content"));

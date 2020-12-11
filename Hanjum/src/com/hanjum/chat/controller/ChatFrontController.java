@@ -18,11 +18,8 @@ import com.hanjum.vo.ActionForward;
 
 
 
-
-
 @WebServlet("*.ch")
 public class ChatFrontController extends HttpServlet {
-	
 	
     protected void doprocess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	//사용자 입력 문자 인코딩

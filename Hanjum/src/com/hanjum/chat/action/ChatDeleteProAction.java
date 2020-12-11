@@ -15,6 +15,7 @@ public class ChatDeleteProAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
 		System.out.println("ChatDeleteProAction");
 		ActionForward forward=null;
 		

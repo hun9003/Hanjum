@@ -9,7 +9,6 @@ import com.hanjum.chat.dao.ChatDAO;
 import com.hanjum.chat.vo.ChatBean;
 
 
-
 public class ChetListService {
 
 	public ArrayList<ChatBean> getListCount(int board_id) throws Exception {
