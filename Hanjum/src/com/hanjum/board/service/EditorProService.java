@@ -63,10 +63,10 @@ public class EditorProService {
 	
 	// DELETE ===================================================================================
 	
-	public boolean dropEditor(int board_id) { // 에디터 삭제 서비스
+	public boolean dropEditor(String user_id) { // 에디터 삭제 서비스
 		System.out.println("EditorProService - dropEditor()");
 		boolean isSuccess = false;
-		int count = editorDAO.deleteEditor(board_id);
+		int count = editorDAO.deleteEditor(user_id);
 		if(count > 0) {
 			commit(con);
 			isSuccess = true;

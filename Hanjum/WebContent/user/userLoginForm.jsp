@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <!DOCTYPE html>
+
+<!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
@@ -11,6 +12,7 @@
 	<div class="login-wrap p-4 p-md-5">
               <h3 class="mb-4">로그인</h3>
               <form action="LoginPro.uo" class="signup-form" method="post" name="Userform">
+                 <input type="hidden" id="prefPage" name="prefPage" value="<%=request.getParameter("prefPage")%>">
                  <div class="form-group">
                     <label class="label" for="userid_field">아이디</label>
                     <input type="text" id="userid_field" class="form-control" name="user_id" required="required"/>

@@ -8,7 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import com.hanjum.action.Action;
 import com.hanjum.user.exception.LoginException;
-import com.hanjum.user.svc.UserProService;
+import com.hanjum.user.service.UserProService;
 import com.hanjum.user.vo.UserBean;
 import com.hanjum.vo.ActionForward;
 
@@ -17,7 +17,13 @@ public class UserLoginProAction implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		System.out.println("UserLoginProAction!");
-		
+		String prefPage = "home";
+		if(request.getParameter("prefPage") != null && !request.getParameter("prefPage").equals("null")) {
+			prefPage = request.getParameter("prefPage");
+			if(prefPage.contains("My") || prefPage.contains("Logout")){
+				prefPage = "My.uo";
+			}
+		}
 		ActionForward forward = null;
 		
 		String user_id = request.getParameter("user_id");
@@ -37,7 +43,7 @@ public class UserLoginProAction implements Action {
 			// 1. ActionForward 객체 생성
 			forward = new ActionForward();
 			// 2. 포워딩 경로(URL) 지정 (주의! 경로명 앞에 슬래시(/) 기호를 붙이지 말 것!)
-			forward.setPath("./");
+			forward.setPath(prefPage);
 			// 3. 포워딩 방식(Redirect 방식) 지정
 			forward.setRedirect(true);
 			} 

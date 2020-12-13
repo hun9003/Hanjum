@@ -43,7 +43,7 @@
 						</div>
 						<div id="codeCheck" style="display: none;">
 						<input type="text" class="form-control" name="email_code" id="email_code" style="width:30%; min-width:150px; display: inline-block;" placeholder="인증 코드">
-						<input type="button" class="btn btn-primary" value="인증 번호 확인" name="code_check" id="code_check">
+						<input type="button" class="btn btn-primary" value="인증코드 재전송" name="code_check" id="code_check">
 						</div>
 						<div id="mailSet2" style="display: none;">
 						<input type="text" name="user_email3" id="user_email3" readonly="readonly">

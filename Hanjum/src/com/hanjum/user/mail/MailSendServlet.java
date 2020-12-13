@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.hanjum.user.svc.UserProService;
+import com.hanjum.user.service.UserProService;
 
 /**
  * 

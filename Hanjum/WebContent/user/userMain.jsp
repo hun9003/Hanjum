@@ -26,7 +26,11 @@
     	case "constract": frUrl="UserConstract.uo"; pageSubject="계약 관리"; break;
     	}
     }
-    
+	String prefPage = "";
+	if(request.getHeader("referer") != null){
+		String prefStr = request.getHeader("referer");
+		prefPage = prefStr.substring(prefStr.lastIndexOf("/")+1);
+	}
     
     %>
 <!DOCTYPE html>
@@ -109,7 +113,12 @@
 			<jsp:include page="../inc/script.jsp"/>
 			<script type="text/javascript">
 			$(document).ready(function(){
-				$("#member-container").load("<%=frUrl%>");
+				var url = "<%=frUrl%>";
+				if(url.indexOf("Login.uo") != -1){
+					$("#member-container").load(url+"?prefPage=<%=prefPage%>");
+				} else {
+					$("#member-container").load(url);
+				}
 			});
 			</script>
 			

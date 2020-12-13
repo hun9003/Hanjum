@@ -36,5 +36,14 @@ public class BoardProService {
 		return count;
 	}
 	
-	
+	public boolean checkBoardWriter(int board_id, String user_id) {
+		System.out.println("BoardProService - checkBoardWriter()");
+		boolean isWriter = false;
+		int check = boardDAO.checkBoardWriter(board_id, user_id);
+		if(check == 1) {
+			isWriter = true;
+		}
+		close(con);
+		return isWriter;
+	}
 }

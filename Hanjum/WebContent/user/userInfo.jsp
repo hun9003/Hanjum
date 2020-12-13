@@ -30,11 +30,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/util.css">
     <script src="js/jquery.min.js"></script>
-    <script type="text/javascript">
-    $(document).ready(function(){
-    	$("#portfolioArea").load("UserPortfolioList.uo");
-    })
-    </script>
+    <script src="js/userInfo.js"></script>
 <title>My</title>
 <style>
 .color-primary {
@@ -47,6 +43,26 @@
 .form-group-content:hover > span {
 	font-weight: bold;
 }
+.toggle_input {
+	position: absolute; left: -1000%;
+}
+.toggle_label {
+	position: relative !important;
+	top:0 !important; left:0 !important;
+	display: inline-block; width:50px; height: 24px;
+	background: #d3d3d3 !important;
+	border-radius: 24px; 
+}
+.toggle_label:after {
+	content: "";
+	position: absolute; top:50%; left:2px; transform: translateY(-50%); 
+	width: 20px; height: 20px;
+	border-radius: 100%; box-shadow: 1px 3px 4px rgba(0,0,0,.1);
+	background: #fff; transition:all .4s;
+}
+input[name=editor_status]:checked + .toggle_label {background: #007bff !important;}
+input[name=editor_status]:checked + .toggle_label:after { left:28px;}
+.toggle_label span { display: none;}
 </style>
 </head>
 <body>
@@ -89,6 +105,14 @@
 			 <span class="form-group-content">
 			 	접속 횟수 <span class="float-r m-r-10"><span class="color-primary"><%=userBean.getUser_login_count() %></span> 회</span>
 			 </span>             
+             </div>
+             <div class="form-group">
+			 <span class="form-group-content">
+			 	활동 상태 <span class="float-r m-r-10"><span class="color-primary">
+			 	<input type="checkbox" class="toggle_input" name="editor_status" id="editor_status" <%if(editorInfo.get("status").equals("1")){ %>checked="checked"<%} %>><label class="toggle_label" for="editor_status"><span>상태</span></label>
+			 	</span>
+			 </span>   
+			 </span>          
              </div>
              <div class="form-group">
 			 <span class="form-group-content">

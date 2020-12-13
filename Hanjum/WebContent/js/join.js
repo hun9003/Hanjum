@@ -154,7 +154,7 @@
 		
 		
 			// 이메일 인증번호 체크
-			$('#email_code').keyup(function() {
+			$('#email_code').change(function() {
 			var email = $('#user_email').val() + "@" + $('#user_email2').val();
 			var code = $('#email_code').val();
 			$.ajax({

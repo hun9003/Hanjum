@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.hanjum.action.Action;
-import com.hanjum.user.svc.UserProService;
+import com.hanjum.user.service.UserProService;
 import com.hanjum.user.vo.EditorBean;
 import com.hanjum.user.vo.UserBean;
 import com.hanjum.vo.ActionForward;
@@ -109,6 +109,7 @@ public class UserInfoMyAction implements Action {
 			editorInfo.put("min_price",editor_ed_min_price);
 			editorInfo.put("max_price",editor_ed_max_price);
 			editorInfo.put("address",editor_address);
+			editorInfo.put("status", editorBean.getEditor_status()+"");
 		}
 		
 		request.setAttribute("editorInfo", editorInfo);

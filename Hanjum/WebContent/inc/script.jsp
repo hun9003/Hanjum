@@ -10,9 +10,8 @@
 			<script src="js/owl.carousel.min.js"></script>
 			<script src="js/jquery.magnific-popup.min.js"></script>
 			<script src="js/jquery.animateNumber.min.js"></script>
-			<script src="js/bootstrap-datepicker.js"></script>
+<!-- 			<script src="js/bootstrap-datepicker.js"></script> -->
 			<script src="js/scrollax.min.js"></script>
 			<script src="js/main.js"></script>
-			<script type="text/javascript" src="js/refLink.js"></script>
-   			<script type="text/javascript" src="js/layer.js"></script>
+			
    			<script type="text/javascript" src="js/focus.js"></script>

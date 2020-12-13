@@ -42,13 +42,13 @@
 			<div class="row no-gutters slider-text align-items-end justify-content-center">
 				<div class="col-md-9 ftco-animate pb-5 text-center">
 					<p class="breadcrumbs"><span class="mr-2"><a href="home">Home <i class="fa fa-chevron-right"></i></a></span> <span>Project <i class="fa fa-chevron-right"></i></span></p>
-					<h1 class="mb-0 bread">프로젝트 리스트</h1>
+					<h1 id="pageTitle" class="mb-0 bread">프로젝트 리스트</h1>
 				</div>
 			</div>
 		</div>
 	</section>
 
-	<section class="ftco-section bg-light">
+	<section id="pageContent" class="ftco-section bg-light">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-3 sidebar">
@@ -70,6 +70,7 @@
 						if(search.containsKey("transfer")) { transfer=search.get("transfer"); }
 					}
 					%>
+					<a href="ProjectWrite.bo" id="write-btn" class="btn btn-primary sidebar-box ftco-animate layer-btn">프로젝트 작성</a>
 					<form name="search_form" action="ProjectListSearch.bo" method="POST">
 					<div class="sidebar-box bg-white ftco-animate">
 							<div class="form-group">
@@ -147,7 +148,6 @@
 					</div>
 					
 				</form>
-						<button id="write-btn" class="btn-info sidebar-box ftco-animate layer-btn">프로젝트 작성</button>
 				</div>
 				<div id="list-container" class="col-lg-9">
 				<div class="row">
@@ -244,11 +244,11 @@
           <div class="project-wrap">
           	<div class="project-profile">
           	<span class="status">모집중</span>
-             <a id="item-img<%=i %>" data-href="<%=contentUrl%>?board_id=<%=project.getBoard_id()%>" class="img item-link"style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); background-image: url(images/work-1.jpg); border-radius: 50%; width:150px; height:150px;margin:0 auto;">
+             <a id="item-img<%=i %>" href="<%=contentUrl%>?board_id=<%=project.getBoard_id()%>" class="img item-link"style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); background-image: url(images/work-1.jpg); border-radius: 50%; width:150px; height:150px;margin:0 auto;">
             </a>
           	</div>
             <div class="text p-4">
-                <h3><a id="item-title<%=i %>" class="item-link" data-href="<%=contentUrl%>?board_id=<%=project.getBoard_id()%>"><%=project.getBoard_subject() %></a></h3>
+                <h3><a id="item-title<%=i %>" class="item-link" href="<%=contentUrl%>?board_id=<%=project.getBoard_id()%>"><%=project.getBoard_subject() %></a></h3>
                 <p class="advisor"><%=project.getUser_id() %> <span><%=genre %></span></p>
                 <ul class="d-flex justify-content-between">
                    <li><span class="flaticon-shower"></span><%=board_date %></li>
@@ -307,6 +307,6 @@
 			
 			
 			<jsp:include page="../inc/script.jsp"/>
-			
+			<script src="js/project.js"></script>
 		</body>
 </html>

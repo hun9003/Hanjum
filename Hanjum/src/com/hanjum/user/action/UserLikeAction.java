@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.websocket.Session;
 
 import com.hanjum.action.Action;
-import com.hanjum.user.svc.UserProService;
+import com.hanjum.user.service.UserProService;
 import com.hanjum.vo.ActionForward;
 
 public class UserLikeAction implements Action {

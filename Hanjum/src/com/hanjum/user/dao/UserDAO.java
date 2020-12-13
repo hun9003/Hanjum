@@ -13,6 +13,7 @@ import static com.hanjum.db.JdbcUtil.*;
 import com.hanjum.user.exception.LoginException;
 import com.hanjum.user.vo.EditorBean;
 import com.hanjum.user.vo.PortfolioBean;
+import com.hanjum.user.vo.ReportBean;
 import com.hanjum.user.vo.UserBean;
 
 public class UserDAO {
@@ -314,6 +315,7 @@ public class UserDAO {
 				editorBean.setEditor_ed_max_price(rs.getInt("editor_ed_max_price"));
 				editorBean.setEditor_address(rs.getString("editor_address"));
 				editorBean.setEditor_like(rs.getInt("editor_like"));
+				editorBean.setEditor_status(rs.getInt("editor_status"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -817,5 +819,195 @@ public class UserDAO {
 		}
 		return portfolioBean;
 	}
+	
+	public int changeStatus(String user_id, int editor_status) {
+		int count = 0;
+		PreparedStatement pstmt = null;
+//		ResultSet rs = null;
+		
+		try {
+			String sql = "update editor set editor_status=? where user_id=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, editor_status);
+			pstmt.setString(2, user_id);
+			count=pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("insertUser() 오류! - " + e.getMessage());
+			e.printStackTrace();
+		} finally {
+//			close(rs);
+			close(pstmt);
+		}
+		return count;
+	}
+	
+	// 신고
+	public int userReport(ReportBean reportBean) {
+		System.out.println("UserDAO - insertUser() - user");
+		int insertCount = 0;
+		PreparedStatement pstmt = null;
+//		ResultSet rs = null;
+		
+		
+		try {
+			String sql = "insert into user_report(user_id,report_userid,report_type,report_content) values(?,?,?,?)";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, reportBean.getUser_id());
+			pstmt.setString(2, reportBean.getReport_userId());
+			pstmt.setInt(3, reportBean.getReport_type());
+			pstmt.setString(4, reportBean.getReport_content());
+			insertCount=pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("insertUser() 오류! - " + e.getMessage());
+			e.printStackTrace();
+		} finally {
+//			close(rs);
+			close(pstmt);
+		}
+		return insertCount;
+	}
+
+	public int getReportListCount() {
+		int listCount = 0;
+			
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			
+			try {
+				// SELECT 구문을 사용하여 전체 게시물 수 조회
+				// => count()함수 사용, 조회 대상 컬럼 1개 지정하거나 * 사용
+				String sql = "select Count(user_id) from user_report";
+				pstmt = con.prepareStatement(sql);
+				rs=pstmt.executeQuery();
+				
+				// 조회 결과가 있을 경우 (= 게시물이 하나라도 존재하는 경우)
+				// => 게시물 수를 listCount에 저장
+				if(rs.next()) {
+					listCount = rs.getInt(1);
+				}
+				
+			} catch (SQLException e) {
+				System.out.println("getListCount() 오류! - " + e.getMessage());
+				e.printStackTrace();
+			} finally {
+				// 자원 반환
+				// 주의! DAO 클래스 내에서 Connection 객체 반환 금지!
+				close(rs);
+				close(pstmt);
+			}
+			
+			
+			
+			return listCount;
+		}
+		public int getReportListCount(String search, String searchType) {
+			int listCount = 0;
+			
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			
+			try {
+				// SELECT 구문을 사용하여 전체 게시물 수 조회
+				// => count()함수 사용, 조회 대상 컬럼 1개 지정하거나 * 사용
+				String sql = "select Count(user_id) from user_report where "+searchType + " like ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, "%"+search+"%");
+				rs=pstmt.executeQuery();
+				
+				// 조회 결과가 있을 경우 (= 게시물이 하나라도 존재하는 경우)
+				// => 게시물 수를 listCount에 저장
+				if(rs.next()) {
+					listCount = rs.getInt(1);
+				}
+				
+			} catch (SQLException e) {
+				System.out.println("getListCount() 오류! - " + e.getMessage());
+				e.printStackTrace();
+			} finally {
+				// 자원 반환
+				// 주의! DAO 클래스 내에서 Connection 객체 반환 금지!
+				close(rs);
+				close(pstmt);
+			}
+			
+			
+			
+			return listCount;
+		}
+
+		public ArrayList<ReportBean> getReportList(int page, int limit) {
+			ArrayList<ReportBean> reportList = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			
+			int startRow = (page-1) * limit;
+			
+			try {
+				String sql = "select * from user_report limit ?,?";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setInt(1, startRow);
+				pstmt.setInt(2, limit);
+				rs=pstmt.executeQuery();
+				
+				reportList = new ArrayList<ReportBean>();
+				while(rs.next()) {
+					ReportBean reportBean = new ReportBean();
+					reportBean.setUser_id(rs.getString("user_id"));
+					reportBean.setReport_content(rs.getString("report_content"));
+					reportBean.setReport_id(Integer.parseInt(rs.getString("report_id")));
+					reportBean.setReport_type(Integer.parseInt(rs.getString("report_type")));
+					reportBean.setReport_userId(rs.getString("report_userid"));
+					reportList.add(reportBean);
+					
+				}
+			
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				close(rs);
+				close(pstmt);
+			}
+			
+			return reportList;
+		}
+
+		public ArrayList<ReportBean> getReportList(int page, int limit, String search, String searchType) {
+			ArrayList<ReportBean> reportList = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			System.out.println("getUserList_검색");
+			int startRow = (page-1) * limit;
+			
+			try {
+				String sql = "select * from user_report where " +searchType + " like ? limit ?,?";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setString(1, "%"+search+"%");
+				pstmt.setInt(2, startRow);
+				pstmt.setInt(3, limit);
+				rs=pstmt.executeQuery();
+				
+				reportList = new ArrayList<ReportBean>();
+				while(rs.next()) {
+					ReportBean reportBean = new ReportBean();
+					reportBean.setUser_id(rs.getString("user_id"));
+					reportBean.setReport_content(rs.getString("report_content"));
+					reportBean.setReport_id(Integer.parseInt(rs.getString("report_id")));
+					reportBean.setReport_type(Integer.parseInt(rs.getString("report_type")));
+					reportBean.setReport_userId(rs.getString("report_userid"));
+					reportList.add(reportBean);
+				}
+			
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				close(rs);
+				close(pstmt);
+			}
+			
+			return reportList;
+		}
+	
 	
 }

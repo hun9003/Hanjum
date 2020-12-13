@@ -70,10 +70,11 @@ public class ProjectUpdateProAction implements Action {
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();
 			out.println(Constant.arrMsg);
+			
 		} else {
-			response.setContentType("text/html; charset=UTF-8");
-			PrintWriter out = response.getWriter();
-			out.println("Project.bo?board_id="+projectBean.getBoard_id());
+			forward = new ActionForward();
+			forward.setPath("Project.bo?board_id="+projectBean.getBoard_id());
+			forward.setRedirect(true);
 		}
 		return forward;
 	}

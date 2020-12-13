@@ -48,6 +48,17 @@
 								<option value="gmail.com">gmail.com</option>
 								<option value="daum.net">daum.net</option>
 						</select>
+						<div id="checkEmailResult" class="offset-1"><!-- 자바스크립트에서 메세지 출력 공간 --></div>
+                	
+                	<div id="codeMessage" style="margin-top: 10px;"><!-- 코드번호 틀린거 맞는거 들어갈칸 -->
+						</div>
+						<div id="codeCheck" style="display: none;">
+						<input type="text" class="form-control" name="email_code" id="email_code" style="width:30%; min-width:150px; display: inline-block;" placeholder="인증 코드">
+						<input type="button" class="btn btn-primary" value="인증코드 재전송" name="code_check" id="code_check">
+						</div>
+						<div id="mailSet2" style="display: none;">
+						<input type="text" name="user_email3" id="user_email3" readonly="readonly">
+						</div>
                 </div>
                 <div class="form-group">
                     <label class="label" for="user_phone">휴대폰번호</label>

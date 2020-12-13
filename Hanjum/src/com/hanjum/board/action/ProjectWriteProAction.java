@@ -7,12 +7,14 @@ import java.util.Arrays;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.hanjum.action.Action;
 import com.hanjum.board.service.BoardProService;
 import com.hanjum.board.service.ProjectProService;
 import com.hanjum.board.vo.BoardBean;
 import com.hanjum.board.vo.ProjectBean;
+import com.hanjum.user.vo.UserBean;
 import com.hanjum.vo.ActionForward;
 import com.hanjum.vo.Constant;
 
@@ -25,12 +27,16 @@ public class ProjectWriteProAction implements Action{
 		ActionForward forward = null;
 		boolean isSuccess = false;
 		
+		HttpSession session = request.getSession();
+		UserBean userSession = (UserBean)session.getAttribute("userBean");
+		String user_id = userSession.getUser_id();
+		
 		ProjectBean projectBean = new ProjectBean();
 		projectBean.setBoard_subject(request.getParameter("board_subject"));
 		projectBean.setBoard_content(request.getParameter("board_content"));
 		projectBean.setBoard_date(new Timestamp(System.currentTimeMillis()));
 		projectBean.setBoard_type(1);
-		
+		projectBean.setUser_id(user_id);
 		BoardProService boardProService = new BoardProService();
 		projectBean.setBoard_id(boardProService.getBoardLastId());
 		

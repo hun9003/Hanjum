@@ -1,7 +1,85 @@
+<%@page import="com.hanjum.user.vo.UserBean"%>
 <%@page import="com.hanjum.board.vo.ProjectBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	<title>한줌에디터</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
+	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<link rel="stylesheet" href="css/animate.css">
+	
+	<link rel="stylesheet" href="css/owl.carousel.min.css">
+	<link rel="stylesheet" href="css/owl.theme.default.min.css">
+	<link rel="stylesheet" href="css/magnific-popup.css">
+
+	<link rel="stylesheet" href="css/bootstrap-datepicker.css">
+	<link rel="stylesheet" href="css/jquery.timepicker.css">
+
+	
+	<link rel="stylesheet" href="css/flaticon.css">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/util.css">
+	
+	
+	<style>
+		.check_list { display: inline-block; padding:10px;}
+		.check_list span { margin-left: 10px;}
+		.label-primary { color: #4986fc !important; }
+		.form-group-content {text-align: right;}
+		.form-group:hover > .form-group-content{
+			font-weight: bold;
+		}
+		.board_ref {
+		max-width:560px;
+		max-height:315px;
+		width:90%;
+		}
+	</style>
+	<%
+	if(session.getAttribute("userBean")==null){
+	%>
+	<script>
+		var loginConfirm = confirm("로그인이 필요합니다 로그인 하시겠습니까?");
+		if(loginConfirm){
+			location.href = "My.uo?fr=login";
+		} else {
+			history.back();
+		}
+	</script>
+	<%
+	}
+	
+	UserBean userBean = (UserBean)session.getAttribute("userBean");
+	String prefPage = "";
+	if(request.getHeader("referer") != null){
+		String prefStr = request.getHeader("referer");
+		prefPage = prefStr.substring(prefStr.lastIndexOf("/")+1);
+	}
+	%>
+	
+</head>
+<body>
+	<jsp:include page="../inc/top.jsp"/>
+
+	<section class="hero-wrap hero-wrap-2" style="background-image: url('images/bg_2.jpg');">
+		<div class="overlay"></div>
+		<div class="container">
+			<div class="row no-gutters slider-text align-items-end justify-content-center">
+				<div class="col-md-9 ftco-animate pb-5 text-center">
+					<p class="breadcrumbs"><span class="mr-2"><a href="home">Home <i class="fa fa-chevron-right"></i></a></span> <span>Project <i class="fa fa-chevron-right"></i></span></p>
+					<h1 id="pageTitle" class="mb-0 bread">프로젝트 조회</h1>
+				</div>
+			</div>
+		</div>
+	</section>
+	<%
     ProjectBean project = (ProjectBean)request.getAttribute("project");
 	
 	String pageUrl = "Project.bo";
@@ -85,36 +163,121 @@
 		}
 			
 	%>
-<div class="write_form">
-<div class="write_title"><h1>프로젝트</h1></div>
-<table class="write_table">
-<tr><th class="td_name">프로젝트 제목</th><td class="td_content"><div class="board_subject"><%=project.getBoard_subject() %></div></td></tr>
-<tr><th class="td_name">작성자</th><td class="td_content"><div class="board_content"><%=project.getUser_id() %></div></td></tr>
-<tr><th class="td_name">프로젝트 소개</th><td class="td_content"><div class="board_content"><%=project.getBoard_content() %></div></td></tr>
-<tr><th class="td_name">장르</th><td class="td_content"><div class="board_option"><%=genre %></div></td></tr>
-<tr><th class="td_name">세부설명</th><td class="td_content"><div class="board_detail_content"><%=project.getBoard_creator_content_detail()%></div></td></tr>
-<tr><th class="td_name">동시 녹음 유무</th><td class="td_content"><div class="board_option"><%=recording %></div></td></tr>
-<tr><th class="td_name">녹화에 이용된 캠</th><td class="td_content"><div class="board_option"><%=cam_num %></div></td></tr>
-<tr><th class="td_name">원본 클립</th><td class="td_content"><div class="board_option"><%=ori_clip %></div></td></tr>
-<tr><th class="td_name">편집 전 런타임</th><td class="td_content"><div class="board_option"><%=ori_length %></div></td></tr>
-<tr><th class="td_name">편집 후 런타임</th><td class="td_content"><div class="board_option"><%=edit_length %></div></td></tr>
-<tr><th class="td_name">파일의 전달방식</th><td class="td_content"><div class="board_option"><%=ori_transfer %></div></td></tr>
-<tr><th class="td_name">예상 단가</th><td class="td_content"><div class="board_price"><%=min_price %> ~ <%=max_price %></div></td></tr>
-<tr><th class="td_name"><label for="Ref1">레퍼런스 링크</label></th><td class="td_content">
-<%
-for(int i = 0; i < ref.length; i++){
-%>
-<div class="board_ref"><iframe width="560" height="315" src="https://www.youtube.com/embed/<%=ref[i] %>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+	<section id="pageContent" class="ftco-section bg-light">
+<div class="login-wrap p-4 p-md-5" style="margin:0px auto;; max-width : 800px;">
+		<div class="form-group">
+        	<label class="label has-focus label-primary">프로젝트 제목</label>
+        	<div class="form-group-content p-tb-10">
+        	<%=project.getBoard_subject() %>
+        	</div>
+        </div>
+        <div class="form-group">
+        	<label class="label has-focus label-primary">작성자</label>
+        	<div class="form-group-content p-tb-10">
+        	<%=project.getUser_id() %>
+        	</div>
+        </div>
+        <div class="form-group">
+        	<label class="label has-focus label-primary">프로젝트 소개</label>
+        	<div class="form-group-content p-tb-10">
+        	<%=project.getBoard_content()%>
+        	</div>
+        </div>
+		<div class="form-group">
+        	<label class="label has-focus label-primary">장르</label>
+        	<div class="form-group-content p-tb-10">
+			<%=genre %>
+        	</div>
+		</div>
+		<div class="form-group">
+            <label  class="label has-focus label-primary">세부 설명</label>
+            <div class="form-group-content p-tb-10">
+            <%=project.getBoard_creator_content_detail()%>
+            </div>
+        </div>
+        <div class="form-group">
+        	<label class="label has-focus label-primary">동시 녹음 유무</label>
+        	<div class="form-group-content p-tb-10">
+        	<%=recording %>
+        	</div>
+		</div>
+		<div class="form-group">
+        	<label class="label has-focus label-primary">녹화에 이용된 캠</label>
+        	<div class="form-group-content p-tb-10">
+        	<%=cam_num %>
+        	</div>
+		</div>
+		<div class="form-group">
+        	<label class="label has-focus label-primary">원본 클립</label>
+        	<div class="form-group-content p-tb-10">
+        	<%=ori_clip %>
+        	</div>
+		</div>
+		<div class="form-group">
+        	<label class="label has-focus label-primary">편집전 런타임</label>
+        	<div class="form-group-content p-tb-10">
+        	<%=ori_length %>
+        	</div>
+		</div>
+		<div class="form-group">
+        	<label class="label has-focus label-primary">편집후 런타임</label>
+        	<div class="form-group-content p-tb-10">
+        	<%=edit_length %>
+        	</div>
+		</div>
+		<div class="form-group">
+        	<label class="label has-focus label-primary">파일의 전달방식</label>
+        	<div class="form-group-content p-tb-10">
+        	<%=ori_transfer %>
+        	</div>
+		</div>
+		<div class="form-group">
+            <label class="label has-focus label-primary">예상 단가</label>
+            <div class="form-group-content p-tb-10">
+            <%=min_price %> ~ <%=max_price %>
+            </div>
+        </div>
+        <div id="ref_area" class="form-group">
+            <label class="label has-focus label-primary">레퍼런스 링크</label>
+            <%
+			for(int i = 0; i < ref.length; i++){
+				String refID = ref[i].substring(ref[i].lastIndexOf("v=")+2);
+
+			%>
+			<div class="form-group-content p-tb-10">
+			<div class="board_ref"><iframe src="https://www.youtube.com/embed/<%=refID %>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+			</div>
+			<%
+			}
+			%>
+        </div>
+        <div class="form-group d-flex justify-content-end mt-4">
+        <a class="btn btn-primary submit" type="button" id="UpdateBtn" href="<%=prefPage%>">목록으로</a> 
+        <%
+        if(userBean != null)
+        if(userBean.getUser_id().equals(project.getUser_id())){
+        %>
+        <a class="btn btn-primary submit m-l-10" type="button" id="UpdateBtn" href="ProjectUpdate.bo?board_id=<%=project.getBoard_id()%>">수정하기</a> 
+		<a class="btn btn-light submit m-l-10" type="button" id="DeleteBtn" href = 'ProjectDeletePro.bo?board_id=<%=project.getBoard_id()%>'>삭제하기</a>
+        <%
+        }
+        %>
+        </div>
+</div>
+</section>
 <%
 }
 %>
-</td></tr>
-</table>
-<div class="write_form_submit">
-<input type="button" name="update_btn" id="UpdateBtn" value="수정하기" data-href="ProjectUpdate.bo?board_id=<%=project.getBoard_id()%>">
-<input type="button" id="DeleteBtn" value="삭제하기" onclick="location.href = 'ProjectDeletePro.bo?board_id=<%=project.getBoard_id()%>'">
-</div>
-</div>
-<%
-}
-%>
+		<jsp:include page="../inc/bottom.jsp"/>
+			
+			
+			
+
+			<!-- loader -->
+			<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+			
+			
+			<jsp:include page="../inc/script.jsp"/>
+	
+		</body>
+</html>

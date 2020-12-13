@@ -8,11 +8,11 @@ import javax.servlet.http.HttpServletResponse;
 import com.hanjum.action.Action;
 import com.hanjum.user.service.UserProService;
 import com.hanjum.user.vo.PageInfo;
-import com.hanjum.user.vo.UserBean;
+import com.hanjum.user.vo.ReportBean;
 import com.hanjum.vo.ActionForward;
 
 
-public class UserManageAction implements Action{
+public class UserReportManageAction implements Action{
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -23,12 +23,12 @@ public class UserManageAction implements Action{
 		if(request.getParameter("page") != null) {
 			page = Integer.parseInt(request.getParameter("page"));
 		}
-		UserProService userManageService = new UserProService();
-		int listCount = userManageService.getListCount();
+		UserProService userReportManageService = new UserProService();
+		int listCount = userReportManageService.getReportListCount();
 		System.out.println("전체 게시물 수 : " + listCount);
 		
-		ArrayList<UserBean> userList = new ArrayList<UserBean>();
-		userList = userManageService.getUserList(page,limit);
+		ArrayList<ReportBean> reportList = new ArrayList<ReportBean>();
+		reportList = userReportManageService.getReportList(page,limit);
 		
 		int maxPage = (int)((double)listCount / limit + 0.95);
 		
@@ -42,11 +42,11 @@ public class UserManageAction implements Action{
 		
 		PageInfo pageInfo = new PageInfo(page, maxPage, startPage, endPage, listCount);
 		
-		request.setAttribute("userList", userList);
+		request.setAttribute("reportList", reportList);
 		request.setAttribute("pageInfo", pageInfo);
 		
 		forward = new ActionForward();
-		forward.setPath("/user/userManage.jsp");
+		forward.setPath("/user/userReportManage.jsp");
 		return forward;
 	}
 

@@ -109,7 +109,33 @@ public class BoardDAO {
 		}
 		return listCount;
 	}
-	
+	// CHECK ====================================================================================
+	public int checkBoardWriter(int board_id, String user_id) {
+		System.out.println("BoardDAO - checkBoardWriter()");
+		int check = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			String sql = "SELECT user_id FROM board WHERE board_id = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, board_id);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				if(rs.getString("user_id").equals(user_id)) {
+					check = 1;
+				}
+			}
+		} catch (SQLException e) {
+			System.out.println("checkBoardWriter() 오류! - " + e.getMessage());
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return check;
+	}
 	// INSERT ===================================================================================
 	
 	public int insertBoard(BoardBean boardBean) { // board 게시물 작성
@@ -125,7 +151,7 @@ public class BoardDAO {
 			pstmt.setString(2, boardBean.getBoard_subject());
 			pstmt.setString(3, boardBean.getBoard_content());
 			pstmt.setInt(4, boardBean.getBoard_type());
-			pstmt.setString(5, "test");
+			pstmt.setString(5, boardBean.getUser_id());
 			insertCount = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("insertBoard() 오류! - " + e.getMessage());

@@ -34,7 +34,37 @@ public class EditorDAO {
 		if(boardBean instanceof EditorBean) {
 			editorBean = (EditorBean)boardBean;
 		}
-		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			String sql = "SELECT * FROM board_ed where board_id = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, boardBean.getBoard_id());
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				editorBean.setBoard_ed_address(rs.getString("board_ed_address"));
+				editorBean.setBoard_ed_category(rs.getString("board_ed_category"));
+				editorBean.setBoard_ed_content_detail(rs.getString("board_ed_content_detail"));
+				editorBean.setBoard_ed_fort(rs.getInt("board_ed_fort"));
+				editorBean.setBoard_ed_inventory(rs.getString("board_ed_inventory"));
+				editorBean.setBoard_ed_link(rs.getString("board_ed_link"));
+				editorBean.setBoard_ed_max_price(rs.getInt("board_ed_max_price"));
+				editorBean.setBoard_ed_meeting(rs.getInt("board_ed_meeting"));
+				editorBean.setBoard_ed_min_price(rs.getInt("board_ed_min_price"));
+				editorBean.setBoard_ed_program(rs.getString("board_ed_program"));
+				editorBean.setBoard_ed_sample(rs.getInt("board_ed_sample"));
+				editorBean.setBoard_ed_solution(rs.getString("board_ed_solution"));
+				editorBean.setBoard_ed_subject(rs.getString("board_ed_subject"));
+				editorBean.setBoard_ed_upload(rs.getInt("board_ed_upload"));
+				editorBean.setBoard_ed_work(rs.getInt("board_ed_work"));
+			}
+		} catch (Exception e) {
+			System.out.println("selectProjectInfo() 오류! - " + e.getMessage());
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
 		return editorBean;
 	}
 	
@@ -83,20 +113,51 @@ public class EditorDAO {
 	public int updateEditor(EditorBean editorBean) { // 에디터 게시물 수정
 		System.out.println("EditorDAO - updateEditor()");
 		int updateCount = 0;
+		PreparedStatement pstmt = null;
+		try {
+			String sql = "UPDATE board_ed SET board_ed_program = ?, board_ed_solution = ?, board_ed_inventory = ?, "
+					+ "board_ed_upload = ?, board_ed_work = ?, baord_ed_sample = ?, board_ed_fort = ?, board_ed_min_price = ?, "
+					+ "baord_ed_max_price = ?, board_ed_meeting = ?, board_ed_content_detail = ?, board_ed_address = ?, "
+					+ "board_ed_category = ?, board_ed_subject = ?, board_ed_link = ? WHERE board_id = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, editorBean.getBoard_ed_program());
+			pstmt.setString(2, editorBean.getBoard_ed_solution());
+			pstmt.setString(3, editorBean.getBoard_ed_inventory());
+			pstmt.setInt(4, editorBean.getBoard_ed_upload());
+			pstmt.setInt(5, editorBean.getBoard_ed_work());
+			pstmt.setInt(6, editorBean.getBoard_ed_sample());
+			pstmt.setInt(7, editorBean.getBoard_ed_fort());
+			pstmt.setInt(8, editorBean.getBoard_ed_min_price());
+			pstmt.setInt(9, editorBean.getBoard_ed_max_price());
+			pstmt.setInt(10, editorBean.getBoard_ed_meeting());
+			pstmt.setString(11, editorBean.getBoard_ed_content_detail());
+			pstmt.setString(12, editorBean.getBoard_ed_address());
+			pstmt.setString(13, editorBean.getBoard_ed_category());
+			pstmt.setString(14, editorBean.getBoard_ed_subject());
+			pstmt.setString(15, editorBean.getBoard_ed_link());
+			pstmt.setInt(16, editorBean.getBoard_id());
+			updateCount = pstmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("updateEditor() 오류! - " + e.getMessage());
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
 		
 		return updateCount;
 	}
 		
 	// DELETE ===================================================================================
 		
-	public int deleteEditor(int board_id) { // 에디터 게시글 삭제
+	public int deleteEditor(String user_id) { // 에디터 게시글 삭제
 		System.out.println("EditorDAO - deleteEditor()");
 		int deleteEditor = 0;
 		PreparedStatement pstmt = null;
 		
 		try {
-			String sql = "DELETE FROM board_ed WHERE board_id = ?";
+			String sql = "DELETE FROM board_ed WHERE user_id = ?";
 			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, user_id);
 			deleteEditor = pstmt.executeUpdate();
 		} catch (Exception e) {
 			System.out.println("deleteEditor() 오류! - " + e.getMessage());

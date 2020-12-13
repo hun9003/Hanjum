@@ -19,11 +19,12 @@ import com.hanjum.user.action.UserPortfolioInfoAction;
 import com.hanjum.user.action.UserPortfolioInsertAction;
 import com.hanjum.user.action.UserPortfolioListAction;
 import com.hanjum.user.action.UserPortfolioUpdateAction;
+import com.hanjum.user.action.UserReportProAction;
 import com.hanjum.user.action.UserSearchManageAction;
 import com.hanjum.user.action.UserUpdateEditorProAction;
 import com.hanjum.user.action.UserUpdateFormAction;
 import com.hanjum.user.action.UserUpdateProAction;
-import com.hanjum.user.svc.UserProService;
+import com.hanjum.user.service.UserProService;
 import com.hanjum.user.action.UserCheckIdAction;
 import com.hanjum.user.action.UserDeleteProAction;
 import com.hanjum.user.action.UserInfoAction;
@@ -80,7 +81,7 @@ public class UserFrontController extends HttpServlet {
 		}
 		
 		else if (command.equals("/Login.uo")) {
-
+			request.setAttribute("prefPage", request.getAttribute("prefPage"));
 			forward = new ActionForward(); // 포워드 객체 생성
 			forward.setPath("/user/userLoginForm.jsp"); // 포워드경로 지정 , 디스패쳐 방식으로 해야되니 redirect값은 안줌
 			
@@ -275,7 +276,42 @@ public class UserFrontController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		} 		
+		// 리포트 폼
+		else if (command.equals("/UserReportForm.uo")) { // command 주소 검사
+			// 바로 View로 포워딩 실행
+			forward = new ActionForward(); // 포워드 객체 생성
+			forward.setPath("/user/userReportForm.jsp"); // 포워드경로 지정 , 디스패쳐 방식으로 해야되니 redirect값은 안줌
+		}
+		
+		// 리포트 pro
+		else if (command.equals("/UserReportPro.uo")) { // command 주소 검사
+			action = new UserReportProAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} 
+		
+		// 구인상태 변경 - Action 없음 ajax
+		else if (command.equals("/ChangeStatus.uo")) {
+			String user_id = request.getParameter("user_id");
+			int editor_status = Integer.parseInt(request.getParameter("editor_status"));
+			boolean success = false;
+			
+			UserProService userProService = new UserProService();
+			success = userProService.changeStatus(user_id,editor_status);
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			if(success) {
+				out.println(success);
+				out.close();
+			}else {
+				out.println(success);
+				out.close();
+			}
+		}
 		// -------------------------------------------------------------------------------------------------------------------
 		// 기본 작업 후 공통 작업 수행
 		if (forward != null) { // 포워드가 값이 있다 = 포워드 객체가 생성 되었다 -> 실행
