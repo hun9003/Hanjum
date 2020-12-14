@@ -10,11 +10,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.hanjum.action.Action;
+import com.hanjum.notice.action.DeclineNoticeAction;
+import com.hanjum.notice.action.NoticeDeleteAction;
 import com.hanjum.notice.action.NoticeListAction;
+import com.hanjum.notice.action.NoticeMatchAction;
 import com.hanjum.notice.action.NoticeNewAlarmAction;
 import com.hanjum.notice.action.NoticeOldAlarmAction;
-import com.hanjum.notice.action.NoticeSetAction;
 import com.hanjum.notice.action.NoticeUpdateStatusAction;
+import com.hanjum.notice.action.applyNoticeAction;
 import com.hanjum.vo.ActionForward;
 
 
@@ -58,21 +61,10 @@ public class NoticeFrontController extends HttpServlet {
 				e.printStackTrace();
 			}
 		}else if(command.equals("/getOldNotice.nt")) {
-			// 확인된 알람
+			// 읽은 알람
 			System.out.println("getOldNotice.nt");
 			
 			action = new NoticeOldAlarmAction();
-			
-			try {
-				forward = action.execute(request, response);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}else if(command.equals("/setNotice.nt")) {
-			// 알람 값들 입력 
-			System.out.println("setNotice.nt");
-			
-			action = new NoticeSetAction();
 			
 			try {
 				forward = action.execute(request, response);
@@ -90,10 +82,60 @@ public class NoticeFrontController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} 
-//		else if(command.equals("/")){
-//			
-//		}
+		} else if(command.equals("/matchNotice.nt")) {
+			// match한다고(수락버튼 아마도?) 했을 경우
+			System.out.println("matchNotice.nt");
+			
+			action = new  NoticeMatchAction();
+			
+			try {
+				forward = action.execute(request, response);
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.equals("/noticeDelete.nt")) {
+			// 알람 삭제버튼 누르면 삭제
+			System.out.println("noticeDelete.nt");
+			
+			action = new NoticeDeleteAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if(command.equals("/applyNotice.nt")) {
+			// 프로젝트 "신청"버튼
+			System.out.println("applyNotice");
+			
+			action = new applyNoticeAction();
+				try {
+					forward = action.execute(request, response);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+		}else if(command.equals("/declineNotice.nt")) {
+			// 거절버튼
+			System.out.println("declineNotice");
+			
+			action = new DeclineNoticeAction();
+				try {
+					forward = action.execute(request, response);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+		}else if(command.equals("/deleteNotice.nt")) {
+			// 해당알람 삭제
+			System.out.println("deletenotice");
+			
+			action = new NoticeDeleteAction();
+				try {
+					forward = action.execute(request, response);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+		}
+
+		
 		
 		
 		

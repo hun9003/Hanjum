@@ -39,7 +39,6 @@ public class NoticeOldAlarmAction implements Action {
 			jo.put("board_id", notice.getBoard_id()+"");
 			jo.put("user_id", notice.getUser_id());
 			jo.put("notice_from_id", notice.getNotice_from_id());
-			jo.put("notice_type", notice.getNotice_type());
 
 			
 			noticeJsonList.add(jo);		
@@ -48,16 +47,20 @@ public class NoticeOldAlarmAction implements Action {
 		System.out.println(noticeJsonList);
 		
 		if(!noticeList.isEmpty()) {
+			// noticeList에 값이 있을 경우 출력
 			response.setContentType("application/json; charset=UTF-8");
 			PrintWriter out = response.getWriter();
 			out.println(noticeJsonList);
 			out.close();
 		}else {
-			// 실패시
-		}
+			response.setContentType("application/json; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("지난 알람이 없습니다.");
+			out.close();
 		
-		return null;
 	}
+		return null;
 		
-
 }
+}
+

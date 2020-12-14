@@ -1,4 +1,3 @@
-<%@page import="com.hanjum.notice.service.NoticeProService"%>
 <%@page import="com.hanjum.user.vo.UserBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -38,16 +37,12 @@ login=1;
 			<li><a href="EnterList.bo" class="btn_link btn_main font_white">채용공고</a></li>
 		</ul>
 	</div>
-	<%
-	if(login == 1){
-		%>
 		<div class="top_member_menu">
 		<ul class="menu_col menu_member">
 <<<<<<< HEAD
 			<li><div id="setting" class="menu_setting"><img src="img/settings-5-fill.png" alt="세팅"></div>
 =======
-		<%if (type==0){%>
-			<li><div id="setting" class="menu_setting"><a href="UserManage.uo"><img src="img/settings-5-fill.png" alt="세팅"></a></div><%}%>
+			<li><div id="setting" class="menu_setting"><a href="UserManage.uo"><img src="img/settings-5-fill.png" alt="세팅"></a></div>
 >>>>>>> origin/pje
 			<li><div id="noticeBtn" class="menu_notice"><img src="img/notice.png" alt="알림" style="width:40px;"></div></li>
 			<li><div id="menuBtn" class="menu_user"><img src="img/menu_white.png" alt="메뉴"></div></li>
@@ -71,91 +66,38 @@ login=1;
 			 <li><a href="user/userLogout.jsp">로그아웃</a></li>
 			</ul>
   		</div>
-  		
-  		
-  		<!--  notice -->
-<%
-String user_id = "user_id"; // 유저아이디
-NoticeProService svc = new NoticeProService();
-int count = svc.getNoticeCount(user_id);
-%>
-
-<form action="applyNotice.nt">
-	<input type="submit" value="프로젝트 신청">
-</form>
-
-<form action="matchNotice.nt">
-	<input type="submit" value="수락" >
-</form>
-
-<form action="declineNotice.nt">
-	<input type="reset" value="거절">
-</form>
-
-<form action="deleteNotice.nt">
-	<input type="submit" value="알림삭제">
-</form>
-
-
-
-<a href="applyNotice.nt"><input type="hidden" value="'+item.notice_id+'">수락</a>
-
-
-	<div id="notice_table">
-		
-		<btn id="btn">
-			<%if(count > 0) {%>
-			<div id="notice_count"><%=count%></div>
-			<%} %>
-			<input type="button" id="BtnIcon">
-		</btn>
-		
-		
-		<ul id="list">
-			<li>	
-				<!-- 읽지않은 알람 리스트 뿌림 -->
-				<div id="new_notice">
-					<table id="new_notice_list">
-							<!--  여기에 읽지않은 알람 -->
-					</table>
-				</div>
-			</li>
-			
-			<li>
-				<!--지난 알람 리스트 뿌림 -->
-				<div id="old_notice">
-					<table id="old_notice_list">
-						<!--  읽은알람  -->
-					</table>
-				</div>
-			</li>	
-			<li id="li_btn">
-				<button id="get_notice_btn">+</button>
-			</li>
-			
-		</ul>	
-	</div>
-	
-	
-  		
-  		
-  		
-  		
-  		
-  		
+  		<div id="myNotice" class="menu_user_notice">
+  		<ul id="notice_list" class="no_margin lstyle_n">
+	  		<li>
+		  		<div id="new_notice">
+			  		<div class="notice_title"><span>새 알림</span></div>
+			  		<div class="notice_content">
+			  		<ul class="no_margin lstyle_n">
+			  		<li><a href="#">2개의 새로운 리뷰가 도착했습니다.</a></li>
+			  		</ul>
+			  		</div>
+		  		</div>
+	  		</li>
+	  		<li>
+		  		<div id="old_notice">
+		  		<div class="notice_title"><span>지난 알림</span></div>
+		  		<div class="notice_content">
+		  			<ul class="no_margin lstyle_n">
+			  		<li><a href="#">등록한 프로젝트의 지원자가 있습니다.</a></li>
+			  		</ul>
+		  		</div>
+		  		</div>
+	  		</li>
+	  		
+  		</ul>
+  		</div>
 		</div>
-		<%
-	} else {
-		%>
 		<div class="top_member_menu">
 		<ul class="menu_col menu_member">
 			<li><a href="UserLoginForm.uo" class="btn_link btn_main font_white">로그인</a></li>
 			<li><a href="UserInsertMain.uo" class="btn_link btn_main font_white">회원가입</a></li>
 		</ul>
 		</div>
-		<%
-	}
-	%>
 	
 </div>
 </header>

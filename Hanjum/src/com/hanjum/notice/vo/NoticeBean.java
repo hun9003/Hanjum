@@ -5,33 +5,27 @@ import java.sql.Timestamp;
 public class NoticeBean {
 	
 	int notice_id; // 각 알림들에 매겨지는 값
-	String notice_content; // 알림 내용
+	int notice_content; // 알림 내용
 	Timestamp notice_date; // 알림 날짜
 	String notice_url; // 알림 링크
 	int notice_read; // 알림 조회 여부
 	int board_id; // 프로젝트 id
 	String user_id; // 유저(본인) 아이디
 	String notice_from_id; // 알람을 보낸 사람 아이디
-	int notice_type;
 	
 	
 	// Getter / Setter
-	public int getNotice_type() {
-		return notice_type;
-	}
-	public void setNotice_type(int notice_type) {
-		this.notice_type = notice_type;
-	}
+
 	public int getNotice_id() {
 		return notice_id;
 	}
 	public void setNotice_id(int notice_id) {
 		this.notice_id = notice_id;
 	}
-	public String getNotice_content() {
+	public int getNotice_content() {
 		return notice_content;
 	}
-	public void setNotice_content(String notice_content) {
+	public void setNotice_content(int notice_content) {
 		this.notice_content = notice_content;
 	}
 	public Timestamp getNotice_date() {

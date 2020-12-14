@@ -1,3 +1,5 @@
+
+  
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -11,27 +13,47 @@
 <script src="js/rollingJob.js"></script>
 <script src="js/topMenu.js"></script>
 <script type="text/javascript">
-
-	$(document).ready(function () {
-		$('#myNotice').click(function(){
-			$.getJSON('getNewNotice.nt'), function (rdata) {
-				$.each(rdata, function (index, item) {
-					$('#new_notice').append('<li><a href="#">'+item.notice_id+'</a></li>');
-				});
-			});
-		});
-		
-	});
+// count(notice_read) == 1 인 갯수를 버튼위에 갯수 띄워줌?
+// 실시간?
 	
-// 	$(document).ready(function () {
-// 		$('#myNotice').click(function () {
-// 			$.getJSON('getNewNotice.nt', function (rdata) {
-// 				$.each(rdata, function (index, item) {
-// 					$('ul#notice_new_msg').append('<li style="padding:7px;"><a href="'+item.notice_url+'">'+item.notice_content+'</a></li>');
-// 				});	 // each	+
-// 			}); //getJSON
-// 		}); //click - 새알람S
-// 	}); //ready	
+		// test10.jsp <-jsQuery
+		
+		// action 에서 값 불러와서 출력.......?여기서 ?
+		
+	
+	$(document).ready(function () {
+		$('#myNotice').click(function () {
+			$.getJSON('getNewNotice.nt', function (rdata) {
+				$.each(rdata, function (index, item) {
+					
+// 					var val = $().val();
+// 					if(val == item.user_id){
+						
+// 					}
+					
+					
+					if(item.notice_content == 1){
+						// match된 알람 
+						$('').append('<li><a href="http://'+item.notice_url+'">'+item.notice_content+item.notice_url+'</a></li>');
+						
+					}else if(item.notice_content == 2){
+						// user_id 님이 프로젝트를 거절 
+						$('div#new_notice').append('<li><a href="'+item.notice_url+'">'+item.notice_content+item.notice_url+'</a></li>');
+					}
+					
+// 						$('#old_notice').append('<li><a href="'+item.notice_url+'">'+index+'</a></li>'); // 0, 1
+	                
+						
+					
+					
+					// 오래된 알람은 버튼 클릭했을때만 열리게 
+					
+						
+					
+				});	 // each
+			}); //getJSON
+		}); //click - 새알람S
+	}); //ready	
 	
 // 	$(document).ready(function(){
 // 		$('#myNotice').click(function () {
@@ -44,7 +66,6 @@
 // 			}
 // 		});
 		
-
 	
 </script>
 </head>

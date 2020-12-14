@@ -9,7 +9,6 @@ import com.hanjum.board.service.ProjectProService;
 import com.hanjum.board.vo.BoardBean;
 import com.hanjum.board.vo.ProjectBean;
 import com.hanjum.vo.ActionForward;
-import com.mysql.jdbc.PreparedStatement.ParseInfo;
 
 public class ProjectInfoAction implements Action {
 
