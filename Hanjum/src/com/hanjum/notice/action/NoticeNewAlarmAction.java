@@ -19,31 +19,29 @@ public class NoticeNewAlarmAction implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ActionForward forward = new ActionForward();
-
 		// 새알람 가져옴
 		String user_id = request.getParameter("user_id");
 		
 		// NoticeBean 객체 전달
 		NoticeProService service =  new NoticeProService();
-		System.out.println("NoticeNewAction.java");
 		ArrayList<NoticeBean> noticeList = service.getNewNotice(user_id);
 		JSONArray noticeJsonList = new JSONArray();
 		
 		for(int i = 0; i < noticeList.size(); i++) {
 			NoticeBean notice = (NoticeBean)noticeList.get(i);
 			JSONObject jo = new JSONObject();
-				jo.put("notice_id", notice.getNotice_id()+"");
-				jo.put("notice_content", notice.getNotice_content());
-				jo.put("notice_date", notice.getNotice_date()+"");
-				jo.put("notice_url", notice.getNotice_url());
-				jo.put("notice_read", notice.getNotice_read());
-				jo.put("board_id", notice.getBoard_id());
-				jo.put("user_id", notice.getUser_id());
-				jo.put("notice_from_id", notice.getNotice_from_id());
-				jo.put("notice_type", notice.getNotice_type());
+			jo.put("notice_id", notice.getNotice_id()+"");
+			jo.put("notice_content", notice.getNotice_content());
+			jo.put("notice_date", notice.getNotice_date()+"");
+			jo.put("notice_url", notice.getNotice_url());
+			jo.put("notice_read", notice.getNotice_read());
+			jo.put("board_id", notice.getBoard_id());
+			jo.put("user_id", notice.getUser_id());
+			jo.put("notice_from_id", notice.getNotice_from_id());
 
 			
 			noticeJsonList.add(jo);		
+			
 		}
 		
 		System.out.println(noticeJsonList);
@@ -54,7 +52,11 @@ public class NoticeNewAlarmAction implements Action {
 			out.println(noticeJsonList);
 			out.close();
 		}else {
-			// 실패시
+			// 새로운 알람이 없을 경우
+			response.setContentType("application/json; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.print("새로운 알람이 없습니다.");
+			out.close();
 		}
 		
 		return forward;

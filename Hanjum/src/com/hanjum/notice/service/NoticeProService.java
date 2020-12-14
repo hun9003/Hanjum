@@ -29,12 +29,13 @@ public class NoticeProService {
 //	----------------DAO호출-------------------
 	
 	
-	// 새로운 알람 5개 가져오기
+	// 새로운 알람 가져오기
 		public ArrayList<NoticeBean> getNewNotice(String user_id) {
 			System.out.println("svc - getNewNotice()");
 			ArrayList<NoticeBean> list = noticeDAO.getNewNotice(user_id);
 			close(con);
 			return list;
+			
 		}
 	
 	 
@@ -59,25 +60,15 @@ public class NoticeProService {
 	// 신청된 정보들을 담아서 insertNotice에 입력하러감 룰루
 	public void insertNotice(NoticeBean noticeBean) {
 		System.out.println("svc - insertNotice()");
+		
 		int noticeSuccess = noticeDAO.insertNotice(noticeBean);
-		String msg = null;
 		
 		if(noticeSuccess > 0) {
 			commit(con);
-			// 여기서 알람보내는 method 호출???****
-//			noticeDAO.sendNotification(noticeBean.notice_type)
-			
-//			if(notice_type == 1) {
-//				리턴받은 notice_type으로 분류 후 String 형으로 리턴시켜줌 여기서
-//			}
-			
-			
-			
 		}else {
 			rollback(con);
-			// ㄷ
-			// 실패일 경우에 리턴값 따로줘서 등록실패했다고 알려줌
 		}
+		
 		close(con);
 	}
 	
@@ -96,18 +87,70 @@ public class NoticeProService {
 	}
 	
 	
-	// 알람보내기
-	public int sendNotification(String user_id, String notice_from_id) {
-		int alert = 0;
+	// 해당알람 삭제하기
+	public void deleteNotice(int notice_id) {
+		int deleteSuccess = noticeDAO.deleteNotice(notice_id);
 		
-		return alert;
+		if(deleteSuccess > 0) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
+		
+		close(con);
 	}
-
 	
+	
+	// 갯수 띄우기
+	public int getNoticeCount(String user_id) {
+		int count = noticeDAO.getNoticeCount(user_id);
+		return count;
+	}
 	
 	
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
