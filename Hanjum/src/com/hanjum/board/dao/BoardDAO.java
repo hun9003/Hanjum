@@ -71,10 +71,15 @@ public class BoardDAO {
 				boardBean.setBoard_subject(rs.getString("board_subject"));
 				boardBean.setBoard_content(rs.getString("board_content"));
 				boardBean.setBoard_date(rs.getTimestamp("board_date"));
-				boardBean.setReadcount(rs.getInt("board_readcount"));
+				boardBean.setBoard_readcount(rs.getInt("board_readcount"));
 				boardBean.setBoard_type(rs.getInt("board_type"));
-				boardBean.setReport(rs.getInt("board_report"));
+				boardBean.setBoard_report(rs.getInt("board_report"));
 				boardBean.setUser_id(rs.getString("user_id"));
+				
+				sql = "UPDATE board SET board_readcount = board_readcount+1 WHERE board_id = ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, board_id);
+				pstmt.executeUpdate();
 			}
 		} catch (Exception e) {
 			System.out.println("selectBoardInfo() 오류! - " + e.getMessage());

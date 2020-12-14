@@ -23,6 +23,9 @@ public class UserLoginProAction implements Action {
 			if(prefPage.contains("My") || prefPage.contains("Logout")){
 				prefPage = "My.uo";
 			}
+			if(prefPage.contains("Project")) {
+				prefPage = "ProjectList.bo";
+			}
 		}
 		ActionForward forward = null;
 		

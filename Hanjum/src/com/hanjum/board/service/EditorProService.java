@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.hanjum.board.dao.BoardDAO;
 import com.hanjum.board.dao.EditorDAO;
 import com.hanjum.board.vo.BoardBean;
 import com.hanjum.board.vo.EditorBean;
@@ -20,24 +21,45 @@ public class EditorProService {
 	
 	// GET ======================================================================================
 	
-	public EditorBean getEditor(BoardBean boardBean) { // 에디터 조회 서비스
+	public EditorBean getEditor(String user_id) { // 에디터 조회 서비스
 		System.out.println("EditorProService - getEditor()");
 		
 		editorDAO.setConnection(con);
+		EditorBean editorBean = editorDAO.selectEditorInfo(user_id);
+		close(con);
+		return editorBean; // EditorBean
 		
-		return editorDAO.selectEditorInfo(boardBean); // EditorBean
-		
+	}
+	// CHECK ====================================================================================
+	
+	public boolean checkEditorInfo(String user_id) {
+		System.out.println("EditorProService - checkEditorInfo()");
+		boolean isSuccess = false;
+		int check = editorDAO.checkEditorInfo(user_id);
+		if(check == 1) {
+			isSuccess = true;
+		}
+		close(con);
+		return isSuccess;
 	}
 	
 	// INSERT ===================================================================================
 	
 	public boolean writeEditor(EditorBean editorBean) { // 에디터 작성 서비스
 		System.out.println("EditorProService - writeEditor()");
+		BoardBean boardBean = editorBean;
+		BoardDAO boardDAO = BoardDAO.getInstance(); // 2단계
+		boardDAO.setConnection(con); // 3단계
 		boolean isSuccess = false;
-		int count = editorDAO.insertEditor(editorBean);
+		int count = boardDAO.insertBoard(boardBean);
 		if(count > 0) {
-			commit(con);
-			isSuccess = true;
+			count = editorDAO.insertEditor(editorBean);
+			if(count > 0) {
+				commit(con);
+				isSuccess = true;
+			} else {
+				rollback(con);
+			}
 		} else {
 			rollback(con);
 		}
@@ -90,6 +112,20 @@ public class EditorProService {
 		System.out.println("EditorProService - getListSearchEditor()");
 		close(con);
 		return editorDAO.selectListSearchEditor(startRow, search);
+	}
+
+	public boolean updateEditor(com.hanjum.user.vo.EditorBean editorBean) { // 회원정보수정으로 인한 이력서 수정
+		System.out.println("EditorProService - updateEditor()");
+		boolean isSuccess = false;
+		int count = editorDAO.updateEditor(editorBean);
+		if(count > 0) {
+			commit(con);
+			isSuccess = true;
+		} else {
+			rollback(con);
+		}
+		close(con);
+		return isSuccess;
 	}
 	
 }

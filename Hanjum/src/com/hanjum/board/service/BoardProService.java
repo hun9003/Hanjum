@@ -19,6 +19,11 @@ public class BoardProService {
 	public BoardBean getBoard(int board_id) { // board 정보 호출
 		System.out.println("BoardProService - getBoard()");
 		BoardBean boardBean = boardDAO.selectBoardInfo(board_id);
+		if(boardBean != null) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
 		close(con);
 		return boardBean;
 	}

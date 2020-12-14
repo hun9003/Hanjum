@@ -4,34 +4,41 @@
     String frUrl = "";
     String fr = "";
     String pageSubject = "";
+    
+    
     if(session.getAttribute("userBean") != null){
-    	frUrl = "userNotice.uo";
-    	fr = "notice";
-    	pageSubject = "내 알림";
+    	frUrl = "UserMyInfo.uo";
+    	fr = "info";
+    	pageSubject = "내 정보";
+    	if(request.getParameter("fr") != null){
+        	fr = request.getParameter("fr");
+        	switch(fr){
+        	case "notice": frUrl="getNewNotice.nt"; pageSubject="내 알림"; break;
+        	case "chat": frUrl="ChatListPro.ch"; pageSubject="채팅"; break;
+        	case "info": frUrl="UserMyInfo.uo"; pageSubject="내 정보"; break;
+        	case "constract": frUrl="UserConstract.uo"; pageSubject="계약 관리"; break;
+        	}
+        }
     } else {
     	frUrl = "Login.uo";
     	fr = "login";
     	pageSubject = "로그인";
-    }
-    if(request.getParameter("fr") != null){
-    	fr = request.getParameter("fr");
-    	switch(fr){
-    	case "login": frUrl="Login.uo"; pageSubject="로그인"; break;
-    	case "join": frUrl="Join.uo"; pageSubject="회원등록"; break;
-    	case "joinEditor": frUrl="JoinEditor.uo"; pageSubject="편집자등록"; break;
-    	
-    	case "notice": frUrl="getNewNotice.nt"; pageSubject="내 알림"; break;
-    	case "chat": frUrl="ChatListPro.ch"; pageSubject="채팅"; break;
-    	case "info": frUrl="UserMyInfo.uo"; pageSubject="내 정보"; break;
-    	case "constract": frUrl="UserConstract.uo"; pageSubject="계약 관리"; break;
-    	}
+    	if(request.getParameter("fr") != null){
+        	fr = request.getParameter("fr");
+        	switch(fr){
+        	case "login": frUrl="Login.uo"; pageSubject="로그인"; break;
+        	case "join": frUrl="Join.uo"; pageSubject="회원등록"; break;
+        	case "joinEditor": frUrl="JoinEditor.uo"; pageSubject="편집자등록"; break;
+        	}
+        }
     }
 	String prefPage = "";
 	if(request.getHeader("referer") != null){
 		String prefStr = request.getHeader("referer");
 		prefPage = prefStr.substring(prefStr.lastIndexOf("/")+1);
 	}
-    
+	
+	
     %>
 <!DOCTYPE html>
 <html lang="en">
@@ -57,7 +64,9 @@
 	<link rel="stylesheet" href="css/flaticon.css">
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/member.css">
-	
+	<style type="text/css">
+		.form-group-content:hover > .edit {display: inline-block;}
+	</style>
 	
 </head>
 <body>
@@ -121,6 +130,6 @@
 				}
 			});
 			</script>
-			
+			<script src="js/userInfo.js"></script>
 		</body>
 </html>

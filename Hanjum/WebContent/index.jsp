@@ -199,6 +199,9 @@
 					}
 					
 				}
+				
+				SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-DD");
+				String projectDate = sdf.format(project.getBoard_date());
 	    %>
 	       <div class="col-md-4 ftco-animate">
 	          <div class="project-wrap">
@@ -208,11 +211,11 @@
 	            </a>
 	          	</div>
 	            <div class="text p-4">
-	                <h3><a href="#">다큐멘터리를 제작할 편집자를 찾고 있습니다</a></h3>
-	                <p class="advisor">다큐TV <span>다큐멘터리, 유튜브</span></p>
+	                <h3><a href="#"><%=project.getBoard_subject() %></a></h3>
+	                <p class="advisor"><%=project.getUser_name() %> <span><%=genre %></span></p>
 	                <ul class="d-flex justify-content-between">
-	                   <li><span class="flaticon-shower"></span>2020-11-15</li>
-	                   <li class="price">10만원 ~ 15만원</li>
+	                   <li><span class="flaticon-shower"></span><%=projectDate %></li>
+	                   <li class="price"><%=min_price %> ~ <%=max_price %></li>
 	               </ul>
 	           </div>
 	       </div>
@@ -291,6 +294,7 @@
         if(request.getAttribute("editorList") != null){
         	ArrayList<EditorBean> editorList = (ArrayList<EditorBean>)request.getAttribute("editorList");
 	        for(int i = 0; i < editorList.size(); i++){
+	        	EditorBean editorBean = editorList.get(i);
 	        %>
 	          <div class="item">
 	            <div class="testimony-wrap py-4">
@@ -302,11 +306,11 @@
 	                    <span class="fa fa-star"></span>
 	                    <span class="fa fa-star"></span>
 	                </p>
-	                <p class="mb-4" style="height: 144px;">최선을 다해 편집하겠습니다</p>
+	                <p class="mb-4" style="height: 144px;"><%=editorBean.getBoard_subject() %></p>
 	                <div class="d-flex align-items-center">
-	                   <div class="user-img" style="background-image: url(images/person_1.jpg)"></div>
+	                   <div class="user-img" style="background-image: url(editorUserPhotoUpload/<%=editorBean.getBoard_ed_photo()%>)"></div>
 	                   <div class="pl-3">
-	                      <p class="name">username<%=i+1 %></p>
+	                      <p class="name"><%=editorBean.getUser_name() %></p>
 	                      <span class="position">편집자</span>
 	                  </div>
 	              </div>
@@ -439,5 +443,6 @@
 			<%
 		}
 	%>
+	
 </body>
 </html>

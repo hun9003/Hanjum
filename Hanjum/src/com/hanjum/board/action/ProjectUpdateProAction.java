@@ -24,7 +24,7 @@ public class ProjectUpdateProAction implements Action {
 		
 		boolean isSuccess = false;
 		int board_id = Integer.parseInt(request.getParameter("board_id"));
-		
+		int nowPage = Integer.parseInt(request.getParameter("page"));
 		ProjectBean projectBean = new ProjectBean();
 		projectBean.setBoard_subject(request.getParameter("board_subject"));
 		projectBean.setBoard_content(request.getParameter("board_content"));
@@ -73,7 +73,7 @@ public class ProjectUpdateProAction implements Action {
 			
 		} else {
 			forward = new ActionForward();
-			forward.setPath("Project.bo?board_id="+projectBean.getBoard_id());
+			forward.setPath("Project.bo?page="+nowPage+"&board_id="+projectBean.getBoard_id());
 			forward.setRedirect(true);
 		}
 		return forward;

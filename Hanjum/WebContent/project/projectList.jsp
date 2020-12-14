@@ -244,11 +244,11 @@
           <div class="project-wrap">
           	<div class="project-profile">
           	<span class="status">모집중</span>
-             <a id="item-img<%=i %>" href="<%=contentUrl%>?board_id=<%=project.getBoard_id()%>" class="img item-link"style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); background-image: url(images/work-1.jpg); border-radius: 50%; width:150px; height:150px;margin:0 auto;">
+             <a id="item-img<%=i %>" href="<%=contentUrl%>?page=<%=nowPage %>&board_id=<%=project.getBoard_id()%>" class="img item-link"style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); background-image: url(images/work-1.jpg); border-radius: 50%; width:150px; height:150px;margin:0 auto;">
             </a>
           	</div>
             <div class="text p-4">
-                <h3><a id="item-title<%=i %>" class="item-link" href="<%=contentUrl%>?board_id=<%=project.getBoard_id()%>"><%=project.getBoard_subject() %></a></h3>
+                <h3><a id="item-title<%=i %>" class="item-link" href="<%=contentUrl%>?page=<%=nowPage %>&board_id=<%=project.getBoard_id()%>"><%=project.getBoard_subject() %></a></h3>
                 <p class="advisor"><%=project.getUser_id() %> <span><%=genre %></span></p>
                 <ul class="d-flex justify-content-between">
                    <li><span class="flaticon-shower"></span><%=board_date %></li>

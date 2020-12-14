@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.hanjum.action.Action;
+import com.hanjum.board.service.EditorProService;
 import com.hanjum.user.service.UserProService;
 import com.hanjum.user.vo.EditorBean;
 import com.hanjum.user.vo.UserBean;
@@ -25,6 +26,9 @@ public class UserInfoMyAction implements Action {
 		request.setAttribute("userBean", userBean);
 		userInfoService = new UserProService();
 		EditorBean editorBean = userInfoService.getEditorInfo(user_id);
+		
+		EditorProService editorProService = new EditorProService();
+		boolean isEditorInfo = editorProService.checkEditorInfo(user_id);
 		
 		String editor_program = "", editor_solution = "", editor_inventory = "", 
 				editor_upload = "", editor_work = "", editor_meeting = "", editor_fort = "",
@@ -107,13 +111,25 @@ public class UserInfoMyAction implements Action {
 			editorInfo.put("fort",editor_fort);
 			editorInfo.put("sample",editor_sample);
 			editorInfo.put("min_price",editor_ed_min_price);
+			editorInfo.put("min_price_val",editorBean.getEditor_ed_min_price()+"");
 			editorInfo.put("max_price",editor_ed_max_price);
+			editorInfo.put("max_price_val",editorBean.getEditor_ed_max_price()+"");
 			editorInfo.put("address",editor_address);
 			editorInfo.put("status", editorBean.getEditor_status()+"");
+			editorInfo.put("des", editorBean.getEditor_des());
+			editorInfo.put("profile", editorBean.getEditor_profile());
+
+			
 		}
 		
 		request.setAttribute("editorInfo", editorInfo);
-		
+		int readyStatus = 0;
+		if(isEditorInfo == true) {
+			readyStatus = 1;
+			request.setAttribute("readyStatus", readyStatus);
+		} else {
+			request.setAttribute("readyStatus", readyStatus);
+		}
 		if(userBean != null) {
 			forward = new ActionForward();
 			forward.setPath("user/userInfo.jsp");

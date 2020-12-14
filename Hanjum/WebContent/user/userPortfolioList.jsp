@@ -1,3 +1,4 @@
+<%@page import="com.hanjum.board.vo.EditorBean"%>
 <%@page import="com.hanjum.user.vo.PortfolioBean"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -24,8 +25,27 @@
     		pf_count = (int)request.getAttribute("pf_count");
     	}
     	ArrayList<PortfolioBean> portfolioList = (ArrayList<PortfolioBean>)request.getAttribute("portfolioList");
-    %>
- 
+   		EditorBean editorBoard = null;
+    	if(request.getAttribute("editorBoard") != null){
+   			editorBoard = (EditorBean)request.getAttribute("editorBoard");
+   		}
+    	%>
+    		<%
+    		if(editorBoard != null){
+    		%>
+ 			 <div class="form-group">
+			 <span class="form-group-content">
+			 	이력서 제목 <span class="float-r m-r-10"><span class="color-primary"><%=editorBoard.getBoard_subject() %> </span></span>
+			 </span>             
+             </div>
+             <div class="form-group">
+			 <span class="form-group-content">
+			 	이력서 조회수 <span class="float-r m-r-10"><span class="color-primary"><%=editorBoard.getBoard_readcount() %></span></span>
+			 </span>             
+             </div>
+             <%
+    		}
+             %>
              <div class="form-group">
 			 <span class="form-group-content">
 			 	포트폴리오 <span class="float-r m-r-10"><span class="color-primary" title="포트폴리오 보기"><%=pf_count %></span>개</span>

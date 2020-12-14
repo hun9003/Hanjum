@@ -7,6 +7,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.hanjum.action.Action;
+import com.hanjum.board.service.BoardProService;
+import com.hanjum.board.service.EditorProService;
+import com.hanjum.board.vo.BoardBean;
+import com.hanjum.board.vo.EditorBean;
 import com.hanjum.user.service.UserProService;
 import com.hanjum.user.vo.PortfolioBean;
 import com.hanjum.user.vo.UserBean;
@@ -26,6 +30,11 @@ public class UserPortfolioListAction implements Action {
 		int count = userProService.getCountPortfolio(userBean.getUser_id());
 		request.setAttribute("portfolioList", list);
 		request.setAttribute("pf_count", count);
+		EditorProService editorProService = new EditorProService();
+		EditorBean editorBean = editorProService.getEditor(userBean.getUser_id());
+		if(editorBean != null) {
+			request.setAttribute("editorBoard", editorBean);
+		}
 
 		forward = new ActionForward();
 		forward.setPath("/user/userPortfolioList.jsp");

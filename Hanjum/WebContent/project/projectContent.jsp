@@ -83,7 +83,8 @@
     ProjectBean project = (ProjectBean)request.getAttribute("project");
 	
 	String pageUrl = "Project.bo";
-	
+	String nowPageStr = (String)request.getAttribute("page");
+	int nowPage = Integer.parseInt(nowPageStr);
 	if(project != null){
 		String genre = "";
 		String recording = "";
@@ -252,12 +253,12 @@
 			%>
         </div>
         <div class="form-group d-flex justify-content-end mt-4">
-        <a class="btn btn-primary submit" type="button" id="UpdateBtn" href="<%=prefPage%>">목록으로</a> 
+        <a class="btn btn-primary submit" type="button" id="ListBtn" href="ProjectList.bo?page=<%=nowPage%>">목록으로</a> 
         <%
         if(userBean != null)
         if(userBean.getUser_id().equals(project.getUser_id())){
         %>
-        <a class="btn btn-primary submit m-l-10" type="button" id="UpdateBtn" href="ProjectUpdate.bo?board_id=<%=project.getBoard_id()%>">수정하기</a> 
+        <a class="btn btn-primary submit m-l-10" type="button" id="UpdateBtn" href="ProjectUpdate.bo?page=<%=nowPage%>&board_id=<%=project.getBoard_id()%>">수정하기</a> 
 		<a class="btn btn-light submit m-l-10" type="button" id="DeleteBtn" href = 'ProjectDeletePro.bo?board_id=<%=project.getBoard_id()%>'>삭제하기</a>
         <%
         }

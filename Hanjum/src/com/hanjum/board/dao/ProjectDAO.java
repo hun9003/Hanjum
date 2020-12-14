@@ -273,7 +273,9 @@ public class ProjectDAO {
 		try {
 			String sql = "SELECT * FROM board b " + 
 					"JOIN board_creator c " + 
-					"ON b.board_id = c.board_id " +
+					"ON b.board_id = c.board_id "
+					+ "JOIN user u "
+					+ "ON b.user_id = u.user_id " +
 					"ORDER BY b.board_date DESC " +
 					"LIMIT ?,?";
 			pstmt = con.prepareStatement(sql);
@@ -290,6 +292,7 @@ public class ProjectDAO {
 				projectBean.setBoard_date(rs.getTimestamp("board_date"));
 				projectBean.setBoard_type(rs.getInt("board_type"));
 				projectBean.setUser_id(rs.getString("user_id"));
+				projectBean.setUser_name(rs.getString("user_name"));
 				projectBean.setBoard_creator_cam_num(rs.getInt("board_creator_cam_num"));
 				projectBean.setBoard_creator_content_detail(rs.getString("board_creator_content_detail"));
 				projectBean.setBoard_creator_cre_max_price(rs.getInt("board_creator_cre_max_price"));
@@ -326,8 +329,9 @@ public class ProjectDAO {
 		try {
 			String sql = "SELECT b.board_id, b.board_subject, b.board_content, b.board_date, b.board_type, u.user_id, u.user_name, c.board_creator_genre," + 
 					"c.board_creator_recording, c.board_creator_cam_num, c.board_creator_ori_clip_num, c.board_creator_ori_length," + 
-					"c.board_creator_edit_length, c.board_creator_ori_transfer, c.board_creator_cre_min_price, c.board_creator_cre_max_price, c.board_creator_status FROM board b JOIN user u ON b.user_id = u.user_id "
-					+ "JOIN board_creator c ON c.board_id = b.board_id WHERE ";
+					"c.board_creator_edit_length, c.board_creator_ori_transfer, c.board_creator_cre_min_price, c.board_creator_cre_max_price, c.board_creator_status u.user_name FROM board b JOIN user u ON b.user_id = u.user_id "
+					+ "JOIN board_creator c ON c.board_id = b.board_id "
+					+ "JOIN user u ON u.user_id = b.user_id WHERE ";
 			if(search.containsKey("keyword")) {sql+="CONCAT(b.board_subject,b.board_content) LIKE '%"+search.get("keyword")+"%' ";}
 			if(search.containsKey("genre")) {sql+="AND c.board_creator_genre IN("+search.get("genre")+") ";}
 			if(search.containsKey("price_x")) {sql+="AND c.board_creator_cre_min_price < "+search.get("price_x")+" ";}
@@ -354,6 +358,7 @@ public class ProjectDAO {
 				projectBean.setBoard_date(rs.getTimestamp("board_date"));
 				projectBean.setBoard_type(rs.getInt("board_type"));
 				projectBean.setUser_id(rs.getString("user_id"));
+				projectBean.setUser_name(rs.getString("user_name"));
 				projectBean.setBoard_creator_cam_num(rs.getInt("board_creator_cam_num"));
 				projectBean.setBoard_creator_cre_max_price(rs.getInt("board_creator_cre_max_price"));
 				projectBean.setBoard_creator_cre_min_price(rs.getInt("board_creator_cre_min_price"));

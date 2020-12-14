@@ -121,7 +121,7 @@
                 </div>
                 <div class="form-group">
                 <label class="label has-focus label-primary">실물 미팅</label>
-	                <div class="check_list"><input type="radio" id="meeting1" name="editor_meeting" value="1"><span class="checkbox">쌉가능</span></div>
+	                <div class="check_list"><input type="radio" id="meeting1" name="editor_meeting" value="1"><span class="checkbox">가능</span></div>
 					<div class="check_list"><input type="radio" id="meeting2" name="editor_meeting" value="2"><span class="checkbox">불가능</span></div>
                 </div>
                 <div class="form-group">
@@ -137,7 +137,7 @@
                 </div>
                 <div class="form-group">
                 <label class="label has-focus label-primary" for="Content">예상 단가</label>
-              	  <div class="input_price"><input class="form-control" style="width:30%; display: inline-block;" type="number" id="MinPrice" step="1000" min="1000" name="editor_ed_min_price" value="0"> 원 ~ <input class="form-control" style="width:30%; display: inline-block;" type="number" id="MaxPrice" step="1000" min="1000" name="editor_ed_max_price" value="5000"> 원</div>
+              	  <div class="input_price"><input class="form-control" style="width:30%; display: inline-block;" type="number" id="MinPrice" step="1000" min="0" name="editor_ed_min_price" value="0"> 원 ~ <input class="form-control" style="width:30%; display: inline-block;" type="number" id="MaxPrice" step="1000" min="0" name="editor_ed_max_price" value="5000"> 원</div>
                 </div>
                 <div class="form-group">
                 <label class="label has-focus label-primary">거주지</label>

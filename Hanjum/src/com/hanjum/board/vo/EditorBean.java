@@ -14,9 +14,14 @@ public class EditorBean extends BoardBean{
 	private int board_ed_meeting;
 	private String board_ed_content_detail;
 	private String board_ed_address;
-	private String board_ed_category;
-	private String board_ed_subject;
-	private String board_ed_link;
+	private String board_ed_photo;
+	
+	public String getBoard_ed_photo() {
+		return board_ed_photo;
+	}
+	public void setBoard_ed_photo(String board_ed_photo) {
+		this.board_ed_photo = board_ed_photo;
+	}
 	public int getBoard_id() {
 		return board_id;
 	}
@@ -94,24 +99,6 @@ public class EditorBean extends BoardBean{
 	}
 	public void setBoard_ed_address(String board_ed_address) {
 		this.board_ed_address = board_ed_address;
-	}
-	public String getBoard_ed_category() {
-		return board_ed_category;
-	}
-	public void setBoard_ed_category(String board_ed_category) {
-		this.board_ed_category = board_ed_category;
-	}
-	public String getBoard_ed_subject() {
-		return board_ed_subject;
-	}
-	public void setBoard_ed_subject(String board_ed_subject) {
-		this.board_ed_subject = board_ed_subject;
-	}
-	public String getBoard_ed_link() {
-		return board_ed_link;
-	}
-	public void setBoard_ed_link(String board_ed_link) {
-		this.board_ed_link = board_ed_link;
 	}
 	
 }

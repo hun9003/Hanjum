@@ -27,7 +27,7 @@ public class ProjectInfoAction implements Action {
 		
 		ProjectProService projectProService = new ProjectProService();
 		ProjectBean project = projectProService.getProject(boardBean);
-		
+		request.setAttribute("page", request.getParameter("page"));
 		request.setAttribute("project", project);
 		forward = new ActionForward();
 		forward.setPath("/project/projectContent.jsp");

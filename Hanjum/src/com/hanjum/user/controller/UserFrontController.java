@@ -25,6 +25,7 @@ import com.hanjum.user.action.UserUpdateEditorProAction;
 import com.hanjum.user.action.UserUpdateFormAction;
 import com.hanjum.user.action.UserUpdateProAction;
 import com.hanjum.user.service.UserProService;
+import com.hanjum.user.action.EditAction;
 import com.hanjum.user.action.UserCheckIdAction;
 import com.hanjum.user.action.UserDeleteProAction;
 import com.hanjum.user.action.UserInfoAction;
@@ -310,6 +311,13 @@ public class UserFrontController extends HttpServlet {
 			}else {
 				out.println(success);
 				out.close();
+			}
+		} else if (command.equals("/editEditor.uo")) {
+			action = new EditAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
 		// -------------------------------------------------------------------------------------------------------------------

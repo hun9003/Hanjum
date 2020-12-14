@@ -187,16 +187,16 @@ public class UserDAO {
 		}
 	}
 	
-	public int updateUser(UserBean userBean) {
+	public int updateUser(String user_id, String content, String target) {
 		System.out.println("UserDAO - updateUser()");
-		int insertCount = 0;
+		int updateCount = 0;
 		PreparedStatement pstmt = null;
 		try {
-			String sql = "update user set user_phone=? where user_id=?";
+			String sql = "UPDATE user SET "+target+" = ? WHERE user_id = ?";
 			pstmt=con.prepareStatement(sql);
-			pstmt.setString(1, userBean.getUser_phone());
-			pstmt.setString(2, userBean.getUser_id());
-			insertCount=pstmt.executeUpdate();
+			pstmt.setString(1, content);
+			pstmt.setString(2, user_id);
+			updateCount=pstmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("updateUser() 오류! - user" + e.getMessage());
 			e.printStackTrace();
@@ -205,47 +205,28 @@ public class UserDAO {
 		}
 		
 		
-		return insertCount;
+		return updateCount;
 	}
-	public int updateUser(EditorBean editorBean) {
-		System.out.println("UserDAO - insertUser() - editor");
+	public int updateEditor(String user_id, String content, String target) {
+		System.out.println("UserDAO - updateEditor()");
 		int updateCount = 0;
-		int userUpdateCount = 0;
 		PreparedStatement pstmt = null;
-		UserBean userbean = (UserBean)editorBean;
-		System.out.println(editorBean.getEditor_program());
-		userUpdateCount=updateUser(userbean);
-		System.out.println("user 성공!" + userbean.getUser_name());
-		if(userUpdateCount > 0) {
-			try {
-				String sql = "update editor set editor_photo=?,editor_des=?,editor_profile=?,editor_program=?,editor_solution=?,editor_inventory=?,editor_upload=?,editor_work=?,editor_meeting=?,editor_fort=?,editor_sample=?,editor_ed_min_price=?,editor_ed_max_price=?,editor_address=? where user_id=?";
-				pstmt=con.prepareStatement(sql);
-				pstmt.setString(1, editorBean.getEditor_photo());
-				pstmt.setString(2, editorBean.getEditor_des());
-				pstmt.setString(3, editorBean.getEditor_profile());
-				pstmt.setString(4, editorBean.getEditor_program());
-				pstmt.setString(5, editorBean.getEditor_solution());
-				pstmt.setString(6, editorBean.getEditor_inventory());
-				pstmt.setInt(7, editorBean.getEditor_upload());
-				pstmt.setInt(8, editorBean.getEditor_work());
-				pstmt.setInt(9, editorBean.getEditor_meeting());
-				pstmt.setInt(10, editorBean.getEditor_fort());
-				pstmt.setInt(11, editorBean.getEditor_sample());
-				pstmt.setInt(12, editorBean.getEditor_ed_min_price());
-				pstmt.setInt(13, editorBean.getEditor_ed_max_price());
-				pstmt.setString(14, editorBean.getEditor_address());
-				pstmt.setString(15, editorBean.getUser_id());
-				updateCount=pstmt.executeUpdate();
-			} catch (SQLException e) {
-				System.out.println("updateUser() 오류! - editor " + e.getMessage());
-				e.printStackTrace();
-			} finally {
-				close(pstmt);
+		try {
+			String sql = "UPDATE editor SET "+target+" = ? WHERE user_id = ?";
+			pstmt=con.prepareStatement(sql);
+			if(target.equals("editor_ed_min_price") || target.equals("editor_ed_min_price")) {
+				pstmt.setInt(1, Integer.parseInt(content));
+			} else {
+				pstmt.setString(1, content);
 			}
-		} else {
-			rollback(con);
+			pstmt.setString(2, user_id);
+			updateCount=pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("updateEditor() 오류!" + e.getMessage());
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
 		}
-		
 		return updateCount;
 	}
 	

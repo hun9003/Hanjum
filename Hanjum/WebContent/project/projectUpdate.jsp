@@ -59,6 +59,8 @@
 	</section>
 <%
 ProjectBean project = (ProjectBean)request.getAttribute("project");
+String nowPageStr = (String)request.getAttribute("page");
+int nowPage = Integer.parseInt(nowPageStr);
 if(project != null){
 	String[] ref = project.getBoard_creator_cre_ref().split(",");
 %>
@@ -69,6 +71,7 @@ if(project != null){
 	<h3 class="mb-4">프로젝트 수정</h3>
 	<form action="ProjectUpdatePro.bo" method="post" name="fr_write" id="UpdateForm">
 		<input type="hidden" name="board_id" value="<%=project.getBoard_id()%>">
+		<input type="hidden" name="page" value="<%=nowPage%>">
 		<div class="form-group">
         	<label class="label has-focus" for="Subject">프로젝트 제목</label>
             <input type="text" id="Subject" class="form-control" name="board_subject" required="required" value="<%=project.getBoard_subject()%>"/>
@@ -173,6 +176,13 @@ if(project != null){
 </div>
 </section>
 <%
+} else {
+	%>
+	<script>
+		alert("잘못된 접근입니다.");
+		history.back();
+	</script>
+	<%
 }
 %>
 <jsp:include page="../inc/bottom.jsp"/>

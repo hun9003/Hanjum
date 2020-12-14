@@ -29,29 +29,19 @@
 	<style>
 		.check_list { display: inline-block; padding:10px;}
 		.check_list span { margin-left: 10px;}
-		.label-primary { color: #4986fc !important; }
-		.form-group-content {text-align: right;}
-		.form-group:hover > .form-group-content{
-			font-weight: bold;
-		}
-		.board_ref {
-		max-width:560px;
-		max-height:315px;
-		width:90%;
-		}
 	</style>
 	<%
 	if(session.getAttribute("userBean")==null){
-	%>
-	<script>
-		var loginConfirm = confirm("로그인이 필요합니다 로그인 하시겠습니까?");
-		if(loginConfirm){
-			location.href = "My.uo?fr=login";
-		} else {
-			history.back();
-		}
-	</script>
-	<%
+		%>
+		<script>
+			var loginConfirm = confirm("로그인이 필요합니다 로그인 하시겠습니까?");
+			if(loginConfirm){
+				location.href = "My.uo?fr=login";
+			} else {
+				history.back();
+			}
+		</script>
+		<%
 	}
 	%>
 	

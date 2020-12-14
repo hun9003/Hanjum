@@ -70,16 +70,16 @@ public class UserProService {
 		return userBean;
 	}
 	
-	public boolean updateUser(UserBean userBean) {
+	public boolean updateUser(String user_id, String content, String target) {
 		boolean isSuccess = false;
 		
 		Connection con = getConnection();
 		UserDAO userDAO = UserDAO.getInstance();
 		userDAO.setConnection(con);
-		int insertCount = userDAO.updateUser(userBean);
-		if(insertCount > 0) {
+		int updateCount = userDAO.updateUser(user_id, content, target);
+		if(updateCount > 0) {
 			commit(con); 
-			isSuccess = true; 
+			isSuccess = true;
 		} else {
 			rollback(con);
 		}
@@ -89,14 +89,14 @@ public class UserProService {
 		
 	}
 	
-	public boolean updateUser(EditorBean editorBean) {
+	public boolean updateEditor(String user_id, String content, String target) {
 		boolean isSuccess = false;
 		
 		Connection con = getConnection();
 		UserDAO userDAO = UserDAO.getInstance();
 		userDAO.setConnection(con);
-		int insertCount = userDAO.updateUser(editorBean);
-		if(insertCount > 0) {
+		int updateCount = userDAO.updateEditor(user_id, content, target);
+		if(updateCount > 0) {
 			commit(con); 
 			isSuccess = true; 
 		} else {

@@ -47,7 +47,7 @@ public class BoardFrontController extends HttpServlet {
 			forward.setPath("/project/projectWrite.jsp");
 		}  else if(command.equals("/EditorWrite.bo")) { //편집자 글쓰기
 			forward = new ActionForward();
-			forward.setPath("/editor/editorWriteForm.jsp");
+			forward.setPath("/editor/editorWrite.jsp");
 		}  else if(command.equals("/EditorUpdate.bo")) { //편집자 수정
 			forward = new ActionForward();
 			forward.setPath("/editor/editorUpdateForm.jsp");

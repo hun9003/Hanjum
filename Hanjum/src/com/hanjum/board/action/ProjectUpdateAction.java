@@ -25,6 +25,7 @@ public class ProjectUpdateAction implements Action {
 		if(request.getParameter("board_id") != null) {
 			board_id = Integer.parseInt(request.getParameter("board_id"));
 		}
+		int nowPage = Integer.parseInt(request.getParameter("page"));
 		
 		HttpSession session = request.getSession();
 		UserBean userSession = (UserBean)session.getAttribute("userBean");
@@ -40,7 +41,7 @@ public class ProjectUpdateAction implements Action {
 			ProjectBean project = projectProService.getProject(boardBean);
 			
 			request.setAttribute("project", project);
-			
+			request.setAttribute("page", nowPage);
 			forward = new ActionForward();
 			forward.setPath("/project/projectUpdate.jsp");
 			forward.setRedirect(false);
