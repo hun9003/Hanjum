@@ -165,7 +165,7 @@
 			
 	%>
 	<section id="pageContent" class="ftco-section bg-light">
-<div class="login-wrap p-4 p-md-5" style="margin:0px auto;; max-width : 800px;">
+<div class="login-wrap p-4 p-md-5" style="margin:0px auto; max-width : 800px;">
 		<div class="form-group">
         	<label class="label has-focus label-primary">프로젝트 제목</label>
         	<div class="form-group-content p-tb-10">
@@ -192,7 +192,7 @@
 		</div>
 		<div class="form-group">
             <label  class="label has-focus label-primary">세부 설명</label>
-            <div class="form-group-content p-tb-10">
+            <div class="p-tb-20 m-l-50" style="text-align: justify;">
             <%=project.getBoard_creator_content_detail()%>
             </div>
         </div>

@@ -51,4 +51,10 @@ public class BoardProService {
 		close(con);
 		return isWriter;
 	}
+	public String getUser_id(int board_id) {
+		System.out.println("BoardProService - checkBoardWriter()");
+		String user_id = boardDAO.selectUserId(board_id);
+		close(con);
+		return user_id;
+	}
 }

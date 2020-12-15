@@ -1,3 +1,7 @@
+<%@page import="com.hanjum.vo.Constant"%>
+<%@page import="com.hanjum.vo.PageInfo"%>
+<%@page import="com.hanjum.board.vo.EditorBean"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -43,17 +47,32 @@
 	<section class="ftco-section bg-light">
 		<div class="container">
 			<div class="row">
-			<% for(int i = 0; i < 8; i++){ %>
-				<div class="col-md-6 col-lg-3 ftco-animate d-flex align-items-stretch">
+			<%
+			PageInfo pageInfo = (PageInfo)request.getAttribute("pageInfo");
+			int listCount = pageInfo.getListCount();
+			int nowPage = pageInfo.getPage();
+			int maxPage = pageInfo.getMaxPage();
+			int startPage = pageInfo.getStartPage();
+			int endPage = pageInfo.getEndPage();
+			int pageSize = Constant.BOARD_PAGE_SIZE;
+			String pageUrl = "EditorList.bo";
+			String contentUrl = "Editor.bo";
+			
+        if(request.getAttribute("editorList") != null){
+        	ArrayList<EditorBean> editorList = (ArrayList<EditorBean>)request.getAttribute("editorList");
+	        for(int i = 0; i < editorList.size(); i++){
+	        	EditorBean editorBean = editorList.get(i);
+	        %>
+				<div class="col-md-6 col-lg-3 ftco-animate d-flex align-items-stretch" onclick="location.href='Editor.bo?board_id=<%=editorBean.getBoard_id()%>&page=<%=nowPage%>'">
 					<div class="staff">
 						<div class="img-wrap d-flex align-items-stretch">
-							<div class="img align-self-stretch" style="background-image: url(images/no-profile.png);"></div>
+							<div class="img align-self-stretch" style="width:255px; background-size:255px; background-image: url(editorUserPhotoUpload/<%=editorBean.getBoard_ed_photo()%>);"></div>
 						</div>
 						<div class="text pt-3">
-							<h3><a href="instructor-details.html">username</a></h3>
+							<h3><%=editorBean.getUser_name() %></h3>
 							<span class="position mb-2">편집자</span>
 							<div class="faded">
-								<p>최선을 다해 편집하겠습니다.</p>
+								<p style="height: 80px; text-overflow: ellipsis;"><%=editorBean.getBoard_subject() %></p>
 								<p class="star">
 				                    <span class="fa fa-star"></span>
 				                    <span class="fa fa-star"></span>
@@ -65,25 +84,37 @@
 						</div>
 					</div>
 				</div>
-				<%
-			}
-				%>
+			<%
+	        }
+       }
+        %>
 			</div>
 			<div class="row mt-5">
-				<div class="col text-center">
-					<div class="block-27">
-						<ul>
-							<li><a href="#">&lt;</a></li>
-							<li class="active"><span>1</span></li>
-							<li><a href="#">2</a></li>
-							<li><a href="#">3</a></li>
-							<li><a href="#">4</a></li>
-							<li><a href="#">5</a></li>
-							<li><a href="#">&gt;</a></li>
-						</ul>
+						<div class="col">
+							<div class="block-27">
+								<ul>
+								<%if(startPage > pageSize){ %>
+									<li><a href="<%=pageUrl%>?page=<%=startPage-pageSize%>">&lt;</a></li>
+									<% 
+										}
+									for(int i=startPage; i<=endPage; i++){
+										if(i == nowPage){
+											%>
+									<li class="active"><span><%=i %></span></li>
+									<% } else { %>
+									<li><a href="<%=pageUrl%>?page=<%=i%>"><%=i %></a></li>
+									<% } 
+									}
+									if(endPage < maxPage){ 
+									%>
+									<li><a href="<%=pageUrl%>?page=<%=startPage+pageSize %>">&gt;</a></li>
+									<%
+									}
+									%>
+								</ul>
+							</div>
+						</div>
 					</div>
-				</div>
-			</div>
 		</div>
 	</section>
 

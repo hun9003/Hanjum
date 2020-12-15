@@ -21,47 +21,33 @@ public class UserInsertEditorProAction implements Action {
 		System.out.println("UserInsertProAction!");
 		ActionForward forward = null; 
 		
-		ServletContext context = request.getServletContext();
-		
-		String saveFolder = "/editorUserPhotoUpload";
-		
-		String realFolder = context.getRealPath(saveFolder);
-		
-		int fileSize = 1024 * 1024 * 10; // 10MB
-		MultipartRequest multi = new MultipartRequest(
-				request, // HttpServletRequest(request) 객체 
-				realFolder, // 실제 업로드 폴더
-				fileSize, // 한번에 업로드 가능한 1개파일 최대 크기
-				"UTF-8", // 파일명에 대한 인코딩 방식
-				new DefaultFileRenamePolicy() // 파일명 중복 시 중복 처리 객체
-		);
-		String[] programArr = multi.getParameterValues("editor_program");
+		String[] programArr = request.getParameterValues("editor_program");
 		String program = Arrays.toString(programArr).replaceAll("[\\[\\] ]", "");
-		String[] solutionArr = multi.getParameterValues("editor_solution");
+		String[] solutionArr = request.getParameterValues("editor_solution");
 		String solution = Arrays.toString(solutionArr).replaceAll("[\\[\\] ]", "");
-		String[] inventoryArr = multi.getParameterValues("editor_inventory");
+		String[] inventoryArr = request.getParameterValues("editor_inventory");
 		String inventory = Arrays.toString(inventoryArr).replaceAll("[\\[\\] ]", "");
 		EditorBean editorBean = new EditorBean();
 		
-		editorBean.setUser_id(multi.getParameter("user_id"));
-		editorBean.setUser_pass(multi.getParameter("user_pass"));
-		editorBean.setUser_name(multi.getParameter("user_name"));
-		editorBean.setUser_email(multi.getParameter("user_email")+"@"+multi.getParameter("user_email2"));
-		editorBean.setUser_phone(multi.getParameter("user_phone"));
-		editorBean.setEditor_photo(multi.getOriginalFileName("editor_photo"));
-		editorBean.setEditor_des(multi.getParameter("editor_des"));
-		editorBean.setEditor_profile(multi.getParameter("editor_profile"));
+		editorBean.setUser_id(request.getParameter("user_id"));
+		editorBean.setUser_pass(request.getParameter("user_pass"));
+		editorBean.setUser_name(request.getParameter("user_name"));
+		editorBean.setUser_email(request.getParameter("user_email")+"@"+request.getParameter("user_email2"));
+		editorBean.setUser_phone(request.getParameter("user_phone"));
+		editorBean.setEditor_photo(request.getParameter("editor_photo"));
+		editorBean.setEditor_des(request.getParameter("editor_des"));
+		editorBean.setEditor_profile(request.getParameter("editor_profile"));
 		editorBean.setEditor_program(program);
 		editorBean.setEditor_solution(solution);
 		editorBean.setEditor_inventory(inventory);
-		editorBean.setEditor_upload(Integer.parseInt(multi.getParameter("editor_upload")));
-		editorBean.setEditor_work(Integer.parseInt(multi.getParameter("editor_work")));
-		editorBean.setEditor_meeting(Integer.parseInt(multi.getParameter("editor_meeting")));
-		editorBean.setEditor_fort(Integer.parseInt(multi.getParameter("editor_fort")));
-		editorBean.setEditor_sample(Integer.parseInt(multi.getParameter("editor_sample")));
-		editorBean.setEditor_ed_min_price(Integer.parseInt(multi.getParameter("editor_ed_min_price")));
-		editorBean.setEditor_ed_max_price(Integer.parseInt(multi.getParameter("editor_ed_max_price")));
-		editorBean.setEditor_address(multi.getParameter("editor_address"));
+		editorBean.setEditor_upload(Integer.parseInt(request.getParameter("editor_upload")));
+		editorBean.setEditor_work(Integer.parseInt(request.getParameter("editor_work")));
+		editorBean.setEditor_meeting(Integer.parseInt(request.getParameter("editor_meeting")));
+		editorBean.setEditor_fort(Integer.parseInt(request.getParameter("editor_fort")));
+		editorBean.setEditor_sample(Integer.parseInt(request.getParameter("editor_sample")));
+		editorBean.setEditor_ed_min_price(Integer.parseInt(request.getParameter("editor_ed_min_price")));
+		editorBean.setEditor_ed_max_price(Integer.parseInt(request.getParameter("editor_ed_max_price")));
+		editorBean.setEditor_address(request.getParameter("editor_address"));
 		editorBean.setUser_type(2);
 		
 		UserProService userInsertProServic = new UserProService();
@@ -78,7 +64,7 @@ public class UserInsertEditorProAction implements Action {
 			// 1. ActionForward 객체 생성
 			forward = new ActionForward();
 			// 2. 포워딩 경로(URL) 지정 (주의! 경로명 앞에 슬래시(/) 기호를 붙이지 말 것!)
-			forward.setPath("UserLoginForm.uo");
+			forward.setPath("My.uo?fr=login");
 			// 3. 포워딩 방식(Redirect 방식) 지정
 			forward.setRedirect(true);
 		}

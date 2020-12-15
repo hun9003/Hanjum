@@ -26,8 +26,9 @@ public class ProjectListAction implements Action {
 			page = Integer.parseInt(request.getParameter("page"));
 		}
 		
+		int board_type = 1;
 		BoardProService boardProService = new BoardProService();
-		int listCount = boardProService.getBoardCount(1);
+		int listCount = boardProService.getBoardCount(board_type);
 		
 		ProjectProService projectProService = new ProjectProService();
 		ArrayList<ProjectBean> list = new ArrayList<ProjectBean>();

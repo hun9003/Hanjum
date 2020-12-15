@@ -9,7 +9,6 @@
 <script type="text/javascript" src="js/jquery-3.5.1.js"></script>
 <script type="text/javascript" src="plugin/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript" src="js/smartediter.js"></script>
-
 <script type="text/javascript" src="js/join.js"></script>
 <title>회원가입</title>
 <style>
@@ -17,12 +16,15 @@
 	.check_list { display: inline-block; padding:10px;}
 	.check_list span { margin-left: 10px;}
 	.label-primary { color: #4986fc !important; }
+	#editor_photo { display:none; }
+	.profile_photo {max-width: 300px; max-height: 300px; width:80%;}
+	
 </style>
 </head>
 <body>
 <div class="login-wrap p-4 p-md-5" style="margin-top:0px;">
               <h3 class="mb-4">편집자 가입</h3>
-              <form action="JoinEditorPro.uo" method="post" name="fr_write" id="WriteForm" enctype="multipart/form-data" onsubmit="return check()">
+              <form action="JoinEditorPro.uo" method="post" name="fr_write" id="WriteForm" onsubmit="return check()">
                  <div class="form-group">
                     <label id="id_label" class="label" for="user_id">아이디</label>
                     <input type="text" id="user_id" class="form-control" name="user_id" required="required"/>
@@ -30,7 +32,7 @@
                 </div>
                 <div class="form-group">
                  <label id="pass_label" class="label" for="password">비밀번호</label>
-                 <input id="password-field" type="password" class="form-control" name="user_pass" required="required" onkeyup="checkPasswd(this)">
+                 <input id="password" type="password" class="form-control" name="user_pass" required="required">
             	 <div id="checkPasswdResult" class="offset-1"><!-- 자바스크립트에서 메세지 출력 공간 --></div>	
             	</div>
             	<div class="form-group">
@@ -38,17 +40,16 @@
                     <input type="text" id="user_name" class="form-control" name="user_name" required="required"/>
                 </div>
                 <div class="form-group">
-                    <label class="label" for="user_email">이메일</label>
+                    <label class="label" id="email_label" for="user_email">이메일</label>
                     <input type="text" id="user_email" style="min-width:100px; width:30%; display: inline-block;" class="form-control" name="user_email" required="required"/> @ 
-                    <input type="text" class="form-control" style="width:30%; display: inline-block;" name="user_email2" id="user_email2" onfocus="inInput(this)"
-							onblur="outInput(this)" /> 
-							<select  class="form-control" style="width:25%; display: inline-block;" onfocus="inInput(this)" onblur="outInput(this)" onChange="selEmail(this.value)">
+                    <input type="text" class="form-control" style="width:35%; min-width:100px; display: inline-block;" name="user_email2" id="user_email2"/> 
+							<select  class="form-control" style="width:30%; min-width:150px; display: inline-block;" onChange="selEmail(this.value)">
 								<option onselect="focus">직접입력</option>
 								<option value="naver.com">naver.com</option>
 								<option value="gmail.com">gmail.com</option>
 								<option value="daum.net">daum.net</option>
 						</select>
-						<div id="checkEmailResult" class="offset-1"><!-- 자바스크립트에서 메세지 출력 공간 --></div>
+					<div id="checkEmailResult" class="offset-1"><!-- 자바스크립트에서 메세지 출력 공간 --></div>
                 	
                 	<div id="codeMessage" style="margin-top: 10px;"><!-- 코드번호 틀린거 맞는거 들어갈칸 -->
 						</div>
@@ -64,12 +65,16 @@
                     <label class="label" for="user_phone">휴대폰번호</label>
                     <input type="text" id="user_phone" class="form-control" name="user_phone" required="required"/>
                 </div>
-                <div class="form-group">
-                <label class="label has-focus" for="editor_photo_btn">프로필 사진</label>
-                <input class="form-control" id="photo_content" type="text" readonly="readonly" style="min-width:100px; width:40%; display: inline-block;" > 
-                <input type="button" class="btn btn-primary" id="editor_photo_btn" value="프로필 업로드"> 
-                <input type="file" id="editor_photo" name="editor_photo"/>
-                </div>
+<!--                 <div class="form-group"> 프로필 사진 제거 -->
+<!--                 <div id="photoArea" style="margin-bottom: 10px;"> -->
+<!--                 <img id="photo" class="profile_photo" src="images/no-profile.png" title="profile"> -->
+<!--                 </div> -->
+<!--                 <label class="label has-focus" for="editor_photo_btn">프로필 사진</label> -->
+<!--                 <input class="form-control" id="photo_content" type="text" readonly="readonly" style="min-width:100px; width:40%; display: inline-block;" >  -->
+<!--                 <input type="button" class="btn btn-primary" id="editor_photo_btn" value="프로필 업로드">  -->
+<!--                 <input type="file" id="editor_photo" name="editor_photo"/> -->
+<!--                 </div> -->
+				<input type="hidden" id="editor_photo" name="editor_photo" value="no-profile.png"/>
                 <div class="form-group">
                 <label class="label has-focus" for="editor_des">한줄 소개</label>
                 <textarea id="editor_des" name="editor_des" cols="50" rows="3" ></textarea>

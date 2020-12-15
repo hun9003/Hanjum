@@ -28,7 +28,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/util.css">
     <script src="js/jquery.min.js"></script>
-    
+    <script src="js/profile-photo.js"></script>
 <title>My</title>
 <style>
 .color-primary {
@@ -69,11 +69,26 @@ input[name=editor_status]:checked + .toggle_label:after { left:28px;}
 		}
 .edit { width:20px; height:20px; opacity: 0.6; display: none; cursor: pointer; background-image: url(images/pen.png); background-size: 20px;}
 .form-group-content {overflow: auto;}
-
+.profile_photo {max-width: 300px; max-height: 300px; width:80%;}
+#editor_photo_form { display:none; }
 </style>
 </head>
 <body>
 	<div class="login-wrap p-4 p-md-5">
+	<%
+		if(editorInfo != null){
+			
+			%>
+			<div class="form-group">
+			 <span class="form-group-content">
+			 	<img id="photo" class="profile_photo" data-src="<%=editorInfo.get("photo") %>" src="editorUserPhotoUpload/<%=editorInfo.get("photo") %>" title="profile">
+			 	<span id="editor_photo"></span>
+			 	<span id="edit_photo" class="edit edit_ready m-l-10" style="vertical-align: bottom;"><span>수정</span></span>
+			 </span>             
+             </div>
+			<%
+		}
+	%>
               <h3 class="mb-4">My <span id="USER_ID" class=".color-primary m-l-20"><%=userBean.getUser_id()%></span><span class="float-r m-r-10"><%=user_type %><span></span></span></h3>
              <div class="form-group">
              <span class="form-group-content">

@@ -5,7 +5,7 @@
 
 $(document).ready(function(){
 	$("#portfolioArea").load("UserPortfolioList.uo");
-	$(".toggle_label").click(function(){
+	$(document).on('click','.toggle_label',function(){
 		var status = 0;
 		var user_id = $("#user_id").val();
 		if($("input:checkbox[name=editor_status]").is(":checked") == true) {
@@ -74,6 +74,22 @@ function edit(target){
 			url : "editEditor.uo",
 			type : "POST",
 			data : {content:content, target:"editor_"+target, editor_ed_min_price:min_price, editor_ed_max_price:max_price},
+			success : function(data) {
+				$("#editor_"+target).html(data);
+				$("#edit_"+target).addClass("edit_commit");
+				$("#edit_"+target).removeClass("edit_ready");
+				$("#edit_"+target).css({"background-image": "url(images/check.png)"});
+			},
+			error : function() {}
+		});
+	} else if(target == "photo") {
+		var targetID = "#"+target;
+		var content = $(targetID).attr("data-src");
+		$.ajax({
+			cache : false,
+			url : "editEditor.uo",
+			type : "POST",
+			data : {content:content, target:"editor_"+target},
 			success : function(data) {
 				$("#editor_"+target).html(data);
 				$("#edit_"+target).addClass("edit_commit");
@@ -184,6 +200,11 @@ function edit_commit(target){
 			},
 			error : function() {}
 		});
+	} else if(target == "photo") {
+		$("#editor_photo").html("");
+		$("#edit_"+target).css({"background-image": "url(images/pen.png)"});
+		$("#edit_"+target).removeClass("edit_commit");
+		$("#edit_"+target).addClass("edit_ready");
 	} else {
 		var content = $("input[name='editor_"+target+"']:checked").val();
 		var user_id = $("#user_id").val();

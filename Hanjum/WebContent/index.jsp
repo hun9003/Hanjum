@@ -207,11 +207,11 @@
 	          <div class="project-wrap">
 	          	<div class="project-profile">
 	          	<span class="status">모집중</span>
-	             <a id="item-img<%=i %>" data-href="<%=contentUrl%>?board_id=<%=project.getBoard_id()%>" class="img item-link" style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); background-image: url(images/work-1.jpg); border-radius: 50%; width:150px; height:150px;margin:0 auto;">
+	             <a id="item-img<%=i %>" href="<%=contentUrl%>?board_id=<%=project.getBoard_id()%>" class="img item-link" style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); background-image: url(images/work-1.jpg); border-radius: 50%; width:150px; height:150px;margin:0 auto;">
 	            </a>
 	          	</div>
 	            <div class="text p-4">
-	                <h3><a href="#"><%=project.getBoard_subject() %></a></h3>
+	                <h3><a href="<%=contentUrl%>?board_id=<%=project.getBoard_id()%>"><%=project.getBoard_subject() %></a></h3>
 	                <p class="advisor"><%=project.getUser_name() %> <span><%=genre %></span></p>
 	                <ul class="d-flex justify-content-between">
 	                   <li><span class="flaticon-shower"></span><%=projectDate %></li>
@@ -296,6 +296,7 @@
 	        for(int i = 0; i < editorList.size(); i++){
 	        	EditorBean editorBean = editorList.get(i);
 	        %>
+	        <a href="Editor.bo?board_id=<%=editorBean.getBoard_id()%>">
 	          <div class="item">
 	            <div class="testimony-wrap py-4">
 	              <div class="text">
@@ -306,7 +307,7 @@
 	                    <span class="fa fa-star"></span>
 	                    <span class="fa fa-star"></span>
 	                </p>
-	                <p class="mb-4" style="height: 144px;"><%=editorBean.getBoard_subject() %></p>
+	                <p class="mb-4 text" style="height: 144px; color:#212529;"><%=editorBean.getBoard_subject() %></p>
 	                <div class="d-flex align-items-center">
 	                   <div class="user-img" style="background-image: url(editorUserPhotoUpload/<%=editorBean.getBoard_ed_photo()%>)"></div>
 	                   <div class="pl-3">
@@ -317,6 +318,7 @@
 	          </div>
 	      </div>
 	  </div>
+	        </a>
 	<%
 	        }
        }
@@ -422,7 +424,6 @@
 <script src="js/bootstrap-datepicker.js"></script>
 <script src="js/scrollax.min.js"></script>
 <script src="js/main.js"></script>
-<script src="js/layer.js"></script>
 <script src="js/focus.js"></script>
 <%
 		if(session.getAttribute("userBean")!=null){

@@ -26,7 +26,7 @@ public class ProjectSearchListAction implements Action {
 		int page = 1;
 		int limit = Constant.BOARD_PAGE_SIZE;
 		
-		String genre = Arrays.toString(request.getParameterValues("board_creator_genre")).replaceAll("[\\[\\] ]", "");
+		String genre = Arrays.toString(request.getParameterValues("board_creator_genre")).replaceAll("[\\[\\] ]", "").replaceAll(",", "|");
 		String price_n = request.getParameter("board_creator_cre_min_price");
 		String price_x = request.getParameter("board_creator_cre_max_price");
 		String keyword = request.getParameter("keyword");

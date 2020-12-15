@@ -20,7 +20,7 @@
                 </div>
                 <div class="form-group">
                  <label id="pass_label" class="label" for="password">비밀번호</label>
-                 <input id="password" type="password" class="form-control" name="user_pass" required="required" onkeyup="checkPasswd(this)">
+                 <input id="password" type="password" class="form-control" name="user_pass" required="required">
             	 <div id="checkPasswdResult" class="offset-1"><!-- 자바스크립트에서 메세지 출력 공간 --></div>	
             	</div>
             	<div class="form-group">

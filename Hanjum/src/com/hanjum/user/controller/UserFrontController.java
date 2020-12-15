@@ -14,6 +14,7 @@ import com.hanjum.action.Action;
 import com.hanjum.user.action.UserLoginProAction;
 import com.hanjum.user.action.UserLogoutAction;
 import com.hanjum.user.action.UserManageAction;
+import com.hanjum.user.action.UserPhotoUploadAction;
 import com.hanjum.user.action.UserPortfolioDeleteAction;
 import com.hanjum.user.action.UserPortfolioInfoAction;
 import com.hanjum.user.action.UserPortfolioInsertAction;
@@ -314,6 +315,13 @@ public class UserFrontController extends HttpServlet {
 			}
 		} else if (command.equals("/editEditor.uo")) {
 			action = new EditAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/UserPhotoUpdate.uo")) {
+			action = new UserPhotoUploadAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {

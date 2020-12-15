@@ -178,6 +178,18 @@ public class EditAction implements Action {
 					"					<option "+selected17+" value='제주'>제주</option>\r\n" + 
 					"					</select>\r\n" + 
 					"                </div>");
+		} else if(target.equals("editor_photo")) {
+			String photo = content.substring(content.lastIndexOf("/")+1);
+			if(content.equals("no-profile.png")){
+				photo = "";
+			}
+			out.println("<form method=\"post\" name=\"fr_photo\" id=\"WriteForm\" style=\"display:inline-block; margin-top:10px; vertical-align: bottom;\" enctype=\"multipart/form-data\" onsubmit=\"return false\">\r\n" + 
+					"<div class=\"form-group\" style=\"margin:0px;\">\r\n" + 
+					"                <input class=\"form-control\" id=\"photo_content\" type=\"text\" readonly=\"readonly\" style=\"min-width:100px; width:60%; display: inline-block;\" value=\""+photo+"\"> \r\n" + 
+					"                <input type=\"button\" class=\"btn btn-primary\" id=\"editor_photo_btn\" value=\"프로필 업로드\"> \r\n" + 
+					"                <input type=\"file\" id=\"editor_photo_form\" name=\"editor_photo\"/>\r\n" + 
+					"                </div>"
+					+ "</form>");
 		}
 		
 		

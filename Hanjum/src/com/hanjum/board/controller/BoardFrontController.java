@@ -14,6 +14,7 @@ import com.hanjum.action.Action;
 import com.hanjum.board.action.EditorInfoAction;
 import com.hanjum.board.action.EditorListAction;
 import com.hanjum.board.action.EditorSearchListAction;
+import com.hanjum.board.action.EditorUpdateAction;
 import com.hanjum.board.action.EditorUpdateProAction;
 import com.hanjum.board.action.EditorWriteProAction;
 import com.hanjum.board.action.ProjectDeleteProAction;
@@ -48,10 +49,7 @@ public class BoardFrontController extends HttpServlet {
 		}  else if(command.equals("/EditorWrite.bo")) { //편집자 글쓰기
 			forward = new ActionForward();
 			forward.setPath("/editor/editorWrite.jsp");
-		}  else if(command.equals("/EditorUpdate.bo")) { //편집자 수정
-			forward = new ActionForward();
-			forward.setPath("/editor/editorUpdateForm.jsp");
-		} 
+		}
 //============================== BACK ======================================
 		else if(command.equals("/Project.bo")) { // 프로젝트 조회 액션
 			action = new ProjectInfoAction();
@@ -80,7 +78,10 @@ public class BoardFrontController extends HttpServlet {
 		} else if(command.equals("/EditorWritePro.bo")) { // 편집자 작성 액션
 			action = new EditorWriteProAction();
 			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
-		} else if(command.equals("/EditorUpdatePro.bo")) { // 편집자 수정 액션
+		}  else if(command.equals("/EditorUpdate.bo")) { //편집자 수정
+			action = new EditorUpdateAction();
+			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
+		}  else if(command.equals("/EditorUpdatePro.bo")) { // 편집자 수정 액션
 			action = new EditorUpdateProAction();
 			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
 		} else if(command.equals("/EditorList.bo")) { // 편집자 리스트 액션

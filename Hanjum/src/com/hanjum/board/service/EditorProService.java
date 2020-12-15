@@ -74,8 +74,16 @@ public class EditorProService {
 		boolean isSuccess = false;
 		int count = editorDAO.updateEditor(editorBean);
 		if(count > 0) {
-			commit(con);
-			isSuccess = true;
+			BoardBean boardBean = editorBean;
+			BoardDAO boardDAO = BoardDAO.getInstance(); // 2단계
+			boardDAO.setConnection(con); // 3단계
+			count = boardDAO.updateBoard(boardBean);
+			if(count > 0) {
+				commit(con);
+				isSuccess = true;
+			} else {
+				rollback(con);
+			}
 		} else {
 			rollback(con);
 		}

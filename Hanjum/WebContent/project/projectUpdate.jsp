@@ -169,7 +169,7 @@ if(project != null){
 			}
 			%>
         <div class="form-group d-flex justify-content-end mt-4">
-        <input class="btn btn-primary submit" type="submit" id="UpdateSubmit" name="update-submit" value="수정하기">
+        <input class="btn btn-primary submit" type="submit" id="WriteSubmit" name="update-submit" value="수정하기">
         </div>
 	</form>
 	

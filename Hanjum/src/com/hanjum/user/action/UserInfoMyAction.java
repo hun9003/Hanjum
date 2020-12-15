@@ -118,7 +118,7 @@ public class UserInfoMyAction implements Action {
 			editorInfo.put("status", editorBean.getEditor_status()+"");
 			editorInfo.put("des", editorBean.getEditor_des());
 			editorInfo.put("profile", editorBean.getEditor_profile());
-
+			editorInfo.put("photo", editorBean.getEditor_photo());
 			
 		}
 		

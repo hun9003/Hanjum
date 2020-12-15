@@ -40,6 +40,8 @@ public class EditorDAO {
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				editorBean = new EditorBean();
+				editorBean.setBoard_id(rs.getInt("board_id"));
+				editorBean.setUser_id(rs.getString("user_id"));
 				editorBean.setBoard_content(rs.getString("board_content"));
 				editorBean.setBoard_date(rs.getTimestamp("board_date"));
 				editorBean.setBoard_subject(rs.getString("board_subject"));
@@ -138,24 +140,11 @@ public class EditorDAO {
 		int updateCount = 0;
 		PreparedStatement pstmt = null;
 		try {
-			String sql = "UPDATE board_ed SET board_ed_program = ?, board_ed_solution = ?, board_ed_inventory = ?, "
-					+ "board_ed_upload = ?, board_ed_work = ?, baord_ed_sample = ?, board_ed_fort = ?, board_ed_min_price = ?, "
-					+ "baord_ed_max_price = ?, board_ed_meeting = ?, board_ed_content_detail = ?, board_ed_address = ? "
-					+ "WHERE user_id = ?";
+			String sql = "UPDATE board_ed SET board_ed_content_detail = ? "
+					+ "WHERE board_id = ?";
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, editorBean.getBoard_ed_program());
-			pstmt.setString(2, editorBean.getBoard_ed_solution());
-			pstmt.setString(3, editorBean.getBoard_ed_inventory());
-			pstmt.setInt(4, editorBean.getBoard_ed_upload());
-			pstmt.setInt(5, editorBean.getBoard_ed_work());
-			pstmt.setInt(6, editorBean.getBoard_ed_sample());
-			pstmt.setInt(7, editorBean.getBoard_ed_fort());
-			pstmt.setInt(8, editorBean.getBoard_ed_min_price());
-			pstmt.setInt(9, editorBean.getBoard_ed_max_price());
-			pstmt.setInt(10, editorBean.getBoard_ed_meeting());
-			pstmt.setString(11, editorBean.getBoard_ed_content_detail());
-			pstmt.setString(12, editorBean.getBoard_ed_address());
-			pstmt.setString(13, editorBean.getUser_id());
+			pstmt.setString(1, editorBean.getBoard_ed_content_detail());
+			pstmt.setInt(2, editorBean.getBoard_id());
 			updateCount = pstmt.executeUpdate();
 		} catch (Exception e) {
 			System.out.println("updateEditor() 오류! - " + e.getMessage());

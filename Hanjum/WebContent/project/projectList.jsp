@@ -1,3 +1,4 @@
+<%@page import="com.hanjum.vo.Constant"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.hanjum.vo.PageInfo"%>
@@ -160,7 +161,7 @@
 							int maxPage = pageInfo.getMaxPage();
 							int startPage = pageInfo.getStartPage();
 							int endPage = pageInfo.getEndPage();
-							
+							int pageSize = Constant.BOARD_PAGE_SIZE;
 							String pageUrl = "ProjectList.bo";
 							String contentUrl = "Project.bo";
 							
@@ -270,8 +271,8 @@
 						<div class="col">
 							<div class="block-27">
 								<ul>
-								<%if(nowPage>1){ %>
-									<li><a href="#">&lt;</a></li>
+								<%if(startPage > pageSize){ %>
+									<li><a href="<%=pageUrl%>?page=<%=startPage-pageSize%>">&lt;</a></li>
 									<% 
 										}
 									for(int i=startPage; i<=endPage; i++){
@@ -279,12 +280,12 @@
 											%>
 									<li class="active"><span><%=i %></span></li>
 									<% } else { %>
-									<li><a href="#"><%=i %></a></li>
+									<li><a href="<%=pageUrl%>?page=<%=i%>"><%=i %></a></li>
 									<% } 
 									}
-									if(nowPage < maxPage){ 
+									if(endPage < maxPage){ 
 									%>
-									<li><a href="#">&gt;</a></li>
+									<li><a href="<%=pageUrl%>?page=<%=startPage+pageSize %>">&gt;</a></li>
 									<%
 									}
 									%>

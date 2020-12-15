@@ -114,6 +114,26 @@ public class BoardDAO {
 		}
 		return listCount;
 	}
+	
+	public String selectUserId(int board_id) {
+		System.out.println("BoardDAO - selectUserId()");
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String user_id = "";
+		try {
+			String sql = "SELECT user_id FROM board WHERE board_id = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, board_id);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				user_id = rs.getString(1);
+			}
+		} catch (Exception e) {
+			System.out.println("selectUserId() 오류! - " + e.getMessage());
+			e.printStackTrace();
+		}
+		return user_id;
+	}
 	// CHECK ====================================================================================
 	public int checkBoardWriter(int board_id, String user_id) {
 		System.out.println("BoardDAO - checkBoardWriter()");
@@ -169,11 +189,6 @@ public class BoardDAO {
 	}
 	
 	// UPDATE ===================================================================================
-	
-	public void updateBoardReadcount(int board_id) { // board 게시물 조회수 증가
-		System.out.println("BoardDAO - updateBoardReadcount()");
-	
-	}
 	
 	public int updateBoard(BoardBean boardBean) { // board 게시물 수정
 		System.out.println("BoardDAO - updateBoard()");

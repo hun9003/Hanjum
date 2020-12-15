@@ -545,4 +545,22 @@ public class UserProService {
 		return reportList;
 	}
 
+	public boolean updatePhoto(String user_id, String editor_photo) {
+		System.out.println("UserProService - updatePhoto()");
+		boolean isSuccess = false;
+		Connection con = getConnection();
+		UserDAO userDAO = UserDAO.getInstance();
+		userDAO.setConnection(con);
+		
+		int updateCount = userDAO.updatePhoto(user_id, editor_photo);
+		if(updateCount > 0) {
+			commit(con);
+			isSuccess = true;
+		} else {
+			rollback(con);
+		}
+		close(con);
+		return isSuccess;
+	}
+
 }

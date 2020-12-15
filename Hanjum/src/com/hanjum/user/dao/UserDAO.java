@@ -989,6 +989,26 @@ public class UserDAO {
 			
 			return reportList;
 		}
+
+		public int updatePhoto(String user_id, String editor_photo) {
+			System.out.println("UserDAO - updatePhoto()");
+			PreparedStatement pstmt = null;
+			int updateCount = 0;
+			try {
+				String sql = "UPDATE editor SET editor_photo = ? WHERE user_id = ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, editor_photo);
+				pstmt.setString(2, user_id);
+				updateCount = pstmt.executeUpdate();
+				
+			} catch (Exception e) {
+				System.out.println("updatePhoto() 오류! "+e.getMessage());
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+			return updateCount;
+		}
 	
 	
 }
