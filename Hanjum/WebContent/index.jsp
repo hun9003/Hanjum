@@ -7,6 +7,7 @@
 <title>한줌에디터</title>
 <link href="css/default.css" rel="stylesheet" type="text/css">
 <link href="css/front.css" rel="stylesheet" type="text/css">
+<link href="css/notice.css" rel="stylesheet" type="text/css">
 <script src="js/jquery-3.5.1.js"></script>
 <script src="js/rollingJob.js"></script>
 <script src="js/topMenu.js"></script>
@@ -51,6 +52,7 @@
 <body>
 <div id="wrap">
 <jsp:include page="inc/toptest.jsp"/>
+
 <main>
 <div id="main_banner">
 
