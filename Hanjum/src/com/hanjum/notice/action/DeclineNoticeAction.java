@@ -33,7 +33,8 @@ public class DeclineNoticeAction implements Action {
 		NoticeProService service = new NoticeProService();
 		service.insertNotice(noticeBean);
 		NoticeProService service3 = new NoticeProService();
-		service3.updateStatus(2); // 해당 notice_읽음; 같은 변수명쓰면 Connection is null error ! 
+		service3.updateStatus(notice_id); // 해당 notice_읽음; 같은 변수명쓰면 Connection is null error ! 
+		
 			// ======================================================================
 		
 		// user_id = editor(거절당한사람), notice_from_id = creator(거절하는 사람)

@@ -35,7 +35,8 @@ public class NoticeMatchAction implements Action {
 			NoticeProService service = new NoticeProService();
 			service.insertNotice(noticeBean);
 			NoticeProService service3 = new NoticeProService();
-			service3.updateStatus(3); // 해당 notice_읽음; 같은 변수명쓰면 Connection is null error ! 
+			service3.updateStatus(notice_id); // 해당 notice_읽음; 같은 변수명쓰면 Connection is null error ! 
+			
 				// ======================================================================
 			
 			// user_id = editor(신청한사람), notice_from_id = creator(프로젝트하는사람)

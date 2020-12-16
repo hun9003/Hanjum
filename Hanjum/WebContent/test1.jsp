@@ -17,109 +17,96 @@
 <script src="js/jquery-3.5.1.js"></script>
 <script src="js/rollingJob.js"></script>
 <script src="js/topMenu.js"></script>
-
-
+<script src="js/notice.js"></script>
 <script type="text/javascript">
 // disabled <- ifstmt
 		
-	$(document).ready(function () {
-		
+// 	$(document).ready(function () {
 	
-		$('#btn').mouseover(function () {
-			$.getJSON('getNewNotice.nt', function (rdata) {
+// 		$('#btn').mouseover(function () {
+// 			$.getJSON('getNewNotice.nt', function (rdata) {
 				
-				$('#new_notice_list *').remove();
+// 				$('#new_notice_list *').remove();
 			
-				$.each(rdata, function (index, item) {
+// 				$.each(rdata, function (index, item) {
 					
-					if(item.notice_content == 1){
-						// 주소값넣기
-						$('#new_notice_list').append('<tr><td id="new_notice_td"><a href="http://'+item.notice_url+'"><b>'+item.user_id+' </b>님 '+item.notice_from_id+' 님께 프로젝트를<br> 성공적으로 요청하였습니다</a></td><tr>');
-					}else if(item.notice_content == 2){
-// 					$('#new_notice_list').append('<tr><td id="new_notice_td"><a href="http://'+item.notice_url+'">'+item.notice_from_id+'님이 프로젝트를 요청하였습니다</a><br><div id="btns"><form action="matchNotice.nt"><input type="hidden" value="'+item.notice_id+'"><button type="submit" id="submit">수락</button></form><form action="declineNotice.nt"><input type="hidden" value="'+item.notice_id+'"><button type="submit" id="decline">거절</button></form></div></td><tr>');
-						$('#new_notice_list').append('<tr><td id="new_notice_td"><a href="http://'+item.notice_url+'">'+item.notice_from_id+'님이 프로젝트를 요청하였습니다</a><br><div id="btns"><a href="matchNotice.nt?notice_id='+item.notice_id+'">수락</a><a href="declineNotice.nt?notice_id='+item.notice_id+'">거절</a></td><tr>');
-
-					}else if(item.notice_content == 3){
-						$('#new_notice_list').append('<tr><td id="new_notice_td"><a href="http://'+item.notice_url+'"><b>'+item.user_id+'</b> 님, '+item.notice_from_id+' 님의 프로젝트를 요청을 수락하였습니다</a></td><tr>');
-					}else if(item.notice_content == 4){
-						$('#new_notice_list').append('<tr><td id="new_notice_td"><a href="http://'+item.notice_url+'">'+item.notice_from_id+' </b>님이 프로젝트를 요청을 수락하였습니다</a></td><tr>');
-					}else if(item.notice_content == 5){
-						$('#new_notice_list').append('<tr><td id="new_notice_td"><a href="http://'+item.notice_url+'"><b>'+item.user_id+' </b>님의 프로젝트를 요청을 거절하였습니다</a></td><tr>');
-					}else if(item.notice_content == 6){
-						$('#new_notice_list').append('<tr><td id="new_notice_td"><a href="http://'+item.notice_url+'">'+item.notice_from_id+' </b>님이 프로젝트를 요청을 거절하였습니다</a></td><tr>');
-					}
-
-				});	
-			}); //getJSON
-		}); //click - 새알람
+// 					if(item.notice_content == 1){
+// 						// 주소값넣기 -> 수락 / 거절시에만
+// 						$('#new_notice_list').append('<tr><td id="new_notice_td"><a href="updateStatus.nt?notice_id='+item.notice_id+'"><b>'+item.user_id+' </b>님 '+item.notice_from_id+' 님께 프로젝트를<br> 성공적으로 요청하였습니다</a><br><a id="delete" href="deleteNotice.nt?notice_id='+item.notice_id+'"> >> 삭제</a></td><tr>');
+// 					}else if(item.notice_content == 2 && item.notice_read == 0){
+// // 					$('#new_notice_list').append('<tr><td id="new_notice_td"><a href="http://'+item.notice_url+'">'+item.notice_from_id+'님이 프로젝트를 요청하였습니다</a><br><div id="btns"><form action="matchNotice.nt"><input type="hidden" value="'+item.notice_id+'"><button type="submit" id="submit">수락</button></form><form action="declineNotice.nt"><input type="hidden" value="'+item.notice_id+'"><button type="submit" id="decline">거절</button></form></div></td><tr>');
+// 						$('#new_notice_list').append('<tr><td id="new_notice_td">'+item.notice_from_id+'님이 프로젝트를 요청하였습니다</a><br><div id="btns"><a href="matchNotice.nt?notice_id='+item.notice_id+'" id="accept">수락</a>　*　<a href="declineNotice.nt?notice_id='+item.notice_id+'"id="decline">거절</a></div><a href="deleteNotice.nt?notice_id='+item.notice_id+'"> >> 삭제</a></td><tr>');
+// 					}else if(item.notice_content == 3){
+// 						$('#new_notice_list').append('<tr><td id="new_notice_td"><a href="updateStatus.nt?notice_id='+item.notice_id+'"><b>'+item.user_id+'</b> 님, '+item.notice_from_id+' 님의 프로젝트를 요청을 수락하였습니다</a><br><a href="deleteNotice.nt?notice_id='+item.notice_id+'"> >> 삭제</a></td><tr>');
+// 					}else if(item.notice_content == 4){
+// 						$('#new_notice_list').append('<tr><td id="new_notice_td"><a href="updateStatus.nt?notice_id='+item.notice_id+'">'+item.notice_from_id+' </b>님이 프로젝트를 요청을 수락하였습니다</a><br><a href="deleteNotice.nt?notice_id='+item.notice_id+'"> >> 삭제</a></td><tr>');
+// 					}else if(item.notice_content == 5){
+// 						$('#new_notice_list').append('<tr><td id="new_notice_td"><a href="updateStatus.nt?notice_id='+item.notice_id+'"><b>'+item.user_id+' </b>님의 프로젝트를 요청을 거절하였습니다</a><br><a href="deleteNotice.nt?notice_id='+item.notice_id+'"> >> 삭제</a></td><tr>');
+// 					}else if(item.notice_content == 6){
+// 						$('#new_notice_list').append('<tr><td id="new_notice_td"><a href="updateStatus.nt?notice_id='+item.notice_id+'">'+item.notice_from_id+' </b>님이 프로젝트를 요청을 거절하였습니다</a><br><a href="deleteNotice.nt?notice_id='+item.notice_id+'"> >> 삭제</a></td><tr>');
+// 					}
+// 				});	
+// 			}); //getJSON
+// 		}); //click - 새알람
 		
-		
-		
-		$('#get_notice_btn').click(function () {
-			$.getJSON('getOldNotice.nt', function (rdata) {
+// 		$('#get_notice_btn').click(function () {
+// 			$.getJSON('getOldNotice.nt', function (rdata) {
 				
-				$('#old_notice_list *').remove();
+// 				$('#old_notice_list *').remove();
 				
-				$.each(rdata, function (index, item) {
+// 				$.each(rdata, function (index, item) {
 					
-					if(item.notice_content == 1){
-						// 주소값넣기
-						$('#old_notice_list').append('<tr><td id="old_notice_td"><a href="http://'+item.notice_url+'"><b>'+item.user_id+' </b>님 '+item.notice_from_id+' 님께 프로젝트를<br> 성공적으로 요청하였습니다</a></td><tr>');
-					}else if(item.notice_content == 2){
-						$('#old_notice_list').append('<tr><td id="old_notice_td"><a href="http://'+item.notice_url+'">'+item.notice_from_id+'님이 프로젝트를 요청하였습니다</a><br><form action="matchNotice.nt"><input type="hidden" value="'+item.notice_id+'"><input type="submit" value="수락" ></form><form action="declineNotice.nt"><input type="hidden" value="'+item.notice_id+'"><input type="submit" value="거절"></form></td><tr>');
-					}else if(item.notice_content == 3){
-						$('#old_notice_list').append('<tr><td id="old_notice_td"><a href="http://'+item.notice_url+'"><b>'+item.user_id+' 님, '+item.notice_from_id+' 님의 프로젝트를 요청을 수락하였습니다</a></td><tr>');
-					}else if(item.notice_content == 4){
-						$('#old_notice_list').append('<tr><td id="old_notice_td"><a href="http://'+item.notice_url+'">'+item.notice_from_id+' </b>님이 프로젝트를 요청을 수락하였습니다</a></td><tr>');
-					}else if(item.notice_content == 5){
-						$('#old_notice_list').append('<tr><td id="old_notice_td"><a href="http://'+item.notice_url+'"><b>'+item.user_id+' </b>님의 프로젝트를 요청을 거절하였습니다</a></td><tr>');
-					}else if(item.notice_content == 6){
-						$('#old_notice_list').append('<tr><td id="old_notice_td"><a href="http://'+item.notice_url+'">'+item.notice_from_id+' </b>님이 프로젝트를 요청을 거절하였습니다</a></td><tr>');
-					}
+// 					if(item.notice_content == 1){
+// 						// 주소값넣기
+// 						$('#old_notice_list').append('<tr><td id="old_notice_td"><b>'+item.user_id+' </b>님 '+item.notice_from_id+' 님께 프로젝트를<br> 성공적으로 요청하였습니다</a><br><a href="deleteNotice.nt?notice_id='+item.notice_id+'"> >> 삭제</a></td><tr>');
+// 					}else if(item.notice_content == 2){
+// 						$('#old_notice_list').append('<tr><td id="old_notice_td">'+item.notice_from_id+'님이 프로젝트를 요청하였습니다</a><br><a href="deleteNotice.nt?notice_id='+item.notice_id+'"> >> 삭제</a></td><tr>');
+// 					}else if(item.notice_content == 3){
+// 						$('#old_notice_list').append('<tr><td id="old_notice_td"><b>'+item.user_id+' 님, '+item.notice_from_id+' 님의 프로젝트를 요청을 수락하였습니다</a><br><a href="deleteNotice.nt?notice_id='+item.notice_id+'"> >> 삭제</a></td><tr>');
+// 					}else if(item.notice_content == 4){
+// 						$('#old_notice_list').append('<tr><td id="old_notice_td">'+item.notice_from_id+' </b>님이 프로젝트를 요청을 수락하였습니다</a><br><a href="deleteNotice.nt?notice_id='+item.notice_id+'"> >> 삭제</a></td><tr>');
+// 					}else if(item.notice_content == 5){
+// 						$('#old_notice_list').append('<tr><td id="old_notice_td"><b>'+item.user_id+' </b>님의 프로젝트를 요청을 거절하였습니다</a><br><a href="deleteNotice.nt?notice_id='+item.notice_id+'"> >> 삭제</a></td><tr>');
+// 					}else if(item.notice_content == 6){
+// 						$('#old_notice_list').append('<tr><td id="old_notice_td">'+item.notice_from_id+' </b>님이 프로젝트를 요청을 거절하였습니다</a><br><a href="deleteNotice.nt?notice_id='+item.notice_id+'"> >> 삭제</a></td><tr>');
+// 					}
 
-				});	
-			}); //getJSON
-		}); //click - 새알람
+// 				});	
+// 			}); //getJSON
+// 		}); //click - 새알람
 		
-		
-		
-		
-}); //ready	
-	
-	
+// }); //ready	
 </script>
-
-
-
 </head>
+
 
 <body>
 
 <%
-String user_id = "test"; // 유저아이디
+String user_id = (String)session.getAttribute("id"); // 유저아이디
 NoticeProService svc = new NoticeProService();
 int count = svc.getNoticeCount(user_id);
 %>
 
-<form action="applyNotice.nt">
-	<input type="submit" value="프로젝트 신청">
-</form>
+<!-- <form action="applyNotice.nt"> -->
+<!-- 	<input type="submit" value="프로젝트 신청"> -->
+<!-- </form> -->
 
-<form action="matchNotice.nt">
-	<input type="submit" value="수락" >
-</form>
+<!-- <form action="matchNotice.nt"> -->
+<!-- 	<input type="submit" value="수락" > -->
+<!-- </form> -->
 
-<form action="declineNotice.nt">
-	<input type="reset" value="거절">
-</form>
+<!-- <form action="declineNotice.nt"> -->
+<!-- 	<input type="reset" value="거절"> -->
+<!-- </form> -->
 
-<form action="deleteNotice.nt">
-	<input type="submit" value="알림삭제">
-</form>
+<!-- <form action="deleteNotice.nt"> -->
+<!-- 	<input type="submit" value="알림삭제"> -->
+<!-- </form> -->
 
+<!-- <br><a style="text-align: right;"  href="deleteNotice.nt?notice_id='+item.notice_id+'"> >> 삭제</a> -->
 
-
-<a href="applyNotice.nt"><input type="hidden" value="'+item.notice_id+'">수락</a>
+<!-- <a href="applyNotice.nt"><input type="hidden" value="'+item.notice_id+'">수락</a> -->
 
 
 	<div id="notice_table">
@@ -130,7 +117,6 @@ int count = svc.getNoticeCount(user_id);
 			<%} %>
 			<input type="button" id="BtnIcon">
 		</btn>
-		
 		
 		<ul id="list">
 			<li>	
@@ -157,12 +143,6 @@ int count = svc.getNoticeCount(user_id);
 		</ul>	
 	</div>
 	
-	
-
-
-		
-
-
 </body>
 </html>
 
