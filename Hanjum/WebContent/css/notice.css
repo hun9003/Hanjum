@@ -10,6 +10,10 @@ li{list-style: none;}
 a:link, a:visited{color: grey; text-decoration: none;}
 a:hover, a:active{color : skyblue; text-decoration: none; transition:0.5s;}
 
+a>#delete{
+	float:right;
+}
+
 #old_notice_td>a{
 color:skyblue;}
 
@@ -34,8 +38,7 @@ td:after {
 }
 td:hover:after { 
   width: 100%; 
-  left: 0; 
-}
+  left: 0;}
 
 td{
 	padding-bottom: 15px;
@@ -51,8 +54,7 @@ td:hover{
 	transition:0.5s;
 	cursor: pointer;}
 	
-/* 알람버튼 */
-
+/* 알람버튼  동글*/
 btn{
 	position:fixed;
 	width:53px;
@@ -156,8 +158,23 @@ btn:hover{
 	float: auto;
 	padding-left: 45%}
 	
+/* 수락/ 거절 */	
+#btns{display: inline-block; }
+#accept{
+	float : right;  
+	padding: 3px;
+	border: 0.5px solid grey;
+}
+#decline{
+	float : right;  
+	padding:3px;
+	border: 0.5px solid grey;
+}
+
+/* 삭제 */
+#delete{
 	
-#btns{	display: inline-block; float : auto;;}
+}
 	
 #submit, #decline{
 	padding : 8 px;
