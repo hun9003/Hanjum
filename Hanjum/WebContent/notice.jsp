@@ -23,7 +23,7 @@
 <body>
 
 <%
-String user_id = "test"; // (String)session.getAttribute("user_id"); // 유저아이디
+String user_id = (String)session.getAttribute("user_id"); // 유저아이디
 NoticeProService svc = new NoticeProService();
 int count = svc.getNoticeCount(user_id);
 
