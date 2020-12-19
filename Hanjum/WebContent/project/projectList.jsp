@@ -1,3 +1,4 @@
+<%@page import="com.hanjum.user.vo.UserBean"%>
 <%@page import="com.hanjum.vo.Constant"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -54,6 +55,11 @@
 			<div class="row">
 				<div class="col-lg-3 sidebar">
 					<%
+					boolean isLogin = false;
+					UserBean userBean = (UserBean)session.getAttribute("userBean");
+					if(userBean != null){
+						isLogin = true;
+					}
 					HashMap<String, String> search = null;
 					String genres = "", price_n = "", price_x = "", keyword = "", recordings = "", 
 							camnum = "", clipnum = "", oriLength = "", editLength = "", transfer = "";
@@ -241,15 +247,15 @@
 								
 								%>
     		
-       <div class="col-md-6 d-flex align-items-stretch ftco-animate">
+       <div id="item-<%=i %>" data-href="<%=contentUrl%>?page=<%=nowPage %>&board_id=<%=project.getBoard_id()%>" class="col-md-6 d-flex align-items-stretch ftco-animate" style="cursor: pointer;" onclick="forward('<%=i%>','<%=isLogin%>')">
           <div class="project-wrap">
           	<div class="project-profile">
           	<span class="status">모집중</span>
-             <a id="item-img<%=i %>" href="<%=contentUrl%>?page=<%=nowPage %>&board_id=<%=project.getBoard_id()%>" class="img item-link"style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); background-image: url(images/work-1.jpg); border-radius: 50%; width:150px; height:150px;margin:0 auto;">
-            </a>
+             <span id="item-img<%=i %>" class="img item-link"style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); background-image: url(images/work-1.jpg); border-radius: 50%; width:150px; height:150px;margin:0 auto;">
+            </span>
           	</div>
             <div class="text p-4">
-                <h3><a id="item-title<%=i %>" class="item-link" href="<%=contentUrl%>?page=<%=nowPage %>&board_id=<%=project.getBoard_id()%>"><%=project.getBoard_subject() %></a></h3>
+                <h3><%=project.getBoard_subject() %></h3>
                 <p class="advisor"><%=project.getUser_id() %> <span><%=genre %></span></p>
                 <ul class="d-flex justify-content-between">
                    <li><span class="flaticon-shower"></span><%=board_date %></li>
@@ -308,6 +314,18 @@
 			
 			
 			<jsp:include page="../inc/script.jsp"/>
-			<script src="js/project.js"></script>
+			<script type="text/javascript">
+				function forward(item, login){
+					var url = $("#item-"+item).attr("data-href");
+					if(login == "true"){
+						location.href = url;
+					} else {
+						var loginMsg = confirm("로그인이 필요한 페이지 입니다 로그인 하시겠습니까?");
+						if(loginMsg){
+							location.href = "My.uo?fr=login";
+						}
+					}
+				}
+			</script>
 		</body>
 </html>

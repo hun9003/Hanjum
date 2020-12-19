@@ -75,6 +75,7 @@ input[name=editor_status]:checked + .toggle_label:after { left:28px;}
 </head>
 <body>
 	<div class="login-wrap p-4 p-md-5">
+		
 	<%
 		if(editorInfo != null){
 			
@@ -98,8 +99,8 @@ input[name=editor_status]:checked + .toggle_label:after { left:28px;}
 
              <span class="color-primary m-l-10" id="user_name"><%=userBean.getUser_name()%></span><span id="edit_user_name" class="edit edit_ready m-l-10"><span>수정</span></span>
              <span class="float-r m-r-10">
-             	<button class="btn btn-white">채팅</button>
-             	<button class="btn btn-primary">알림</button>
+             	<button class="btn btn-white" onclick="location.href='My.uo?fr=chat'">채팅</button>
+             	<button class="btn btn-primary" onclick="location.href='My.uo?fr=notice'">알림</button>
              </span>
              </span>
              </div> 

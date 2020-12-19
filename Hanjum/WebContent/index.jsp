@@ -1,3 +1,4 @@
+<%@page import="java.util.Date"%>
 <%@page import="com.hanjum.board.vo.EditorBean"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.hanjum.board.vo.ProjectBean"%>
@@ -46,7 +47,9 @@
         <h1 class="mb-4 t-shadow">한줌에디터에서 영상 편집자를 찾아보세요.</h1>
         <p class="caps t-shadow">다양한 프로젝트와 능력있는 편집자들을 찾아 원하는 대로 만들어가세요.</p>
         <%
+        	boolean isLogin = true;
         	if(session.getAttribute("userBean") == null){
+        		isLogin = false;
         %>
         <p class="mb-0"><a class="btn btn-primary" href="My.uo?fr=joinEditor">편집자 등록</a> <a class="btn btn-white" href="My.uo?fr=join">일반 회원등록</a></p>
     	<%
@@ -200,18 +203,18 @@
 					
 				}
 				
-				SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-DD");
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 				String projectDate = sdf.format(project.getBoard_date());
 	    %>
-	       <div class="col-md-4 ftco-animate">
+	       <div id="item-<%=i %>" data-href="<%=contentUrl%>?board_id=<%=project.getBoard_id()%>" style="cursor: pointer;" class="col-md-4 ftco-animate" onclick="forward('<%=i%>','<%=isLogin%>')">
 	          <div class="project-wrap">
 	          	<div class="project-profile">
 	          	<span class="status">모집중</span>
-	             <a id="item-img<%=i %>" href="<%=contentUrl%>?board_id=<%=project.getBoard_id()%>" class="img item-link" style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); background-image: url(images/work-1.jpg); border-radius: 50%; width:150px; height:150px;margin:0 auto;">
-	            </a>
+	             <span id="item-img<%=i %>" class="img item-link" style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); background-image: url(images/no-profile.png); border-radius: 50%; width:150px; height:150px;margin:0 auto;">
+	            </span>
 	          	</div>
 	            <div class="text p-4">
-	                <h3><a href="<%=contentUrl%>?board_id=<%=project.getBoard_id()%>"><%=project.getBoard_subject() %></a></h3>
+	                <h3><%=project.getBoard_subject() %></h3>
 	                <p class="advisor"><%=project.getUser_name() %> <span><%=genre %></span></p>
 	                <ul class="d-flex justify-content-between">
 	                   <li><span class="flaticon-shower"></span><%=projectDate %></li>
@@ -296,8 +299,7 @@
 	        for(int i = 0; i < editorList.size(); i++){
 	        	EditorBean editorBean = editorList.get(i);
 	        %>
-	        <a href="Editor.bo?board_id=<%=editorBean.getBoard_id()%>">
-	          <div class="item">
+	          <div id="edItem-<%=i %>" data-href="Editor.bo?board_id=<%=editorBean.getBoard_id()%>" class="item" style="cursor: pointer;" onclick="forwardEd('<%=i %>','<%=isLogin %>')">
 	            <div class="testimony-wrap py-4">
 	              <div class="text">
 	                 <p class="star">
@@ -318,7 +320,6 @@
 	          </div>
 	      </div>
 	  </div>
-	        </a>
 	<%
 	        }
        }
@@ -425,6 +426,30 @@
 <script src="js/scrollax.min.js"></script>
 <script src="js/main.js"></script>
 <script src="js/focus.js"></script>
+<script type="text/javascript">
+		function forward(item, login){
+			var url = $("#item-"+item).attr("data-href");
+			if(login == "true"){
+				location.href = url;
+			} else {
+				var loginMsg = confirm("로그인이 필요한 페이지 입니다 로그인 하시겠습니까?");
+				if(loginMsg){
+					location.href = "My.uo?fr=login";
+				}
+			}
+		}
+		function forwardEd(item, login){
+			var url = $("#edItem-"+item).attr("data-href");
+			if(login == "true"){
+				location.href = url;
+			} else {
+				var loginMsg = confirm("로그인이 필요한 페이지 입니다 로그인 하시겠습니까?");
+				if(loginMsg){
+					location.href = "My.uo?fr=login";
+				}
+			}
+		}
+			</script>
 <%
 		if(session.getAttribute("userBean")!=null){
 			%>

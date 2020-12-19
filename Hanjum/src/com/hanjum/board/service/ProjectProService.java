@@ -8,6 +8,8 @@ import com.hanjum.board.dao.BoardDAO;
 import com.hanjum.board.dao.ProjectDAO;
 import com.hanjum.board.vo.BoardBean;
 import com.hanjum.board.vo.ProjectBean;
+import com.hanjum.board.vo.WaitingBean;
+
 import static com.hanjum.db.JdbcUtil.*;
 
 public class ProjectProService {
@@ -52,6 +54,23 @@ public class ProjectProService {
 		close(con);
 		return statusCount;
 	}
+	// CHECK ===================================================================================
+	public int CheckApplyProject(String user_id, int board_id) {
+		System.out.println("ProjectProService - getStatusCount()");
+		
+		int check = projectDAO.checkApplyProject(user_id, board_id);
+		close(con);
+		return check;
+	}
+	
+	public int CheckProjectStatus(int board_id) {
+		System.out.println("ProjectProService - getStatusCount()");
+		int check = projectDAO.checkProjectStatus(board_id);
+		
+		close(con);
+		return check;
+		
+	}
 	// INSERT ===================================================================================
 	
 	public boolean writeProject(ProjectBean projectBean) { // 프로젝트 작성 서비스
@@ -74,6 +93,20 @@ public class ProjectProService {
 			rollback(con);
 		}
 		close(con);
+		return isSuccess;
+	}
+	
+	public boolean insertWaiting(WaitingBean waitingBean) {
+		System.out.println("ProjectProService - insertWaiting()");
+		boolean isSuccess = false;
+		
+		int insertCount = projectDAO.insertWaiting(waitingBean);
+		if(insertCount > 0) {
+			commit(con);
+			isSuccess = true;
+		} else {
+			rollback(con);
+		}
 		return isSuccess;
 	}
 	
@@ -101,6 +134,18 @@ public class ProjectProService {
 		return isSuccess;
 	}
 	
+	public boolean updateStatus(int board_id, int board_creator_status) {
+		System.out.println("ProjectProService - updateStatus()");
+		boolean isSuccess = false;
+		int count = projectDAO.updateStatus(board_id, board_creator_status);
+		if(count>0) {
+			commit(con);
+			isSuccess = true;
+		} else {
+			rollback(con);
+		}
+		return isSuccess;
+	}
 	// DELETE ===================================================================================
 	
 	public boolean dropProject(int board_id) { // 프로젝트 삭제 서비스
@@ -124,6 +169,35 @@ public class ProjectProService {
 		return isSuccess;
 	}
 	
+	public boolean dropWaiting(int board_id, String waiting_editor) { // 대기자 삭제 overloading
+		System.out.println("ProjectProService - dropWaiting()");
+		boolean isSuccess = false;
+		int count = projectDAO.deleteWaiting(board_id, waiting_editor);
+		if(count > 0) {
+			commit(con);
+			isSuccess = true;
+		} else {
+			rollback(con);
+		}
+		close(con);
+		return isSuccess;
+	}
+	
+	public boolean dropWaiting(int board_id) { // 대기자 전체 삭제 overloading
+		System.out.println("ProjectProService - dropWaiting()");
+		boolean isSuccess = false;
+		int count = projectDAO.deleteWaiting(board_id);
+		if(count > 0) {
+			commit(con);
+			isSuccess = true;
+		} else {
+			rollback(con);
+		}
+		close(con);
+		return isSuccess;
+	}
+	
+	
 	// LIST ===================================================================================
 
 	public ArrayList<ProjectBean> getListProject(int startRow){ // 프로젝트 리스트 서비스
@@ -136,6 +210,13 @@ public class ProjectProService {
 	public ArrayList<ProjectBean> getListSearchProject(int page, HashMap<String, String> search){ // 프로젝트 검색 서비스
 		System.out.println("ProjectProService - listProject()");
 		ArrayList<ProjectBean> list = projectDAO.selectListSearchProject(page, search);
+		close(con);
+		return list;
+	}
+	
+	public ArrayList<String> getWaitingDeclineList(int board_id, String waiting_editor){ // 선택받지 못한 자들의 리스트
+		System.out.println("ProjectProService - getWaitingDeclineList()");
+		ArrayList<String> list = projectDAO.selectWaitingDeclineList(board_id, waiting_editor);
 		close(con);
 		return list;
 	}

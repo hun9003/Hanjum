@@ -9,6 +9,8 @@ import java.util.Vector;
 
 import com.hanjum.board.vo.BoardBean;
 import com.hanjum.board.vo.ProjectBean;
+import com.hanjum.board.vo.WaitingBean;
+
 import static com.hanjum.db.JdbcUtil.*;
 import com.hanjum.vo.Constant;
 
@@ -163,7 +165,70 @@ public class ProjectDAO {
 		}
 	// CHECK ====================================================================================
 		
+		public int checkApplyProject(String user_id, int board_id) { // 에디터와 프로젝트와의 관계 (지원전, 지원중, 계약중)
+			int check = 0;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			try {
+				String sql = "SELECT COUNT(contract_id) FROM contract WHERE contract_status = 1 AND contract_editor = ? AND board_id = ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, user_id);
+				pstmt.setInt(2, board_id);
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					if(rs.getInt(1)==1) {
+						check = 1; // 대기자 상태
+						
+					} else {
+						sql = "SELECT COUNT(contract_id) FROM contract WHERE contract_status = 2 AND contract_editor = ? AND board_id = ?";
+						pstmt = con.prepareStatement(sql);
+						pstmt.setString(1, user_id);
+						pstmt.setInt(2, board_id);
+						rs = pstmt.executeQuery();
+						if(rs.next()) {
+							if(rs.getInt(1)==1) {
+								check = 2; // 계약중인 상태
+							}
+						}
+					
+					}
+				}
+				
+			} catch (Exception e) {
+				System.out.println("checkApplyProject() 오류! - " + e.getMessage());
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+				close(rs);
+			}
+			
+			return check;
+		}
 		
+		public int checkProjectStatus(int board_id) { // 프로젝트 상태
+			System.out.println("ProjectDAO - checkProjectStatus()");
+			int check = 0;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			try {
+				String sql = "SELECT board_creator_status FROM board_creator WHERE board_id = ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, board_id);
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					check = rs.getInt(1);
+				}
+			} catch (Exception e) {
+				System.out.println("checkProjectStatus() 오류! - " + e.getMessage());
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+				close(rs);
+			}
+			
+			return check;
+
+		}
 	// INSERT ===================================================================================
 	
 	public int insertProject(ProjectBean projectBean) { // 에디터 게시물 생성
@@ -199,6 +264,29 @@ public class ProjectDAO {
 		} finally {
 			close(pstmt);
 		}
+		return insertCount;
+	}
+	
+	public int insertWaiting(WaitingBean waitingBean) {
+		System.out.println("ProjectDAO - insertWaiting()");
+		int insertCount = 0;
+		PreparedStatement pstmt = null;
+		try {
+			String sql = "INSERT INTO waiting (waiting_editor, waiting_date, user_id, board_id, waiting_price) "
+					+ "VALUES (?,NOW(),?,?,?)";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, waitingBean.getWaiting_editor());
+			pstmt.setString(2, waitingBean.getUser_id());
+			pstmt.setInt(3, waitingBean.getBoard_id());
+			pstmt.setInt(4, waitingBean.getWaiting_price());
+			insertCount = pstmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("insertWaiting() - "+e.getMessage());
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
 		return insertCount;
 	}
 		
@@ -238,6 +326,24 @@ public class ProjectDAO {
 		return updateCount;
 	}
 		
+	public int updateStatus(int board_id, int board_creator_status) {
+		System.out.println("ProjectDAO - updateStatus()");
+		int updateCount = 0;
+		PreparedStatement pstmt = null;
+		try {
+			String sql = "UPDATE board_creator SET board_creator_status = ? WHERE board_id = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, board_creator_status);
+			pstmt.setInt(2, board_id);
+			updateCount = pstmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("updateStatus() 오류 - " + e.getMessage());
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return updateCount;
+	}
 	// DELETE ===================================================================================
 		
 	public int deleteProject(int board_id) { // 에디터 게시글 삭제
@@ -257,6 +363,45 @@ public class ProjectDAO {
 			close(pstmt);
 		}
 		return deleteProject;
+	}
+	
+	public int deleteWaiting(int board_id, String waiting_editor) {
+		System.out.println("ProjectDAO - deleteWaiting()");
+		int deleteCount = 0;
+		PreparedStatement pstmt = null;
+		
+		try {
+			String sql = "DELETE FROM waiting WHERE board_id = ? AND waiting_editor = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, board_id);
+			pstmt.setString(2, waiting_editor);
+			deleteCount = pstmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("deleteWaiting() 오류! - " + e.getMessage());
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return deleteCount;
+	}
+	
+	public int deleteWaiting(int board_id) {
+		System.out.println("ProjectDAO - deleteWaiting()");
+		int deleteCount = 0;
+		PreparedStatement pstmt = null;
+		
+		try {
+			String sql = "DELETE FROM waiting WHERE board_id = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, board_id);
+			deleteCount = pstmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("deleteWaiting() 오류! - " + e.getMessage());
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return deleteCount;
 	}
 		
 	// LIST =====================================================================================
@@ -383,6 +528,36 @@ public class ProjectDAO {
 		}
 		return list;
 	}
+
+
+	public ArrayList<String> selectWaitingDeclineList(int board_id, String waiting_editor) {
+		System.out.println("ProjectDAO - selectWaitingDeclineList()");
+		ArrayList<String> list = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			String sql = "SELECT waiting_editor FROM waiting WHERE board_id = ? AND waiting_editor NOT IN(?)";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, board_id);
+			pstmt.setString(2, waiting_editor);
+			rs = pstmt.executeQuery();
+			list = new ArrayList<String>();
+			while(rs.next()) {
+				list.add(rs.getString(1));
+			}
+		} catch (Exception e) {
+			System.out.println("selectWaitingDeclineList() 오류 - "+e.getMessage());
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		
+		return list;
+	}
+
+
+
 
 
 	

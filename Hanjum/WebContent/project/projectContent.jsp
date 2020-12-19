@@ -57,6 +57,8 @@
 	}
 	
 	UserBean userBean = (UserBean)session.getAttribute("userBean");
+	int checkApply = (int)request.getAttribute("checkApply");
+	int checkProject = (int)request.getAttribute("checkProject");
 	String prefPage = "";
 	if(request.getHeader("referer") != null){
 		String prefStr = request.getHeader("referer");
@@ -253,19 +255,66 @@
 			%>
         </div>
         <div class="form-group d-flex justify-content-end mt-4">
-        <a class="btn btn-primary submit" type="button" id="ListBtn" href="ProjectList.bo?page=<%=nowPage%>">목록으로</a> 
         <%
-        if(userBean != null)
-        if(userBean.getUser_id().equals(project.getUser_id())){
-        %>
-        <a class="btn btn-primary submit m-l-10" type="button" id="UpdateBtn" href="ProjectUpdate.bo?page=<%=nowPage%>&board_id=<%=project.getBoard_id()%>">수정하기</a> 
-		<a class="btn btn-light submit m-l-10" type="button" id="DeleteBtn" href = 'ProjectDeletePro.bo?board_id=<%=project.getBoard_id()%>'>삭제하기</a>
-        <%
+        if(userBean != null){
+	        if(userBean.getUser_id().equals(project.getUser_id())){
+	        %>
+	        <a class="btn btn-primary submit m-r-10" type="button" id="UpdateBtn" href="ProjectUpdate.bo?page=<%=nowPage%>&board_id=<%=project.getBoard_id()%>">수정하기</a> 
+			<a class="btn btn-light submit m-r-10" type="button" id="DeleteBtn" href = 'ProjectDeletePro.bo?board_id=<%=project.getBoard_id()%>'>삭제하기</a>
+	        <%
+	        }
+        	if(userBean.getUser_type() == 2 && !userBean.getUser_id().equals(project.getUser_id())){
+        		if(checkApply == 0){
+        	%>
+        	<a class="btn btn-primary submit m-r-10" type="button" id="ApplyBtn" data-href="ProjectApplyPro.bo?board_id=<%=project.getBoard_id()%>&page=<%=nowPage%>">지원하기</a> 
+        	<%
+        		} else if(checkApply == 1) {
+        			%>
+                	<a class="btn btn-light submit m-r-10" type="button" id="CancleBtnAp" href="ProjectApplyCanclePro.bo?board_id=<%=project.getBoard_id()%>&page=<%=nowPage%>">지원취소</a> 
+                	<%
+        		} else if(checkApply == 2) {
+        			%>
+                	<a class="btn btn-light submit m-r-10" type="button" id="CancleBtnCo" href="ProjectContractCanclePro.bo?board_id=<%=project.getBoard_id()%>&page=<%=nowPage%>">계약취소</a> 
+                	<%
+        		}
+        	} else if(userBean.getUser_type() == 1 && userBean.getUser_id().equals(project.getUser_id())){
+        		if(checkProject == 1) {
+        			%>
+                	<a class="btn btn-primary submit m-r-10" type="button" id="ApplyBtnCo" href="ProjectContractSuccessPro.bo?board_id=<%=project.getBoard_id()%>&page=<%=nowPage%>">계약완료</a> 
+                	<a class="btn btn-light submit m-r-10" type="button" id="CancleBtnCo" href="ProjectContractCanclePro.bo?board_id=<%=project.getBoard_id()%>&page=<%=nowPage%>">계약취소</a> 
+                	<%
+        		}
+        	}
         }
         %>
+        <a class="btn btn-primary submit" type="button" id="ListBtn" href="ProjectList.bo?page=<%=nowPage%>">목록으로</a> 
+        
         </div>
 </div>
 </section>
+			<jsp:include page="../inc/script.jsp"/>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$("#ApplyBtn").click(function(){
+					
+					const price = Number(prompt("계약 희망 금액을 입력하십시오. \n(<%=min_price %> ~ <%=max_price %>)","ex) <%=project.getBoard_creator_cre_max_price()%>"));
+					if(isNaN(price)){
+						alert("숫자만 입력하세요 ex) <%=project.getBoard_creator_cre_max_price()%>");
+					} else {
+						if(price <= <%=project.getBoard_creator_cre_max_price()%> && price >= <%=project.getBoard_creator_cre_min_price()%>){
+							var cfPrice = confirm(price+"원으로 지원하시겠습니까?");
+							if(cfPrice){
+								var href = $("#ApplyBtn").attr("data-href");
+								location.href = href+"&contract_price="+price;
+							}
+						} else {
+							alert("<%=min_price %> ~ <%=max_price %> 사이의 금액으로 지원하실수 있습니다.");
+						}
+					}
+				})
+			})
+			
+		</script>
 <%
 }
 %>
@@ -278,7 +327,6 @@
 			<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
 			
 			
-			<jsp:include page="../inc/script.jsp"/>
-	
+			
 		</body>
 </html>

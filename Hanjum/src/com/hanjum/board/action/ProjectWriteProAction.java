@@ -78,6 +78,7 @@ public class ProjectWriteProAction implements Action{
 			PrintWriter out = response.getWriter();
 			out.println(Constant.arrMsg);
 		} else {
+			
 			forward = new ActionForward();
 			forward.setPath("ProjectList.bo");
 			forward.setRedirect(true);

@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 public class NoticeBean {
 	
 	int notice_id; // 각 알림들에 매겨지는 값
-	String notice_content; // 알림 내용
+	int notice_content; // 알림 내용
 	Timestamp notice_date; // 알림 날짜
 	String notice_url; // 알림 링크
 	int notice_read; // 알림 조회 여부
@@ -15,16 +15,17 @@ public class NoticeBean {
 	
 	
 	// Getter / Setter
+
 	public int getNotice_id() {
 		return notice_id;
 	}
 	public void setNotice_id(int notice_id) {
 		this.notice_id = notice_id;
 	}
-	public String getNotice_content() {
+	public int getNotice_content() {
 		return notice_content;
 	}
-	public void setNotice_content(String notice_content) {
+	public void setNotice_content(int notice_content) {
 		this.notice_content = notice_content;
 	}
 	public Timestamp getNotice_date() {

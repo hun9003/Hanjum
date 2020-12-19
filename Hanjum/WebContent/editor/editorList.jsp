@@ -1,3 +1,4 @@
+<%@page import="com.hanjum.user.vo.UserBean"%>
 <%@page import="com.hanjum.vo.Constant"%>
 <%@page import="com.hanjum.vo.PageInfo"%>
 <%@page import="com.hanjum.board.vo.EditorBean"%>
@@ -48,6 +49,11 @@
 		<div class="container">
 			<div class="row">
 			<%
+			boolean isLogin = false;
+			UserBean userBean = (UserBean)session.getAttribute("userBean");
+			if(userBean != null){
+				isLogin = true;
+			}
 			PageInfo pageInfo = (PageInfo)request.getAttribute("pageInfo");
 			int listCount = pageInfo.getListCount();
 			int nowPage = pageInfo.getPage();
@@ -63,7 +69,7 @@
 	        for(int i = 0; i < editorList.size(); i++){
 	        	EditorBean editorBean = editorList.get(i);
 	        %>
-				<div class="col-md-6 col-lg-3 ftco-animate d-flex align-items-stretch" onclick="location.href='Editor.bo?board_id=<%=editorBean.getBoard_id()%>&page=<%=nowPage%>'">
+				<div id="edItem-<%=i %>" data-href="Editor.bo?board_id=<%=editorBean.getBoard_id()%>&page=<%=nowPage %>" class="col-md-6 col-lg-3 ftco-animate d-flex align-items-stretch" style="cursor: pointer;" onclick="forwardEd('<%=i %>','<%=isLogin %>')">
 					<div class="staff">
 						<div class="img-wrap d-flex align-items-stretch">
 							<div class="img align-self-stretch" style="width:255px; background-size:255px; background-image: url(editorUserPhotoUpload/<%=editorBean.getBoard_ed_photo()%>);"></div>
@@ -140,6 +146,18 @@
 		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
 		<script src="js/google-map.js"></script>
 		<script src="js/main.js"></script>
-		
+		<script type="text/javascript">
+		function forwardEd(item, login){
+			var url = $("#edItem-"+item).attr("data-href");
+			if(login == "true"){
+				location.href = url;
+			} else {
+				var loginMsg = confirm("로그인이 필요한 페이지 입니다 로그인 하시겠습니까?");
+				if(loginMsg){
+					location.href = "My.uo?fr=login";
+				}
+			}
+		}
+			</script>
 	</body>
 	</html>

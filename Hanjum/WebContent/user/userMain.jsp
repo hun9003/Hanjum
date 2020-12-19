@@ -13,7 +13,7 @@
     	if(request.getParameter("fr") != null){
         	fr = request.getParameter("fr");
         	switch(fr){
-        	case "notice": frUrl="getNewNotice.nt"; pageSubject="내 알림"; break;
+        	case "notice": frUrl="getNoticeList.nt"; pageSubject="내 알림"; break;
         	case "chat": frUrl="ChatListPro.ch"; pageSubject="채팅"; break;
         	case "info": frUrl="UserMyInfo.uo"; pageSubject="내 정보"; break;
         	case "constract": frUrl="UserConstract.uo"; pageSubject="계약 관리"; break;
