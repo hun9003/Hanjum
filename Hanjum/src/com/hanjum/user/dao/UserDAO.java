@@ -235,6 +235,10 @@ public class UserDAO {
 		
 		return insertCount;
 	}
+	
+	
+	
+	
 	public int updateUser(EditorBean editorBean) {
 		System.out.println("UserDAO - insertUser() - editor");
 		int updateCount = 0;
@@ -277,12 +281,151 @@ public class UserDAO {
 		return updateCount;
 	}
 	
-	public int deleteUser(UserBean userBean) {
-		System.out.println("UserDAO - deleteUser()");
-		int insertCount = 1;
-		return insertCount;
+	
+	
+	
+	// 정말로 삭제하시려면 비밀번호를 입력하세요 확인.
+	public int deleteCheck(String user_id, String user_pass) {
+		int checkCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select * from user where user_id=? and user_pass =?" ;
+		try {
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1,user_id);
+			pstmt.setString(2,user_pass);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				checkCount = 1;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		
+		
+		
+		return checkCount;
 	}
-
+	
+	
+	
+	
+	
+	// 저번에 만든Exception이 있어서 그냥 로그인이셉션으로 쓸게요 어자피 Delete를 만들어도 같은내용임
+	public void deleteUserWithBoard(String user_id) throws LoginException {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			// 우선 진행중인 프로젝트가 있는가 확인.
+			String sql = "select board_id from contract where (contract_editor=? or contract_creator=?) and contract_status=2";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, user_id);
+			pstmt.setString(2, user_id);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				// 값이 있다? = 진행중인 프로젝트가 있따
+				throw new LoginException("진행중인 프로젝트가 있는경우 탈퇴할 수 없습니다."); // 오류메세지 출력
+			} else {
+				// 값이 없다? = 진행중인 프로젝트는 없다 > id값에 해당되는 프로젝트 우선 조회
+				sql = "select * from contract where contract_editor=? or contract_creator=? ";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setString(1, user_id);
+				pstmt.setString(2, user_id);
+				rs=pstmt.executeQuery();
+				// 가져온 값이 있으면 while문 실행
+				while(rs.next()) {
+					String match = rs.getString("contract_editor");// if 가져온 값이 creator인지 editor인지 판별하는 변수
+					// status 꺼내서 가져온 contract의 진행상태를 확인
+					System.out.println(rs.getInt("board_id"));
+					int status = rs.getInt("contract_status");
+					System.out.println("상태:" +status);
+					switch (status) {
+					case 1:  // 1 (시작전) 이기때문에 걍 바로컷
+						if(match.equals(user_id)) { // editor(신청자) 아이디가 탈퇴하려는 사람 아이디일 경우 contract에서만 삭제
+							sql = "delete from contract where contract_id = " + rs.getString("contract_id");
+						}else { // creator(작성자) 아이디가 탈퇴하려는 사람 아이디일 경우 board_id(ON CASECADE DELETE)를 삭제
+							sql = "delete from board where board_id = "+ rs.getString("board_id");
+						}
+						break;
+					case 2: // 2 (진행중)의 경우는 위에서 이미 거르기때문에 있을 수가없음.
+						throw new LoginException("진행중인 프로젝트가 있는경우 탈퇴할 수 없습니다.");
+					case 3: 
+					case 4: // 3(완료) 또는 4(취소)된 정보이기 때문에 id값을 undefined(기존id) 로 변경 - 추후의 문제? 등 대응하는 정보 보관 목적을 위해
+						if(match.equals(user_id)) { // 해당 아뒤가 contract_editor 일경우
+							sql = "update contract set contract_editor='undefined(" + user_id + ")' where contract_id = " + rs.getString("contract_id");
+						}else { // 해당 아뒤가 contract_creator 일경우 해당 board에도 user_id 값이 있기 때문에 user_id값을 undefined로 변경
+							sql = "update board set user_id = 'undefined' where board_id = " + rs.getString("board_id");
+							pstmt = con.prepareStatement(sql);
+							pstmt.executeUpdate(); // 구문실행 
+							sql = "update contract set contract_creator='undefined(" + user_id + ")' where contract_id = " + rs.getString("contract_id");
+						}
+						break;
+					}
+					
+					// switch 문에서 정한 sql문을 가지고 실행
+					pstmt=con.prepareStatement(sql);
+					pstmt.executeUpdate();
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	// 찐으로 삭제 (User_id) 테이블을 참조하고있는 거의 모든 정보가 제거됨
+	public int deleteUser(String user_id, String user_pass) {
+		System.out.println("UserDAO - deleteUser()");
+		int deleteCount = 0;
+		PreparedStatement pstmt = null;
+		
+		
+		String sql = "delete from user where user_id=? and user_pass =?" ;
+		try {
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1,user_id);
+			pstmt.setString(2,user_pass);
+			deleteCount=pstmt.executeUpdate();
+			if(deleteCount > 0) {
+				// 리뷰 대상이 탈퇴할 경우에는 Delete User에서 자동으로 사라짐
+				sql = "update review set review_from_id = 'undefined' where review_from_id = ?"; // 리뷰어가 탈퇴할경우 = undefined로 id변경되고 리뷰는 남아있음
+				pstmt=con.prepareStatement(sql);
+				pstmt.setString(1, user_id);
+				pstmt.executeUpdate();
+				// 탈퇴한 채팅내역 id = undefined로 변경
+				sql = "update chat set chat_to_id = if(chat_to_id ='"+ user_id +"','undefined',chat_to_id),"
+						+ "chat_from_id = if(chat_from_id='"+ user_id +"','undefined',chat_from_id)";
+				System.out.println(sql);
+				pstmt=con.prepareStatement(sql);
+				pstmt.executeUpdate();
+			}
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		
+		
+		return deleteCount;
+	}
+	
+	
+	// 유저 한명의 기본정보 들고오기
 	public UserBean getUserInfo(String user_id) {
 		System.out.println("selectUserInfo - dao");
 		UserBean userBean = new UserBean();
@@ -314,7 +457,9 @@ public class UserDAO {
 		}
 		return userBean;
 	}
-
+	
+	
+	// 유저 한명의 에디터 정보 들고오기
 	public EditorBean getEditorBean(String user_id) {
 		System.out.println("selectUserInfo - dao");
 		EditorBean editorBean = null;
@@ -731,7 +876,7 @@ public class UserDAO {
 		PreparedStatement pstmt = null;
 //		ResultSet rs = null;
 		
-		
+		// 신고 테이블에 추가
 		try {
 			String sql = "insert into user_report(user_id,report_userid,report_type,report_content) values(?,?,?,?)";
 			pstmt=con.prepareStatement(sql);
@@ -749,7 +894,8 @@ public class UserDAO {
 		}
 		return insertCount;
 	}
-
+	
+	// 페이징 처리를 위해 갯수불러오기
 	public int getReportListCount() {
 		int listCount = 0;
 			
@@ -783,6 +929,8 @@ public class UserDAO {
 			
 			return listCount;
 		}
+	
+		// 페이징 처리를 위해 갯수불러오기(검색 기능시)
 		public int getReportListCount(String search, String searchType) {
 			int listCount = 0;
 			
@@ -817,7 +965,8 @@ public class UserDAO {
 			
 			return listCount;
 		}
-
+		
+		// 페이징값 받아서 리스트 불러오기(검색X)
 		public ArrayList<ReportBean> getReportList(int page, int limit) {
 			ArrayList<ReportBean> reportList = null;
 			PreparedStatement pstmt = null;
@@ -854,7 +1003,8 @@ public class UserDAO {
 			
 			return reportList;
 		}
-
+		
+		// 페이징값과 검색어 받아서 리스트 불러오기(검색시)
 		public ArrayList<ReportBean> getReportList(int page, int limit, String search, String searchType) {
 			ArrayList<ReportBean> reportList = null;
 			PreparedStatement pstmt = null;
@@ -891,6 +1041,6 @@ public class UserDAO {
 			
 			return reportList;
 		}
-	
+		
 	
 }

@@ -202,7 +202,8 @@ function checkPasswd(passwdForm) {
 <tr><td class="td_name"><label for="Content">회원 타입</label></td><td class="td_content"><%=user_type %></td></tr>
 <tr><td class="td_name"><label for="Content">로그인 횟수</label></td><td class="td_content"><%=userBean.getUser_login_count() %> 회</td></tr>
 </table>
-	<div class="write_form_submit"><input type="submit" id="WriteSubmit" value="수정 완료"></div>
+	<div class="write_form_submit"><input type="submit" id="WriteSubmit" value="수정 완료">
+	<input type="button" onclick="location.href='UserDeleteForm.uo?user_id=<%=userBean.getUser_id()%>'" value="회원 탈퇴"></div>
 </form>
 </div>
 

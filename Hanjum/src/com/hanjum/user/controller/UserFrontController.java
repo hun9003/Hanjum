@@ -320,6 +320,20 @@ public class UserFrontController extends HttpServlet {
 				out.close();
 			}
 		}
+		else if (command.equals("/UserDeleteForm.uo")) { //회원탈퇴
+			// 바로 View로 포워딩 실행
+			forward = new ActionForward(); 
+			forward.setPath("/user/userDeleteForm.jsp"); 
+			
+		}
+		else if (command.equals("/UserDeletePro.uo")) { //회원탈퇴
+			action = new UserDeleteProAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		
 		// -------------------------------------------------------------------------------------------------------------------
 		// 기본 작업 후 공통 작업 수행

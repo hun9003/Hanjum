@@ -330,7 +330,8 @@ function selEmail(email){
 <!-- <div class="input_link"><input type="text" name="board_creator_cre_ref[]" id="Ref3" placeholder="링크를 업로드 하세요."></div> -->
 <!-- </td></tr> -->
 </table>
-<div class="write_form_submit"><input type="submit" id="WriteSubmit" value="수정 완료"></div>
+<div class="write_form_submit"><input type="submit" id="WriteSubmit" value="수정 완료">
+<input type="button" onclick="location.href='UserDeleteForm.uo?user_id=<%=userBean.getUser_id()%>'" value="회원 탈퇴"></div>
 </form>
 </div>
 

@@ -107,19 +107,34 @@ public class UserProService {
 		
 	}
 	
-	public boolean deleteUser(UserBean userBean) {
+	public boolean deleteUser(String user_id,String user_pass) throws LoginException{
 		boolean isSuccess = false;
 		
 		Connection con = getConnection();
 		UserDAO userDAO = UserDAO.getInstance();
 		userDAO.setConnection(con);
-		int deleteCount = userDAO.deleteUser(userBean);
-		if(deleteCount > 0) {
-			commit(con);
-			isSuccess = true;
+		
+		int successCount = 0;  // 석세스 카운트 생성
+		
+		// 유저가 입력한 id 및 pass값 확인 성공시 1반환
+		successCount = userDAO.deleteCheck(user_id, user_pass); 
+		if(successCount>0) {
+			successCount = 0; // 값초기화
+			// 우선 Board 및 Contract
+			userDAO.deleteUserWithBoard(user_id);
+			successCount = userDAO.deleteUser(user_id,user_pass); // delete 성공시 1반환
+			if(successCount > 0) { // DB저장
+				commit(con);
+				isSuccess = true; 
+			} else {
+				rollback(con); //실패시 롤백
+			}
 		} else {
-			rollback(con);
+			// 실패시 오류메세지 출력
+			throw new LoginException("비밀번호가 맞지 않습니다.");
 		}
+		
+		
 		close(con);
 		return isSuccess;
 	}
