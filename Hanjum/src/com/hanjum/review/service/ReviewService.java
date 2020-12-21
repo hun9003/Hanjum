@@ -54,7 +54,7 @@ public class ReviewService {
 	}
 
 	// 리뷰 수정 작업 전 작성자 확인을 위한 아이디 비교
-	public boolean isArticleWriter(int review_id, String review_form_id) {
+	public boolean isArticleWriter(int review_id, String review_from_id) {
 		
 		
 				boolean isArticleWriter = false;
@@ -62,7 +62,7 @@ public class ReviewService {
 				ReviewDAO reviewDAO = ReviewDAO.getInstance();
 				reviewDAO.setConnection(con);
 				System.out.println(review_id);
-				isArticleWriter = reviewDAO.isArticleReviewWriter(review_id, review_form_id);
+				isArticleWriter = reviewDAO.isArticleReviewWriter(review_id, review_from_id);
 				
 				close(con);
 				

@@ -48,7 +48,7 @@ public class ReviewUpdatePro implements Action {
 			// 유저아이디 일치여부에 따라
 			ReviewBean article = new ReviewBean();
 			article.setReview_id(review_id);
-			article.setReview_form_id(userBean.getUser_id());
+			article.setReview_from_id(userBean.getUser_id());
 			article.setReview_speciality(Integer.parseInt(request.getParameter("review_speciality")));
 			article.setReview_satisfaction(Integer.parseInt(request.getParameter("review_satisfaction")));
 			article.setReview_positivity(Integer.parseInt(request.getParameter("review_positivity")));

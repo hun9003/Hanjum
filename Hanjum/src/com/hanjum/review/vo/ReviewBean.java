@@ -13,7 +13,7 @@ public class ReviewBean {
 	private int review_positivity;
 	private int review_communication;
 	private Timestamp review_date;
-	private String review_form_id;
+	private String review_from_id;
 	private int review_id;
 	
 	public String getUser_id() {
@@ -60,11 +60,11 @@ public class ReviewBean {
 	public void setReview_date(Timestamp review_date) {
 		this.review_date = review_date;
 	}
-	public String getReview_form_id() {
-		return review_form_id;
+	public String getReview_from_id() {
+		return review_from_id;
 	}
-	public void setReview_form_id(String review_form_id) {
-		this.review_form_id = review_form_id;
+	public void setReview_from_id(String review_from_id) {
+		this.review_from_id = review_from_id;
 	}
 	public int getReview_id() {
 		return review_id;

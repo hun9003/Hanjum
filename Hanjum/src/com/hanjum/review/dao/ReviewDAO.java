@@ -53,7 +53,7 @@ private ReviewDAO() {}
 			pstmt.setInt(5, reviewBean.getReview_positivity());
 			pstmt.setInt(6, reviewBean.getReview_communication());
 //			pstmt.setTimestamp(7, reviewBean.getReview_date());
-			pstmt.setString(7, reviewBean.getReview_form_id());
+			pstmt.setString(7, reviewBean.getReview_from_id());
 			pstmt.setInt(8, num);
 			
 			insertCount = pstmt.executeUpdate();
@@ -136,7 +136,7 @@ private ReviewDAO() {}
 					article.setReview_positivity(rs.getInt("review_positivity"));
 					article.setReview_communication(rs.getInt("review_communication"));
 					article.setReview_date(rs.getTimestamp("review_date"));
-					article.setReview_form_id(rs.getString("review_form_id"));
+					article.setReview_from_id(rs.getString("review_from_id"));
 					article.setReview_id(rs.getInt("review_id"));
 					
 					articleList.add(article);
@@ -154,7 +154,7 @@ private ReviewDAO() {}
 		}
 		
 		// 리뷰작성자 확인
-		public boolean isArticleReviewWriter(int review_id, String review_form_id) {
+		public boolean isArticleReviewWriter(int review_id, String review_from_id) {
 			
 			boolean isArticleWriter = false;
 			
@@ -162,13 +162,13 @@ private ReviewDAO() {}
 			ResultSet rs = null;
 			
 			try {
-				String sql = "SELECT review_form_id FROM review WHERE review_id=?";
+				String sql = "SELECT review_from_id FROM review WHERE review_id=?";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, review_id);
 				rs = pstmt.executeQuery();
 				
 				if(rs.next()) {
-					if(review_form_id.equals(rs.getString("review_form_id"))) {
+					if(review_from_id.equals(rs.getString("review_from_id"))) {
 						isArticleWriter = true;
 					}
 				}
@@ -261,7 +261,7 @@ private ReviewDAO() {}
 					article.setReview_satisfaction(rs.getInt("review_satisfaction"));
 					article.setReview_positivity(rs.getInt("review_positivity"));
 					article.setReview_communication(rs.getInt("review_communication"));
-					article.setReview_form_id(rs.getString("review_form_id"));
+					article.setReview_from_id(rs.getString("review_from_id"));
 					// 임시 확인용 상세 내용 출력
 //					System.out.println("글 제목 : " + article.getBoard_subject());
 				}
@@ -285,7 +285,7 @@ private ReviewDAO() {}
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
 			try {
-				String sql = "SELECT count(review_id) FROM review WHERE review_form_id = ? AND user_id = ?";
+				String sql = "SELECT count(review_id) FROM review WHERE review_from_id = ? AND user_id = ?";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, user_id);
 				pstmt.setString(2, editor_id);

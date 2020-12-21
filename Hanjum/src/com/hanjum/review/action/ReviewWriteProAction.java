@@ -31,7 +31,7 @@ public class ReviewWriteProAction implements Action {
 		reviewBean.setReview_satisfaction(Integer.parseInt(request.getParameter("review_satisfaction")));
 		reviewBean.setReview_positivity(Integer.parseInt(request.getParameter("review_positivity")));
 		reviewBean.setReview_communication(Integer.parseInt(request.getParameter("review_communication")));
-		reviewBean.setReview_form_id(userBean.getUser_id());
+		reviewBean.setReview_from_id(userBean.getUser_id());
 //		reviewBean.setReview_date(new Timestamp(System.currentTimeMillis()));
 		reviewBean.setUser_id(request.getParameter("writer_id"));
 		
