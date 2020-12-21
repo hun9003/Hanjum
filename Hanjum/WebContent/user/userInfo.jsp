@@ -19,7 +19,7 @@
 	}
 	
 	
-	
+	int noticeCount = (int)request.getAttribute("noticeCount");
 %>
 <!DOCTYPE html>
 <html>
@@ -71,6 +71,8 @@ input[name=editor_status]:checked + .toggle_label:after { left:28px;}
 .form-group-content {overflow: auto;}
 .profile_photo {max-width: 300px; max-height: 300px; width:80%;}
 #editor_photo_form { display:none; }
+.new-count {position: relative;}
+.new-count-content {position:absolute; top:-10px; left:49px; display:inline-block; line-height:17px; text-align:center; width: 16px; height: 16px; font-size: 13px; color:#fff; font-weight:500; background: #f00; border-radius: 100%;}
 </style>
 </head>
 <body>
@@ -92,15 +94,25 @@ input[name=editor_status]:checked + .toggle_label:after { left:28px;}
 	%>
               <h3 class="mb-4">My <span id="USER_ID" class=".color-primary m-l-20"><%=userBean.getUser_id()%></span><span class="float-r m-r-10"><%=user_type %><span></span></span></h3>
              <div class="form-group">
-             <span class="form-group-content">
+             <span class="form-group-content" style="overflow: visible;">
              <span class="user_lv">Lv <%=userBean.getUser_level() %></span>
              
              <input type="hidden" id="user_id" name="user_id" value="<%=userBean.getUser_id() %>">
 
              <span class="color-primary m-l-10" id="user_name"><%=userBean.getUser_name()%></span><span id="edit_user_name" class="edit edit_ready m-l-10"><span>수정</span></span>
              <span class="float-r m-r-10">
-             	<button class="btn btn-white" onclick="location.href='My.uo?fr=chat'">채팅</button>
-             	<button class="btn btn-primary" onclick="location.href='My.uo?fr=notice'">알림</button>
+             	<span class="new-count"><button class="btn btn-white" onclick="location.href='My.uo?fr=chat'">채팅</button>
+             	</span>
+             	<span class="new-count"><button class="btn btn-primary" onclick="location.href='My.uo?fr=notice'">알림</button>
+             		<%
+             		if(noticeCount>0){
+             		%>
+             		<span class="new-count-content"><%=noticeCount %></span>
+             		<%
+             		}
+             		%>
+             	</span>
+             	
              </span>
              </span>
              </div> 

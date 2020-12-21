@@ -10,6 +10,8 @@ import com.hanjum.action.Action;
 import com.hanjum.board.service.BoardProService;
 import com.hanjum.board.service.EditorProService;
 import com.hanjum.board.vo.EditorBean;
+import com.hanjum.contract.service.ContractCheckSuccessService;
+import com.hanjum.review.service.ReviewService;
 import com.hanjum.user.service.UserProService;
 import com.hanjum.user.vo.PortfolioBean;
 import com.hanjum.user.vo.UserBean;
@@ -21,6 +23,7 @@ public class EditorInfoAction implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		System.out.println("EditorInfoAction!");
 		ActionForward forward = null;
+		
 		
 		int board_id = Integer.parseInt(request.getParameter("board_id"));
 		
@@ -37,6 +40,7 @@ public class EditorInfoAction implements Action {
 		
 		ArrayList<PortfolioBean> portfolioList = userProService.getPortfolioList(user_id);
 		request.setAttribute("portfolioList", portfolioList);
+		
 		
 		forward = new ActionForward();
 		forward.setPath("/editor/editorContent.jsp");

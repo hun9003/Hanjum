@@ -8957,9 +8957,13 @@ h1, h2, h3, h4, h5,
     .project-wrap .text h3 {
       font-size: 20px;
       margin-bottom: 10px;
-      font-weight: 500; }
+      font-weight: 500; 
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space:nowrap;}
       .project-wrap .text h3 a {
-        color: #000000; }
+        color: #000000;
+         }
     .project-wrap .text ul {
       margin: 0;
       padding: 10px 0 0 0;

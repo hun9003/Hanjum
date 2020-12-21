@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import com.hanjum.action.Action;
 import com.hanjum.board.service.EditorProService;
+import com.hanjum.notice.service.NoticeProService;
 import com.hanjum.user.service.UserProService;
 import com.hanjum.user.vo.EditorBean;
 import com.hanjum.user.vo.UserBean;
@@ -123,6 +124,7 @@ public class UserInfoMyAction implements Action {
 		}
 		
 		request.setAttribute("editorInfo", editorInfo);
+		
 		int readyStatus = 0;
 		if(isEditorInfo == true) {
 			readyStatus = 1;
@@ -130,6 +132,10 @@ public class UserInfoMyAction implements Action {
 		} else {
 			request.setAttribute("readyStatus", readyStatus);
 		}
+		
+		NoticeProService noticeProService = new NoticeProService();
+		int noticeCount = noticeProService.getNoticeCount(user_id);
+		request.setAttribute("noticeCount", noticeCount);
 		if(userBean != null) {
 			forward = new ActionForward();
 			forward.setPath("user/userInfo.jsp");

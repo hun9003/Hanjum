@@ -65,7 +65,7 @@ public class ProjectContractCancleProAction implements Action {
 				noticeBean.setNotice_url("Project.bo?board_id="+board_id);
 				if(!isWriter) { // 에디터가 계약을 취소
 					noticeBean.setNotice_content(9);
-					noticeBean.setNotice_from_id(contractBean.getContract_editor());
+					noticeBean.setNotice_from_id(contractBean.getContract_creator());
 					noticeBean.setUser_id(contractBean.getContract_editor());
 					
 					NoticeProService noticeProService = new NoticeProService();
@@ -78,14 +78,14 @@ public class ProjectContractCancleProAction implements Action {
 					noticeProService = new NoticeProService();
 					noticeProService.insertNotice(noticeBean);
 				} else { // 크리에이터가 계약을 취소
-					noticeBean.setNotice_content(11);
-					noticeBean.setNotice_from_id(contractBean.getContract_creator());
+					noticeBean.setNotice_content(12);
+					noticeBean.setNotice_from_id(contractBean.getContract_editor());
 					noticeBean.setUser_id(contractBean.getContract_creator());
 					
 					NoticeProService noticeProService = new NoticeProService();
 					noticeProService.insertNotice(noticeBean);
 					
-					noticeBean.setNotice_content(12);
+					noticeBean.setNotice_content(11);
 					noticeBean.setNotice_from_id(contractBean.getContract_creator());
 					noticeBean.setUser_id(contractBean.getContract_editor());
 					

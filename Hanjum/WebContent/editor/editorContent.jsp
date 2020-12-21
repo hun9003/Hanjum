@@ -66,6 +66,7 @@
 		prefPage = prefStr.substring(prefStr.lastIndexOf("/")+1);
 	}
 	
+	
 	%>
 	
 </head>
@@ -292,7 +293,11 @@
              <%
              }
              %> 	
+			<h3>리뷰</h3>
+			<hr>
+			<div id="review_area">
 			
+			</div>
 			<div class="form-group d-flex justify-content-end mt-4">
 	        <a class="btn btn-primary submit" type="button" id="ListBtn" href="EditorList.bo?page=<%=nowPage%>">목록으로</a> 
 	        <%
@@ -320,6 +325,56 @@
 			
 			
 			<jsp:include page="../inc/script.jsp"/>
+			<script type="text/javascript">
+				$(document).ready(function(){
+					$("#review_area").load("ReviewList.rv?user_id=<%=editorBean.getUser_id()%>");
+					$("#review_area").on("click",".page-move",function(){
+						var href = $(this).attr("data-href");
+						$("#review_area").load(href);
+					});
+					
+				})
+				function reviewWrite() {
+	 			var formData = $("#reviewForm").serialize();
+		        $.ajax({
+		            cache : false,
+		            url : "ReviewWritePro.rv", // 요기에
+		            type : 'POST', 
+		            data : formData, 
+		            success : function(data) {
+		            	if(data.indexOf("true")==-1){
+		            		alert("리뷰작성에 실패하였습니다")
+		            	}
+						$("#review_area").load("ReviewList.rv?user_id=<%=editorBean.getUser_id()%>");
+		            }, // success 
+		    
+		            error : function(xhr, status) {
+		                alert(xhr + " : " + status);
+		            }
+		        }); // $.ajax */
+				return false;
+			}
+			function reviewUpdateSubmit(){
+				var formData = $("#reviewUpdateForm").serialize();
+		        $.ajax({
+		            cache : false,
+		            url : "ReviewUpdatePro.rv", // 요기에
+		            type : 'POST', 
+		            data : formData, 
+		            success : function(data) {
+		            	if(data.indexOf("true")==-1){
+		            		alert("리뷰수정에 실패하였습니다")
+		            	}
+						$("#review_area").load("ReviewList.rv?user_id=<%=editorBean.getUser_id()%>");
+		            }, // success 
+		    
+		            error : function(xhr, status) {
+		                alert(xhr + " : " + status);
+		            }
+		        }); // $.ajax */
+				return false;
+			}
+		</script>
 	
 		</body>
 </html>

@@ -71,7 +71,7 @@
     				"<span class='notice_close' onclick='noticeClose("+noticeBean.getNotice_id()+")'>&times;</span>"; break;
     		case 12: noticeContent = "<a href='"+noticeBean.getNotice_url()+"'>"+from_id+"님과의 프로젝트 계약을 취소하였습니다.</a>"+
     				"<span class='notice_close' onclick='noticeClose("+noticeBean.getNotice_id()+")'>&times;</span>"; break;
-    		case 13: noticeContent = "<a href='"+noticeBean.getNotice_url()+"'>"+from_id+"님의 프로젝트가 완료되었습니다.</a>"+
+    		case 13: noticeContent = "<a href='"+noticeBean.getNotice_url()+"'>"+from_id+"님의 프로젝트가 완료되었습니다. 여기를 눌러서 리뷰를 남겨보세요</a>"+
     				"<span class='notice_close' onclick='noticeClose("+noticeBean.getNotice_id()+")'>&times;</span>"; break;
     		case 14: noticeContent = "<a href='"+noticeBean.getNotice_url()+"'>"+from_id+"님과의 프로젝트가 완료되었습니다.</a>"+
     				"<span class='notice_close' onclick='noticeClose("+noticeBean.getNotice_id()+")'>&times;</span>"; break;
@@ -129,7 +129,7 @@
     				"<span class='notice_close' onclick='noticeClose("+noticeBean.getNotice_id()+")'>&times;</span>"; break;
     		case 12: noticeContent = "<a href='"+noticeBean.getNotice_url()+"'>"+from_id+"님과의 프로젝트 계약을 취소하였습니다.</a>"+
     				"<span class='notice_close' onclick='noticeClose("+noticeBean.getNotice_id()+")'>&times;</span>"; break;
-    		case 13: noticeContent = "<a href='"+noticeBean.getNotice_url()+"'>"+from_id+"님의 프로젝트가 완료되었습니다.</a>"+
+    		case 13: noticeContent = "<a href='"+noticeBean.getNotice_url()+"'>"+from_id+"님의 프로젝트가 완료되었습니다. 여기를 눌러서 리뷰를 남겨보세요</a>"+
     				"<span class='notice_close' onclick='noticeClose("+noticeBean.getNotice_id()+")'>&times;</span>"; break;
     		case 14: noticeContent = "<a href='"+noticeBean.getNotice_url()+"'>"+from_id+"님과의 프로젝트가 완료되었습니다.</a>"+
     				"<span class='notice_close' onclick='noticeClose("+noticeBean.getNotice_id()+")'>&times;</span>"; break;

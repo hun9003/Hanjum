@@ -104,6 +104,7 @@ public class NoticeProService {
 	// 갯수 띄우기
 	public int getNoticeCount(String user_id) {
 		int count = noticeDAO.getNoticeCount(user_id);
+		close(con);
 		return count;
 	}
 	

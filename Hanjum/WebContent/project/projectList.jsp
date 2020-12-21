@@ -244,13 +244,23 @@
 									}
 									
 								}
-								
+								String project_status = "";
+								switch(project.getBoard_creator_status()){
+								case 0: project_status = "모집중"; break;
+								case 1: project_status = "진행중"; break;
+								case 2: project_status = "완료"; break;
+								default: project_status = "모집중"; break;
+								}
 								%>
     		
        <div id="item-<%=i %>" data-href="<%=contentUrl%>?page=<%=nowPage %>&board_id=<%=project.getBoard_id()%>" class="col-md-6 d-flex align-items-stretch ftco-animate" style="cursor: pointer;" onclick="forward('<%=i%>','<%=isLogin%>')">
           <div class="project-wrap">
           	<div class="project-profile">
-          	<span class="status">모집중</span>
+          	<span class="status" <%if(project.getBoard_creator_status()==1){%>
+	          	style="background-color: #8b00ff;"
+	          	<%} else if(project.getBoard_creator_status()==2){%>
+	          	style="background-color: #008000;"
+	          	<%} %>><%=project_status %></span>
              <span id="item-img<%=i %>" class="img item-link"style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); background-image: url(images/work-1.jpg); border-radius: 50%; width:150px; height:150px;margin:0 auto;">
             </span>
           	</div>

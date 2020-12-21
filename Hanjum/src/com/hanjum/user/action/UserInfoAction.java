@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.hanjum.action.Action;
+import com.hanjum.notice.service.NoticeProService;
 import com.hanjum.user.service.UserProService;
 import com.hanjum.user.vo.EditorBean;
 import com.hanjum.user.vo.UserBean;
@@ -22,6 +23,9 @@ public class UserInfoAction implements Action {
 		UserBean userBean = userInfoService.getUserInfo(user_id);
 		request.setAttribute("userBean", userBean);
 
+		NoticeProService noticeProService = new NoticeProService();
+		int noticeCount = noticeProService.getNoticeCount(user_id);
+		request.setAttribute("noticeCount", noticeCount);
 		if(userBean != null) {
 			forward = new ActionForward();
 			forward.setPath("user/userInfo.jsp");

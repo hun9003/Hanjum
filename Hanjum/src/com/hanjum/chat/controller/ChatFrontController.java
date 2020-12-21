@@ -13,6 +13,7 @@ import com.hanjum.action.Action;
 import com.hanjum.chat.action.ChatDeleteFormAction;
 import com.hanjum.chat.action.ChatDeleteProAction;
 import com.hanjum.chat.action.ChatInfoAction;
+import com.hanjum.chat.action.ChatInnerAction;
 import com.hanjum.chat.action.ChatListAction;
 import com.hanjum.chat.action.ChatWriteProAction;
 import com.hanjum.vo.ActionForward;
@@ -84,6 +85,13 @@ public class ChatFrontController extends HttpServlet {
 			}	
 		} else if(commend.equals("/ChatContent.ch")) {
 			action = new ChatInfoAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(commend.equals("/ChatInner.ch")) {
+			action = new ChatInnerAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {

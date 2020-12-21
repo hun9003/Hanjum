@@ -126,7 +126,6 @@ public class NoticeDAO {
 		System.out.println("DAO - getNoticeList()");
 
 		ArrayList<NoticeBean> list = new ArrayList<NoticeBean>();
-		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = null;

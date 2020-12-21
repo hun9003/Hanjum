@@ -88,6 +88,7 @@ public class ChatDAO {
 	//===============================SELECT========================================
 	//	chat 내용조회
 	public ArrayList<ChatBean> selectListCount(int board_id) {
+		System.out.println("selectListCount()");
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
@@ -162,10 +163,12 @@ public class ChatDAO {
 		ResultSet rs = null;
 		try {
 			String sql = "SELECT b.board_id, b.board_subject, c.chat_to_id, c.chat_from_id, c.chat_content, c.chat_date FROM board b "
-					+ "JOIN  (SELECT * FROM chat WHERE chat_to_id = ? ORDER BY chat_date DESC LIMIT 1000000) c "
+					+ "JOIN  (SELECT * FROM chat WHERE chat_to_id = ? OR chat_from_id = ? ORDER BY chat_date DESC LIMIT 1000000) c "
 					+ "ON c.board_id = b.board_id "
 					+ "GROUP BY b.board_id"; 
 			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, user_id);
+			pstmt.setString(2, user_id);
 			rs = pstmt.executeQuery();
 			list = new ArrayList<ChatListBean>();
 			ChatListBean chatListBean = null;
@@ -177,6 +180,7 @@ public class ChatDAO {
 				chatListBean.setChat_date(rs.getTimestamp("chat_date"));
 				chatListBean.setUser_id("chat_to_id");
 				chatListBean.setFrom_id(rs.getString("chat_from_id"));
+				list.add(chatListBean);
 			}
 		} catch (Exception e) {
 			System.out.println("selectChatList() 오류 - "+ e.getMessage());

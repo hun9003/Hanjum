@@ -13,7 +13,7 @@ import com.hanjum.chat.vo.ChatListBean;
 public class ChatListService {
 
 	public ArrayList<ChatBean> getListCount(int board_id) throws Exception {
-		
+		System.out.println("ChatListService - getListCount()");
 		int listCount = 0;
 		ArrayList<ChatBean> list = new ArrayList<ChatBean>();
 		

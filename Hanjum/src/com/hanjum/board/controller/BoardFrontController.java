@@ -17,7 +17,10 @@ import com.hanjum.board.action.EditorSearchListAction;
 import com.hanjum.board.action.EditorUpdateAction;
 import com.hanjum.board.action.EditorUpdateProAction;
 import com.hanjum.board.action.EditorWriteProAction;
+import com.hanjum.board.action.ProjectApplyCancleProAction;
 import com.hanjum.board.action.ProjectApplyProAction;
+import com.hanjum.board.action.ProjectContractCancleProAction;
+import com.hanjum.board.action.ProjectContractSuccessProAction;
 import com.hanjum.board.action.ProjectDeleteProAction;
 import com.hanjum.board.action.ProjectInfoAction;
 import com.hanjum.board.action.ProjectListAction;
@@ -93,6 +96,15 @@ public class BoardFrontController extends HttpServlet {
 			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
 		} else if(command.equals("/ProjectApplyPro.bo")) { // 편집자 검색 리스트 액션
 			action = new ProjectApplyProAction();
+			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
+		} else if(command.equals("/ProjectApplyCanclePro.bo")) { // 편집자 검색 리스트 액션
+			action = new ProjectApplyCancleProAction();
+			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
+		} else if(command.equals("/ProjectContractCanclePro.bo")) { // 편집자 검색 리스트 액션
+			action = new ProjectContractCancleProAction();
+			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
+		} else if(command.equals("/ProjectContractSuccessPro.bo")) { // 편집자 검색 리스트 액션
+			action = new ProjectContractSuccessProAction();
 			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
 		}
 		

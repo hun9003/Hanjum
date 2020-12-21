@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.hanjum.chat.vo.ChatListBean"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -19,18 +20,22 @@
 <div class="chat_room">
 <%
 	ArrayList<ChatListBean> list = (ArrayList<ChatListBean>)request.getAttribute("list");
-	if(list != null){
+	if(list != null && list.size() > 0){
 		for(int i = 0; i < list.size(); i++){
 			ChatListBean chatListBean = list.get(i);
+			SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH:mm");
+			String date = sdf.format(chatListBean.getChat_date());
 %>
 
 	<div class="chat_room_item p-2" id="ch<%=chatListBean.getBoard_id()%>">
 		<p class="chat_subject"><%=chatListBean.getBoard_subject() %></p>
 		<span class="chat_msg"><%=chatListBean.getChat_content() %></span>
-		<span class="chat_date"><%=chatListBean.getChat_date() %></span>
+		<span class="chat_date"><%=date %></span>
 	</div>
 <%
 		}
+	} else {
+		%>개설된 채팅방이 없습니다.<%
 	}
 %>
 </div>
@@ -43,11 +48,12 @@
 </div>
 <script type="text/javascript">
 	$(document).click(function(){
-		$(".chat_room_item").click(function(){
+		$(document).on('click', ".chat_room_item", function(){
 			var board_id = $(this).attr("id").replace("ch","");
-			$("#chat_content").empty();
 			$("#chat_content").load("ChatContent.ch?board_id="+board_id);
-		})
+			$('.chat_side').css('width','0px');
+			$('.chat_content').css('width','100%');
+		});
 	})
 </script>
 </body>

@@ -396,8 +396,9 @@ public class ContractDAO {
 		System.out.println("ContractDAO - updateStatus()");
 		int updateCount = 0;
 		PreparedStatement pstmt = null;
+		
 		try {
-			String sql = "UPDATE contract SET contract_status = ? WHERE board_id = ?";
+			String sql = "UPDATE contract SET contract_status = ? WHERE board_id = ? AND contract_status != 4";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, contract_status);
 			pstmt.setInt(2, board_id);
@@ -469,7 +470,7 @@ public class ContractDAO {
 				contractBean.setContract_end_date(rs.getTimestamp("contract_end_date"));
 				contractBean.setContract_price(rs.getInt("contract_price"));
 				contractBean.setContract_status(rs.getInt("contract_status"));
-				
+				contractBean.setBoard_id(rs.getInt("board_id"));
 			}
 		} catch (Exception e) {
 			System.out.println("selectContractInfo 오류 - "+e.getMessage());
@@ -480,5 +481,31 @@ public class ContractDAO {
 		}
 		return contractBean;
 		
+	}
+	
+	public int checkSuccessEditor(String editor_id, String creator_id) {
+		System.out.println("ContractDAO - checkSuccessEditor");
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int check = 0;
+		try {
+			String sql = "SELECT count(contract_id) FROM contract WHERE contract_editor = ? AND contract_creator = ? AND contract_status = 3";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, editor_id);
+			pstmt.setString(2, creator_id);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				if(rs.getInt(1)>0) {
+					check = 1;
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("checkSuccessEditor - 오류 "+e.getMessage());
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		return check;
 	}
 }
