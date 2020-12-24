@@ -81,7 +81,7 @@
 			}
 			%>
 	        </p>
-			<span class="review_from_id"><%=reviewBean.getReview_form_id() %></span>
+			<span class="review_from_id"><%=reviewBean.getReview_from_id() %></span>
 			<span class="review_score"></span>
 			</div>		
 			<div class="review_content">
@@ -96,7 +96,7 @@
 				<div class="review_col_content">소통 <span class="float-r m-r-10"><progress value="<%=reviewBean.getReview_communication()%>" max="10"></progress></span></div>
 				<div class="review_col_content txt-right">
 				<%
-				if(reviewBean.getReview_form_id().equals(userBean.getUser_id())){
+				if(reviewBean.getReview_from_id().equals(userBean.getUser_id())){
 				%>
 				<input type="button" class="btn btn-primary reviewUpdateBtn" value="수정" id="update<%=articleList.get(i).getReview_id() %>" />
 				<input type="button" class="btn btn-white" value="삭제" onclick="ajaxdelete()" />

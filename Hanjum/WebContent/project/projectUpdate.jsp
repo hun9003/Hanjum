@@ -137,10 +137,10 @@ if(project != null){
 		<div class="form-group">
         	<label class="label has-focus label-primary">파일의 전달방식</label>
 			<div class="check_list"><input type="radio" id="OriTransfer1" name="board_creator_ori_transfer" value="1" <%if(project.getBoard_creator_ori_transfer() == 1){%>checked<%} %>><span class="checkbox">이메일</span></div>
-			<div class="check_list"><input type="radio" id="OriTransfer2" name="board_creator_ori_transfer" value="2" <%if(project.getBoard_creator_ori_transfer() == 1){%>checked<%} %>><span class="checkbox">웹하드</span></div>
-			<div class="check_list"><input type="radio" id="OriTransfer3" name="board_creator_ori_transfer" value="3" <%if(project.getBoard_creator_ori_transfer() == 1){%>checked<%} %>><span class="checkbox">NAS</span></div>
-			<div class="check_list"><input type="radio" id="OriTransfer4" name="board_creator_ori_transfer" value="4" <%if(project.getBoard_creator_ori_transfer() == 1){%>checked<%} %>><span class="checkbox">SMS</span></div>
-			<div class="check_list"><input type="radio" id="OriTransfer5" name="board_creator_ori_transfer" value="5" <%if(project.getBoard_creator_ori_transfer() == 1){%>checked<%} %>><span class="checkbox">직접전달</span></div>
+			<div class="check_list"><input type="radio" id="OriTransfer2" name="board_creator_ori_transfer" value="2" <%if(project.getBoard_creator_ori_transfer() == 2){%>checked<%} %>><span class="checkbox">웹하드</span></div>
+			<div class="check_list"><input type="radio" id="OriTransfer3" name="board_creator_ori_transfer" value="3" <%if(project.getBoard_creator_ori_transfer() == 3){%>checked<%} %>><span class="checkbox">NAS</span></div>
+			<div class="check_list"><input type="radio" id="OriTransfer4" name="board_creator_ori_transfer" value="4" <%if(project.getBoard_creator_ori_transfer() == 4){%>checked<%} %>><span class="checkbox">SMS</span></div>
+			<div class="check_list"><input type="radio" id="OriTransfer5" name="board_creator_ori_transfer" value="5" <%if(project.getBoard_creator_ori_transfer() == 5){%>checked<%} %>><span class="checkbox">직접전달</span></div>
 		</div>
 		<div class="form-group">
             <label class="label has-focus label-primary">예상 단가</label>

@@ -28,6 +28,7 @@ import com.hanjum.user.action.UserUpdateProAction;
 import com.hanjum.user.service.UserProService;
 import com.hanjum.user.action.EditAction;
 import com.hanjum.user.action.UserCheckIdAction;
+import com.hanjum.user.action.UserContractListAction;
 import com.hanjum.user.action.UserDeleteProAction;
 import com.hanjum.user.action.UserInfoAction;
 import com.hanjum.user.action.UserInfoMyAction;
@@ -322,6 +323,26 @@ public class UserFrontController extends HttpServlet {
 			}
 		} else if (command.equals("/UserPhotoUpdate.uo")) {
 			action = new UserPhotoUploadAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/UserConstract.uo")) {
+			action = new UserContractListAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/UserDeleteForm.uo")) { //회원탈퇴
+			// 바로 View로 포워딩 실행
+			forward = new ActionForward(); 
+			forward.setPath("/user/userDeleteForm.jsp"); 
+			
+		}
+		else if (command.equals("/UserDeletePro.uo")) { //회원탈퇴
+			action = new UserDeleteProAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {

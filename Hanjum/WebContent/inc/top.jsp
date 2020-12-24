@@ -16,7 +16,7 @@
          <li class="nav-item <%if(request.getServletPath().contains("user")){ %>active<% } %>"><a href="My.uo" class="nav-link">My</a></li>
          <li class="nav-item <%if(request.getServletPath().contains("project")){ %>active<% } %>"><a href="ProjectList.bo" class="nav-link">Project</a></li>
          <li class="nav-item <%if(request.getServletPath().contains("editor")){ %>active<% } %>"><a href="EditorList.bo" class="nav-link">Editor</a></li>
-         <li class="nav-item <%if(request.getServletPath().contains("help")){ %>active<% } %>"><a href="help.hp" class="nav-link">Contact</a></li>
+         <li class="nav-item <%if(request.getServletPath().contains("center")){ %>active<% } %>"><a href="Center.hp" class="nav-link">Center</a></li>
      </ul>
  </div>
 </div>

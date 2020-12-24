@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.hanjum.action.Action;
 import com.hanjum.review.service.ReviewService;
 import com.hanjum.review.vo.ReviewBean;
+import com.hanjum.user.service.UserProService;
 import com.hanjum.vo.ActionForward;
 
 
@@ -18,9 +19,7 @@ public class reviewDeleteProAction implements Action {
 	
 		ActionForward forward = null;
 		System.out.println("reviewDeleteAction");
-		ReviewBean reviewBean = new ReviewBean();
-		int review_id = reviewBean.getReview_id();
-//		int review_id = Integer.parseInt(request.getParameter("review_id"));
+		int review_id = Integer.parseInt(request.getParameter("review_id"));
 		String review_form_id = request.getParameter("review_form_id");
 		
 		ReviewService reviewService = new ReviewService();
@@ -49,6 +48,15 @@ public class reviewDeleteProAction implements Action {
 				out.println("history.back()");
 				out.println("</script>");
 			} else { 
+				reviewService = new ReviewService();
+				ReviewBean reviewBean = reviewService.getArticle(review_id);
+				
+				reviewService = new ReviewService();
+				int avg = reviewService.getReviewAvg(reviewBean.getUser_id());
+				
+				UserProService userProService = new UserProService();
+				userProService.updateScore(reviewBean.getUser_id(), avg);
+				
 				forward = new ActionForward();
 				forward.setPath(
 						"ReviewList.rv?page=" + request.getParameter("page"));

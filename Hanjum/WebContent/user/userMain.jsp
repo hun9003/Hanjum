@@ -17,6 +17,7 @@
         	case "chat": frUrl="ChatListPro.ch"; pageSubject="채팅"; break;
         	case "info": frUrl="UserMyInfo.uo"; pageSubject="내 정보"; break;
         	case "constract": frUrl="UserConstract.uo"; pageSubject="계약 관리"; break;
+        	case "leave": frUrl="UserDeleteForm.uo"; pageSubject="회원 탈퇴"; break;
         	}
         }
     } else {
@@ -64,6 +65,7 @@
 	<link rel="stylesheet" href="css/flaticon.css">
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/member.css">
+	<link rel="stylesheet" href="css/util.css">
 	<style type="text/css">
 		.form-group-content:hover > .edit {display: inline-block;}
 	</style>
@@ -103,6 +105,7 @@
 				<div class="col-md-9 d-flex align-items-stretch ftco-animate member_menu" id="form_user_constrat"><a href="My.uo?fr=constract" class="member-menu nav-link <%if(fr.equals("constract")){%>active<%}%>">계약 관리</a></div>
 				<div class="col-md-9 d-flex align-items-stretch ftco-animate member_menu" id="form_user_chat"><a href="My.uo?fr=chat" class="member-menu nav-link <%if(fr.equals("chat")){%>active<%}%>">채팅</a></div>
 				<div class="col-md-9 d-flex align-items-stretch ftco-animate member_menu" id="form_join_user"><a href="Logout.uo" class="member-menu nav-link">로그아웃</a></div>
+				<div class="col-md-9 d-flex align-items-stretch ftco-animate member_menu" id="form_user_leave"><a href="My.uo?fr=leave" class="member-menu nav-link <%if(fr.equals("leave")){%>active<%}%>" style="color:#FF0000;">회원탈퇴</a></div>
 				<%
 				}
 				%>

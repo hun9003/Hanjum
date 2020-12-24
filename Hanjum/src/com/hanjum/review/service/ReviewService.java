@@ -147,7 +147,18 @@ public class ReviewService {
 		close(con);
 		return check;
 	}
-
+	
+	public int getReviewAvg(String user_id) {
+		System.out.println("getReviewAvg 서비스");
+		Connection con = getConnection();
+		
+		ReviewDAO reviewDAO = ReviewDAO.getInstance();
+		reviewDAO.setConnection(con);
+		int avg = reviewDAO.getReviewAvg(user_id);
+		
+		close(con);
+		return avg;
+	}
 }
 	
 

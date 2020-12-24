@@ -25,7 +25,7 @@ public class ProjectUpdateAction implements Action {
 		if(request.getParameter("board_id") != null) {
 			board_id = Integer.parseInt(request.getParameter("board_id"));
 		}
-		int nowPage = Integer.parseInt(request.getParameter("page"));
+		String nowPage = request.getParameter("page");
 		
 		HttpSession session = request.getSession();
 		UserBean userSession = (UserBean)session.getAttribute("userBean");

@@ -17,8 +17,10 @@
 	default:
 		user_type = "관리자";
 	}
-	
-	
+	int successCount = 0;
+	if(request.getAttribute("successCount")!=null) {
+		successCount = Integer.parseInt(request.getAttribute("successCount")+"");
+	}
 	int noticeCount = (int)request.getAttribute("noticeCount");
 %>
 <!DOCTYPE html>
@@ -118,11 +120,6 @@ input[name=editor_status]:checked + .toggle_label:after { left:28px;}
              </div> 
              <div class="form-group">
 			 <span class="form-group-content">
-			 	진행중인 프로젝트 <span class="float-r m-r-10"><a data-href="#">0</a>건</span>
-			 </span>             
-             </div>
-             <div class="form-group">
-			 <span class="form-group-content">
 			 	포인트 <span class="float-r m-r-10"><a data-href="#">0</a> p</span>
 			 </span>             
              </div>
@@ -131,6 +128,17 @@ input[name=editor_status]:checked + .toggle_label:after { left:28px;}
 			 	Exp <span class="float-r m-r-10"><progress value="<%=userBean.getUser_lv_exp() %>" max="<%=userBean.getUser_level()*20 %>" title="경험치 <%=userBean.getUser_lv_exp() %> / <%=userBean.getUser_level()*20 %>"></progress></span>
 			 </span>             
              </div>
+             <%
+             if(request.getAttribute("successCount")!=null){
+            	 %>
+           	 <div class="form-group">
+			 <span class="form-group-content">
+			 	총 거래건수 <span class="float-r m-r-10"><a data-href="#"><%=successCount %></a>건</span>
+			 </span>             
+             </div>
+            	 <%
+             }
+             %>
              <%
              if(editorInfo != null){
             	 int readyStatus = 0;
@@ -222,6 +230,18 @@ input[name=editor_status]:checked + .toggle_label:after { left:28px;}
              <div id="portfolioArea">
 <!--                포트폴리오 공간              -->
              </div>
+            	 <%
+             } else { 
+            	 %>
+            	 <div class="form-group">
+				 <span class="form-group-content">
+				 	<span class="float-r m-r-10">
+				 	
+				 	<a href="My.uo?fr=info" class="m-l-10">회원정보 더보기</a>
+		             
+				 	</span>
+				 </span>             
+	             </div>
             	 <%
              }
              %>

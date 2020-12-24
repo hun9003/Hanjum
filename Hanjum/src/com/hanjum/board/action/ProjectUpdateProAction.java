@@ -61,7 +61,7 @@ public class ProjectUpdateProAction implements Action {
 		projectBean.setBoard_creator_cre_ref(ref);
 		projectBean.setBoard_creator_cre_min_price(Integer.parseInt(request.getParameter("board_creator_cre_min_price")));
 		projectBean.setBoard_creator_cre_max_price(Integer.parseInt(request.getParameter("board_creator_cre_max_price")));
-		projectBean.setBoard_creator_status(1);
+		projectBean.setBoard_creator_status(0);
 		
 		ProjectProService projectProService = new ProjectProService();
 		isSuccess = projectProService.modifyProject(projectBean);

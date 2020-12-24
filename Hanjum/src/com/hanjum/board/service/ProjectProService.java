@@ -107,6 +107,7 @@ public class ProjectProService {
 		} else {
 			rollback(con);
 		}
+		close(con);
 		return isSuccess;
 	}
 	
@@ -144,6 +145,7 @@ public class ProjectProService {
 		} else {
 			rollback(con);
 		}
+		close(con);
 		return isSuccess;
 	}
 	// DELETE ===================================================================================

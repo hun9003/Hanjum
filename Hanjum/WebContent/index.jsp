@@ -85,11 +85,27 @@
     if(request.getAttribute("projectGenreCount") != null){
     	
     	genreCount = (HashMap<String, Integer>)request.getAttribute("projectGenreCount");
-   
+   		
 	    for(int i = 0; i < genreCount.size(); i++){
+	    	String imgUrl = "";
+	    	String genreUrl = "ProjectListSearch.bo";
+	    	switch (genreCount.keySet().toArray()[i]+""){
+	    	case "유튜브" : imgUrl = "images/bg_youtube.jpg";
+	    				  genreUrl += "?board_creator_genre=1"; break;  
+	    	case "홍보영상" : imgUrl = "images/bg_promotion.jpg";
+	    				  genreUrl += "?board_creator_genre=2"; break;   
+	    	case "광고" : imgUrl = "images/bg_ad.jpg";
+	    				  genreUrl += "?board_creator_genre=3"; break;   
+	    	case "드라마" : imgUrl = "images/bg_drama.jpg";
+	    				  genreUrl += "?board_creator_genre=5"; break;   
+	    	case "모션그래픽" : imgUrl = "images/bg_motion.jpg";
+	    				  genreUrl += "?board_creator_genre=6"; break;  
+	    	default : imgUrl = "images/work-1.jpg";
+	    				  genreUrl += "?board_creator_genre=7";  
+	    	}
 	    %>
 	     <div class="col-md-3 col-lg-2">
-	        <a href="#" class="course-category img d-flex align-items-center justify-content-center" style="background-image: url(images/work-1.jpg);">
+	        <a href="<%=genreUrl %>" class="course-category img d-flex align-items-center justify-content-center" style="background-image: url(<%=imgUrl%>);">
 	           <div class="text w-100 text-center font-weight-bold">
 	              <h3><%=genreCount.keySet().toArray()[i] %></h3>
 	              <span><%=genreCount.values().toArray()[i] %> 개의 프로젝트</span>
@@ -311,16 +327,33 @@
         	ArrayList<EditorBean> editorList = (ArrayList<EditorBean>)request.getAttribute("editorList");
 	        for(int i = 0; i < editorList.size(); i++){
 	        	EditorBean editorBean = editorList.get(i);
+    	    	int score = editorBean.getUser_score(); 
 	        %>
 	          <div id="edItem-<%=i %>" data-href="Editor.bo?board_id=<%=editorBean.getBoard_id()%>" class="item" style="cursor: pointer;" onclick="forwardEd('<%=i %>','<%=isLogin %>')">
 	            <div class="testimony-wrap py-4">
 	              <div class="text">
 	                 <p class="star">
-	                    <span class="fa fa-star"></span>
-	                    <span class="fa fa-star"></span>
-	                    <span class="fa fa-star"></span>
-	                    <span class="fa fa-star"></span>
-	                    <span class="fa fa-star"></span>
+	                    <%
+			for(int j = 0; j < 5; j++){
+				if(score-2<0){ // 점수에서 2점을 뺄때 0보다 낮으면 판별시작 그외에는 1개 출력후 2빼기
+					if(score-1<0){ // 반개도 못채울경우 0개 출력
+					%>
+	            <span class="fa fa-star-o"></span> 
+					<%
+					} else { // 1점이라도 남아있으면 반개 출력후 1 빼기
+					score -= 1;
+					%>	
+				<span class="fa fa-star-half-o"></span>
+					<%
+					}
+				} else { // 2점 남아있으면 1개 출력후 2 빼기
+					%>
+				<span class="fa fa-star"></span>	
+					<%
+					score -= 2;
+				}
+			}
+			%>
 	                </p>
 	                <p class="mb-4 text" style="height: 144px; color:#212529;"><%=editorBean.getBoard_subject() %></p>
 	                <div class="d-flex align-items-center">

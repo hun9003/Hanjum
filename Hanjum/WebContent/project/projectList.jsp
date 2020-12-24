@@ -261,7 +261,7 @@
 	          	<%} else if(project.getBoard_creator_status()==2){%>
 	          	style="background-color: #008000;"
 	          	<%} %>><%=project_status %></span>
-             <span id="item-img<%=i %>" class="img item-link"style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); background-image: url(images/work-1.jpg); border-radius: 50%; width:150px; height:150px;margin:0 auto;">
+             <span id="item-img<%=i %>" class="img item-link"style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); background-image: url(images/no-profile.png); border-radius: 50%; width:150px; height:150px;margin:0 auto;">
             </span>
           	</div>
             <div class="text p-4">

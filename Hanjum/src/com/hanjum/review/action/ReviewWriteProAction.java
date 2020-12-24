@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import com.hanjum.action.Action;
 import com.hanjum.review.service.ReviewService;
 import com.hanjum.review.vo.ReviewBean;
+import com.hanjum.user.service.UserProService;
 import com.hanjum.user.vo.UserBean;
 import com.hanjum.vo.ActionForward;
 
@@ -36,8 +37,14 @@ public class ReviewWriteProAction implements Action {
 		reviewBean.setUser_id(request.getParameter("writer_id"));
 		
 		
-		ReviewService reviewWriteService = new ReviewService();
-		boolean isWriteSuccess = reviewWriteService.rigisterWriter(reviewBean);
+		ReviewService reviewService = new ReviewService();
+		boolean isWriteSuccess = reviewService.rigisterWriter(reviewBean);
+		
+		reviewService = new ReviewService();
+		int avg = reviewService.getReviewAvg(request.getParameter("writer_id"));
+		
+		UserProService userProService = new UserProService();
+		userProService.updateScore(request.getParameter("writer_id"), avg);
 		
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();

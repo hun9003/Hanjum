@@ -76,7 +76,6 @@ public class NoticeMatchAction implements Action {
 			projectProService = new ProjectProService();
 			isSuccess = projectProService.dropWaiting(noticeInfo.getBoard_id()); // 대기열 다 삭제
 		}
-
 		if (isSuccess) {
 			UserProService userProService = new UserProService();
 			UserBean editorInfo = userProService.getUserInfo(noticeInfo.getNotice_from_id());

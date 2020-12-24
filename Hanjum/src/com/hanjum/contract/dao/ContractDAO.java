@@ -195,7 +195,7 @@ public class ContractDAO {
 
 			// 날짜 선택에 따른 조건문 추가
 			if(csb.getDate_check().equals("on")) {
-				sql = sql.concat("AND contract_begin_date >= ");
+				sql = sql.concat(" AND contract_begin_date >= ");
 				sql = sql.concat("'" + csb.getSearch_begin_date() + "' " );
 				sql = sql.concat("AND contract_end_date <= ");
 				sql = sql.concat("'" + csb.getSearch_end_date() + "' " );
@@ -507,5 +507,29 @@ public class ContractDAO {
 			close(rs);
 		}
 		return check;
+	}
+	
+	public int getContractSuccessCount(String user_id) {
+		System.out.println("ContractDAO - getContractSuccessCount");
+		int count = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			String sql = "SELECT COUNT(contract_id) FROM contract WHERE contract_editor = ? OR contract_creator = ? AND contract_status = 3";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, user_id);
+			pstmt.setString(2, user_id);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			System.out.println("getContractSuccessCount - 오류 "+e.getMessage());
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		return count;
 	}
 }

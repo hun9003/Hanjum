@@ -1,3 +1,4 @@
+<%@page import="com.hanjum.board.vo.BoardBean"%>
 <%@page import="com.hanjum.user.vo.UserBean"%>
 <%@page import="com.hanjum.board.vo.ProjectBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -257,7 +258,7 @@
         <div class="form-group d-flex justify-content-end mt-4">
         <%
         if(userBean != null){
-	        if(userBean.getUser_id().equals(project.getUser_id())){
+	        if(userBean.getUser_id().equals(project.getUser_id()) && project.getBoard_creator_status() == 0){
 	        %>
 	        <a class="btn btn-primary submit m-r-10" type="button" id="UpdateBtn" href="ProjectUpdate.bo?page=<%=nowPage%>&board_id=<%=project.getBoard_id()%>">수정하기</a> 
 			<a class="btn btn-light submit m-r-10" type="button" id="DeleteBtn" href = 'ProjectDeletePro.bo?board_id=<%=project.getBoard_id()%>'>삭제하기</a>

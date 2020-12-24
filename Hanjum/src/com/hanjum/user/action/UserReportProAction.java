@@ -16,15 +16,15 @@ public class UserReportProAction implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ActionForward forward = null;
 		String user_id = request.getParameter("user_id");
-		String report_userId = request.getParameter("report_userid");
+		String report_from_user = request.getParameter("report_from_user");
 		int report_type = Integer.parseInt(request.getParameter("report_type"));
 		String report_content = request.getParameter("report_content");
 		ReportBean reportBean = new ReportBean();
 		reportBean.setReport_content(report_content);
 		reportBean.setReport_type(report_type);
-		reportBean.setReport_userId(report_userId);
+		reportBean.setReport_userId(report_from_user);
 		reportBean.setUser_id(user_id);
-		if(user_id.equals(report_userId)) {
+		if(user_id.equals(report_from_user)) {
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter(); 
 			out.println("<script>"); // 자바스크립트 시작 태그

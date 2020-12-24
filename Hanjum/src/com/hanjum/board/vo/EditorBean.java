@@ -15,7 +15,13 @@ public class EditorBean extends BoardBean{
 	private String board_ed_content_detail;
 	private String board_ed_address;
 	private String board_ed_photo;
-	
+	private int user_score;
+	public int getUser_score() {
+		return user_score;
+	}
+	public void setUser_score(int user_score) {
+		this.user_score = user_score;
+	}
 	public String getBoard_ed_photo() {
 		return board_ed_photo;
 	}

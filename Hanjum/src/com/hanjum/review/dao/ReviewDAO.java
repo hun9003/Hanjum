@@ -304,4 +304,30 @@ private ReviewDAO() {}
 			}
 			return check;
 		}
+		
+		public int getReviewAvg(String user_id) { // 리뷰 점수 평균 구해주기
+			System.out.println("ReviewDAO - getReviewAvg");
+			int avg = 0;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			try {
+				String sql = "SELECT SUM((review_speciality + review_satisfaction + review_positivity + review_communication)/4)/count(review_id) " + 
+						"FROM review WHERE user_id = ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, user_id);
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					avg = rs.getInt(1);
+				}
+				
+			} catch (Exception e) {
+				System.out.println("getReviewAvg 오류 - "+e.getMessage());
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+				close(rs);
+			}
+			
+			return avg;
+		}
 }

@@ -10,7 +10,7 @@ import com.hanjum.action.Action;
 import com.hanjum.board.service.BoardProService;
 import com.hanjum.board.service.EditorProService;
 import com.hanjum.board.vo.EditorBean;
-import com.hanjum.contract.service.ContractCheckSuccessService;
+import com.hanjum.contract.service.ContractGetSuccessCount;
 import com.hanjum.review.service.ReviewService;
 import com.hanjum.user.service.UserProService;
 import com.hanjum.user.vo.PortfolioBean;
@@ -41,6 +41,9 @@ public class EditorInfoAction implements Action {
 		ArrayList<PortfolioBean> portfolioList = userProService.getPortfolioList(user_id);
 		request.setAttribute("portfolioList", portfolioList);
 		
+		ContractGetSuccessCount getSuccessService = new ContractGetSuccessCount();
+		int successCount = getSuccessService.getSuccessCount(user_id);
+		request.setAttribute("successCount", successCount);
 		
 		forward = new ActionForward();
 		forward.setPath("/editor/editorContent.jsp");

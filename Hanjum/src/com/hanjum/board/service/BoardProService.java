@@ -31,6 +31,7 @@ public class BoardProService {
 	public int getBoardLastId() { // board_id 새 번호 호출
 		System.out.println("BoardProService - getBoardLastId()");
 		int board_id = boardDAO.selectBoardLastId();
+		close(con);
 		return board_id;
 	}
 	

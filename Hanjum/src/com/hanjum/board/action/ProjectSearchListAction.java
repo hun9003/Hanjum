@@ -36,16 +36,16 @@ public class ProjectSearchListAction implements Action {
 		String oriLength = Arrays.toString(request.getParameterValues("board_creator_ori_length")).replaceAll("[\\[\\] ]", "");;
 		String editLength = Arrays.toString(request.getParameterValues("board_creator_edit_length")).replaceAll("[\\[\\] ]", "");;
 		String transfer = Arrays.toString(request.getParameterValues("board_creator_ori_transfer")).replaceAll("[\\[\\] ]", "");;
-		if(genre != "null" && genre != "") {search.put("genre",genre);}
-		if(price_n != "null" && price_n != "") {search.put("price_n",price_n);}
-		if(price_x != "null" && price_x != "") {search.put("price_x",price_x);}
-		if(keyword != "null" && keyword != "") {search.put("keyword",keyword);}
-		if(recording != "null" && recording != "") {search.put("recording",recording);}
-		if(camnum != "null" && camnum != "") {search.put("camnum",camnum);}
-		if(clipnum != "null" && clipnum != "") {search.put("clipnum",clipnum);}
-		if(oriLength != "null" && oriLength != "") {search.put("oriLength",oriLength);}
-		if(editLength != "null" && editLength != "") {search.put("editLength",editLength);}
-		if(transfer != "null" && transfer != "") {search.put("transfer",transfer);}
+		if(genre != "null" && genre != "" && genre != null) {search.put("genre",genre);}
+		if(price_n != "null" && price_n != "" && price_n != null) {search.put("price_n",price_n);}
+		if(price_x != "null" && price_x != "" && price_x != null) {search.put("price_x",price_x);}
+		if(keyword != "null" && keyword != "" && keyword != null) {search.put("keyword",keyword);}
+		if(recording != "null" && recording != "" && recording != null) {search.put("recording",recording);}
+		if(camnum != "null" && camnum != "" && camnum != null) {search.put("camnum",camnum);}
+		if(clipnum != "null" && clipnum != "" && clipnum != null) {search.put("clipnum",clipnum);}
+		if(oriLength != "null" && oriLength != "" && oriLength != null) {search.put("oriLength",oriLength);}
+		if(editLength != "null" && editLength != "" && editLength != null) {search.put("editLength",editLength);}
+		if(transfer != "null" && transfer != "" && transfer != null) {search.put("transfer",transfer);}
 		ProjectProService projectProService = new ProjectProService();
 		ArrayList<ProjectBean> list = new ArrayList<ProjectBean>();
 		int listCount = projectProService.getProjectSearchListCount(search);

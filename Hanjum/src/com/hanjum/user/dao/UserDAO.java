@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import static com.hanjum.db.JdbcUtil.*;
 
+import com.hanjum.contract.vo.ContractBean;
 import com.hanjum.user.exception.LoginException;
 import com.hanjum.user.vo.EditorBean;
 import com.hanjum.user.vo.PortfolioBean;
@@ -230,11 +231,150 @@ public class UserDAO {
 		return updateCount;
 	}
 	
-	public int deleteUser(UserBean userBean) {
-		System.out.println("UserDAO - deleteUser()");
-		int insertCount = 1;
-		return insertCount;
+	
+	
+	
+	// 정말로 삭제하시려면 비밀번호를 입력하세요 확인.
+	public int deleteCheck(String user_id, String user_pass) {
+		int checkCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select * from user where user_id=? and user_pass =?" ;
+		try {
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1,user_id);
+			pstmt.setString(2,user_pass);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				checkCount = 1;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		
+		
+		
+		return checkCount;
 	}
+	
+	
+	
+	
+	
+	// 저번에 만든Exception이 있어서 그냥 로그인이셉션으로 쓸게요 어자피 Delete를 만들어도 같은내용임
+	public void deleteUserWithBoard(String user_id) throws LoginException {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			// 우선 진행중인 프로젝트가 있는가 확인.
+			String sql = "select board_id from contract where (contract_editor=? or contract_creator=?) and contract_status=2";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, user_id);
+			pstmt.setString(2, user_id);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				// 값이 있다? = 진행중인 프로젝트가 있따
+				throw new LoginException("진행중인 프로젝트가 있는경우 탈퇴할 수 없습니다."); // 오류메세지 출력
+			} else {
+				// 값이 없다? = 진행중인 프로젝트는 없다 > id값에 해당되는 프로젝트 우선 조회
+				sql = "select * from contract where contract_editor=? or contract_creator=? ";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setString(1, user_id);
+				pstmt.setString(2, user_id);
+				rs=pstmt.executeQuery();
+				// 가져온 값이 있으면 while문 실행
+				while(rs.next()) {
+					String match = rs.getString("contract_editor");// if 가져온 값이 creator인지 editor인지 판별하는 변수
+					// status 꺼내서 가져온 contract의 진행상태를 확인
+					System.out.println(rs.getInt("board_id"));
+					int status = rs.getInt("contract_status");
+					System.out.println("상태:" +status);
+					switch (status) {
+					case 1:  // 1 (시작전) 이기때문에 걍 바로컷
+						if(match.equals(user_id)) { // editor(신청자) 아이디가 탈퇴하려는 사람 아이디일 경우 contract에서만 삭제
+							sql = "delete from contract where contract_id = " + rs.getString("contract_id");
+						}else { // creator(작성자) 아이디가 탈퇴하려는 사람 아이디일 경우 board_id(ON CASECADE DELETE)를 삭제
+							sql = "delete from board where board_id = "+ rs.getString("board_id");
+						}
+						break;
+					case 2: // 2 (진행중)의 경우는 위에서 이미 거르기때문에 있을 수가없음.
+						throw new LoginException("진행중인 프로젝트가 있는경우 탈퇴할 수 없습니다.");
+					case 3: 
+					case 4: // 3(완료) 또는 4(취소)된 정보이기 때문에 id값을 undefined(기존id) 로 변경 - 추후의 문제? 등 대응하는 정보 보관 목적을 위해
+						if(match.equals(user_id)) { // 해당 아뒤가 contract_editor 일경우
+							sql = "update contract set contract_editor='undefined(" + user_id + ")' where contract_id = " + rs.getString("contract_id");
+						}else { // 해당 아뒤가 contract_creator 일경우 해당 board에도 user_id 값이 있기 때문에 user_id값을 undefined로 변경
+							sql = "update board set user_id = 'undefined' where board_id = " + rs.getString("board_id");
+							pstmt = con.prepareStatement(sql);
+							pstmt.executeUpdate(); // 구문실행 
+							sql = "update contract set contract_creator='undefined(" + user_id + ")' where contract_id = " + rs.getString("contract_id");
+						}
+						break;
+					}
+					
+					// switch 문에서 정한 sql문을 가지고 실행
+					pstmt=con.prepareStatement(sql);
+					pstmt.executeUpdate();
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	// 찐으로 삭제 (User_id) 테이블을 참조하고있는 거의 모든 정보가 제거됨
+	public int deleteUser(String user_id, String user_pass) {
+		System.out.println("UserDAO - deleteUser()");
+		int deleteCount = 0;
+		PreparedStatement pstmt = null;
+		
+		
+		String sql = "delete from user where user_id=? and user_pass =?" ;
+		try {
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1,user_id);
+			pstmt.setString(2,user_pass);
+			deleteCount=pstmt.executeUpdate();
+			if(deleteCount > 0) {
+				// 리뷰 대상이 탈퇴할 경우에는 Delete User에서 자동으로 사라짐
+				sql = "update review set review_from_id = 'undefined' where review_from_id = ?"; // 리뷰어가 탈퇴할경우 = undefined로 id변경되고 리뷰는 남아있음
+				pstmt=con.prepareStatement(sql);
+				pstmt.setString(1, user_id);
+				pstmt.executeUpdate();
+				// 탈퇴한 채팅내역 id = undefined로 변경
+				sql = "update chat set chat_to_id = if(chat_to_id ='"+ user_id +"','undefined',chat_to_id),"
+						+ "chat_from_id = if(chat_from_id='"+ user_id +"','undefined',chat_from_id)";
+				System.out.println(sql);
+				pstmt=con.prepareStatement(sql);
+				pstmt.executeUpdate();
+			}
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		
+		
+		return deleteCount;
+	}
+	
+
 
 	public UserBean getUserInfo(String user_id) {
 		System.out.println("selectUserInfo - dao");
@@ -824,14 +964,14 @@ public class UserDAO {
 	
 	// 신고
 	public int userReport(ReportBean reportBean) {
-		System.out.println("UserDAO - insertUser() - user");
+		System.out.println("UserDAO - userReport() - user");
 		int insertCount = 0;
 		PreparedStatement pstmt = null;
 //		ResultSet rs = null;
 		
 		
 		try {
-			String sql = "insert into user_report(user_id,report_userid,report_type,report_content) values(?,?,?,?)";
+			String sql = "insert into user_report(report_id, user_id,report_from_user,report_type,report_content) values(null,?,?,?,?)";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setString(1, reportBean.getUser_id());
 			pstmt.setString(2, reportBean.getReport_userId());
@@ -1009,6 +1149,63 @@ public class UserDAO {
 			}
 			return updateCount;
 		}
-	
+		
+		public int updateScore(String user_id , int score) {
+			System.out.println("UserDAO - updatePhoto()");
+			PreparedStatement pstmt = null;
+			int updateCount = 0;
+			try {
+				String sql = "UPDATE user SET user_score = ? WHERE user_id = ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1,score);
+				pstmt.setString(2, user_id);
+				updateCount = pstmt.executeUpdate();
+			} catch (Exception e) {
+				System.out.println("updateScore() 오류! "+e.getMessage());
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+			return updateCount;
+
+		}
+
+		public ArrayList<ContractBean> getUserContractList(String user_id, int contract_status) {
+			System.out.println("UserDAO - updatePhoto()");
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			ArrayList<ContractBean> list = null;
+			try {
+				String sql = "SELECT * FROM contract WHERE contract_status = ? AND (contract_editor = ? OR contract_creator = ?)";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, contract_status);
+				pstmt.setString(2, user_id);
+				pstmt.setString(3, user_id);
+				rs = pstmt.executeQuery();
+				list = new ArrayList<ContractBean>();
+				while(rs.next()) {
+					ContractBean contractBean = new ContractBean();
+					contractBean.setBoard_id(rs.getInt("board_id"));
+					contractBean.setBoard_subject(rs.getString("contract_subject"));
+					contractBean.setContract_address(rs.getString("contract_address"));
+					contractBean.setContract_begin_date(rs.getTimestamp("contract_begin_date"));
+					contractBean.setContract_creator(rs.getString("contract_creator"));
+					contractBean.setContract_editor(rs.getString("contract_editor"));
+					contractBean.setContract_end_date(rs.getTimestamp("contract_end_date"));
+					contractBean.setContract_id(rs.getInt("contract_id"));
+					contractBean.setContract_price(rs.getInt("contract_price"));
+					contractBean.setContract_status(rs.getInt("contract_status"));
+					list.add(contractBean);
+				}
+				
+			}  catch (Exception e) {
+				System.out.println("updatePhoto() 오류! "+e.getMessage());
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+				close(rs);
+			}
+			return list;
+		}
 	
 }

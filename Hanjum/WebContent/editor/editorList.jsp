@@ -68,6 +68,7 @@
         	ArrayList<EditorBean> editorList = (ArrayList<EditorBean>)request.getAttribute("editorList");
 	        for(int i = 0; i < editorList.size(); i++){
 	        	EditorBean editorBean = editorList.get(i);
+	        	int score = editorBean.getUser_score();
 	        %>
 				<div id="edItem-<%=i %>" data-href="Editor.bo?board_id=<%=editorBean.getBoard_id()%>&page=<%=nowPage %>" class="col-md-6 col-lg-3 ftco-animate d-flex align-items-stretch" style="cursor: pointer;" onclick="forwardEd('<%=i %>','<%=isLogin %>')">
 					<div class="staff">
@@ -80,11 +81,27 @@
 							<div class="faded">
 								<p style="height: 80px; text-overflow: ellipsis;"><%=editorBean.getBoard_subject() %></p>
 								<p class="star">
-				                    <span class="fa fa-star"></span>
-				                    <span class="fa fa-star"></span>
-				                    <span class="fa fa-star"></span>
-				                    <span class="fa fa-star"></span>
-				                    <span class="fa fa-star"></span>
+				                    <%
+			for(int j = 0; j < 5; j++){
+				if(score-2<0){ // 점수에서 2점을 뺄때 0보다 낮으면 판별시작 그외에는 1개 출력후 2빼기
+					if(score-1<0){ // 반개도 못채울경우 0개 출력
+					%>
+	            <span class="fa fa-star-o"></span> 
+					<%
+					} else { // 1점이라도 남아있으면 반개 출력후 1 빼기
+					score -= 1;
+					%>	
+				<span class="fa fa-star-half-o"></span>
+					<%
+					}
+				} else { // 2점 남아있으면 1개 출력후 2 빼기
+					%>
+				<span class="fa fa-star"></span>	
+					<%
+					score -= 2;
+				}
+			}
+			%>
                 				</p>
 							</div>
 						</div>

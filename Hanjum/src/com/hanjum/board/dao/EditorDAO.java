@@ -34,7 +34,7 @@ public class EditorDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
-			String sql = "SELECT * FROM board_ed e JOIN board b ON e.board_id = b.board_id where b.user_id = ?";
+			String sql = "SELECT * FROM board_ed e JOIN board b ON e.board_id = b.board_id JOIN user u ON u.user_id = b.user_id where b.user_id = ?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, user_id);
 			rs = pstmt.executeQuery();
@@ -59,6 +59,7 @@ public class EditorDAO {
 				editorBean.setBoard_ed_solution(rs.getString("board_ed_solution"));
 				editorBean.setBoard_ed_upload(rs.getInt("board_ed_upload"));
 				editorBean.setBoard_ed_work(rs.getInt("board_ed_work"));
+				editorBean.setUser_score(rs.getInt("user_score"));
 			}
 		} catch (Exception e) {
 			System.out.println("selectProjectInfo() 오류! - " + e.getMessage());
@@ -231,7 +232,7 @@ public class EditorDAO {
 					+ "JOIN user u "
 					+ "ON b.user_id = u.user_id "
 					+ "WHERE ed.editor_status = 1 "
-					+ "ORDER BY b.board_date DESC "
+					+ "ORDER BY u.user_score DESC "
 					+ "LIMIT ?,?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, startRow);
@@ -261,6 +262,7 @@ public class EditorDAO {
 				editorBean.setBoard_ed_upload(rs.getInt("board_ed_upload"));
 				editorBean.setBoard_ed_work(rs.getInt("board_ed_work"));
 				editorBean.setBoard_ed_photo(rs.getString("editor_photo"));
+				editorBean.setUser_score(rs.getInt("user_score"));
 				list.add(editorBean);
 			}
 			

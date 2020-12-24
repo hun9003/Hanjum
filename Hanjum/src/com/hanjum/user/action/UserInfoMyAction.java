@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import com.hanjum.action.Action;
 import com.hanjum.board.service.EditorProService;
+import com.hanjum.contract.service.ContractGetSuccessCount;
 import com.hanjum.notice.service.NoticeProService;
 import com.hanjum.user.service.UserProService;
 import com.hanjum.user.vo.EditorBean;
@@ -136,6 +137,11 @@ public class UserInfoMyAction implements Action {
 		NoticeProService noticeProService = new NoticeProService();
 		int noticeCount = noticeProService.getNoticeCount(user_id);
 		request.setAttribute("noticeCount", noticeCount);
+		
+		ContractGetSuccessCount getSuccessService = new ContractGetSuccessCount();
+		int successCount = getSuccessService.getSuccessCount(user_id);
+		request.setAttribute("successCount", successCount);
+		
 		if(userBean != null) {
 			forward = new ActionForward();
 			forward.setPath("user/userInfo.jsp");
