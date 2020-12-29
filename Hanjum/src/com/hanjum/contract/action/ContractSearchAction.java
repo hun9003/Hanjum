@@ -85,10 +85,10 @@ public class ContractSearchAction implements Action {
 			contract_pay2 = Integer.parseInt(request.getParameter("contract_pay2"));
 		}
 
-		if (request.getParameter("search_word") != null) {
-			search_word = request.getParameter("search_word");
-		}
-		
+	    if (request.getParameter("search_word") != null || request.getParameter("search_word").equals(""))   {
+	        search_word = request.getParameter("search_word");
+	    }
+	    
 		if(request.getParameter("searchtype") != null) {
 			searchtype = request.getParameter("searchtype");
 		}
@@ -187,7 +187,7 @@ public class ContractSearchAction implements Action {
 		
 		
 		forward = new ActionForward();
-		forward.setPath("/admin_contract2.jsp");  //실제 jsp 페이지 넣기!
+		forward.setPath("/admin/admin_contract2.jsp");  //실제 jsp 페이지 넣기!
 		forward.setRedirect(false);  // 디폴트 false 이므로 생략 가능
 		
 		

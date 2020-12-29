@@ -223,7 +223,7 @@ String search_word = csb.getSearch_word();
 							<tr>
 								<th>계약단가 설정</th>
 								<td><input type="text" name="contract_pay1" value="0">원
-									~ <input type="text" name="contract_pay2" value="100000">원
+									~ <input type="text" name="contract_pay2" value="10000000">원
 								</td>
 
 							</tr>

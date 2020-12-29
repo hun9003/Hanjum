@@ -167,213 +167,223 @@ public class ContractDAO {
 
 	}
 
-//----------------------------SearchService 메서드----------------------------------------------------------------
-//
-	public int selectSearchListCount(ContractSearchBean csb) {
-		int listCount = 0;
+	//----------------------------SearchService 메서드----------------------------------------------------------------
+	//
+	   public int selectSearchListCount(ContractSearchBean csb) {
+	      int listCount = 0;
 
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		ContractBean cBean = new ContractBean();
-		
-		try {
-			String sql = "SELECT COUNT(contract_id) FROM contract ";
-	
-			
-//			---------------------검색 조건문 추가 --------------------------
-			//계약금액 쿼리문
-			sql = sql.concat("WHERE ");
-			sql = sql.concat(csb.getContract_pay1() + "<=");
-			sql = sql.concat(" contract_price ");
-			sql = sql.concat("<=" + csb.getContract_pay2());
-			
-		
-			// 라디오박스 지역 체크에 따른 조건문 추가
-			if (csb.getRegion() != null) {   
+	      PreparedStatement pstmt = null;
+	      ResultSet rs = null;
+	      ContractBean cBean = new ContractBean();
 
-				sql = sql.concat(" AND contract_address in('");
-				for (int i = 0; i < csb.getRegion().length-1; i++) {
-					sql = sql.concat(csb.getRegion()[i] + "', '");
-				}
-				sql = sql.concat(csb.getRegion()[csb.getRegion().length-1] + "') ");
-				
-			}
+	      try {
+	         String sql = "SELECT COUNT(contract_id) FROM contract as c left outer join board as b on c.board_id = b.board_id ";
 
+//	         ---------------------검색 조건문 추가 --------------------------
+	         // 계약금액 쿼리문
+	         sql = sql.concat("WHERE ");
+	         sql = sql.concat(csb.getContract_pay1() + "<=");
+	         sql = sql.concat(" contract_price AND ");
+	         sql = sql.concat("contract_price <=" + csb.getContract_pay2());
 
-			// 날짜 선택에 따른 조건문 추가
-			if(csb.getDate_check().equals("on")) {
-				sql = sql.concat(" AND contract_begin_date >= ");
-				sql = sql.concat("'" + csb.getSearch_begin_date() + "' " );
-				sql = sql.concat("AND contract_end_date <= ");
-				sql = sql.concat("'" + csb.getSearch_end_date() + "' " );
-			}
-			
-			// 계약 상태 조건 검색
-			if(csb.getContract_status() != null) {
-				
-				
-				sql = sql.concat("AND contract_status in(");
-				
-				for(int i=0;i<csb.getContract_status().length-1;i++) {
-					sql = sql.concat(csb.getContract_status()[i] + ", ");
-				}
-				sql = sql.concat(csb.getContract_status()[csb.getContract_status().length-1]) + ") ";
-			}
-			
-			
+	         // 라디오박스 지역 체크에 따른 조건문 추가
+	         if (csb.getRegion() != null) {
 
-			//검색 타입과 검색명 으로 조회
-			if(csb.getSearchtype() != null && csb.getSearch_word() != null){
-				
-				sql = sql.concat(" AND ");
-				
-				if(csb.getSearchtype().equals("contract_id") || csb.getSearchtype().equals("board_id")) {
-					sql = sql.concat(csb.getSearchtype() + "= '" + csb.getSearch_word() + "'" );
-				}else {
-					sql = sql.concat(csb.getSearchtype()  + " like ");
-					sql = sql.concat("'% " + csb.getSearch_word() + "%' ");
-	
-				}
-	
-			}
-			
-//			---------------------검색 조건문 종료 --------------------------
+	            sql = sql.concat(" AND contract_address in('");
+	            for (int i = 0; i < csb.getRegion().length - 1; i++) {
+	               sql = sql.concat(csb.getRegion()[i] + "', '");
+	            }
+	            sql = sql.concat(csb.getRegion()[csb.getRegion().length - 1] + "') ");
 
-			
-			System.out.println("count sql : " + sql);
+	         }
 
-			pstmt = con.prepareStatement(sql);
+	         // 날짜 선택에 따른 조건문 추가
+	         if (csb.getDate_check().equals("on")) {
+	            sql = sql.concat(" AND contract_begin_date >= ");
+	            sql = sql.concat("'" + csb.getSearch_begin_date() + "' ");
+	            sql = sql.concat(" AND contract_end_date <= ");
+	            sql = sql.concat("'" + csb.getSearch_end_date() + "' ");
+	         }
 
-			rs = pstmt.executeQuery();
+	         // 계약 상태 조건 검색
+	         if (csb.getContract_status() != null) {
 
-			// 조회 결과가 있을 경우(= 게시물이 하나라도 존재하는 경우)
-			// => 게시물 수를 listCount 에 저장
-			if (rs.next()) {
-				listCount = rs.getInt(1);
-			}
+	            sql = sql.concat(" AND contract_status in(");
 
-		} catch (SQLException e) {
-			System.out.println("selectSearchListCount() 오류! - " + e.getMessage());
-			e.printStackTrace();
-		} finally {
-			// 자원 반환
-			// 주의! DAO 클래스 내에서 Connection 객체 반환 금지!
-			close(rs);
-			close(pstmt);
-		}
-		System.out.println("리스트 카운트" + listCount);
-		
-		return listCount;
-	}
+	            for (int i = 0; i < csb.getContract_status().length - 1; i++) {
+	               sql = sql.concat(csb.getContract_status()[i] + ", ");
+	            }
+	            sql = sql.concat(csb.getContract_status()[csb.getContract_status().length - 1]) + ") ";
+	         }
 
-	public ArrayList<ContractBean> searchContractList(int page, int limit, ContractSearchBean csb) {
-		ArrayList<ContractBean> contractList = null;
+	         // 검색 타입과 검색명 으로 조회
+	      
+	            
+	            
+	            
+	            if (csb.getSearchtype() != null && csb.getSearch_word() != null && csb.getSearch_word() != "") {
+	                                 
+	               sql = sql.concat(" AND ");
 
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
+	               if (csb.getSearchtype().equals("contract_id")) {
+	                  sql = sql.concat(csb.getSearchtype() + " = '" + csb.getSearch_word() + "'");
+	               }else if(csb.getSearchtype().equals("board_id")) {
+	                  sql = sql.concat("b."+csb.getSearchtype() + " = '" + csb.getSearch_word() + "'");
+	               }
+	               else if (csb.getSearchtype().equals("board_subject")) {
+	                  sql = sql.concat("b." + csb.getSearchtype() + " like "); // board_subject는 앞에 AS값을 붙여야 오류가 안남
+	                  sql = sql.concat("'%" + csb.getSearch_word() + "%' ");
+	               } else {
+	                  sql = sql.concat(csb.getSearchtype() + " like ");
+	                  sql = sql.concat("'%" + csb.getSearch_word() + "%' ");
+	               }
+	            
 
-		int startRow = (page - 1) * limit;
+	         }
 
-		try {
-			String sql = "SELECT c.contract_id, b. board_subject, c.contract_price, c.contract_creator, c.contract_editor, c.contract_address, c.contract_begin_date, c.contract_end_date, c.contract_status, c.board_id  \r\n"
-					+ "FROM contract as c \r\n" + "left outer join board as b on c.board_id = b.board_id ";
-					
-//			---------------------검색 조건문 추가 --------------------------
-			//계약금액 쿼리문
-			sql = sql.concat("where ");
-			sql = sql.concat(csb.getContract_pay1() + "<=");
-			sql = sql.concat(" contract_price ");
-			sql = sql.concat("<=" + csb.getContract_pay2());
-			
-			// 라디오박스 지역 체크에 따른 조건문 추가
-			if (csb.getRegion() != null) {   
+//	         ---------------------검색 조건문 종료 --------------------------   
 
-				sql = sql.concat(" AND contract_address in('");
-				for (int i = 0; i < csb.getRegion().length-1; i++) {
-					sql = sql.concat(csb.getRegion()[i] + "', '");
-				}
-				sql = sql.concat(csb.getRegion()[csb.getRegion().length-1] + "') ");
-				
-			}
-			// 날짜 선택에 따른 조건문 추가
-			if(csb.getDate_check().equals("on")) {
-				sql = sql.concat("AND contract_begin_date >= ");
-				sql = sql.concat("'" + csb.getSearch_begin_date() + "' " );
-				sql = sql.concat("AND contract_end_date <= ");
-				sql = sql.concat("'" + csb.getSearch_end_date() + "' " );
-			}
-			// 계약 상태 조건 검색
-			if(csb.getContract_status() != null) {
-				sql = sql.concat("AND contract_status in(");
-				
-				for(int i=0;i<csb.getContract_status().length-1;i++) {
-					sql = sql.concat(csb.getContract_status()[i] + ", ");
-				}
-				sql = sql.concat(csb.getContract_status()[csb.getContract_status().length-1]) + ") ";
-			}
-			//검색 타입과 검색명 으로 조회
-			if(csb.getSearchtype() != null && csb.getSearch_word() != null){
-				
-				sql = sql.concat(" AND ");
-				
-				if(csb.getSearchtype().equals("contract_id") || csb.getSearchtype().equals("board_id")) {
-					sql = sql.concat(csb.getSearchtype() + "= '" + csb.getSearch_word() + "'" );
-				}else if(csb.getSearchtype().equals("board_subject")){
-					sql = sql.concat("b."+csb.getSearchtype() + " like ");    // board_subject는 앞에 AS값을 붙여야 오류가 안남
-					sql = sql.concat("'%" + csb.getSearch_word() + "%' ");
-				}else {
-					sql = sql.concat(csb.getSearchtype()  + " like ");
-					sql = sql.concat("'% " + csb.getSearch_word() + "%' ");
-	
-				}
-	
-			}
-			
-//			---------------------검색 조건문 종료 --------------------------		
-					
-			
-			sql = sql.concat(" order by contract_id desc LIMIT ?,? ");
-					
-					
-					
-			System.out.println("실제 리스트 sql 문 : " + sql );
-			
-			
-			
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, limit);
+	         System.out.println("count sql : " + sql);
 
-			rs = pstmt.executeQuery();
+	         pstmt = con.prepareStatement(sql);
 
-			contractList = new ArrayList<ContractBean>();
+	         rs = pstmt.executeQuery();
 
-			while (rs.next()) {
-				ContractBean cb = new ContractBean();
+	         // 조회 결과가 있을 경우(= 게시물이 하나라도 존재하는 경우)
+	         // => 게시물 수를 listCount 에 저장
+	         if (rs.next()) {
+	            listCount = rs.getInt(1);
+	         }
 
-				cb.setContract_id(rs.getInt("contract_id"));
-				cb.setBoard_subject(rs.getString("board_subject"));
-				cb.setContract_price(rs.getInt("contract_price"));
-				cb.setContract_creator(rs.getString("contract_creator"));
-				cb.setContract_editor(rs.getString("contract_editor"));
-				cb.setContract_address(rs.getString("contract_address"));
-				cb.setContract_begin_date(rs.getTimestamp("contract_begin_date"));
-				cb.setContract_end_date(rs.getTimestamp("contract_end_date"));
-				cb.setContract_status(rs.getInt("contract_status"));
-				cb.setBoard_id(rs.getInt("board_id"));
+	      } catch (SQLException e) {
+	         System.out.println("selectSearchListCount() 오류! - " + e.getMessage());
+	         e.printStackTrace();
+	      } finally {
+	         // 자원 반환
+	         // 주의! DAO 클래스 내에서 Connection 객체 반환 금지!
+	         close(rs);
+	         close(pstmt);
+	      }
+	      System.out.println("리스트 카운트" + listCount);
 
-				contractList.add(cb);
-			}
-		} catch (Exception e) {
-			System.out.println("selectContractList - 오류 : " + e.getMessage());
-			e.printStackTrace();
-		} finally {
-			close(pstmt);
-			close(rs);
-		}
-		
-		return contractList;
-	}
+	      return listCount;
+	   }
+
+	   public ArrayList<ContractBean> searchContractList(int page, int limit, ContractSearchBean csb) {
+	      ArrayList<ContractBean> contractList = null;
+
+	      PreparedStatement pstmt = null;
+	      ResultSet rs = null;
+
+	      int startRow = (page - 1) * limit;
+
+	      try {
+	         String sql = "SELECT c.contract_id, b. board_subject, c.contract_price, c.contract_creator, c.contract_editor, c.contract_address, c.contract_begin_date, c.contract_end_date, c.contract_status, c.board_id, (SELECT COUNT(waiting_id) FROM waiting WHERE board_id = c.board_id) AS waiting   \r\n"
+	               + "FROM contract as c \r\n" + "left outer join board as b on c.board_id = b.board_id ";
+
+//	         ---------------------검색 조건문 추가 --------------------------
+	         // 계약금액 쿼리문
+	         sql = sql.concat("WHERE ");
+	         sql = sql.concat(csb.getContract_pay1() + "<=");
+	         sql = sql.concat(" contract_price AND ");
+	         sql = sql.concat("contract_price <=" + csb.getContract_pay2());
+
+	         // 라디오박스 지역 체크에 따른 조건문 추가
+	         if (csb.getRegion() != null) {
+
+	            sql = sql.concat(" AND contract_address in('");
+	            for (int i = 0; i < csb.getRegion().length - 1; i++) {
+	               sql = sql.concat(csb.getRegion()[i] + "', '");
+	            }
+	            sql = sql.concat(csb.getRegion()[csb.getRegion().length - 1] + "') ");
+
+	         }
+
+	         // 날짜 선택에 따른 조건문 추가
+	         if (csb.getDate_check().equals("on")) {
+	            sql = sql.concat(" AND contract_begin_date >= ");
+	            sql = sql.concat("'" + csb.getSearch_begin_date() + "' ");
+	            sql = sql.concat(" AND contract_end_date <= ");
+	            sql = sql.concat("'" + csb.getSearch_end_date() + "' ");
+	         }
+
+	         // 계약 상태 조건 검색
+	         if (csb.getContract_status() != null) {
+
+	            sql = sql.concat(" AND contract_status in(");
+
+	            for (int i = 0; i < csb.getContract_status().length - 1; i++) {
+	               sql = sql.concat(csb.getContract_status()[i] + ", ");
+	            }
+	            sql = sql.concat(csb.getContract_status()[csb.getContract_status().length - 1]) + ") ";
+	         }
+
+	         // 검색 타입과 검색명 으로 조회
+	      
+	            
+	            
+	            
+	            if (csb.getSearchtype() != null && csb.getSearch_word() != null && csb.getSearch_word() != "") {
+	                                 
+	               sql = sql.concat(" AND ");
+
+	               if (csb.getSearchtype().equals("contract_id")) {
+	                  sql = sql.concat(csb.getSearchtype() + " = '" + csb.getSearch_word() + "'");
+	               }else if(csb.getSearchtype().equals("board_id")) {
+	                  sql = sql.concat("b."+csb.getSearchtype() + " = '" + csb.getSearch_word() + "'");
+	               }
+	               else if (csb.getSearchtype().equals("board_subject")) {
+	                  sql = sql.concat("b." + csb.getSearchtype() + " like "); // board_subject는 앞에 AS값을 붙여야 오류가 안남
+	                  sql = sql.concat("'%" + csb.getSearch_word() + "%' ");
+	               } else {
+	                  sql = sql.concat(csb.getSearchtype() + " like ");
+	                  sql = sql.concat("'%" + csb.getSearch_word() + "%' ");
+	               }
+	            
+
+	         }
+
+//	         ---------------------검색 조건문 종료 --------------------------   
+
+	         sql = sql.concat(" order by contract_id desc LIMIT ?,? ");
+
+	         System.out.println("실제 리스트 sql 문 : " + sql);
+
+	         pstmt = con.prepareStatement(sql);
+	         pstmt.setInt(1, startRow);
+	         pstmt.setInt(2, limit);
+
+	         rs = pstmt.executeQuery();
+
+	         contractList = new ArrayList<ContractBean>();
+
+	         while (rs.next()) {
+	            ContractBean cb = new ContractBean();
+
+	            cb.setContract_id(rs.getInt("contract_id"));
+	            cb.setBoard_subject(rs.getString("board_subject"));
+	            cb.setContract_price(rs.getInt("contract_price"));
+	            cb.setContract_creator(rs.getString("contract_creator"));
+	            cb.setContract_editor(rs.getString("contract_editor"));
+	            cb.setContract_address(rs.getString("contract_address"));
+	            cb.setContract_begin_date(rs.getTimestamp("contract_begin_date"));
+	            cb.setContract_end_date(rs.getTimestamp("contract_end_date"));
+	            cb.setContract_status(rs.getInt("contract_status"));
+	            cb.setBoard_id(rs.getInt("board_id"));
+
+	            contractList.add(cb);
+	         }
+	      } catch (Exception e) {
+	         System.out.println("selectContractList - 오류 : " + e.getMessage());
+	         e.printStackTrace();
+	      } finally {
+	         close(pstmt);
+	         close(rs);
+	      }
+
+	      return contractList;
+	   }
+
 	
 	public int selectContractStatus(int board_id) {
 		System.out.println("ContractDAO - selectContractStatus()");
