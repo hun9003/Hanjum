@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.hanjum.action.Action;
 import com.hanjum.user.service.UserProService;
-import com.hanjum.user.vo.PageInfo;
+import com.hanjum.vo.PageInfo;
 import com.hanjum.user.vo.ReportBean;
 import com.hanjum.vo.ActionForward;
 
@@ -46,7 +46,7 @@ public class UserReportManageAction implements Action{
 		request.setAttribute("pageInfo", pageInfo);
 		
 		forward = new ActionForward();
-		forward.setPath("/user/userReportManage.jsp");
+		forward.setPath("/admin/admin_user_report.jsp");
 		return forward;
 	}
 

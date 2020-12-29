@@ -17,11 +17,32 @@ public class ContractBean {
 	private String board_ed_subject;
 	private String board_ed_address;
 	private String contract_address;
+	private int wating;
 	
 
 	
 
 	
+
+
+	public int getWating() {
+		return wating;
+	}
+
+
+
+
+
+
+
+	public void setWating(int wating) {
+		this.wating = wating;
+	}
+
+
+
+
+
 
 
 	public ContractBean() {}

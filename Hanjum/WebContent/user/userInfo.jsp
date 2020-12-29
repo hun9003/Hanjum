@@ -251,7 +251,7 @@ input[name=editor_status]:checked + .toggle_label:after { left:28px;}
 			 	<%
              		if(userBean.getUser_type() == 0){
             	 %>
-			 	<a href="#" class="m-l-10">관리</a>
+			 	<a href="UserManage.uo" target="_blank" class="m-l-10">관리</a>
 	             <%
 	             	}
 	             %>

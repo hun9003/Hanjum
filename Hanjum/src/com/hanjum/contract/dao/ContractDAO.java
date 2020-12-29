@@ -39,9 +39,15 @@ public class ContractDAO {
 		int startRow = (page - 1) * limit;
 
 		try {
-			String sql = "SELECT c.contract_id, b. board_subject, c.contract_price, c.contract_creator, c.contract_editor, c.contract_address, c.contract_begin_date, c.contract_end_date, c.contract_status, c.board_id  \r\n"
-					+ "FROM contract as c \r\n" + "left outer join board as b\r\n"
-					+ "on c.board_id = b.board_id order by contract_id desc LIMIT ?,?";
+//			String sql = "SELECT c.contract_id, b. board_subject, c.contract_price, c.contract_creator, c.contract_editor, c.contract_address, c.contract_begin_date, c.contract_end_date, c.contract_status, c.board_id, (SELECT COUNT(waiting_id) FROM waiting WHERE board_id = c.board_id) AS wating  \r\n"
+//					+ "FROM contract as c \r\n" + "left outer join board as b\r\n"
+//					+ "on c.board_id = b.board_id order by contract_id desc LIMIT ?,?";
+			
+			String sql = " SELECT c.contract_id, b.board_subject, c.contract_price, c.contract_creator, c.contract_editor, c.contract_address, c.contract_begin_date, c.contract_end_date, c.contract_status, c.board_id, (SELECT COUNT(waiting_id) FROM waiting WHERE board_id = c.board_id) AS waiting " + 
+					" FROM contract as c left outer join board as b" + 
+					" on c.board_id = b.board_id order by contract_id desc LIMIT ?,?";
+			
+			
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, limit);
@@ -63,6 +69,7 @@ public class ContractDAO {
 				cb.setContract_end_date(rs.getTimestamp("contract_end_date"));
 				cb.setContract_status(rs.getInt("contract_status"));
 				cb.setBoard_id(rs.getInt("board_id"));
+				cb.setWating(rs.getInt("waiting"));
 
 				contractList.add(cb);
 			}
@@ -392,6 +399,31 @@ public class ContractDAO {
 		return status;
 	}
 	
+	public int updateContract(ContractBean cBean) {
+		// BoardBean 객체에 저장된 수정 내용(작성자, 제목, 내용)을 사용하여
+		// 글번호(board_num)에 해당하는 레코드를 수정 후 결과 리턴
+		int updateCount = 0;
+
+		PreparedStatement pstmt = null;
+
+		try {
+			String sql = "UPDATE contract " + "SET contract_price=?, contract_status=? " + "WHERE contract_id=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, cBean.getContract_price());
+			pstmt.setInt(2, cBean.getContract_status());
+			pstmt.setInt(3, cBean.getContract_id());
+			updateCount = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			System.out.println("updateContract() 오류! - " + e.getMessage());
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+
+		return updateCount;
+	}
+	
 	public int updateStatus(int board_id, int contract_status) {
 		System.out.println("ContractDAO - updateStatus()");
 		int updateCount = 0;
@@ -410,6 +442,27 @@ public class ContractDAO {
 			close(pstmt);
 		}
 		return updateCount;
+	}
+	
+	public int deleteContract(int contract_id) {
+		int deleteCount = 0;
+
+		PreparedStatement pstmt = null;
+
+		try {
+			String sql = "DELETE FROM contract WHERE contract_id=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, contract_id);
+			deleteCount = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			System.out.println("deleteContract() 오류! - " + e.getMessage());
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+
+		return deleteCount;
 	}
 	
 	public int deleteContract(int board_id, String contract_editor) { // 지원취소 했을때 삭제

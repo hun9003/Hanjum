@@ -24,9 +24,9 @@ if(userBean != null){
 	<div class="form-control report_form_1">
 	<select class="no-border" name="report_type">
 	<option value="1">욕설</option>
-	<option value="2">2</option>
-	<option value="3">3</option>
-	<option value="4">4</option>
+	<option value="2">불건전한 아이디</option>
+	<option value="3">사기</option>
+	<option value="4">기타</option>
 	</select>
 	<input class="no-border" type="text" name="user_id" placeholder="신고대상유저">
 	</div>

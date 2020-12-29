@@ -72,7 +72,7 @@ public class ContractListAction implements Action {
 		
 //		System.out.println("ContractListService 객체 생성 완료");
 		forward = new ActionForward();
-		forward.setPath("/admin_contract2.jsp");  //실제 jsp 페이지 넣기!
+		forward.setPath("/admin/admin_contract2.jsp");  //실제 jsp 페이지 넣기!
 		forward.setRedirect(false);  // 디폴트 false 이므로 생략 가능
 		
 		

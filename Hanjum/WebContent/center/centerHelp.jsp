@@ -10,6 +10,9 @@
 		.form-group:hover>div {
 			height: auto;
 		}
+		.color-primary {
+			color: #007bff;
+		}
 	</style>
     <%
     ArrayList<HelpBean> list = (ArrayList<HelpBean>)request.getAttribute("list");
@@ -29,7 +32,7 @@
 				HelpBean helpBean = list.get(i);
 		%>
 		<div class="form-group">
-		<span class="form-group-content">
+		<span class="form-group-content color-primary">
 			<%=helpBean.getHelp_question() %>
 		</span>
 		<div class="form-group-content">

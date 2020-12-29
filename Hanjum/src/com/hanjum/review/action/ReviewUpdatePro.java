@@ -34,14 +34,7 @@ public class ReviewUpdatePro implements Action {
 		boolean isRightUser = reviewService.isArticleWriter(
 								review_id, userBean.getUser_id());
 		
-		reviewService = new ReviewService();
-		ReviewBean reviewBean = reviewService.getArticle(review_id);
 		
-		reviewService = new ReviewService();
-		int avg = reviewService.getReviewAvg(reviewBean.getUser_id());
-		
-		UserProService userProService = new UserProService();
-		userProService.updateScore(reviewBean.getUser_id(), avg);
 		
 		// 적합한 사용자 판별에 따른 처리
 		if(!isRightUser) {
@@ -65,6 +58,15 @@ public class ReviewUpdatePro implements Action {
 			// 리뷰 수정
 			boolean isUpdateSuccess = 
 					reviewService.uodateArticle(article);
+			
+			reviewService = new ReviewService();
+			ReviewBean reviewBean = reviewService.getArticle(review_id);
+			
+			reviewService = new ReviewService();
+			int avg = reviewService.getReviewAvg(reviewBean.getUser_id());
+			
+			UserProService userProService = new UserProService();
+			userProService.updateScore(reviewBean.getUser_id(), avg);
 			
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();

@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.hanjum.action.Action;
 import com.hanjum.user.service.UserProService;
-import com.hanjum.user.vo.PageInfo;
+import com.hanjum.vo.PageInfo;
 import com.hanjum.user.vo.UserBean;
 import com.hanjum.vo.ActionForward;
 

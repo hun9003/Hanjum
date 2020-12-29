@@ -384,8 +384,8 @@
           <div class="img"  style="background-image: url(images/bg_4.jpg);">
              <div class="overlay"></div>
              <h2>혹시 저희 사이트에서 불편함을 겪고 계신가요?</h2>
-             <p>고객센터에서 자주묻는 질문과 1:1 상담을 이용해주세요</p>
-             <p class="mb-0"><a href="#" class="btn btn-primary px-4 py-3">고객센터</a></p>
+             <p>고객센터에서 자주묻는 질문 코너를 이용해주세요</p>
+             <p class="mb-0"><a href="Center.hp" class="btn btn-primary px-4 py-3">고객센터</a></p>
          </div>
      </div>
  </div>

@@ -20,8 +20,10 @@ import com.hanjum.user.action.UserPortfolioInfoAction;
 import com.hanjum.user.action.UserPortfolioInsertAction;
 import com.hanjum.user.action.UserPortfolioListAction;
 import com.hanjum.user.action.UserPortfolioUpdateAction;
+import com.hanjum.user.action.UserReportManageAction;
 import com.hanjum.user.action.UserReportProAction;
 import com.hanjum.user.action.UserSearchManageAction;
+import com.hanjum.user.action.UserSearchReportManageAction;
 import com.hanjum.user.action.UserUpdateEditorProAction;
 import com.hanjum.user.action.UserUpdateFormAction;
 import com.hanjum.user.action.UserUpdateProAction;
@@ -343,6 +345,20 @@ public class UserFrontController extends HttpServlet {
 		}
 		else if (command.equals("/UserDeletePro.uo")) { //회원탈퇴
 			action = new UserDeleteProAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/UserReportManage.uo")) {
+			action = new UserReportManageAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/UserSearchReportManage.uo")) {
+			action = new UserSearchReportManageAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {

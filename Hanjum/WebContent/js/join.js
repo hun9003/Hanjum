@@ -182,7 +182,7 @@
 		var msg = $("#checkEmailResult");
 		msg.css("color","#ff471a");
 		check_normal("#email_label","#user_email");
-		msg.html("<input class='btn btn-light' id='mail_check' type='button' value='인증 번호 전송' name='mail_check' id='mail_check'> 이메일 인증이 필요합니다");
+		msg.html("<input class='btn btn-primary' id='mail_check' type='button' value='인증 번호 전송' name='mail_check' id='mail_check'> 이메일 인증이 필요합니다");
 	}
 	function check_true(label, box) {
 			$(label).css("color","#00e673");
