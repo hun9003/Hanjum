@@ -52,7 +52,7 @@ public class NoticeMatchAction implements Action {
 		// user_id = editor(신청한사람), notice_from_id = creator(프로젝트하는사람)
 		// user_from_id 님께서 user_id님의 제안을 받아들임. 프로젝트를 진행합니다?
 		noticeBean.setNotice_content(3);
-		noticeBean.setNotice_from_id(noticeInfo.getUser_id());
+		noticeBean.setNotice_from_id(noticeInfo.getNotice_from_id());
 		noticeBean.setUser_id(noticeInfo.getUser_id());
 
 		service = new NoticeProService();
@@ -63,18 +63,23 @@ public class NoticeMatchAction implements Action {
 		ArrayList<String> WaitingList = projectProService.getWaitingDeclineList(noticeInfo.getBoard_id(), noticeInfo.getNotice_from_id());
 		boolean isSuccess = false;
 		int count = 0;
-		for (int i = 0; i < WaitingList.size(); i++) {
-			noticeBean.setNotice_content(6);
-			noticeBean.setNotice_from_id(noticeInfo.getUser_id());
-			noticeBean.setUser_id(WaitingList.get(i));
-			service = new NoticeProService();
-			service.insertNotice(noticeBean); // 각 지원자들 취소알림 생성
-
-			count++;
-		}
-		if (count == WaitingList.size()) {
-			projectProService = new ProjectProService();
-			isSuccess = projectProService.dropWaiting(noticeInfo.getBoard_id()); // 대기열 다 삭제
+		
+		if(WaitingList != null) {
+			for (int i = 0; i < WaitingList.size(); i++) {
+				noticeBean.setNotice_content(6);
+				noticeBean.setNotice_from_id(noticeInfo.getUser_id());
+				noticeBean.setUser_id(WaitingList.get(i));
+				service = new NoticeProService();
+				service.insertNotice(noticeBean); // 각 지원자들 취소알림 생성
+				
+				count++;
+			}
+			if (count == WaitingList.size()) {
+				projectProService = new ProjectProService();
+				isSuccess = projectProService.dropWaiting(noticeInfo.getBoard_id()); // 대기열 다 삭제
+			}
+		} else {
+			isSuccess = true;
 		}
 		if (isSuccess) {
 			UserProService userProService = new UserProService();

@@ -60,7 +60,7 @@ public class ChatDAO {
 
 		try {
 			System.out.println(chatBean.getChat_content());
-			sql = "INSERT INTO Chat VALUES (?,?,?,?,NOW(),?)";
+			sql = "INSERT INTO chat VALUES (?,?,?,?,NOW(),?)";
 			pstmt = con.prepareStatement(sql);
 
 			//		 pstmt.setInt(1, chatBean.getChat_id());

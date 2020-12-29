@@ -72,7 +72,7 @@ public class HelpDAO {
 		
 		
 		try {
-			String sql = "SELECT HELP_ID,HELP_QUESTION,HELP_ANSWER FROM HELP";
+			String sql = "SELECT help_id, help_question, help_answer FROM help";
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			
