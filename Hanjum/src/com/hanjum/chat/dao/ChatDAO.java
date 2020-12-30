@@ -95,7 +95,7 @@ public class ChatDAO {
 		ArrayList<ChatBean> list = new ArrayList<ChatBean>();
 
 		try {
-			String sql = "select * from chat where board_id=?";
+			String sql = "select * from chat where board_id=? ORDER BY chat_date";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, board_id);
 			rs = pstmt.executeQuery();

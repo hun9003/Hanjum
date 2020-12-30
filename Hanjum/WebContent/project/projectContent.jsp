@@ -98,7 +98,10 @@
 		String min_price = "";
 		String max_price = "";
 		String cam_num = "";
-		String[] ref = project.getBoard_creator_cre_ref().split(",");
+		String[] ref = null;
+		if(project.getBoard_creator_cre_ref() != ""){
+			ref = project.getBoard_creator_cre_ref().split(",");
+		}
 		genre = project.getBoard_creator_genre()
 				.replace("1", "유튜브")
 				.replace("2", "홍보")
@@ -241,6 +244,9 @@
             <%=min_price %> ~ <%=max_price %>
             </div>
         </div>
+        <%
+        	if(ref != null){
+        %>
         <div id="ref_area" class="form-group">
             <label class="label has-focus label-primary">레퍼런스 링크</label>
             <%
@@ -255,6 +261,9 @@
 			}
 			%>
         </div>
+        <%
+        	}
+        %>
         <div class="form-group d-flex justify-content-end mt-4">
         <%
         if(userBean != null){

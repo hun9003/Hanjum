@@ -236,9 +236,8 @@ input[name=editor_status]:checked + .toggle_label:after { left:28px;}
             	 <div class="form-group">
 				 <span class="form-group-content">
 				 	<span class="float-r m-r-10">
-				 	
+				 	<a href="Logout.uo" class="m-l-10">로그아웃</a>
 				 	<a href="My.uo?fr=info" class="m-l-10">회원정보 더보기</a>
-		             
 				 	</span>
 				 </span>             
 	             </div>
