@@ -121,7 +121,7 @@ public class UserInfoMyAction implements Action {
 			editorInfo.put("des", editorBean.getEditor_des());
 			editorInfo.put("profile", editorBean.getEditor_profile());
 			editorInfo.put("photo", editorBean.getEditor_photo());
-			
+			editorInfo.put("follower", editorBean.getEditor_like()+"");
 		}
 		
 		request.setAttribute("editorInfo", editorInfo);

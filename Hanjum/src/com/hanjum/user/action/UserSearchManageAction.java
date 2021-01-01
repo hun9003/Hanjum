@@ -59,7 +59,7 @@ public class UserSearchManageAction implements Action {
 		request.setAttribute("pageInfo", pageInfo);
 		
 		forward = new ActionForward();
-		forward.setPath("/user/userManage.jsp");
+		forward.setPath("/admin/admin_user.jsp");
 		
 		return forward;
 	}

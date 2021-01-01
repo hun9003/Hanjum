@@ -31,7 +31,7 @@
                     <label class="label" id="email_label" for="user_email">이메일</label>
                     <input type="text" id="user_email" style="min-width:100px; width:30%; display: inline-block;" class="form-control" name="user_email" required="required"/> @ 
                     <input type="text" class="form-control" style="width:35%; min-width:100px; display: inline-block;" name="user_email2" id="user_email2"/> 
-							<select  class="form-control" style="width:30%; min-width:150px; display: inline-block;" onChange="selEmail(this.value)">
+							<select  class="form-control" style="width:30%; min-width:150px; display: inline-block;" onChange="selEmail(this.value)" id = "selectEmail">
 								<option onselect="focus">직접입력</option>
 								<option value="naver.com">naver.com</option>
 								<option value="gmail.com">gmail.com</option>
@@ -43,7 +43,7 @@
 						</div>
 						<div id="codeCheck" style="display: none;">
 						<input type="text" class="form-control" name="email_code" id="email_code" style="width:30%; min-width:150px; display: inline-block;" placeholder="인증 코드">
-						<input type="button" class="btn btn-primary" value="인증코드 재전송" name="code_check" id="code_check">
+						<input type="button" class="btn btn-primary" value="인증번호 재전송" name="code_check" id="code_check">
 						</div>
 						<div id="mailSet2" style="display: none;">
 						<input type="text" name="user_email3" id="user_email3" readonly="readonly">

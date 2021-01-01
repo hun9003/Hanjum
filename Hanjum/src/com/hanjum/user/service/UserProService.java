@@ -252,7 +252,7 @@ public class UserProService {
 		userDAO.setConnection(con);
 		
 		int insertCount = userDAO.changeUserLike(user_id,like_userid);
-		
+		int updateCount = userDAO.updateLike(user_id);
 		if (insertCount > 0) {
 			commit(con);
 			likeSuccess = true;
@@ -604,6 +604,51 @@ public class UserProService {
 		userDAO.setConnection(con);
 		
 		ArrayList<ContractBean> list = userDAO.getUserContractList(user_id, contract_status);
+		
+		close(con);
+		
+		return list;
+	}
+	public int getLike(String user_id, String id) {
+		int count;
+		Connection con = getConnection();
+		UserDAO userDAO = UserDAO.getInstance();
+		userDAO.setConnection(con);;
+		count = userDAO.getLike(user_id,id);
+		
+		
+		return count;
+	}
+
+	public int getLikeListCount(String user_id) {
+		int listCount = 0;
+		
+		// 1(공통). Connection 객체 가져오기
+		Connection con = getConnection();
+		
+		// 2(공통). BoardDAO 객체 가져오기
+		UserDAO userDAO = UserDAO.getInstance();
+		
+		// 3(공통). BoardDAO 객체에 Connection 객체 전달
+		userDAO.setConnection(con);
+		
+		// 4. BoardDAO 객체의 selectListCount() 메서드 호출하여 
+		//    전체 게시물 수 가져오기
+		listCount = userDAO.getLikeListCount(user_id);
+		
+		// 5(공통). Connection 객체 반환하기
+		close(con);
+		
+		return listCount;
+	}
+
+	public ArrayList<String> getLikeList(int page, int limit, String user_id) {
+		System.out.println("UserProService - getUserContractList()");
+		Connection con = getConnection();
+		UserDAO userDAO = UserDAO.getInstance();
+		userDAO.setConnection(con);
+		
+		ArrayList<String> list = userDAO.getLikeList(page,limit,user_id);
 		
 		close(con);
 		

@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.hanjum.action.Action;
 import com.hanjum.user.action.UserLoginProAction;
@@ -89,6 +90,11 @@ public class UserFrontController extends HttpServlet {
 			request.setAttribute("prefPage", request.getAttribute("prefPage"));
 			forward = new ActionForward(); // 포워드 객체 생성
 			forward.setPath("/user/userLoginForm.jsp"); // 포워드경로 지정 , 디스패쳐 방식으로 해야되니 redirect값은 안줌
+			
+		} else if (command.equals("/LoginPass.uo")) {
+			request.setAttribute("prefPage", request.getAttribute("prefPage"));
+			forward = new ActionForward(); // 포워드 객체 생성
+			forward.setPath("/user/userLoginPassForm.jsp"); // 포워드경로 지정 , 디스패쳐 방식으로 해야되니 redirect값은 안줌
 			
 		} else if (command.equals("/LoginPro.uo")) {
 			
@@ -197,6 +203,9 @@ public class UserFrontController extends HttpServlet {
 		}  else if (command.equals("/My.uo")) {
 			forward = new ActionForward();
 			forward.setPath("/user/userMain.jsp");
+		} else if (command.equals("/ChangePass.uo")) {
+			forward = new ActionForward(); 
+			forward.setPath("/user/userChangePassForm.jsp"); 
 		} 
 		
 		else if (command.equals("/CodeCheck.uo")) {   // 메일발송한거 코드체크
@@ -216,7 +225,6 @@ public class UserFrontController extends HttpServlet {
 				out.close();
 			}
 		} else if (command.equals("/changePass.uo")) { // 비밀번호 변경
-			System.out.println("에이젝스로왔따!!");
 			String user_id = request.getParameter("user_id");
 			String user_pass = request.getParameter("user_pass");
 			String user_changePass = request.getParameter("user_changePass");
@@ -233,13 +241,17 @@ public class UserFrontController extends HttpServlet {
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();
 			if(success) {
-				System.out.println(1);
-				out.println("1");
-				out.close();
+				HttpSession session = request.getSession();
+				session.invalidate();
+				out.println("<script>"); // 자바스크립트 시작 태그
+				out.println("alert('비밀번호가 변경되었습니다. 다시 로그인해주세요.')"); // 다이얼로그 메세지 출력
+				out.println("location.href='home'");
+				out.println("</script>"); // 자바스크립트 끝 태그
 			}else {
-				System.out.println(0);
-				out.println("0");
-				out.close();
+				out.println("<script>"); // 자바스크립트 시작 태그
+				out.println("alert('변경실패! - 비밀번호가 맞지 않습니다. 다시 시도해주세요.')"); // 다이얼로그 메세지 출력
+				out.println("history.back()");
+				out.println("</script>"); 
 			}
 		} else if (command.equals("/PfWrite.uo")) {
 			

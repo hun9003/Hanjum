@@ -10,6 +10,7 @@ import static com.hanjum.db.JdbcUtil.*;
 import com.hanjum.contract.action.ContractSearchAction;
 import com.hanjum.contract.vo.ContractBean;
 import com.hanjum.contract.vo.ContractSearchBean;
+import com.hanjum.user.dao.UserDAO;
 
 public class ContractDAO {
 
@@ -438,13 +439,54 @@ public class ContractDAO {
 		System.out.println("ContractDAO - updateStatus()");
 		int updateCount = 0;
 		PreparedStatement pstmt = null;
-		
+		ResultSet rs = null;
 		try {
 			String sql = "UPDATE contract SET contract_status = ? WHERE board_id = ? AND contract_status != 4";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, contract_status);
 			pstmt.setInt(2, board_id);
 			updateCount = pstmt.executeUpdate();
+			
+			if(updateCount > 0) { // 1. 업데이트가 성공했을때
+				// 2.계약이 완료 될 경우에만
+				if(contract_status == 3) {
+					sql = "select * from contract where board_id=?";
+					pstmt = con.prepareStatement(sql);
+					pstmt.setInt(1, board_id);
+					rs=pstmt.executeQuery();
+					
+					if(rs.next()) {
+						UserDAO userDAO = UserDAO.getInstance();
+						userDAO.setConnection(con);
+						userDAO.userExp(rs.getString("contract_creator"), 100); // 거래완료 Exp100 부여
+						userDAO.userExp(rs.getString("contract_editor"), 100); 
+						int count = 0;
+						// 거래건수 추가 2번반복
+						for(int i = 1 ; i<3 ; i ++) {
+							switch (i) {
+							case 1:
+								count = getContractSuccessCount(rs.getString("contract_creator"));
+								sql = "update user set user_project_count=? where user_id =?";
+								pstmt = con.prepareStatement(sql);
+								pstmt.setInt(1, count);
+								pstmt.setString(2, rs.getString("contract_creator"));
+								pstmt.executeUpdate();
+								break;
+							case 2:
+								count = getContractSuccessCount(rs.getString("contract_editor"));
+								sql = "update user set user_project_count=? where user_id =?";
+								pstmt = con.prepareStatement(sql);
+								pstmt.setInt(1, count);
+								pstmt.setString(2, rs.getString("contract_editor"));
+								pstmt.executeUpdate();
+								break;
+							}
+						}
+					}
+					close(rs);
+				}
+			}
+			
 		} catch (Exception e) {
 			System.out.println("updateStatus 오류 - "+e.getMessage());
 			e.printStackTrace();

@@ -31,10 +31,10 @@ public class MailSendServlet extends HttpServlet {
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-//		String command = request.getServletPath();
-//		System.out.println("에이젝스로 메일에 왔따!!");
-//		System.out.println("요청 서블릿 주소 : " + command);
-//		System.out.println(request.getParameter("receiver"));
+		String command = request.getServletPath();
+		System.out.println("에이젝스로 메일에 왔따!!");
+		System.out.println("요청 서블릿 주소 : " + command);
+		System.out.println(request.getParameter("receiver"));
 		
 		// 파라미터값 받아오기
 		String user_id = request.getParameter("user_id");

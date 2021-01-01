@@ -16,6 +16,7 @@
         	case "notice": frUrl="getNoticeList.nt"; pageSubject="내 알림"; break;
         	case "chat": frUrl="ChatListPro.ch"; pageSubject="채팅"; break;
         	case "info": frUrl="UserMyInfo.uo"; pageSubject="내 정보"; break;
+        	case "changePass": frUrl="ChangePass.uo"; pageSubject="내 정보"; break;
         	case "constract": frUrl="UserConstract.uo"; pageSubject="계약 관리"; break;
         	case "leave": frUrl="UserDeleteForm.uo"; pageSubject="회원 탈퇴"; break;
         	}
@@ -28,6 +29,7 @@
         	fr = request.getParameter("fr");
         	switch(fr){
         	case "login": frUrl="Login.uo"; pageSubject="로그인"; break;
+        	case "pass": frUrl="LoginPass.uo"; pageSubject="암호찾기"; break;
         	case "join": frUrl="Join.uo"; pageSubject="회원등록"; break;
         	case "joinEditor": frUrl="JoinEditor.uo"; pageSubject="편집자등록"; break;
         	}
@@ -95,6 +97,7 @@
 				if(session.getAttribute("userBean")==null){
 				%>
 				<div class="col-md-9 d-flex align-items-stretch ftco-animate member_menu" id="form_login"><a href="My.uo?fr=login" class="member-menu nav-link <%if(fr.equals("login")){%>active<%}%>">로그인</a></div>
+				<div class="col-md-9 d-flex align-items-stretch ftco-animate member_menu" id="form_pass"><a href="My.uo?fr=pass" class="member-menu nav-link <%if(fr.equals("pass")){%>active<%}%>">암호찾기</a></div>
 				<div class="col-md-9 d-flex align-items-stretch ftco-animate member_menu" id="form_join_user"><a href="My.uo?fr=join" class="member-menu nav-link <%if(fr.equals("join")){%>active<%}%>">회원등록</a></div>
 				<div class="col-md-9 d-flex align-items-stretch ftco-animate member_menu" id="form_join_editor"><a href="My.uo?fr=joinEditor" class="member-menu nav-link <%if(fr.equals("joinEditor")){%>active<%}%>">편집자등록</a></div>
 				<%
@@ -102,6 +105,7 @@
 				%>
 				<div class="col-md-9 d-flex align-items-stretch ftco-animate member_menu" id="form_user_notice"><a href="My.uo?fr=notice" class="member-menu nav-link <%if(fr.equals("notice")){%>active<%}%>">내 알림</a></div>
 				<div class="col-md-9 d-flex align-items-stretch ftco-animate member_menu" id="form_user_info"><a href="My.uo?fr=info" class="member-menu nav-link <%if(fr.equals("info")){%>active<%}%>">내 정보</a></div>
+				<div class="col-md-9 d-flex align-items-stretch ftco-animate member_menu" id="form_user_changePass"><a href="My.uo?fr=changePass" class="member-menu nav-link <%if(fr.equals("changePass")){%>active<%}%>">암호 변경</a></div>
 				<div class="col-md-9 d-flex align-items-stretch ftco-animate member_menu" id="form_user_constrat"><a href="My.uo?fr=constract" class="member-menu nav-link <%if(fr.equals("constract")){%>active<%}%>">계약 관리</a></div>
 				<div class="col-md-9 d-flex align-items-stretch ftco-animate member_menu" id="form_user_chat"><a href="My.uo?fr=chat" class="member-menu nav-link <%if(fr.equals("chat")){%>active<%}%>">채팅</a></div>
 				<div class="col-md-9 d-flex align-items-stretch ftco-animate member_menu" id="form_join_user"><a href="Logout.uo" class="member-menu nav-link">로그아웃</a></div>

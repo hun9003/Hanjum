@@ -1,5 +1,5 @@
   
-<%@page import="com.hanjum.user.vo.PageInfo"%>
+<%@page import="com.hanjum.vo.PageInfo"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.hanjum.user.vo.UserBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"

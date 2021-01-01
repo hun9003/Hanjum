@@ -143,7 +143,7 @@
 		}); // click 종료
 	
 		// 이메일 인증번호 재전송
-		$('#mail_check2').click(function() {
+		$('#code_check').click(function() {
 		var email = $('#user_email').val() + "@" + $('#user_email2').val();
 		alert("인증번호를 " + email + "로 재발송합니다.");
 		$.ajax({
@@ -165,8 +165,11 @@
 					$('#codeMessage').css("color","#00e673");	
 					$('#codeMessage').html("메일 인증을 성공적으로 마쳤습니다. <br>");
 					$('#codeCheck').hide();
-					$('#user_email3').hide();
-					$('#mailSet2').show();
+					$('#user_email').attr("readonly",true);
+					$('#user_email2').attr("readonly",true);
+					$('#selectEmail').attr("readonly",true);
+//					$('#user_email3').hide();
+//					$('#mailSet2').show();
 					checkEmailResult = true;
 					} else if(data == 0) {
 					$('#codeMessage').css("color","#ff471a");

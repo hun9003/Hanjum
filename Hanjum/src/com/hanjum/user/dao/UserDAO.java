@@ -622,12 +622,14 @@ public class UserDAO {
 				pstmt=con.prepareStatement(sql);
 				pstmt.setInt(1, rs.getInt(1));
 				insertCount=pstmt.executeUpdate();
+				userExp(user_id, -20);
 			} else {
 				sql = "insert into user_likeuser (user_id,like_userid) values(?,?)";
 				pstmt=con.prepareStatement(sql);
 				pstmt.setString(1, user_id);
 				pstmt.setString(2, like_userid);
 				insertCount=pstmt.executeUpdate();
+				userExp(user_id, 20);
 			}
 		} 
 		catch (SQLException e) {
@@ -637,7 +639,34 @@ public class UserDAO {
 		}
 		return insertCount;
 	}
-	
+	public int updateLike(String user_id) {
+		int updateCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select count(user_id) from user_likeuser where user_id = ?";
+		try {
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, user_id);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				sql = "update editor set editor_like=? where user_id=? "; 
+				pstmt=con.prepareStatement(sql);
+				pstmt.setInt(1, rs.getInt(1));
+				pstmt.setString(2, user_id);
+				updateCount=pstmt.executeUpdate();
+			} 
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		
+		
+		
+		return updateCount;
+	}
 	
 	public int userCheckId(String user_id) {
 		int data = 0;
@@ -778,6 +807,8 @@ public class UserDAO {
 		int selectCount = 0;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+		System.out.println(user_id);
+		System.out.println(email);
 		try {
 			String sql = "select * from user where user_id=? and user_email=?";
 			pstmt=con.prepareStatement(sql);
@@ -1077,7 +1108,7 @@ public class UserDAO {
 					reportBean.setReport_content(rs.getString("report_content"));
 					reportBean.setReport_id(Integer.parseInt(rs.getString("report_id")));
 					reportBean.setReport_type(Integer.parseInt(rs.getString("report_type")));
-					reportBean.setReport_userId(rs.getString("report_userid"));
+					reportBean.setReport_userId(rs.getString("report_from_user"));
 					reportList.add(reportBean);
 					
 				}
@@ -1115,7 +1146,7 @@ public class UserDAO {
 					reportBean.setReport_content(rs.getString("report_content"));
 					reportBean.setReport_id(Integer.parseInt(rs.getString("report_id")));
 					reportBean.setReport_type(Integer.parseInt(rs.getString("report_type")));
-					reportBean.setReport_userId(rs.getString("report_userid"));
+					reportBean.setReport_userId(rs.getString("report_from_user"));
 					reportList.add(reportBean);
 				}
 			
@@ -1207,5 +1238,96 @@ public class UserDAO {
 			}
 			return list;
 		}
+
+		public int getLikeListCount(String user_id) {
+			int listCount = 0;
+			
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			
+			try {
+				// SELECT 구문을 사용하여 전체 게시물 수 조회
+				// => count()함수 사용, 조회 대상 컬럼 1개 지정하거나 * 사용
+				String sql = "select Count(user_id) from user_likeuser where user_id=?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, user_id);
+				rs=pstmt.executeQuery();
+				
+				// 조회 결과가 있을 경우 (= 게시물이 하나라도 존재하는 경우)
+				// => 게시물 수를 listCount에 저장
+				if(rs.next()) {
+					listCount = rs.getInt(1);
+				}
+				
+			} catch (SQLException e) {
+				System.out.println("getListCount() 오류! - " + e.getMessage());
+				e.printStackTrace();
+			} finally {
+				// 자원 반환
+				// 주의! DAO 클래스 내에서 Connection 객체 반환 금지!
+				close(rs);
+				close(pstmt);
+			}
+			
+			
+			
+			return listCount;
+		}
+
+		public ArrayList<String> getLikeList(int page, int limit, String user_id) {
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			ArrayList<String> list = null;
+			int startRow = (page-1) * limit;
+			
+			try {
+				String sql = "select * from user_likeuser where user_id =? limit ?,?";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setString(1, user_id);
+				pstmt.setInt(2, startRow);
+				pstmt.setInt(3, limit);
+				rs=pstmt.executeQuery();
+				list = new ArrayList<String>();
+				while(rs.next()) {
+					String like_userid;
+					like_userid = rs.getString("like_userid");
+					list.add(like_userid);
+				}
+				
+			}  catch (Exception e) {
+				System.out.println("updatePhoto() 오류! "+e.getMessage());
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+				close(rs);
+			}
+			return list;
+		}
+
+		public int getLike(String user_id, String id) {
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			int count = 0;
+			
+			try {
+				String sql = "select * from user_likeuser where user_id =? and like_userid =? ";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setString(1, user_id);
+				pstmt.setString(2, id);
+				rs=pstmt.executeQuery();
+				if(rs.next()) {
+					count = 1;
+				}
+			}  catch (Exception e) {
+				System.out.println("updatePhoto() 오류! "+e.getMessage());
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+				close(rs);
+			}
+			return count;
+		}
+
+		
 	
 }

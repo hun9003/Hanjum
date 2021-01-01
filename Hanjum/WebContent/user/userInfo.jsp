@@ -146,6 +146,13 @@ input[name=editor_status]:checked + .toggle_label:after { left:28px;}
             		if(readyStatusStr != null){
             			readyStatus = Integer.parseInt(readyStatusStr);
             		}
+            		%>
+            		<div class="form-group">
+       			 <span class="form-group-content">
+       			 	팔로워 수 <span class="float-r m-r-10"><span class="color-primary"><%=editorInfo.get("follower") %></span>명</span>
+       			 </span>             
+                    </div>
+                    <%
             	 %>
              <input type="hidden" id="editor_min_price_val" name="editor_min_price_val" value="<%=editorInfo.get("min_price_val") %>">
              <input type="hidden" id="editor_max_price_val" name="editor_max_price_val" value="<%=editorInfo.get("max_price_val") %>">

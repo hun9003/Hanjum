@@ -26,6 +26,7 @@
              </div>
          </form>
          <p class="text-center">오늘 처음 오셨나요? <a id="join_btn" href="My.uo?fr=join">Sign Up</a></p>
+          <p class="text-center">비밀번호를 잊으셨나요? <a id="join_btn" href="My.uo?fr=pass">Find Password</a></p>
      </div>
      </body>
      </html>

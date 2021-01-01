@@ -168,8 +168,8 @@ $(document).ready( function () {
 	<thead>
 				<tr id="tr_top" >
 					<td class="td_name">신고 번호</td>
-					<td class="td_name">피해 유저</td>
 					<td class="td_name">가해 유저</td>
+					<td class="td_name">피해 유저</td>
 					<td class="td_name">신고 타입</td>
 					<td class="td_name">내용</td>
 				</tr>

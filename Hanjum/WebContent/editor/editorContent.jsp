@@ -306,7 +306,9 @@
 	        %>
 	        <a class="btn btn-primary submit m-l-10" type="button" id="UpdateBtn" href="EditorUpdate.bo?page=<%=nowPage%>&board_id=<%=editorBean.getBoard_id()%>">수정하기</a> 
 	        <%
-	        }
+	        } else{%>
+	        	 <a class="btn btn-primary submit m-l-10" type="button" id="UpdateBtn" href="UserLike.uo?user_id=<%=editorBean.getUser_id()%>&like_userid=<%=userBean.getUser_id()%>"><%int like = (int)request.getAttribute("like"); if(like==1){%>좋아요 취소<%}else{%>좋아요<%}%></a> 
+	        <%}
 	        %>
 	        </div>
         </div>

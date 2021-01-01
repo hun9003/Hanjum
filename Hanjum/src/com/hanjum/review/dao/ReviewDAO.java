@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.hanjum.review.vo.ReviewBean;
+import com.hanjum.user.dao.UserDAO;
+
 import static com.hanjum.db.JdbcUtil.*;
 
 public class ReviewDAO {
@@ -58,6 +60,18 @@ private ReviewDAO() {}
 			
 			insertCount = pstmt.executeUpdate();
 			
+			// 리뷰등록 성공 시 경험치 부여
+			if(insertCount>0) {
+				UserDAO userDAO = UserDAO.getInstance();
+				userDAO.setConnection(con);
+				userDAO.userExp(reviewBean.getReview_from_id(), 30); // 리뷰어 에게는 Exp30 고정적인수치 부여
+				int score = reviewBean.getReview_speciality()+
+						reviewBean.getReview_satisfaction()+
+						reviewBean.getReview_positivity()+
+						reviewBean.getReview_communication();
+				score /= 4;
+				userDAO.userExp(reviewBean.getUser_id(), score*10); // 리뷰 대상자에게는 평균점수*10 Exp 부여
+			}
 			
 		}catch (SQLException e) {
 			System.out.println("insertArticle() 오류! - " + e.getMessage());
@@ -218,17 +232,37 @@ private ReviewDAO() {}
 			int deleteCount = 0;
 			
 			PreparedStatement pstmt = null;
-			
+			ResultSet rs = null;
 			try {
-				String sql = "DELETE FROM review WHERE review_id=?";
+				String sql = "select * from review where review_id=?";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, review_id);
-				deleteCount = pstmt.executeUpdate();
+				rs=pstmt.executeQuery();
+				
+				if(rs.next()) {
+					sql = "DELETE FROM review WHERE review_id=?";
+					pstmt = con.prepareStatement(sql);
+					pstmt.setInt(1, review_id);
+					deleteCount = pstmt.executeUpdate();
+					if(deleteCount > 0) {
+						UserDAO userDAO = UserDAO.getInstance();
+						userDAO.setConnection(con);
+						userDAO.userExp(rs.getString("review_from_id"), -30);; // 리뷰어에게 부여됐던 Exp30 삭감
+						int score = rs.getInt("review_speciality")+
+								rs.getInt("review_satisfaction")+
+								rs.getInt("review_positivity")+
+								rs.getInt("review_communication");
+						score /= 4;
+						score *= -1;
+						userDAO.userExp(rs.getString("user_id"), score*10); // 리뷰 대상자에게 부여됐던 평균점수*10 Exp 삭감
+					}
+				}
 				
 			} catch (SQLException e) {
 				System.out.println("deleteArticle() 오류! - " + e.getMessage());
 				e.printStackTrace();
 			} finally {
+				close(rs);
 				close(pstmt);
 			}
 			

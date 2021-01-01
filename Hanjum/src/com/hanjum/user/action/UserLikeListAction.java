@@ -8,43 +8,27 @@ import javax.servlet.http.HttpServletResponse;
 import com.hanjum.action.Action;
 import com.hanjum.user.service.UserProService;
 import com.hanjum.vo.PageInfo;
-import com.hanjum.user.vo.ReportBean;
 import com.hanjum.user.vo.UserBean;
 import com.hanjum.vo.ActionForward;
 
-public class UserSearchReportManageAction implements Action {
-
+// ㅠ 팔로우한사람 누군지 보는 리스트인데 저장된 데이터가 아이디밖에없어서 만들고나니 쓸데가없음... 우선 보류
+public class UserLikeListAction implements Action{
+	
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		ActionForward forward = null;
-		String search = request.getParameter("search");
-		String searchType = request.getParameter("searchType");
-		
-		// 검색항목을 컬럼명에 맞게 변환
-		if(searchType.equals("신고 번호")) {
-			searchType="report_id";
-		} else if (searchType.equals("피해 유저")) {
-			searchType="report_from_user";
-		} else if (searchType.equals("가해 유저")) {
-			searchType="user_id";
-		} else if (searchType.equals("신고 타입")){
-			searchType="report_type";
-		} else {
-			System.out.println("널임");
-		}
-		
+		ActionForward forward = new ActionForward();
 		int page = 1; // 현재 페이지 번호를 저장할 변수
 		int limit = 10; // 페이지 당 표시할 게시물 수를 결정하는 변수
-		
+		String user_id = request.getParameter("user_id");
 		if(request.getParameter("page") != null) {
 			page = Integer.parseInt(request.getParameter("page"));
 		}
-		UserProService userReportManageService = new UserProService();
-		int listCount = userReportManageService.getReportListCount(search,searchType);
-		System.out.println("전체 게시물 수 : " + listCount);
+		UserProService userLikeListService = new UserProService();
+		int listCount = userLikeListService.getLikeListCount(user_id);
+		System.out.println("전체 팔로워 수 : " + listCount);
 		
-		ArrayList<ReportBean> reportList = new ArrayList<ReportBean>();
-		reportList = userReportManageService.getReportList(page,limit,search,searchType);
+		ArrayList<String> likeList = new ArrayList<String>();
+		likeList = userLikeListService.getLikeList(page,limit,user_id);
 		
 		int maxPage = (int)((double)listCount / limit + 0.95);
 		
@@ -58,12 +42,11 @@ public class UserSearchReportManageAction implements Action {
 		
 		PageInfo pageInfo = new PageInfo(page, maxPage, startPage, endPage, listCount);
 		
-		request.setAttribute("reportList", reportList);
+		request.setAttribute("likeList", likeList);
 		request.setAttribute("pageInfo", pageInfo);
 		
 		forward = new ActionForward();
-		forward.setPath("/admin/admin_user_report.jsp");
-		
+		forward.setPath("");
 		return forward;
 	}
 

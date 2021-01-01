@@ -23,7 +23,10 @@ public class EditorInfoAction implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		System.out.println("EditorInfoAction!");
 		ActionForward forward = null;
-		
+		HttpSession session = request.getSession();
+		UserBean userBean = (UserBean)session.getAttribute("userBean");
+		String id = userBean.getUser_id();
+		System.out.println(id);
 		
 		int board_id = Integer.parseInt(request.getParameter("board_id"));
 		
@@ -45,6 +48,10 @@ public class EditorInfoAction implements Action {
 		int successCount = getSuccessService.getSuccessCount(user_id);
 		request.setAttribute("successCount", successCount);
 		
+		// 이편집자 좋아요 눌렀는가 확인
+		
+		request.setAttribute("like", userProService.getLike(user_id, id));
+		System.out.println("zzzz"+request.getAttribute("like"));
 		forward = new ActionForward();
 		forward.setPath("/editor/editorContent.jsp");
 		forward.setRedirect(false);
