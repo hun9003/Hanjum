@@ -13,6 +13,7 @@ import static com.hanjum.db.JdbcUtil.*;
 import com.hanjum.contract.vo.ContractBean;
 import com.hanjum.user.exception.LoginException;
 import com.hanjum.user.vo.EditorBean;
+import com.hanjum.user.vo.LikeBean;
 import com.hanjum.user.vo.PortfolioBean;
 import com.hanjum.user.vo.ReportBean;
 import com.hanjum.user.vo.UserBean;
@@ -1248,7 +1249,7 @@ public class UserDAO {
 			try {
 				// SELECT 구문을 사용하여 전체 게시물 수 조회
 				// => count()함수 사용, 조회 대상 컬럼 1개 지정하거나 * 사용
-				String sql = "select Count(user_id) from user_likeuser where user_id=?";
+				String sql = "select Count(user_id) from user_likeuser where like_userid=?";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, user_id);
 				rs=pstmt.executeQuery();
@@ -1274,24 +1275,25 @@ public class UserDAO {
 			return listCount;
 		}
 
-		public ArrayList<String> getLikeList(int page, int limit, String user_id) {
+		public ArrayList<LikeBean> getLikeList(String user_id) {
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
-			ArrayList<String> list = null;
-			int startRow = (page-1) * limit;
+			ArrayList<LikeBean> list = null;
 			
 			try {
-				String sql = "select * from user_likeuser where user_id =? limit ?,?";
+				String sql = "select * from user_likeuser l join editor e on l.user_id = e.user_id join user u on u.user_id = l.user_id where l.like_userid = ?";
 				pstmt=con.prepareStatement(sql);
 				pstmt.setString(1, user_id);
-				pstmt.setInt(2, startRow);
-				pstmt.setInt(3, limit);
 				rs=pstmt.executeQuery();
-				list = new ArrayList<String>();
+				list = new ArrayList<LikeBean>();
 				while(rs.next()) {
-					String like_userid;
-					like_userid = rs.getString("like_userid");
-					list.add(like_userid);
+					LikeBean likeBean = new LikeBean();
+					likeBean.setLike_id(rs.getInt("like_id"));
+					likeBean.setLike_userid(rs.getString("like_userid"));
+					likeBean.setEditor_photo(rs.getString("editor_photo"));
+					likeBean.setUser_id(rs.getString("user_id"));
+					likeBean.setUser_name(rs.getString("user_name"));
+					list.add(likeBean);
 				}
 				
 			}  catch (Exception e) {

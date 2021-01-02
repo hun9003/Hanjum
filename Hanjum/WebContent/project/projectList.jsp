@@ -266,7 +266,30 @@
           	</div>
             <div class="text p-4">
                 <h3><%=project.getBoard_subject() %></h3>
-                <p class="advisor"><%=project.getUser_id() %> <span><%=genre %></span></p>
+                <p class="advisor"><span class="userLv" style="font-weight:bold;
+	                <%
+	                if(project.getUser_level() >= 0 && project.getUser_level() < 20){
+	                	%>color:#cc00cc<%
+	                } else if(project.getUser_level() >= 20 && project.getUser_level() < 40){
+	                	%>color:#000066<%
+	                } else if(project.getUser_level() >= 40 && project.getUser_level() < 50){
+	                	%>color:#6666ff<%
+	                } else if(project.getUser_level() >= 50 && project.getUser_level() < 60){
+	                	%>color:#66cc66<%
+	                } else if(project.getUser_level() >= 60 && project.getUser_level() < 70){
+	                	%>color:#e6e600<%
+	                } else if(project.getUser_level() >= 70 && project.getUser_level() < 80){
+	                	%>color:#ffcc00<%
+	                } else if(project.getUser_level() >= 80 && project.getUser_level() < 90){
+	                	%>color:#e62e00<%
+	                } else if(project.getUser_level() >= 90){
+	                	%>background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red); -webkit-background-clip: text; color: transparent;<%
+	                } else {
+	                	%>color:#eeeeee<%
+	                }
+	                %>
+	                
+	                ;">Lv <%=project.getUser_level()%></span> <%=project.getUser_id() %> <span><%=genre %></span></p>
                 <ul class="d-flex justify-content-between">
                    <li><span class="flaticon-shower"></span><%=board_date %></li>
                    <li class="price"><%=min_price %>~<%=max_price %></li>

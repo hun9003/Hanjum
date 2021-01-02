@@ -75,8 +75,13 @@
     				"<span class='notice_close' onclick='noticeClose("+noticeBean.getNotice_id()+")'>&times;</span>"; break;
     		case 14: noticeContent = "<a href='"+noticeBean.getNotice_url()+"'>"+from_id+"님과의 프로젝트가 완료되었습니다.</a>"+
     				"<span class='notice_close' onclick='noticeClose("+noticeBean.getNotice_id()+")'>&times;</span>"; break;
-    		case 15: noticeContent = "<a href='"+noticeBean.getNotice_url()+"'>"+from_id+"님이 작성한 리뷰를 확인하세요!."+
+    		case 15: noticeContent = "<a href='"+noticeBean.getNotice_url()+"'>"+from_id+"님이 작성한 리뷰를 확인하세요!"+
     				"<span class='notice_close' onclick='noticeClose("+noticeBean.getNotice_id()+")'>&times;</span>"; break;
+    		case 16: noticeContent = "<a href='"+noticeBean.getNotice_url()+"'>"+from_id+"님이 프로젝트 지원요청을 하셨습니다."+
+    				"<span class='notice_close' onclick='noticeClose("+noticeBean.getNotice_id()+")'>&times;</span>"; break;
+    		case 17: noticeContent = "<a href='"+noticeBean.getNotice_url()+"'>"+from_id+"님에게 프로젝트 지원요청을 하셨습니다."+
+    				"<span class='notice_close' onclick='noticeClose("+noticeBean.getNotice_id()+")'>&times;</span>"; break;		
+    		
     		}
     	%>
     <div class="form-group-content notice_group">
@@ -133,7 +138,11 @@
     				"<span class='notice_close' onclick='noticeClose("+noticeBean.getNotice_id()+")'>&times;</span>"; break;
     		case 14: noticeContent = "<a href='"+noticeBean.getNotice_url()+"'>"+from_id+"님과의 프로젝트가 완료되었습니다.</a>"+
     				"<span class='notice_close' onclick='noticeClose("+noticeBean.getNotice_id()+")'>&times;</span>"; break;
-    		case 15: noticeContent = "<a href='"+noticeBean.getNotice_url()+"'>"+from_id+"님이 작성한 리뷰를 확인하세요!.</a>"+
+    		case 15: noticeContent = "<a href='"+noticeBean.getNotice_url()+"'>"+from_id+"님이 작성한 리뷰를 확인하세요!</a>"+
+    				"<span class='notice_close' onclick='noticeClose("+noticeBean.getNotice_id()+")'>&times;</span>"; break;
+    		case 16: noticeContent = "<a href='"+noticeBean.getNotice_url()+"'>"+from_id+"님이 프로젝트 지원요청을 하셨습니다."+
+    				"<span class='notice_close' onclick='noticeClose("+noticeBean.getNotice_id()+")'>&times;</span>"; break;
+    		case 17: noticeContent = "<a href='"+noticeBean.getNotice_url()+"'>"+from_id+"님에게 프로젝트 지원요청을 하셨습니다."+
     				"<span class='notice_close' onclick='noticeClose("+noticeBean.getNotice_id()+")'>&times;</span>"; break;
     		}
     	%> 

@@ -37,6 +37,7 @@ public class EditorInfoAction implements Action {
 		EditorBean editorBean = editorProService.getEditor(user_id);
 		request.setAttribute("editorBean", editorBean);
 		
+		
 		UserProService userProService = new UserProService();
 		int pf_count = userProService.getCountPortfolio(user_id);
 		request.setAttribute("pf_count", pf_count);

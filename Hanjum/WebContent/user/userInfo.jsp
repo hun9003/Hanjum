@@ -75,6 +75,7 @@ input[name=editor_status]:checked + .toggle_label:after { left:28px;}
 #editor_photo_form { display:none; }
 .new-count {position: relative;}
 .new-count-content {position:absolute; top:-10px; left:49px; display:inline-block; line-height:17px; text-align:center; width: 16px; height: 16px; font-size: 13px; color:#fff; font-weight:500; background: #f00; border-radius: 100%;}
+.user_lv { font-weight: bold;}
 </style>
 </head>
 <body>
@@ -97,7 +98,30 @@ input[name=editor_status]:checked + .toggle_label:after { left:28px;}
               <h3 class="mb-4">My <span id="USER_ID" class=".color-primary m-l-20"><%=userBean.getUser_id()%></span><span class="float-r m-r-10"><%=user_type %><span></span></span></h3>
              <div class="form-group">
              <span class="form-group-content" style="overflow: visible;">
-             <span class="user_lv">Lv <%=userBean.getUser_level() %></span>
+             <span class="user_lv" style="
+	                <%
+	                if(userBean.getUser_level() >= 0 && userBean.getUser_level() < 20){
+	                	%>color:#cc00cc<%
+	                } else if(userBean.getUser_level() >= 20 && userBean.getUser_level() < 40){
+	                	%>color:#000066<%
+	                } else if(userBean.getUser_level() >= 40 && userBean.getUser_level() < 50){
+	                	%>color:#6666ff<%
+	                } else if(userBean.getUser_level() >= 50 && userBean.getUser_level() < 60){
+	                	%>color:#66cc66<%
+	                } else if(userBean.getUser_level() >= 60 && userBean.getUser_level() < 70){
+	                	%>color:#e6e600<%
+	                } else if(userBean.getUser_level() >= 70 && userBean.getUser_level() < 80){
+	                	%>color:#ffcc00<%
+	                } else if(userBean.getUser_level() >= 80 && userBean.getUser_level() < 90){
+	                	%>color:#e62e00<%
+	                } else if(userBean.getUser_level() >= 90){
+	                	%>background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red); -webkit-background-clip: text; color: transparent;<%
+	                } else {
+	                	%>color:#eeeeee<%
+	                }
+	                %>
+	                
+	                ;">Lv <%=userBean.getUser_level()%></span>
              
              <input type="hidden" id="user_id" name="user_id" value="<%=userBean.getUser_id() %>">
 
@@ -206,11 +230,6 @@ input[name=editor_status]:checked + .toggle_label:after { left:28px;}
              </div>
              <div class="form-group">
 			 <span class="form-group-content">
-			 	녹화에 이용된 캠 <span class="float-r m-r-10"><span id="editor_work" class="color-primary"><%=editorInfo.get("work") %></span></span><span id="edit_work" class="edit edit_ready m-r-10 float-r"><span>수정</span></span>
-			 </span>             
-             </div>
-             <div class="form-group">
-			 <span class="form-group-content">
 			 	실물 미팅 <span class="float-r m-r-10"><span id="editor_meeting" class="color-primary"><%=editorInfo.get("meeting") %></span></span><span id="edit_meeting" class="edit edit_ready m-r-10 float-r"><span>수정</span></span>
 			 </span>             
              </div>
@@ -241,16 +260,17 @@ input[name=editor_status]:checked + .toggle_label:after { left:28px;}
              } else { 
             	 %>
             	 <div class="form-group">
-				 <span class="form-group-content">
-				 	<span class="float-r m-r-10">
+				 <span class="form-group-content float-r m-r-10" style="display: inline-block;">
 				 	<a href="Logout.uo" class="m-l-10">로그아웃</a>
+				 </span>            
+				 <span class="form-group-content float-r m-r-10" style="display: inline-block;">
 				 	<a href="My.uo?fr=info" class="m-l-10">회원정보 더보기</a>
-				 	</span>
-				 </span>             
+				 </span>    
 	             </div>
             	 <%
              }
              %>
+             <div style="clear: both;"></div>
              <div class="form-group">
 			 <span class="form-group-content">
 			 	<span class="float-r m-r-10">

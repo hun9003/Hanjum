@@ -12,6 +12,13 @@ public class BoardBean {
 	private int board_type;
 	private String user_id;
 	private String user_name;
+	private int user_level;
+	public int getUser_level() {
+		return user_level;
+	}
+	public void setUser_level(int user_level) {
+		this.user_level = user_level;
+	}
 	public String getUser_name() {
 		return user_name;
 	}

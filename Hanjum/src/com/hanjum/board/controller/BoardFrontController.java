@@ -19,6 +19,7 @@ import com.hanjum.board.action.EditorUpdateProAction;
 import com.hanjum.board.action.EditorWriteProAction;
 import com.hanjum.board.action.ProjectApplyCancleProAction;
 import com.hanjum.board.action.ProjectApplyProAction;
+import com.hanjum.board.action.ProjectApplySendAction;
 import com.hanjum.board.action.ProjectContractCancleProAction;
 import com.hanjum.board.action.ProjectContractSuccessProAction;
 import com.hanjum.board.action.ProjectDeleteProAction;
@@ -105,6 +106,9 @@ public class BoardFrontController extends HttpServlet {
 			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
 		} else if(command.equals("/ProjectContractSuccessPro.bo")) { // 편집자 검색 리스트 액션
 			action = new ProjectContractSuccessProAction();
+			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
+		} else if(command.equals("/ProjectApplySend.bo")) { // 편집자 검색 리스트 액션
+			action = new ProjectApplySendAction();
 			try {forward = action.execute(request, response);} catch (Exception e) {e.printStackTrace();}
 		}
 		

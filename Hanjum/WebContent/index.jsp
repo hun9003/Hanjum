@@ -32,6 +32,7 @@
     <link rel="stylesheet" href="css/style.css">
 	<style>
 		.login-wrap { margin-top: -480px;}
+		.userLv { font-weight: bold;}
 	</style>
 	
 </head>
@@ -244,7 +245,30 @@
 	          	</div>
 	            <div class="text p-4">
 	                <h3><%=project.getBoard_subject() %></h3>
-	                <p class="advisor"><%=project.getUser_name() %> <span><%=genre %></span></p>
+	                <p class="advisor"><span class="userLv" style="
+	                <%
+	                if(project.getUser_level() >= 0 && project.getUser_level() < 20){
+	                	%>color:#cc00cc<%
+	                } else if(project.getUser_level() >= 20 && project.getUser_level() < 40){
+	                	%>color:#000066<%
+	                } else if(project.getUser_level() >= 40 && project.getUser_level() < 50){
+	                	%>color:#6666ff<%
+	                } else if(project.getUser_level() >= 50 && project.getUser_level() < 60){
+	                	%>color:#66cc66<%
+	                } else if(project.getUser_level() >= 60 && project.getUser_level() < 70){
+	                	%>color:#e6e600<%
+	                } else if(project.getUser_level() >= 70 && project.getUser_level() < 80){
+	                	%>color:#ffcc00<%
+	                } else if(project.getUser_level() >= 80 && project.getUser_level() < 90){
+	                	%>color:#e62e00<%
+	                } else if(project.getUser_level() >= 90){
+	                	%>background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red); -webkit-background-clip: text; color: transparent;<%
+	                } else {
+	                	%>color:#eeeeee<%
+	                }
+	                %>
+	                
+	                ;">Lv <%=project.getUser_level()%></span> <%=project.getUser_name() %> <span><%=genre %></span></p>
 	                <ul class="d-flex justify-content-between">
 	                   <li><span class="flaticon-shower"></span><%=projectDate %></li>
 	                   <li class="price"><%=min_price %> ~ <%=max_price %></li>
@@ -360,7 +384,30 @@
 	                   <div class="user-img" style="background-image: url(editorUserPhotoUpload/<%=editorBean.getBoard_ed_photo()%>)"></div>
 	                   <div class="pl-3">
 	                      <p class="name"><%=editorBean.getUser_name() %></p>
-	                      <span class="position">편집자</span>
+	                      <span class="position"><span class="userLv" style="
+	                <%
+	                if(editorBean.getUser_level() >= 0 && editorBean.getUser_level() < 20){
+	                	%>color:#cc00cc<%
+	                } else if(editorBean.getUser_level() >= 20 && editorBean.getUser_level() < 40){
+	                	%>color:#000066<%
+	                } else if(editorBean.getUser_level() >= 40 && editorBean.getUser_level() < 50){
+	                	%>color:#6666ff<%
+	                } else if(editorBean.getUser_level() >= 50 && editorBean.getUser_level() < 60){
+	                	%>color:#66cc66<%
+	                } else if(editorBean.getUser_level() >= 60 && editorBean.getUser_level() < 70){
+	                	%>color:#e6e600<%
+	                } else if(editorBean.getUser_level() >= 70 && editorBean.getUser_level() < 80){
+	                	%>color:#ffcc00<%
+	                } else if(editorBean.getUser_level() >= 80 && editorBean.getUser_level() < 90){
+	                	%>color:#e62e00<%
+	                } else if(editorBean.getUser_level() >= 90){
+	                	%>background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red); -webkit-background-clip: text; color: transparent;<%
+	                } else {
+	                	%>color:#eeeeee<%
+	                }
+	                %>
+	                
+	                ;">Lv <%=editorBean.getUser_level()%> 편집자</span></span> 
 	                  </div>
 	              </div>
 	          </div>

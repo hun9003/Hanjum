@@ -9,6 +9,7 @@ import com.hanjum.contract.vo.ContractBean;
 import com.hanjum.user.dao.UserDAO;
 import com.hanjum.user.exception.LoginException;
 import com.hanjum.user.vo.EditorBean;
+import com.hanjum.user.vo.LikeBean;
 import com.hanjum.user.vo.PortfolioBean;
 import com.hanjum.user.vo.ReportBean;
 import com.hanjum.user.vo.UserBean;
@@ -642,13 +643,13 @@ public class UserProService {
 		return listCount;
 	}
 
-	public ArrayList<String> getLikeList(int page, int limit, String user_id) {
+	public ArrayList<LikeBean> getLikeList(String user_id) {
 		System.out.println("UserProService - getUserContractList()");
 		Connection con = getConnection();
 		UserDAO userDAO = UserDAO.getInstance();
 		userDAO.setConnection(con);
 		
-		ArrayList<String> list = userDAO.getLikeList(page,limit,user_id);
+		ArrayList<LikeBean> list = userDAO.getLikeList(user_id);
 		
 		close(con);
 		

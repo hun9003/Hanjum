@@ -117,13 +117,7 @@
 					<div class="check_list"><input type="radio" id="upload3" name="editor_upload" value="3"><span class="checkbox">웹하드</span></div>
 					<div class="check_list"><input type="radio" id="upload4" name="editor_upload" value="4"><span class="checkbox">모두 가능</span></div>
                 </div>
-                <div class="form-group">
-                <label class="label has-focus label-primary">녹화에 이용된 캠</label>
-                	<div class="check_list"><input type="radio" id="work1" name="editor_work" value="1"><span class="checkbox">1캠</span></div>
-					<div class="check_list"><input type="radio" id="work2" name="editor_work" value="2"><span class="checkbox">2캠</span></div>
-					<div class="check_list"><input type="radio" id="work3" name="editor_work" value="3"><span class="checkbox">3캠</span></div>
-					<div class="check_list"><input type="radio" id="work4" name="editor_work" value="4"><span class="checkbox">4캠 이상</span></div>
-                </div>
+                <input type="hidden" name="editor_work" value="1">
                 <div class="form-group">
                 <label class="label has-focus label-primary">실물 미팅</label>
 	                <div class="check_list"><input type="radio" id="meeting1" name="editor_meeting" value="1"><span class="checkbox">가능</span></div>

@@ -76,10 +76,33 @@
 							<div class="img align-self-stretch" style="width:255px; background-size:255px; background-image: url(editorUserPhotoUpload/<%=editorBean.getBoard_ed_photo()%>);"></div>
 						</div>
 						<div class="text pt-3">
-							<h3><%=editorBean.getUser_name() %></h3>
-							<span class="position mb-2">편집자</span>
+							<h3 style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><%=editorBean.getBoard_subject() %></h3>
+							<span class="position mb-2"><span class="userLv" style="font-weight:bold;
+	                <%
+	                if(editorBean.getUser_level() >= 0 && editorBean.getUser_level() < 20){
+	                	%>color:#cc00cc<%
+	                } else if(editorBean.getUser_level() >= 20 && editorBean.getUser_level() < 40){
+	                	%>color:#000066<%
+	                } else if(editorBean.getUser_level() >= 40 && editorBean.getUser_level() < 50){
+	                	%>color:#6666ff<%
+	                } else if(editorBean.getUser_level() >= 50 && editorBean.getUser_level() < 60){
+	                	%>color:#66cc66<%
+	                } else if(editorBean.getUser_level() >= 60 && editorBean.getUser_level() < 70){
+	                	%>color:#e6e600<%
+	                } else if(editorBean.getUser_level() >= 70 && editorBean.getUser_level() < 80){
+	                	%>color:#ffcc00<%
+	                } else if(editorBean.getUser_level() >= 80 && editorBean.getUser_level() < 90){
+	                	%>color:#e62e00<%
+	                } else if(editorBean.getUser_level() >= 90){
+	                	%>background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red); -webkit-background-clip: text; color: transparent;<%
+	                } else {
+	                	%>color:#eeeeee<%
+	                }
+	                %>
+	                
+	                ;">Lv <%=editorBean.getUser_level()%></span> <%=editorBean.getUser_name() %></span>
 							<div class="faded">
-								<p style="height: 80px; text-overflow: ellipsis;"><%=editorBean.getBoard_subject() %></p>
+								<p style="height: 80px; text-overflow: ellipsis;"><%=editorBean.getBoard_content() %></p>
 								<p class="star">
 				                    <%
 			for(int j = 0; j < 5; j++){

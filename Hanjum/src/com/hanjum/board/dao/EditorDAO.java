@@ -42,6 +42,7 @@ public class EditorDAO {
 				editorBean = new EditorBean();
 				editorBean.setBoard_id(rs.getInt("board_id"));
 				editorBean.setUser_id(rs.getString("user_id"));
+				editorBean.setUser_level(rs.getInt("user_level"));
 				editorBean.setBoard_content(rs.getString("board_content"));
 				editorBean.setBoard_date(rs.getTimestamp("board_date"));
 				editorBean.setBoard_subject(rs.getString("board_subject"));
@@ -60,6 +61,11 @@ public class EditorDAO {
 				editorBean.setBoard_ed_upload(rs.getInt("board_ed_upload"));
 				editorBean.setBoard_ed_work(rs.getInt("board_ed_work"));
 				editorBean.setUser_score(rs.getInt("user_score"));
+				
+				sql = "UPDATE board SET board_readcount = board_readcount+1 WHERE board_id = ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, rs.getInt("board_id"));
+				pstmt.executeUpdate();
 			}
 		} catch (Exception e) {
 			System.out.println("selectProjectInfo() 오류! - " + e.getMessage());
@@ -249,6 +255,7 @@ public class EditorDAO {
 				editorBean.setBoard_type(rs.getInt("board_type"));
 				editorBean.setUser_id(rs.getString("user_id"));
 				editorBean.setUser_name(rs.getString("user_name"));
+				editorBean.setUser_level(rs.getInt("user_level"));
 				editorBean.setBoard_ed_address(rs.getString("board_ed_address"));
 				editorBean.setBoard_ed_content_detail(rs.getString("board_ed_content_detail"));
 				editorBean.setBoard_ed_fort(rs.getInt("board_ed_fort"));

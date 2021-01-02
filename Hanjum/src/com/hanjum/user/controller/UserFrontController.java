@@ -38,6 +38,7 @@ import com.hanjum.user.action.UserInfoMyAction;
 import com.hanjum.user.action.UserInsertEditorProAction;
 import com.hanjum.user.action.UserInsertProAction;
 import com.hanjum.user.action.UserLikeAction;
+import com.hanjum.user.action.UserLikeListAction;
 import com.hanjum.vo.ActionForward;
 
 @WebServlet("*.uo")
@@ -371,6 +372,13 @@ public class UserFrontController extends HttpServlet {
 			}
 		} else if (command.equals("/UserSearchReportManage.uo")) {
 			action = new UserSearchReportManageAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/UserLikeList.uo")) {
+			action = new UserLikeListAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {

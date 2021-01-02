@@ -27,22 +27,9 @@
 	<link rel="stylesheet" href="css/flaticon.css">
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/util.css">
+	<link rel="stylesheet" href="css/project.css">
+	<link rel="stylesheet" href="css/layer.css">
 	
-	
-	<style>
-		.check_list { display: inline-block; padding:10px;}
-		.check_list span { margin-left: 10px;}
-		.label-primary { color: #4986fc !important; }
-		.form-group-content {text-align: right;}
-		.form-group:hover > .form-group-content{
-			font-weight: bold;
-		}
-		.board_ref {
-		max-width:560px;
-		max-height:315px;
-		width:90%;
-		}
-	</style>
 	<%
 	if(session.getAttribute("userBean")==null){
 	%>
@@ -269,6 +256,7 @@
         if(userBean != null){
 	        if(userBean.getUser_id().equals(project.getUser_id()) && project.getBoard_creator_status() == 0){
 	        %>
+	       	<a class="btn btn-primary submit m-r-10" type="button" id="ApplySendBtn" data-href="UserLikeList.uo?user_id=<%=project.getUser_id()%>">지원요청</a> 
 	        <a class="btn btn-primary submit m-r-10" type="button" id="UpdateBtn" href="ProjectUpdate.bo?page=<%=nowPage%>&board_id=<%=project.getBoard_id()%>">수정하기</a> 
 			<a class="btn btn-light submit m-r-10" type="button" id="DeleteBtn" href = 'ProjectDeletePro.bo?board_id=<%=project.getBoard_id()%>'>삭제하기</a>
 	        <%
@@ -301,9 +289,54 @@
         
         </div>
 </div>
+
 </section>
 			<jsp:include page="../inc/script.jsp"/>
+			<div class="layerForm" id="write-layer">
+						<div class="layer-content" id="write-layer-content">
+						<span class="close" id="close-write">&times;</span>
+						<div class="layer-container">
+			<!-- 			페이지가 들어갈 공간 -->
+						</div>
+						</div>
+			</div>
 		<script type="text/javascript">
+			 var modal = $(".layerForm"); 
+			 var $container = $('.layer-container');
+			 var $content = $('#write-layer-content'); // 회원가입 페이지가 들어갈 공간
+			 function toggleModal() { 
+//	             var show = modal.classList.toggle("show-layer");
+				if(!modal.attr("class").includes("show-layer")){  // 이거는 페이지를 여는 스위치 show-layer가 만약 없다면
+					modal.addClass('show-layer'); // 클래스 삽입
+					$container.load('ProjectWrite.bo');
+				} else { // 만약 있다면 닫아야 하니까
+				 	$container.empty();	 // 불러왔던 페이지를 다 없애고 (empty() 함수)
+					modal.removeClass('show-layer'); // 삽입했던 show-layer 클래스 삭제
+					if ($content.attr("class") == "layer-login-content") {
+						$content.removeClass('layer-login-content');
+						$content.addClass('layer-content');			
+					} else if ($content.attr("class") == "layer-join-content") {
+						$content.removeClass('layer-join-content');
+						$content.addClass('layer-content');			
+					}
+				}
+	         }
+			
+		     function windowOnClick(event) {
+				var target = $(event.target);
+					if(target.is(".layerForm")){
+						toggleModal()
+					}
+		     }
+		     
+		     function applySend(name, id){
+		    	var cfSend = confirm(name+"님께 프로젝트 지원요청을 보내시겠습니까?");
+		     	if(cfSend){
+		     		location.href = "ProjectApplySend.bo?board_id=<%=project.getBoard_id()%>&writer_id=<%=project.getUser_id()%>&page=<%=nowPage%>&user_id="+id;
+		     	}
+		     
+		     }
+		     
 			$(document).ready(function(){
 				$("#ApplyBtn").click(function(){
 					
@@ -321,6 +354,23 @@
 							alert("<%=min_price %> ~ <%=max_price %> 사이의 금액으로 지원하실수 있습니다.");
 						}
 					}
+				})
+				$(".layer-btn").click(function(){
+					toggleModal();
+				});
+				$(".close").click(function(){
+					toggleModal();
+				});
+				$(window).click(function(e){
+					windowOnClick(e);
+				});
+				$("#ApplySendBtn").click(function(){
+					$content.removeClass('layer-content'); // 회원가입 페이지만큼 공간을 키워야 돼서 미리 만들어놓은 css 적용
+													   // 있던 클래스 삭제
+					$content.addClass('layer-join-content'); // 미리 설정해놓은 join 전용 클래스 삽입
+					modal.addClass('show-layer');			// 그리고 숨겨놓은 공간을 열어야 해서 display: block 로
+															// 설정을 바꿔주는 show-layer 클래스 삽입
+					$container.load($(this).attr('data-href'));	
 				})
 			})
 			

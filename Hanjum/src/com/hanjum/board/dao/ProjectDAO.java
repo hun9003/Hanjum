@@ -438,6 +438,7 @@ public class ProjectDAO {
 				projectBean.setBoard_type(rs.getInt("board_type"));
 				projectBean.setUser_id(rs.getString("user_id"));
 				projectBean.setUser_name(rs.getString("user_name"));
+				projectBean.setUser_level(rs.getInt("user_level"));
 				projectBean.setBoard_creator_cam_num(rs.getInt("board_creator_cam_num"));
 				projectBean.setBoard_creator_content_detail(rs.getString("board_creator_content_detail"));
 				projectBean.setBoard_creator_cre_max_price(rs.getInt("board_creator_cre_max_price"));
@@ -505,6 +506,7 @@ public class ProjectDAO {
 				projectBean.setBoard_type(rs.getInt("board_type"));
 				projectBean.setUser_id(rs.getString("user_id"));
 				projectBean.setUser_name(rs.getString("user_name"));
+				projectBean.setUser_level(rs.getInt("user_level"));
 				projectBean.setBoard_creator_cam_num(rs.getInt("board_creator_cam_num"));
 				projectBean.setBoard_creator_cre_max_price(rs.getInt("board_creator_cre_max_price"));
 				projectBean.setBoard_creator_cre_min_price(rs.getInt("board_creator_cre_min_price"));

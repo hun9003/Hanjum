@@ -217,12 +217,6 @@
 	        	</div>
 			</div>
 			<div class="form-group">
-	        	<label class="label has-focus label-primary">녹화에 이용된 캠</label>
-	        	<div class="form-group-content p-tb-10">
-	        	<%=editor_work %>
-	        	</div>
-			</div>
-			<div class="form-group">
 	        	<label class="label has-focus label-primary">실물 미팅</label>
 	        	<div class="form-group-content p-tb-10">
 	        	<%=editor_meeting %>
@@ -306,8 +300,10 @@
 	        %>
 	        <a class="btn btn-primary submit m-l-10" type="button" id="UpdateBtn" href="EditorUpdate.bo?page=<%=nowPage%>&board_id=<%=editorBean.getBoard_id()%>">수정하기</a> 
 	        <%
-	        } else{%>
-	        	 <a class="btn btn-primary submit m-l-10" type="button" id="UpdateBtn" href="UserLike.uo?user_id=<%=editorBean.getUser_id()%>&like_userid=<%=userBean.getUser_id()%>"><%int like = (int)request.getAttribute("like"); if(like==1){%>좋아요 취소<%}else{%>좋아요<%}%></a> 
+	        } else{
+	        	int like = (int)request.getAttribute("like"); 
+	        %>
+	        	 <a class="btn <%if(like==1){ %>btn-light<%} else { %>btn-primary<%} %> submit m-l-10" type="button" id="likeBtn" href="UserLike.uo?user_id=<%=editorBean.getUser_id()%>&like_userid=<%=userBean.getUser_id()%>&board_id=<%=editorBean.getBoard_id()%>&page=<%=nowPage%>"><%if(like==1){%>관심등록중<%}else{%>관심등록<%}%></a> 
 	        <%}
 	        %>
 	        </div>
