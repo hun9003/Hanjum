@@ -77,6 +77,34 @@ public class EditorDAO {
 		return editorBean;
 	}
 	
+	public int getEditorBoardCount() {
+		System.out.println("EditorDAO - getEditorBoardCount()");
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int count = 0;
+		try {
+			String sql = "SELECT COUNT(*) FROM board b "
+					+ "JOIN board_ed e "
+					+ "ON b.board_id = e.board_id "
+					+ "JOIN editor ed "
+					+ "ON b.user_id = ed.user_id "
+					+ "JOIN user u "
+					+ "ON b.user_id = u.user_id "
+					+ "WHERE ed.editor_status = 1 ";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			System.out.println("getEditorBoardCount() 오류! - " + e.getMessage());
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		return count;
+	}
 	
 	// CHECK ====================================================================================
 	
@@ -238,7 +266,7 @@ public class EditorDAO {
 					+ "JOIN user u "
 					+ "ON b.user_id = u.user_id "
 					+ "WHERE ed.editor_status = 1 "
-					+ "ORDER BY u.user_score DESC "
+					+ "ORDER BY u.user_score DESC, u.user_level DESC "
 					+ "LIMIT ?,?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, startRow);

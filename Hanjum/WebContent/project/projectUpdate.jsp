@@ -62,7 +62,10 @@ ProjectBean project = (ProjectBean)request.getAttribute("project");
 String nowPageStr = (String)request.getAttribute("page");
 int nowPage = Integer.parseInt(nowPageStr);
 if(project != null){
-	String[] ref = project.getBoard_creator_cre_ref().split(",");
+	String[] ref = null;
+	if(project.getBoard_creator_cre_ref() != "" && project.getBoard_creator_cre_ref().contains("v=")){
+		ref = project.getBoard_creator_cre_ref().split(",");
+	}
 %>
 
 <section id="pageContent" class="ftco-section bg-light">
@@ -153,7 +156,7 @@ if(project != null){
             <label class="label has-focus label-primary">레퍼런스 링크</label>
             <div class="link_alert d-flex justify-content-end"><button type="button" id="ref_insert" class="btn btn-primary m-l-30">추가</button> <button type="button" id="ref_delete" class="btn btn-light m-l-30">삭제</button></div>
 			<%
-			if(ref.length > 0){
+			if(ref != null){
 				for(int i = 0; i < ref.length; i++){
 					String refID = ref[i].substring(ref[i].lastIndexOf("v=")+2);
 			%>

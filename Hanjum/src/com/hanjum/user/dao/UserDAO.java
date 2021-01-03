@@ -159,7 +159,7 @@ public class UserDAO {
 	public void userExp(String user_id, int exp) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select * from user where user_id=?";
+		String sql = "select * from user where user_id=?"; // 경험치 검색 데이터 불러오기
 		try {
 			pstmt=con.prepareStatement(sql);
 			pstmt.setString(1, user_id);
@@ -168,12 +168,39 @@ public class UserDAO {
 				int level = rs.getInt("user_level");
 				int lv_exp = rs.getInt("user_lv_exp")+exp;
 				int levelupExp = level * 20;
+				
+				// 레벨업 하는거 경험치 많이 얻을시 여러개 업가능
 				if(lv_exp >=  levelupExp) {
-					level ++;
-					lv_exp -= levelupExp;
-					levelupExp = level * 20;
+					while (lv_exp > levelupExp) {
+						// 우선 만렙 99로 제한 만렙 99.99% 에서 겸치안올라가게
+						if(level>=99) {
+							if(lv_exp > levelupExp) {
+								level=99;
+								lv_exp = levelupExp-1;
+								break;
+							}
+						}
+						level ++;
+						lv_exp -= levelupExp;
+						levelupExp = level * 20;
+					}
+				} 
+				// 렙따 경험치 많이 잃을시 여러개 다운가능
+				else if (lv_exp < 0) {
+					while (lv_exp < 0) {
+						//1렙 겸치0까지만 하락 
+						if(level<=1) {
+							if(lv_exp<0) {
+								lv_exp=0;
+								break;
+							}
+						} 
+						level --;
+						levelupExp = level *20;
+						lv_exp += levelupExp;
+					}
 				}
-				System.out.println(level);
+				// 디비 저장
 				String sql2 = "update user set user_level=?,user_lv_exp=? where user_id=?";
 				pstmt=con.prepareStatement(sql2);
 				pstmt.setInt(1, level);

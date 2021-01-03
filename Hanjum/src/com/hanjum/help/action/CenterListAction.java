@@ -32,7 +32,7 @@ public class CenterListAction implements Action {
 		ArrayList<HelpBean> list = new ArrayList<HelpBean>();
 		
 		HelpListService helpListService = new HelpListService();
-		list = helpListService.getHelpList();
+		list = helpListService.getHelpList(page,limit);
 		int listCount = helpListService.getListCount();
 
 		
@@ -40,7 +40,7 @@ public class CenterListAction implements Action {
 		
 		int startPage = ((int)((double)page / 10 + 0.9) - 1) * 10 + 1;
 		
-		int endPage = startPage + 10 - 1;		
+		int endPage = startPage + 9;		
 		
 		
 		if(endPage > maxPage) {

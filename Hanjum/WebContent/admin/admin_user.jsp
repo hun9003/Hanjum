@@ -219,25 +219,31 @@ $(document).ready( function () {
 					<%} %>
 			</tbody>
 		</table>
+		<%String search = request.getParameter("search");
+		String searchType = request.getParameter("searchType");
+		String url = "UserManage.uo?";
+		if(search != null){
+			url = "UserSearchManage.uo?search="+search+"&searchType="+searchType+"&";
+		}%>
 		<div id="paging_area">
 				<%if(nowPage <= 1) {%>
 			<input type="button" value="이전" class="btn">&nbsp;
 	<%} else {%>
-			<input type="button" value="이전" class="btn" onclick="location.href='UserManage.uo?page=<%=nowPage - 1 %>'">&nbsp;
+			<input type="button" value="이전" class="btn" onclick="location.href='<%=url %>page=<%=nowPage - 1 %>'">&nbsp;
 	<%} %>
 	
 	<%for(int i = startPage; i <= endPage; i++) { 
 			if(i == nowPage) { %>
 				[<%=i %>]&nbsp;
 			<%} else { %>
-					<a href="UserManage.uo?page=<%=i %>">[<%=i %>]</a>&nbsp;
+					<a href="<%=url %>page=<%=i %>">[<%=i %>]</a>&nbsp;
 			<%} %>
 	<%} %>
 	
 	<%if(nowPage >= maxPage) { %>
 			<input type="button" value="다음" class="btn">
 	<%} else { %>
-			<input type="button" value="다음" class="btn" onclick="location.href='UserManage.uo?page=<%=nowPage + 1 %>'">
+			<input type="button" value="다음" class="btn" onclick="location.href='<%=url %>page=<%=nowPage + 1 %>'">
 	<%} %>
 	<%}
 	else {

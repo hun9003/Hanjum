@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.hanjum.action.Action;
 import com.hanjum.help.action.CenterListAction;
+import com.hanjum.help.action.CenterSearchListAction;
 import com.hanjum.help.action.HelpDeleteAction;
 import com.hanjum.help.action.HelpListProAction;
 import com.hanjum.help.action.HelpUpdateAction;
@@ -70,11 +71,19 @@ public class HelpFrontController extends HttpServlet {
 				e.printStackTrace();
 			}
 		} else if (command.equals("/Center.hp")) {
+			String search = request.getParameter("search");
 			forward = new ActionForward();
 			forward.setPath("center/center.jsp");
 			forward.setRedirect(false);
 		} else if (command.equals("/CenterHelp.hp")) {
 			action = new CenterListAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/CenterSearchHelp.hp")) {
+			action = new CenterSearchListAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {

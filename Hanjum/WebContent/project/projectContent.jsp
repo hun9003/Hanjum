@@ -1,3 +1,4 @@
+<%@page import="java.util.ArrayList"%>
 <%@page import="com.hanjum.board.vo.BoardBean"%>
 <%@page import="com.hanjum.user.vo.UserBean"%>
 <%@page import="com.hanjum.board.vo.ProjectBean"%>
@@ -85,9 +86,13 @@
 		String min_price = "";
 		String max_price = "";
 		String cam_num = "";
-		String[] ref = null;
-		if(project.getBoard_creator_cre_ref() != ""){
-			ref = project.getBoard_creator_cre_ref().split(",");
+		
+		ArrayList<String> ref = null;
+		if(project.getBoard_creator_cre_ref() != "" && project.getBoard_creator_cre_ref().contains("v=")){
+			ref = new ArrayList<String>();
+			for(String refStr : project.getBoard_creator_cre_ref().split(",")){
+				ref.add(refStr);
+			}
 		}
 		genre = project.getBoard_creator_genre()
 				.replace("1", "유튜브")
@@ -232,24 +237,27 @@
             </div>
         </div>
         <%
-        	if(ref != null){
-        %>
-        <div id="ref_area" class="form-group">
-            <label class="label has-focus label-primary">레퍼런스 링크</label>
-            <%
-			for(int i = 0; i < ref.length; i++){
-				String refID = ref[i].substring(ref[i].lastIndexOf("v=")+2);
-
-			%>
-			<div class="form-group-content p-tb-10">
-			<div class="board_ref"><iframe src="https://www.youtube.com/embed/<%=refID %>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
-			</div>
-			<%
-			}
-			%>
-        </div>
+    	if(ref != null && ref.size() > 0){
+    %>
+    <div id="ref_area" class="form-group">
+        <label class="label has-focus label-primary">레퍼런스 링크</label>
         <%
-        	}
+		for(int i = 0; i < ref.size(); i++){
+			String refID = "";
+			if(ref.get(i).contains("v=")){
+				refID = ref.get(i).substring(ref.get(i).lastIndexOf("v=")+2);
+			}
+
+		%>
+		<div class="form-group-content p-tb-10">
+		<div class="board_ref"><iframe src="https://www.youtube.com/embed/<%=refID %>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+		</div>
+		<%
+		}
+		%>
+    </div>
+    <%
+    	}
         %>
         <div class="form-group d-flex justify-content-end mt-4">
         <%
@@ -261,7 +269,7 @@
 			<a class="btn btn-light submit m-r-10" type="button" id="DeleteBtn" href = 'ProjectDeletePro.bo?board_id=<%=project.getBoard_id()%>'>삭제하기</a>
 	        <%
 	        }
-        	if(userBean.getUser_type() == 2 && !userBean.getUser_id().equals(project.getUser_id())){
+        	if(userBean.getUser_type() == 2 && !userBean.getUser_id().equals(project.getUser_id()) && project.getBoard_creator_status() == 0){
         		if(checkApply == 0){
         	%>
         	<a class="btn btn-primary submit m-r-10" type="button" id="ApplyBtn" data-href="ProjectApplyPro.bo?board_id=<%=project.getBoard_id()%>&page=<%=nowPage%>">지원하기</a> 

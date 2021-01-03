@@ -36,6 +36,7 @@ public class ProjectProService {
 	public int getProjectSearchListCount(HashMap<String, String> search) { // 프로젝트 검색 갯수
 		System.out.println("ProjectProService - getListSearchProjectCount()");
 		int count = projectDAO.selectProjectSearchCount(search);
+		close(con);
 		return count;
 	}
 	

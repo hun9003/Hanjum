@@ -473,7 +473,7 @@ public class ProjectDAO {
 		int limit = Constant.BOARD_PAGE_SIZE;
 		int startRow = (page - 1) * limit;
 		try {
-			String sql = "SELECT b.board_id, b.board_subject, b.board_content, b.board_date, b.board_type, u.user_id, u.user_name, c.board_creator_genre," + 
+			String sql = "SELECT b.board_id, b.board_subject, b.board_content, b.board_date, b.board_type, u.user_id, u.user_name, u.user_level, c.board_creator_genre," + 
 					"c.board_creator_recording, c.board_creator_cam_num, c.board_creator_ori_clip_num, c.board_creator_ori_length," + 
 					"c.board_creator_edit_length, c.board_creator_ori_transfer, c.board_creator_cre_min_price, c.board_creator_cre_max_price, c.board_creator_status, u.user_name FROM board b  "
 					+ "JOIN board_creator c ON c.board_id = b.board_id "

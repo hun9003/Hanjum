@@ -30,6 +30,16 @@ public class EditorProService {
 		return editorBean; // EditorBean
 		
 	}
+	
+	public int getEditorBoardCount() {
+		System.out.println("EditorProService - getEditor()");
+		
+		editorDAO.setConnection(con);
+		int count = editorDAO.getEditorBoardCount();
+		close(con);
+		return count;
+
+	}
 	// CHECK ====================================================================================
 	
 	public boolean checkEditorInfo(String user_id) {

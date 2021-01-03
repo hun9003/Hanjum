@@ -50,9 +50,14 @@
 					<ul>
 					<%
 					int pageSize = 10;
-					String pageUrl = "CenterHelp.hp";
+					String search = request.getParameter("search");
+					String pageUrl = "CenterHelp.hp?";
+					if(search != null){
+						pageUrl = "CenterSearchHelp.hp?search="+search+"&";
+					} 
+					
 					if(startPage > pageSize){ %>
-						<li><a class="page-move" data-href="<%=pageUrl%>&page=<%=startPage-pageSize %>">&lt;</a></li>
+						<li><a class="page-move" data-href="<%=pageUrl%>page=<%=startPage-pageSize %>">&lt;</a></li>
 					<% 
 					}
 					for(int i=startPage; i<=endPage; i++){
@@ -60,12 +65,12 @@
 					%>
 						<li class="active"><span><%=i %></span></li>
 					<% } else { %>
-						<li><a class="page-move" data-href="<%=pageUrl%>&page=<%=i%>"><%=i %></a></li>
+						<li><a class="page-move" data-href="<%=pageUrl%>page=<%=i%>"><%=i %></a></li>
 					<% } 
 					}
 					if(endPage < maxPage){ 
 					%>
-						<li><a class="page-move" data-href="<%=pageUrl%>&page=<%=startPage+pageSize %>">&gt;</a></li>
+						<li><a class="page-move" data-href="<%=pageUrl%>page=<%=startPage+pageSize %>">&gt;</a></li>
 					<%
 					}
 					%>

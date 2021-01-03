@@ -62,18 +62,21 @@ public class HelpDAO {
 		
 	}
 
-	public ArrayList<HelpBean> selectHelpList() {
+	public ArrayList<HelpBean> selectHelpList(int page, int limit) {
 		// TODO Auto-generated method stub
 		ArrayList<HelpBean> list = null;
 		
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
+		int startRow = (page-1) * limit;
 		
 		
 		try {
-			String sql = "SELECT help_id, help_question, help_answer FROM help";
+			String sql = "SELECT help_id, help_question, help_answer FROM help limit ?,?";
 			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, limit);
 			rs = pstmt.executeQuery();
 			
 			list = new ArrayList<HelpBean>();
@@ -96,6 +99,47 @@ public class HelpDAO {
 		
 		return list;
 	}
+	public ArrayList<HelpBean> selectSearchHelpList(int page, int limit, String search) {
+		// TODO Auto-generated method stub
+		ArrayList<HelpBean> list = null;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		int startRow = (page-1) * limit;
+		System.out.println(search);
+		System.out.println(startRow);
+		try {
+			String sql = "SELECT * FROM help where help_question like ? limit ?,?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, "%"+search+"%");
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, limit);
+			rs = pstmt.executeQuery();
+			
+			list = new ArrayList<HelpBean>();
+			
+			while(rs.next()) {
+				HelpBean temp = new HelpBean();
+				temp.setHelp_id(rs.getInt("help_id"));
+				temp.setHelp_question(rs.getString("help_question"));
+				temp.setHelp_answer(rs.getString("help_answer"));
+				
+				list.add(temp);
+				System.out.println(rs.getString("help_question"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+	
+	
 	public int selectListCount() {
 		int listCount = 0;
 		
@@ -155,5 +199,28 @@ public class HelpDAO {
 		}
 	
 		return delectCount;
+	}
+	public int selectSearchListCount(String search) {
+	int listCount = 0;
+		
+		PreparedStatement pstmt= null;
+		ResultSet rs = null;
+		try {
+			String sql ="SELECT COUNT(help_id) FROM help where help_question like ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, "%"+search+"%");
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				listCount = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			System.out.println("selectListCount() 오류! - " + e.getMessage());
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return listCount;
 	}
 }

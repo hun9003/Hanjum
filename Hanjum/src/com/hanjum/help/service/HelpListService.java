@@ -10,7 +10,7 @@ import com.hanjum.help.vo.HelpBean;
 
 public class HelpListService {
 
-	public ArrayList<HelpBean> getHelpList() {
+	public ArrayList<HelpBean> getHelpList(int page, int limit) {
 		System.out.println("HelpListService!");
 		
 		ArrayList<HelpBean> list = null;
@@ -21,7 +21,7 @@ public class HelpListService {
 
 		helpDAO.setConnection(con);
 		
-		list = helpDAO.selectHelpList();
+		list = helpDAO.selectHelpList(page,limit);
 		
 		close(con);
 		
@@ -87,6 +87,40 @@ public class HelpListService {
 		}
 		close(con);
 		return isDeleteSuccess;
+	}
+	public ArrayList<HelpBean> getSearchHelpList(int page, int limit, String search) {
+		ArrayList<HelpBean> list = null;
+		
+		Connection con = getConnection();
+
+		HelpDAO helpDAO = HelpDAO.getInstance();
+
+		helpDAO.setConnection(con);
+		
+		list = helpDAO.selectSearchHelpList(page,limit,search);
+		
+		close(con);
+		
+		return list;
+	}
+	public int getSearchListCount(String search) {
+		System.out.println("helpListService - getListCount()");
+		int listCount = 0;
+		
+		Connection con = getConnection();
+		
+		HelpDAO helpDAO = HelpDAO.getInstance();
+		
+		helpDAO.setConnection(con);
+		
+		
+		listCount = helpDAO.selectSearchListCount(search);
+		
+		
+		close(con);
+		
+		
+		return listCount;
 	}
 	
 	

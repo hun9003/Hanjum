@@ -49,7 +49,7 @@ public class ProjectSearchListAction implements Action {
 		ProjectProService projectProService = new ProjectProService();
 		ArrayList<ProjectBean> list = new ArrayList<ProjectBean>();
 		int listCount = projectProService.getProjectSearchListCount(search);
-		System.out.println(listCount);
+		projectProService = new ProjectProService();
 		list = projectProService.getListSearchProject(page, search);
 		
 		

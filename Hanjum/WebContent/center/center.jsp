@@ -4,7 +4,7 @@
     String frUrl = "";
     String fr = "";
     String pageSubject = "";
-    
+    String search = request.getParameter("search");
     frUrl = "CenterHelp.hp";
     fr = "help";
     pageSubject = "자주 묻는 질문";
@@ -13,6 +13,7 @@
     	switch(fr){
     	case "help": frUrl="CenterHelp.hp"; pageSubject="자주 묻는 질문"; break;
     	case "report": frUrl="CenterReport.hp"; pageSubject="유저 신고"; break;
+    	case "searchHelp": frUrl="CenterSearchHelp.hp?search="+search; pageSubject="자주 묻는 질문 검색"; break;
     	}
     }
     String prefPage = "";
@@ -63,6 +64,14 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-3 sidebar">
+				<form name="search_form" action="Center.hp?fr=searchHelp" method="POST">
+					<div class="sidebar-box bg-white ftco-animate">
+							<div class="form-group">
+								<span class="icon fa fa-search" onclick="document.search_form.submit()"></span>
+								<input type="text" class="form-control" name="search" placeholder="검색어를 입력해주세요." >
+							</div>
+					</div>
+					</form>
 				<div class="sidebar-box bg-white ftco-animate nav-tabs">
 				<h3 class="heading-sidebar">메뉴</h3>
 				<div class="col-md-9 d-flex align-items-stretch ftco-animate member_menu" id="page_help"><a href="Center.hp?fr=help" class="member-menu nav-link <%if(fr.equals("help")){%>active<%}%>">자주묻는질문</a></div>

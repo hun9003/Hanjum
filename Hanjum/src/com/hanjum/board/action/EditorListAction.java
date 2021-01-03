@@ -27,11 +27,11 @@ public class EditorListAction implements Action {
 		}
 		
 		int board_type = 1;
-		BoardProService boardProService = new BoardProService();
-		int listCount = boardProService.getBoardCount(board_type);
-		
-		
 		EditorProService editorProService = new EditorProService();
+		int listCount = editorProService.getEditorBoardCount();
+		
+		
+		editorProService = new EditorProService();
 		ArrayList<EditorBean> editorList = editorProService.getListEditor(1);
 		
 		int maxPage = (int)((double)listCount / limit + 0.95);

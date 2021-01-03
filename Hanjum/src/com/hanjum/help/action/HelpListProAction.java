@@ -32,7 +32,7 @@ public class HelpListProAction implements Action {
 		ArrayList<HelpBean> list = new ArrayList<HelpBean>();
 		
 		HelpListService helpListService = new HelpListService();
-		list = helpListService.getHelpList();
+		list = helpListService.getHelpList(page,limit);
 		int listCount = helpListService.getListCount();
 
 		
