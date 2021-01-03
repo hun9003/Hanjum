@@ -42,6 +42,8 @@ public class CategoryProService {
 		
 		listCount=categoryDAO.categoryListCount();
 		
+		close(con);
+		
 		return listCount;
 	}
 

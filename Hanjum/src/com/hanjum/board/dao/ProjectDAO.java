@@ -421,7 +421,7 @@ public class ProjectDAO {
 					"ON b.board_id = c.board_id "
 					+ "JOIN user u "
 					+ "ON b.user_id = u.user_id " +
-					"ORDER BY b.board_date DESC " +
+					"ORDER BY c.board_creator_status ASC, b.board_date DESC " +
 					"LIMIT ?,?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, startRow);
@@ -491,7 +491,7 @@ public class ProjectDAO {
 			
 			System.out.println(sql);
 			
-			sql += "ORDER BY b.board_date DESC LIMIT ?,?";
+			sql += "ORDER BY c.board_creator_status ASC, b.board_date DESC LIMIT ?,?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, limit);
