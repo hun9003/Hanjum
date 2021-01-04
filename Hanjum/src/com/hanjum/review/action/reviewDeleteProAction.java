@@ -57,10 +57,7 @@ public class reviewDeleteProAction implements Action {
 				UserProService userProService = new UserProService();
 				userProService.updateScore(reviewBean.getUser_id(), avg);
 				
-				forward = new ActionForward();
-				forward.setPath(
-						"ReviewList.rv?page=" + request.getParameter("page"));
-				forward.setRedirect(true);
+				System.out.println("true");
 			}
 		}
 		

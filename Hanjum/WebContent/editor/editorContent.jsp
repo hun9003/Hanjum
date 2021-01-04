@@ -330,6 +330,25 @@
 						var href = $(this).attr("data-href");
 						$("#review_area").load(href);
 					});
+					$(document).on('click','.reviewDeleteBtn',function(){
+			 			var review_id = $(this).attr('id').replace('delete','');
+			 			 $.ajax({
+					            cache : false,
+					            url : "ReviewDeletePro.rv?review_form_id=<%=userBean.getUser_id()%>&review_id="+review_id, // 요기에
+					            type : 'POST', 
+					            data : formData, 
+					            success : function(data) {
+					            	if(data.indexOf("true")==-1){
+					            		alert("리뷰삭제에 실패하였습니다")
+					            	}
+									$("#review_area").load("ReviewList.rv?user_id=<%=editorBean.getUser_id()%>");
+					            }, // success 
+					    
+					            error : function(xhr, status) {
+					                alert(xhr + " : " + status);
+					            }
+					        }); // $.ajax */
+			 		})
 					
 				})
 				function reviewWrite() {

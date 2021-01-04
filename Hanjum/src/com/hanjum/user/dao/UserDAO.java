@@ -171,7 +171,7 @@ public class UserDAO {
 				
 				// 레벨업 하는거 경험치 많이 얻을시 여러개 업가능
 				if(lv_exp >=  levelupExp) {
-					while (lv_exp > levelupExp) {
+					while (lv_exp >= levelupExp) {
 						// 우선 만렙 99로 제한 만렙 99.99% 에서 겸치안올라가게
 						if(level>=99) {
 							if(lv_exp > levelupExp) {

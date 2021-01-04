@@ -122,7 +122,7 @@
     }
   %>
 <div class="col-md-12 text-center mt-5">
-    <a href="#" class="btn btn-secondary">모두보기</a>
+    <a href="ProjectList.bo" class="btn btn-secondary">모두보기</a>
 </div>
 </div>
 </div>

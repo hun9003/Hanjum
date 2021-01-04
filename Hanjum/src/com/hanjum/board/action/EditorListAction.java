@@ -32,7 +32,7 @@ public class EditorListAction implements Action {
 		
 		
 		editorProService = new EditorProService();
-		ArrayList<EditorBean> editorList = editorProService.getListEditor(1);
+		ArrayList<EditorBean> editorList = editorProService.getListEditor(page);
 		
 		int maxPage = (int)((double)listCount / limit + 0.95);
 		

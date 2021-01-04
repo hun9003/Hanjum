@@ -4,6 +4,12 @@ $(document).ready(function(){
 	var year = now.getFullYear();
     var month = now.getMonth() + 1;    //1월이 0으로 되기때문에 +1을 함.
     var date = now.getDate();
+		if(month<10){
+			month = "0"+month;
+		}
+		if(date<10){
+			date = "0"+date;
+		}
 	var currentDate = year+"-"+month+"-"+date;
 
 	$("#date_end").val(currentDate);

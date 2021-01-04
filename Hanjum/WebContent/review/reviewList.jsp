@@ -30,6 +30,8 @@
  			var review_id = $(this).attr('id').replace('update','');
  			reviewUpdate(review_id,<%=nowPage%>);
  		});
+ 		
+ 	
  	})
 	    function reviewUpdate(id, pageNum){
 	 		$("#reviewWriteForm").load('ReviewUpdateForm.rv?review_id='+id+'&page='+pageNum);
@@ -37,7 +39,7 @@
 	 		$("#reviewForm").attr("id","reviewUpdateForm");
 	    }
  		
- 		
+ 	
     </script>
     <link rel="stylesheet" href="css/review.css">
 
@@ -99,7 +101,7 @@
 				if(reviewBean.getReview_from_id().equals(userBean.getUser_id())){
 				%>
 				<input type="button" class="btn btn-primary reviewUpdateBtn" value="수정" id="update<%=articleList.get(i).getReview_id() %>" />
-				<input type="button" class="btn btn-white" value="삭제" onclick="ajaxdelete()" />
+				<input type="button" class="btn btn-white reviewDeleteBtn" value="삭제" id="delete<%=articleList.get(i).getReview_id() %>"  />
 				<%
 				}
 				%>

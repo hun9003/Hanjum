@@ -616,7 +616,7 @@ public class UserProService {
 		UserDAO userDAO = UserDAO.getInstance();
 		userDAO.setConnection(con);;
 		count = userDAO.getLike(user_id,id);
-		
+		close(con);
 		
 		return count;
 	}

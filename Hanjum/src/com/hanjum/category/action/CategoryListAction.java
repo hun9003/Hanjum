@@ -22,7 +22,7 @@ public class CategoryListAction implements Action {
 		System.out.println(listCount);
 		
 		ArrayList<CategoryBean> categoryList = new ArrayList<CategoryBean>();
-		
+		categoryProService = new CategoryProService();
 		categoryList=categoryProService.getCategoryList();
 		
 		
